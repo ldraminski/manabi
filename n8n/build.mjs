@@ -103,7 +103,7 @@ const nodes = [
     typeVersion: 2,
     position: at(),
     webhookId: 'manabi-offers',
-    parameters: { httpMethod: 'POST', path: 'manabi/offers', responseMode: 'responseNode', options: { allowedOrigins: 'http://localhost:5173' } },
+    parameters: { httpMethod: 'POST', path: 'manabi/offers', responseMode: 'responseNode', options: { allowedOrigins: 'https://manabi.draminski.dev,https://manabi-e31.pages.dev,http://localhost:5173' } },
   },
   code('Check request', 'check-request.js', at()),
   isTrue('Request ok?', '$json.ok === true', at()),

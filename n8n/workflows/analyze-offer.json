@@ -30,7 +30,7 @@
         "path": "manabi/offers",
         "responseMode": "responseNode",
         "options": {
-          "allowedOrigins": "http://localhost:5173"
+          "allowedOrigins": "https://manabi.draminski.dev,https://manabi-e31.pages.dev,http://localhost:5173"
         }
       }
     },
