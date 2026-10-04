@@ -16,6 +16,13 @@ const technologies = JSON.parse(readFileSync(join(root, 'technologies.json'), 'u
 const slugs = new Set(technologies.map((technology) => technology.slug));
 if (slugs.size !== technologies.length) fail('technologies.json', 'duplicate slug');
 
+const topics = JSON.parse(readFileSync(join(root, 'topics.json'), 'utf8'));
+const topicKeys = new Set(topics.map((topic) => `${topic.technology}/${topic.slug}`));
+for (const topic of topics) {
+  if (!slugs.has(topic.technology)) fail('topics.json', `unknown technology "${topic.technology}"`);
+  if (!isText(topic.title) || !isText(topic.description)) fail('topics.json', `${topic.slug}: missing title or description`);
+}
+
 const seen = new Set();
 const index = [];
 
@@ -55,6 +62,8 @@ for (const entry of readdirSync(root).sort()) {
       for (const field of ['topic', 'prompt', 'explanation']) {
         if (!isText(question[field])) fail(at, `missing ${field}`);
       }
+      if (!topicKeys.has(`${entry}/${question.topic}`)) fail(at, `topic "${question.topic}" is not listed in topics.json`);
+      if ('code' in question && !isText(question.code)) fail(at, 'code must be non-empty text');
       if (!KINDS.includes(question.kind)) fail(at, `kind must be one of ${KINDS.join(', ')}`);
       if (!/^https:\/\//.test(question.source_url ?? '')) fail(at, 'source_url must be an https link');
       if (!/^\d{4}-\d{2}-\d{2}$/.test(question.added_on ?? '')) fail(at, 'added_on must be YYYY-MM-DD');

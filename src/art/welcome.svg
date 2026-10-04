@@ -1,0 +1,10 @@
+<svg class="hero-art" viewBox="0 0 240 220" aria-hidden="true">
+<path d="M34 118c-8-46 30-92 86-88 52 4 96 34 90 88-5 48-48 80-98 76-42-3-71-36-78-76z" fill="#fff"/>
+<path d="M76 70c20-22 66-24 88 0 20 22 16 62-10 78-26 16-62 10-80-12-15-19-14-48 2-66z" fill="#eaab31"/>
+<text x="120" y="142" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-weight="700" font-size="84" fill="#19253d">学</text>
+<g fill="none" stroke="#19253d" stroke-width="2.5" stroke-linecap="round">
+<path d="M38 62l8 6M52 44l3 9M196 52l-7 7M208 76l-9 2"/>
+<circle cx="30" cy="150" r="5"/><circle cx="212" cy="160" r="4"/>
+<path d="M186 186q10-8 20 0M40 186q8-6 16 0"/>
+</g>
+</svg>

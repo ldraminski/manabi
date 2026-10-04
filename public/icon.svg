@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#19253d"/>
+  <path d="M150 150c56-62 186-68 248 0 56 62 45 174-28 220-73 45-175 28-226-34-42-53-39-135 6-186z" fill="#eaab31"/>
+  <text x="262" y="350" text-anchor="middle" font-family="Hiragino Sans, Noto Sans JP, Yu Gothic, sans-serif" font-weight="700" font-size="230" fill="#19253d">学</text>
+</svg>

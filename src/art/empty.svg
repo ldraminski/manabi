@@ -1,0 +1,12 @@
+<svg class="art" viewBox="0 0 220 200" aria-hidden="true">
+<path d="M24 104c-6-44 34-84 86-80 50 4 92 30 86 82-5 44-44 74-92 70-40-3-74-34-80-72z" fill="#fff"/>
+<g fill="none" stroke="#19253d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M70 46h56l22 22v84a6 6 0 01-6 6H70a6 6 0 01-6-6V52a6 6 0 016-6z" fill="#fff"/>
+<path d="M126 46v22h22" fill="#eaab31"/>
+<path d="M78 86h44M78 100h56M78 114h30" stroke-dasharray="1 7"/>
+<circle cx="140" cy="132" r="20" fill="#eaab31"/>
+<path d="M155 147l16 16"/>
+<path d="M132 132h16M140 124v16"/>
+<path d="M40 60l6 5M186 84l-8 3M48 150q8-6 16 0"/>
+</g>
+</svg>

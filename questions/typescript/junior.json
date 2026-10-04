@@ -1,7 +1,7 @@
 [
   {
     "id": "typescript-junior-001",
-    "topic": "basic-types",
+    "topic": "types",
     "kind": "single_choice",
     "prompt": "Czym różni się typ unknown od any?",
     "options": [
@@ -17,10 +17,16 @@
   },
   {
     "id": "typescript-junior-002",
-    "topic": "union-types",
+    "topic": "types",
     "kind": "single_choice",
-    "prompt": "Jak nazywa się taki typ?\n\nlet id: string | number;",
-    "options": ["Typ generyczny", "Unia (union type)", "Przecięcie (intersection type)", "Krotka (tuple)"],
+    "prompt": "Jak nazywa się taki typ?",
+    "code": "let id: string | number;",
+    "options": [
+      "Typ generyczny",
+      "Unia (union type)",
+      "Przecięcie (intersection type)",
+      "Krotka (tuple)"
+    ],
     "correct": 1,
     "explanation": "Unia oznacza, że wartość może mieć jeden z wymienionych typów. Bez zawężenia wolno używać tylko tego, co jest wspólne dla wszystkich członków unii.",
     "source_url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html",
@@ -28,7 +34,7 @@
   },
   {
     "id": "typescript-junior-003",
-    "topic": "interfaces",
+    "topic": "types",
     "kind": "flashcard",
     "prompt": "Czym różni się interface od type i kiedy użyć którego?",
     "answer": "Oba opisują kształt obiektu i w większości przypadków są wymienne. interface da się rozszerzać przez extends i ponownie deklarować (deklaracje się łączą). type potrafi więcej poza obiektami: unie, przecięcia, krotki, typy mapowane i aliasy typów prostych. Praktyczna zasada: interface dla kształtów obiektów, type dla unii i reszty — a przede wszystkim spójnie w obrębie projektu.",
@@ -38,10 +44,16 @@
   },
   {
     "id": "typescript-junior-004",
-    "topic": "object-types",
+    "topic": "types",
     "kind": "single_choice",
-    "prompt": "Jaki typ ma właściwość nickname przy odczycie?\n\ninterface User {\n  name: string;\n  nickname?: string;\n}",
-    "options": ["string", "string | null", "string | undefined", "any"],
+    "prompt": "Jaki typ ma właściwość nickname przy odczycie?",
+    "code": "interface User {\n  name: string;\n  nickname?: string;\n}",
+    "options": [
+      "string",
+      "string | null",
+      "string | undefined",
+      "any"
+    ],
     "correct": 2,
     "explanation": "Znak zapytania oznacza właściwość opcjonalną: może jej nie być, więc przy odczycie dostajesz string | undefined i przed użyciem musisz to obsłużyć.",
     "source_url": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
@@ -49,7 +61,7 @@
   },
   {
     "id": "typescript-junior-005",
-    "topic": "utility-types",
+    "topic": "generics-and-operators",
     "kind": "single_choice",
     "prompt": "Co robi Partial<User>?",
     "options": [
@@ -65,7 +77,7 @@
   },
   {
     "id": "typescript-junior-006",
-    "topic": "utility-types",
+    "topic": "generics-and-operators",
     "kind": "single_choice",
     "prompt": "Który zapis tworzy typ zawierający tylko pola id i name z typu User?",
     "options": [
@@ -81,9 +93,10 @@
   },
   {
     "id": "typescript-junior-007",
-    "topic": "narrowing",
+    "topic": "generics-and-operators",
     "kind": "single_choice",
-    "prompt": "Jak nazywa się to, co dzieje się wewnątrz if?\n\nfunction print(value: string | number) {\n  if (typeof value === 'string') {\n    console.log(value.toUpperCase());\n  }\n}",
+    "prompt": "Jak nazywa się to, co dzieje się wewnątrz if?",
+    "code": "function print(value: string | number) {\n  if (typeof value === 'string') {\n    console.log(value.toUpperCase());\n  }\n}",
     "options": [
       "Rzutowanie typu (type assertion)",
       "Zawężanie typu (narrowing)",
@@ -97,9 +110,10 @@
   },
   {
     "id": "typescript-junior-008",
-    "topic": "generics",
+    "topic": "generics-and-operators",
     "kind": "single_choice",
-    "prompt": "Czym jest T w tej funkcji?\n\nfunction first<T>(items: T[]): T | undefined {\n  return items[0];\n}",
+    "prompt": "Czym jest T w tej funkcji?",
+    "code": "function first<T>(items: T[]): T | undefined {\n  return items[0];\n}",
     "options": [
       "Typem wbudowanym w TypeScript",
       "Parametrem typu — zostanie zastąpiony typem elementów przekazanej tablicy",
@@ -113,7 +127,7 @@
   },
   {
     "id": "typescript-junior-009",
-    "topic": "compilation",
+    "topic": "tooling",
     "kind": "single_choice",
     "prompt": "Dane z API mają inny kształt niż zadeklarowany typ. Co zrobi TypeScript w działającej aplikacji?",
     "options": [
@@ -129,7 +143,7 @@
   },
   {
     "id": "typescript-junior-010",
-    "topic": "tsconfig",
+    "topic": "tooling",
     "kind": "flashcard",
     "prompt": "Co daje opcja \"strict\": true w tsconfig.json?",
     "answer": "Włącza naraz zestaw ostrzejszych kontroli. Najważniejsze: strictNullChecks (null i undefined nie pasują do innych typów bez jawnej unii) oraz noImplicitAny (błąd, gdy typ nie został podany i kompilator musiałby przyjąć any).",
@@ -139,9 +153,10 @@
   },
   {
     "id": "typescript-junior-011",
-    "topic": "object-types",
+    "topic": "types",
     "kind": "single_choice",
-    "prompt": "Co się stanie przy próbie przypisania?\n\ninterface Point {\n  readonly x: number;\n}\nconst point: Point = { x: 1 };\npoint.x = 2;",
+    "prompt": "Co się stanie przy próbie przypisania?",
+    "code": "interface Point {\n  readonly x: number;\n}\nconst point: Point = { x: 1 };\npoint.x = 2;",
     "options": [
       "Błąd kompilacji",
       "Błąd dopiero w trakcie działania programu",
@@ -155,9 +170,10 @@
   },
   {
     "id": "typescript-junior-012",
-    "topic": "literal-types",
+    "topic": "types",
     "kind": "single_choice",
-    "prompt": "Jaki typ ma zmienna sizes?\n\nconst sizes = ['s', 'm', 'l'] as const;",
+    "prompt": "Jaki typ ma zmienna sizes?",
+    "code": "const sizes = ['s', 'm', 'l'] as const;",
     "options": [
       "string[]",
       "readonly ['s', 'm', 'l']",
@@ -171,10 +187,15 @@
   },
   {
     "id": "typescript-junior-013",
-    "topic": "functions",
+    "topic": "types",
     "kind": "single_choice",
     "prompt": "Jaki typ zwracany ma funkcja, która tylko wypisuje komunikat i niczego nie zwraca?",
-    "options": ["undefined", "null", "void", "never"],
+    "options": [
+      "undefined",
+      "null",
+      "void",
+      "never"
+    ],
     "correct": 2,
     "explanation": "void oznacza, że wynik funkcji nie ma być używany. never jest dla funkcji, które nigdy nie kończą się normalnie: zawsze rzucają błąd albo mają nieskończoną pętlę.",
     "source_url": "https://www.typescriptlang.org/docs/handbook/2/functions.html",
@@ -182,10 +203,16 @@
   },
   {
     "id": "typescript-junior-014",
-    "topic": "type-operators",
+    "topic": "generics-and-operators",
     "kind": "single_choice",
-    "prompt": "Jaki typ powstanie?\n\ninterface User {\n  id: number;\n  name: string;\n}\ntype Keys = keyof User;",
-    "options": ["number | string", "'id' | 'name'", "['id', 'name']", "string"],
+    "prompt": "Jaki typ powstanie?",
+    "code": "interface User {\n  id: number;\n  name: string;\n}\ntype Keys = keyof User;",
+    "options": [
+      "number | string",
+      "'id' | 'name'",
+      "['id', 'name']",
+      "string"
+    ],
     "correct": 1,
     "explanation": "keyof zwraca unię nazw właściwości typu. Często łączy się go z generykami, np. function get<T, K extends keyof T>(obj: T, key: K): T[K].",
     "source_url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html",

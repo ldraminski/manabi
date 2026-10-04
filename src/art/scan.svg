@@ -1,0 +1,9 @@
+<svg class="art scan-art" viewBox="0 0 220 200" aria-hidden="true">
+<path d="M24 104c-6-44 34-84 86-80 50 4 92 30 86 82-5 44-44 74-92 70-40-3-74-34-80-72z" fill="#fff"/>
+<g fill="none" stroke="#19253d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M74 44h52l22 22v86a6 6 0 01-6 6H74a6 6 0 01-6-6V50a6 6 0 016-6z" fill="#fff"/>
+<path d="M126 44v22h22"/>
+<path d="M82 84h34M82 98h52M82 112h44M82 126h24"/>
+</g>
+<rect class="scan-line" x="56" y="62" width="104" height="10" rx="5" fill="#eaab31" opacity=".9"/>
+</svg>

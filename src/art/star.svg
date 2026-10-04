@@ -1,0 +1,11 @@
+<svg class="art star-art" viewBox="0 0 220 200" aria-hidden="true">
+<path d="M28 112c-8-44 30-82 82-78 50 4 90 30 84 80-5 42-44 70-90 66-40-3-70-32-76-68z" fill="#fff"/>
+<path d="M110 34l13 27 30 4-22 21 6 30-27-15-27 15 6-30-22-21 30-4z" fill="#eaab31" stroke="#19253d" stroke-width="2.5" stroke-linejoin="round"/>
+<g fill="none" stroke="#19253d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<path class="ray" d="M110 10v12"/><path class="ray" d="M152 22l-7 10"/><path class="ray" d="M68 22l7 10"/><path class="ray" d="M176 58l-11 4"/><path class="ray" d="M44 58l11 4"/>
+<path d="M58 138c16-8 34-8 52 2 18-10 36-10 52-2v36c-16-8-34-8-52 2-18-10-36-10-52-2z" fill="#fff"/>
+<path d="M110 140v38"/>
+<path d="M70 150q14-4 28 2M70 160q14-4 28 2M122 152q14-6 28-2M122 162q14-6 28-2" stroke-width="2"/>
+<circle cx="36" cy="96" r="4"/><circle cx="188" cy="104" r="5"/>
+</g>
+</svg>

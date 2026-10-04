@@ -1,0 +1,86 @@
+[
+  {
+    "technology": "javascript",
+    "slug": "types-and-equality",
+    "title": "Typy i porównania",
+    "description": "typeof, wartości falsy, == i ===",
+    "icon": "braces"
+  },
+  {
+    "technology": "javascript",
+    "slug": "scope-and-functions",
+    "title": "Zakresy i funkcje",
+    "description": "Hoisting, domknięcia, this",
+    "icon": "braces"
+  },
+  {
+    "technology": "javascript",
+    "slug": "modern-syntax",
+    "title": "Nowoczesna składnia",
+    "description": "Destrukturyzacja, spread, ?. i ??",
+    "icon": "list"
+  },
+  {
+    "technology": "javascript",
+    "slug": "arrays",
+    "title": "Tablice",
+    "description": "map, filter, find, reduce",
+    "icon": "list"
+  },
+  {
+    "technology": "javascript",
+    "slug": "async",
+    "title": "Asynchroniczność",
+    "description": "Pętla zdarzeń, Promise, async/await",
+    "icon": "clock"
+  },
+  {
+    "technology": "javascript",
+    "slug": "browser",
+    "title": "Przeglądarka",
+    "description": "Zdarzenia DOM, localStorage",
+    "icon": "globe"
+  },
+  {
+    "technology": "typescript",
+    "slug": "types",
+    "title": "Typy na co dzień",
+    "description": "Unie, interfejsy, pola opcjonalne",
+    "icon": "type"
+  },
+  {
+    "technology": "typescript",
+    "slug": "generics-and-operators",
+    "title": "Generyki i zawężanie",
+    "description": "Narrowing, typy pomocnicze, keyof",
+    "icon": "type"
+  },
+  {
+    "technology": "typescript",
+    "slug": "tooling",
+    "title": "Kompilator",
+    "description": "tsconfig, strict, typy a runtime",
+    "icon": "layout"
+  },
+  {
+    "technology": "react",
+    "slug": "state-and-props",
+    "title": "Stan i props",
+    "description": "useState, niemutowalność, podnoszenie stanu",
+    "icon": "atom"
+  },
+  {
+    "technology": "react",
+    "slug": "effects-and-hooks",
+    "title": "Efekty i hooki",
+    "description": "useEffect, useRef, zasady hooków",
+    "icon": "atom"
+  },
+  {
+    "technology": "react",
+    "slug": "rendering",
+    "title": "Renderowanie",
+    "description": "JSX, listy i key, formularze",
+    "icon": "atom"
+  }
+]

@@ -1,7 +1,7 @@
 [
   {
     "id": "react-junior-001",
-    "topic": "lists",
+    "topic": "rendering",
     "kind": "single_choice",
     "prompt": "Po co elementom listy potrzebny jest atrybut key?",
     "options": [
@@ -17,10 +17,16 @@
   },
   {
     "id": "react-junior-002",
-    "topic": "state",
+    "topic": "state-and-props",
     "kind": "single_choice",
-    "prompt": "count ma wartość 0. Jaką wartość będzie miał po kliknięciu?\n\nfunction handleClick() {\n  setCount(count + 1);\n  setCount(count + 1);\n  setCount(count + 1);\n}",
-    "options": ["3", "1", "0", "Błąd: nie można wywołać setCount kilka razy"],
+    "prompt": "count ma wartość 0. Jaką wartość będzie miał po kliknięciu?",
+    "code": "function handleClick() {\n  setCount(count + 1);\n  setCount(count + 1);\n  setCount(count + 1);\n}",
+    "options": [
+      "3",
+      "1",
+      "0",
+      "Błąd: nie można wywołać setCount kilka razy"
+    ],
     "correct": 1,
     "explanation": "W trakcie jednego renderu count jest stałą o wartości 0, więc każde wywołanie to setCount(0 + 1). React zbiera aktualizacje i renderuje raz, z wynikiem 1.",
     "source_url": "https://react.dev/learn/queueing-a-series-of-state-updates",
@@ -28,7 +34,7 @@
   },
   {
     "id": "react-junior-003",
-    "topic": "state",
+    "topic": "state-and-props",
     "kind": "single_choice",
     "prompt": "Jak zapisać aktualizację stanu, żeby trzy wywołania pod rząd zwiększyły licznik o 3?",
     "options": [
@@ -44,9 +50,10 @@
   },
   {
     "id": "react-junior-004",
-    "topic": "effects",
+    "topic": "effects-and-hooks",
     "kind": "single_choice",
-    "prompt": "Kiedy uruchomi się ten efekt?\n\nuseEffect(() => {\n  loadData();\n}, []);",
+    "prompt": "Kiedy uruchomi się ten efekt?",
+    "code": "useEffect(() => {\n  loadData();\n}, []);",
     "options": [
       "Po każdym renderze komponentu",
       "Tylko po pierwszym renderze, gdy komponent pojawi się na ekranie",
@@ -60,7 +67,7 @@
   },
   {
     "id": "react-junior-005",
-    "topic": "props-and-state",
+    "topic": "state-and-props",
     "kind": "flashcard",
     "prompt": "Czym różnią się props od state?",
     "answer": "Props to dane przekazane komponentowi z zewnątrz przez rodzica — komponent tylko je czyta. State to dane, które komponent sam trzyma i sam zmienia przez setter; zmiana stanu wywołuje ponowny render. Dane płyną w dół przez props, a dziecko zgłasza zmiany w górę, wywołując funkcję dostaną w props.",
@@ -70,9 +77,10 @@
   },
   {
     "id": "react-junior-006",
-    "topic": "state",
+    "topic": "state-and-props",
     "kind": "single_choice",
-    "prompt": "Dlaczego po tym kodzie ekran może się nie odświeżyć?\n\nuser.name = 'Ola';\nsetUser(user);",
+    "prompt": "Dlaczego po tym kodzie ekran może się nie odświeżyć?",
+    "code": "user.name = 'Ola';\nsetUser(user);",
     "options": [
       "Bo setUser działa asynchronicznie i trzeba dodać await",
       "Bo do settera trafił ten sam obiekt, więc React uznaje, że stan się nie zmienił",
@@ -86,7 +94,7 @@
   },
   {
     "id": "react-junior-007",
-    "topic": "hooks",
+    "topic": "effects-and-hooks",
     "kind": "single_choice",
     "prompt": "Który kod łamie zasady hooków?",
     "options": [
@@ -102,9 +110,10 @@
   },
   {
     "id": "react-junior-008",
-    "topic": "effects",
+    "topic": "effects-and-hooks",
     "kind": "single_choice",
-    "prompt": "Do czego służy funkcja zwracana z useEffect?\n\nuseEffect(() => {\n  const id = setInterval(tick, 1000);\n  return () => clearInterval(id);\n}, []);",
+    "prompt": "Do czego służy funkcja zwracana z useEffect?",
+    "code": "useEffect(() => {\n  const id = setInterval(tick, 1000);\n  return () => clearInterval(id);\n}, []);",
     "options": [
       "Uruchamia się zaraz po efekcie i zwraca jego wynik",
       "Sprząta po efekcie: przed jego kolejnym uruchomieniem i przy odmontowaniu komponentu",
@@ -118,7 +127,7 @@
   },
   {
     "id": "react-junior-009",
-    "topic": "refs",
+    "topic": "effects-and-hooks",
     "kind": "single_choice",
     "prompt": "Co się stanie po zmianie ref.current w obiekcie zwróconym przez useRef?",
     "options": [
@@ -134,7 +143,7 @@
   },
   {
     "id": "react-junior-010",
-    "topic": "state",
+    "topic": "state-and-props",
     "kind": "flashcard",
     "prompt": "Co oznacza „podniesienie stanu” (lifting state up) i kiedy się je stosuje?",
     "answer": "Gdy dwa komponenty muszą korzystać z tych samych danych, stan przenosi się do ich najbliższego wspólnego rodzica. Rodzic przekazuje wartość w dół przez props razem z funkcją do jej zmiany. Dzięki temu jest jedno źródło prawdy i komponenty nie rozjeżdżają się między sobą.",
@@ -144,10 +153,16 @@
   },
   {
     "id": "react-junior-011",
-    "topic": "conditional-rendering",
+    "topic": "rendering",
     "kind": "single_choice",
-    "prompt": "Co pojawi się na ekranie, gdy count ma wartość 0?\n\n<div>{count && <Badge />}</div>",
-    "options": ["Nic, pusty div", "Komponent Badge", "Liczba 0", "Błąd renderowania"],
+    "prompt": "Co pojawi się na ekranie, gdy count ma wartość 0?",
+    "code": "<div>{count && <Badge />}</div>",
+    "options": [
+      "Nic, pusty div",
+      "Komponent Badge",
+      "Liczba 0",
+      "Błąd renderowania"
+    ],
     "correct": 2,
     "explanation": "Operator && zwraca lewą stronę, gdy jest falsy. React pomija false, null i undefined, ale liczbę 0 wyświetla. Bezpieczniej napisać count > 0 && <Badge />.",
     "source_url": "https://react.dev/learn/conditional-rendering",
@@ -155,7 +170,7 @@
   },
   {
     "id": "react-junior-012",
-    "topic": "jsx",
+    "topic": "rendering",
     "kind": "single_choice",
     "prompt": "Komponent ma zwrócić nagłówek i akapit obok siebie, bez dodatkowego elementu w DOM. Jak to zapisać?",
     "options": [
@@ -171,7 +186,7 @@
   },
   {
     "id": "react-junior-013",
-    "topic": "forms",
+    "topic": "rendering",
     "kind": "flashcard",
     "prompt": "Czym różni się pole kontrolowane (controlled) od niekontrolowanego (uncontrolled)?",
     "answer": "W polu kontrolowanym wartość trzyma stan Reacta: input dostaje value i onChange, a każda zmiana przechodzi przez setter. W polu niekontrolowanym wartość trzyma sam DOM; ustawia się najwyżej defaultValue, a odczytuje przez ref albo przy wysłaniu formularza. Kontrolowane dają walidację i formatowanie na bieżąco, niekontrolowane są prostsze przy zwykłych formularzach.",
@@ -181,9 +196,10 @@
   },
   {
     "id": "react-junior-014",
-    "topic": "effects",
+    "topic": "effects-and-hooks",
     "kind": "single_choice",
-    "prompt": "Kiedy uruchamia się efekt zapisany bez tablicy zależności?\n\nuseEffect(() => {\n  document.title = title;\n});",
+    "prompt": "Kiedy uruchamia się efekt zapisany bez tablicy zależności?",
+    "code": "useEffect(() => {\n  document.title = title;\n});",
     "options": [
       "Tylko raz, po pierwszym renderze",
       "Po każdym renderze komponentu",
