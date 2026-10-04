@@ -1,0 +1,108 @@
+[
+  {
+    "id": "css-junior-001",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Element ma width: 200px, padding: 20px i box-sizing: border-box. Jaką szerokość zajmie na ekranie?",
+    "options": [
+      "200 px",
+      "220 px",
+      "240 px",
+      "Zależy od rodzica"
+    ],
+    "correct": 0,
+    "explanation": "Przy border-box padding i obramowanie mieszczą się w zadeklarowanej szerokości. Przy domyślnym content-box wyszłoby 240 px.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-sizing",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-002",
+    "topic": "cascade",
+    "kind": "single_choice",
+    "prompt": "Który selektor wygra, gdy wszystkie trzy ustawiają kolor tego samego elementu?",
+    "options": [
+      "p",
+      ".intro",
+      "#lead",
+      "Ten, który jest zapisany najniżej w pliku"
+    ],
+    "correct": 2,
+    "explanation": "O wyniku decyduje specyficzność: identyfikator jest silniejszy niż klasa, a klasa silniejsza niż nazwa elementu. Kolejność w pliku rozstrzyga dopiero przy równej specyficzności.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-003",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Kontener ma display: flex i domyślny kierunek (row). Która właściwość rozmieszcza elementy w poziomie?",
+    "options": [
+      "align-items",
+      "justify-content",
+      "flex-wrap",
+      "align-content"
+    ],
+    "correct": 1,
+    "explanation": "justify-content działa wzdłuż osi głównej, czyli przy kierunku row — w poziomie. align-items działa w poprzek osi, czyli tu w pionie. Po zmianie na flex-direction: column role się odwracają.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/justify-content",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-004",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Względem czego pozycjonowany jest element z position: absolute?",
+    "options": [
+      "Zawsze względem okna przeglądarki",
+      "Względem najbliższego przodka, który ma position inne niż static",
+      "Względem swojego rodzica, niezależnie od jego stylów",
+      "Względem poprzedniego elementu w kodzie"
+    ],
+    "correct": 1,
+    "explanation": "Dlatego rodzicowi nadaje się zwykle position: relative. Jeśli żaden przodek nie jest pozycjonowany, punktem odniesienia staje się początkowy blok zawierający, czyli w praktyce strona.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/position",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-005",
+    "topic": "cascade",
+    "kind": "flashcard",
+    "prompt": "Czym różnią się jednostki em i rem?",
+    "answer": "rem liczy się od rozmiaru czcionki elementu głównego (html), więc znaczy to samo w całym dokumencie. em liczy się od rozmiaru czcionki elementu, na którym jest użyty (dla font-size — od rodzica), więc zagnieżdżone elementy potrafią się kumulować. rem daje przewidywalną skalę, em przydaje się, gdy odstępy mają rosnąć razem z tekstem komponentu.",
+    "explanation": "Obie jednostki szanują ustawienia czcionki użytkownika, czego nie robią piksele.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Values_and_units",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-006",
+    "topic": "responsive",
+    "kind": "single_choice",
+    "prompt": "Co oznacza podejście mobile-first w CSS?",
+    "options": [
+      "Osobna strona pod adresem m.domena.pl",
+      "Style bazowe pisane dla małych ekranów, a media queries z min-width dokładają zmiany dla większych",
+      "Style bazowe dla desktopu, a media queries z max-width poprawiają telefon",
+      "Ukrywanie części treści na telefonach"
+    ],
+    "correct": 1,
+    "explanation": "Zaczyna się od najprostszego układu, który działa na telefonie, i rozbudowuje go wraz z szerokością ekranu. Telefon nie musi wtedy nadpisywać stylów desktopowych.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-007",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Czym różni się display: none od visibility: hidden?",
+    "options": [
+      "Niczym, dają ten sam efekt",
+      "display: none usuwa element z układu, visibility: hidden zostawia po nim puste miejsce",
+      "visibility: hidden usuwa element z układu, display: none zostawia puste miejsce",
+      "display: none działa tylko na elementy blokowe"
+    ],
+    "correct": 1,
+    "explanation": "Element z display: none nie zajmuje miejsca i jest pomijany przez czytniki ekranu. Element z visibility: hidden jest niewidoczny, ale nadal rezerwuje swoje miejsce w układzie.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility",
+    "added_on": "2026-10-04"
+  }
+]

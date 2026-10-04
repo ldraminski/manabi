@@ -1,5 +1,205 @@
 [
   {
+    "id": "ai-tools-junior-001",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-002",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-003",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-004",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-005",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-006",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "working-with-ai",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-001",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-002",
+    "technology": "css",
+    "level": "junior",
+    "topic": "cascade",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-003",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-004",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-005",
+    "technology": "css",
+    "level": "junior",
+    "topic": "cascade",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-006",
+    "technology": "css",
+    "level": "junior",
+    "topic": "responsive",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-007",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-001",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-002",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-003",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-004",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-005",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-006",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-001",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-002",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-003",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-004",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-005",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-006",
+    "technology": "html",
+    "level": "junior",
+    "topic": "loading",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -268,6 +468,62 @@
     "technology": "react",
     "level": "junior",
     "topic": "effects-and-hooks",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-001",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-002",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-003",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-004",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "browser-requests",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-005",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-006",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-007",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
     "kind": "single_choice",
     "added_on": "2026-10-04"
   },

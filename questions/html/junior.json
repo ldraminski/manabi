@@ -1,0 +1,92 @@
+[
+  {
+    "id": "html-junior-001",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Którym elementem najlepiej oznaczyć główną nawigację strony?",
+    "options": [
+      "<div class=\"nav\">",
+      "<nav>",
+      "<menu>",
+      "<header>"
+    ],
+    "correct": 1,
+    "explanation": "<nav> mówi przeglądarce i czytnikom ekranu, że to blok linków nawigacyjnych. Dzięki temu użytkownik czytnika może do niego od razu przeskoczyć. <div> nie niesie żadnego znaczenia.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-002",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Do czego służy atrybut alt w znaczniku <img>?",
+    "options": [
+      "Wyświetla podpis pod obrazkiem",
+      "Ustawia tytuł widoczny po najechaniu myszką",
+      "Opisuje obrazek czytnikom ekranu i pokazuje się, gdy obraz się nie wczyta",
+      "Przyspiesza ładowanie obrazka"
+    ],
+    "correct": 2,
+    "explanation": "alt to tekst zastępczy. Dla obrazków czysto dekoracyjnych zostawia się pusty alt=\"\", żeby czytnik je pominął. Brak atrybutu jest błędem dostępności.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-003",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Dlaczego do akcji na stronie lepiej użyć <button> niż <div> z obsługą kliknięcia?",
+    "options": [
+      "<button> ładuje się szybciej",
+      "<button> od razu działa z klawiatury i jest rozpoznawany przez czytniki ekranu",
+      "<div> nie może mieć zdarzenia click",
+      "Nie ma różnicy, to kwestia stylu"
+    ],
+    "correct": 1,
+    "explanation": "Przycisk dostaje fokus z Tab, reaguje na Enter i spację oraz ma rolę „button”. W <div> trzeba by to wszystko dopisać ręcznie: tabindex, obsługę klawiszy i role.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-004",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Jak poprawnie powiązać etykietę z polem formularza?",
+    "options": [
+      "Umieścić etykietę nad polem w tym samym <div>",
+      "Nadać polu atrybut placeholder z tekstem etykiety",
+      "Ustawić w <label> atrybut for równy id pola",
+      "Nadać etykiecie i polu tę samą klasę"
+    ],
+    "correct": 2,
+    "explanation": "Powiązanie przez for i id (albo zagnieżdżenie pola w <label>) sprawia, że czytnik odczyta etykietę przy polu, a kliknięcie w etykietę ustawi fokus. placeholder nie zastępuje etykiety, bo znika po wpisaniu tekstu.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-005",
+    "topic": "semantics-and-forms",
+    "kind": "flashcard",
+    "prompt": "Co to jest semantyczny HTML i co daje w praktyce?",
+    "answer": "To używanie znaczników zgodnie z ich znaczeniem: <header>, <nav>, <main>, <article>, <button>, nagłówki h1–h6 w poprawnej kolejności — zamiast samych <div> i <span>. Daje lepszą dostępność (czytniki ekranu rozumieją strukturę), lepsze SEO i czytelniejszy kod.",
+    "explanation": "Dobry przykład do podania: <main> pozwala użytkownikowi czytnika pominąć nawigację jednym skrótem.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Glossary/Semantics",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-006",
+    "topic": "loading",
+    "kind": "single_choice",
+    "prompt": "Czym różni się <script defer> od zwykłego <script> w <head>?",
+    "options": [
+      "defer blokuje parsowanie HTML do czasu pobrania skryptu",
+      "defer pobiera skrypt w tle i uruchamia go po sparsowaniu dokumentu",
+      "defer uruchamia skrypt dopiero po kliknięciu użytkownika",
+      "defer działa tylko dla skryptów wpisanych w HTML"
+    ],
+    "correct": 1,
+    "explanation": "Zwykły skrypt w <head> zatrzymuje parsowanie strony na czas pobrania i wykonania. defer pobiera plik równolegle, a wykonuje go po zbudowaniu DOM, z zachowaniem kolejności skryptów. async też pobiera w tle, ale uruchamia od razu po pobraniu, bez gwarancji kolejności.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script",
+    "added_on": "2026-10-04"
+  }
+]

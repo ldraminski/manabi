@@ -1,0 +1,92 @@
+[
+  {
+    "id": "git-junior-001",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Co robi polecenie git pull?",
+    "options": [
+      "Wysyła lokalne commity na serwer",
+      "Pobiera zmiany ze zdalnego repozytorium i od razu scala je z bieżącą gałęzią",
+      "Pobiera zmiany, ale nie zmienia lokalnych plików",
+      "Usuwa lokalne zmiany i zastępuje je wersją z serwera"
+    ],
+    "correct": 1,
+    "explanation": "git pull to git fetch i zaraz po nim git merge (albo rebase, zależnie od konfiguracji). Samo git fetch tylko pobiera zmiany, bez dotykania Twojej gałęzi.",
+    "source_url": "https://git-scm.com/docs/git-pull",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-002",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Chcesz cofnąć ostatni commit, ale zostawić jego zmiany w plikach, żeby je poprawić. Którego polecenia użyjesz?",
+    "options": [
+      "git reset --hard HEAD~1",
+      "git reset --soft HEAD~1",
+      "git checkout HEAD~1",
+      "git clean -fd"
+    ],
+    "correct": 1,
+    "explanation": "--soft cofa tylko wskaźnik gałęzi: zmiany zostają gotowe do ponownego commita. --hard wyrzuca je bezpowrotnie z katalogu roboczego.",
+    "source_url": "https://git-scm.com/docs/git-reset",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-003",
+    "topic": "daily-workflow",
+    "kind": "flashcard",
+    "prompt": "Czym różni się merge od rebase?",
+    "answer": "merge łączy dwie gałęzie nowym commitem scalającym i zachowuje historię taką, jaka była. rebase przenosi Twoje commity na koniec docelowej gałęzi, tworząc ich nowe kopie — historia wychodzi liniowa. Zasada bezpieczeństwa: nie rób rebase commitów, które już wypchnąłeś na współdzieloną gałąź, bo zmienia on ich identyfikatory.",
+    "explanation": "Na rozmowie zwykle wystarczy dodać, jak pracuje się w Twoim zespole: np. rebase własnej gałęzi przed otwarciem pull requesta.",
+    "source_url": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-004",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Dodałeś plik .env do .gitignore, ale Git dalej pokazuje jego zmiany. Dlaczego?",
+    "options": [
+      ".gitignore działa dopiero po restarcie terminala",
+      "Plik był już śledzony; .gitignore dotyczy tylko plików nieśledzonych",
+      "Plików zaczynających się od kropki nie da się ignorować",
+      "Trzeba najpierw wykonać git pull"
+    ],
+    "correct": 1,
+    "explanation": "Żeby przestać śledzić plik, trzeba go usunąć z indeksu: git rm --cached .env, a potem zrobić commit. Sam plik zostaje na dysku. Jeśli zawierał sekrety, trzeba je też wymienić, bo zostają w historii.",
+    "source_url": "https://git-scm.com/docs/gitignore",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-005",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Do czego służy git stash?",
+    "options": [
+      "Usuwa nieśledzone pliki",
+      "Odkłada na bok niezacommitowane zmiany, żeby mieć czysty katalog roboczy",
+      "Tworzy kopię zapasową repozytorium na serwerze",
+      "Łączy kilka commitów w jeden"
+    ],
+    "correct": 1,
+    "explanation": "Przydaje się, gdy trzeba na chwilę zmienić gałąź, a praca nie nadaje się jeszcze na commit. Zmiany przywraca git stash pop.",
+    "source_url": "https://git-scm.com/docs/git-stash",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-006",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Błędny commit jest już na wspólnej gałęzi main. Jak go bezpiecznie wycofać?",
+    "options": [
+      "git reset --hard i git push --force",
+      "git revert, który tworzy nowy commit odwracający zmiany",
+      "Usunąć gałąź main i utworzyć ją od nowa",
+      "git commit --amend"
+    ],
+    "correct": 1,
+    "explanation": "revert nie zmienia istniejącej historii, więc nie psuje pracy innym. reset z wymuszonym pushem przepisuje historię współdzielonej gałęzi i u reszty zespołu kończy się konfliktami.",
+    "source_url": "https://git-scm.com/docs/git-revert",
+    "added_on": "2026-10-04"
+  }
+]

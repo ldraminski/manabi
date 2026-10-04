@@ -1,0 +1,109 @@
+[
+  {
+    "id": "rest-api-junior-001",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Która z tych metod HTTP jest z definicji idempotentna?",
+    "options": [
+      "POST",
+      "PUT",
+      "PATCH",
+      "Żadna z nich"
+    ],
+    "correct": 1,
+    "explanation": "Powtórzenie tego samego żądania PUT zostawia zasób w tym samym stanie. POST za każdym razem może utworzyć nowy zasób, a PATCH takiej gwarancji nie daje.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Glossary/Idempotent",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-002",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Użytkownik jest zalogowany, ale próbuje otworzyć zasób, do którego nie ma uprawnień. Jaki status powinien zwrócić serwer?",
+    "options": [
+      "401 Unauthorized",
+      "403 Forbidden",
+      "404 Not Found",
+      "400 Bad Request"
+    ],
+    "correct": 1,
+    "explanation": "401 oznacza brak albo niepoprawne uwierzytelnienie: nie wiemy, kim jesteś. 403 oznacza, że wiemy, kim jesteś, ale nie masz dostępu.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-003",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Jaki status najlepiej pasuje do odpowiedzi na udane utworzenie zasobu przez POST?",
+    "options": [
+      "200 OK",
+      "201 Created",
+      "204 No Content",
+      "302 Found"
+    ],
+    "correct": 1,
+    "explanation": "201 mówi wprost, że powstał nowy zasób; zwykle towarzyszy mu nagłówek Location albo utworzony obiekt w treści. 204 stosuje się, gdy operacja się udała i nie ma czego zwracać.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/201",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-004",
+    "topic": "browser-requests",
+    "kind": "flashcard",
+    "prompt": "Co to jest CORS i dlaczego przeglądarka blokuje niektóre żądania?",
+    "answer": "Przeglądarka domyślnie nie pozwala skryptowi czytać odpowiedzi z innego originu (inna domena, port albo protokół) — to polityka same-origin. CORS to mechanizm, którym serwer nagłówkiem Access-Control-Allow-Origin wskazuje, które strony mogą czytać jego odpowiedzi. Przy żądaniach innych niż proste przeglądarka wysyła najpierw zapytanie OPTIONS (preflight).",
+    "explanation": "Ważne na rozmowie: CORS konfiguruje się na serwerze, a nie we frontendzie, i chroni użytkownika przeglądarki, nie samo API.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-005",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "prompt": "Serwer odpowiedział statusem 404. Co się stanie w tym kodzie?",
+    "code": "try {\n  const response = await fetch('/api/users/999');\n  console.log('gotowe');\n} catch (error) {\n  console.log('błąd');\n}",
+    "options": [
+      "Wykona się catch, bo fetch odrzuca promise przy statusach 4xx i 5xx",
+      "Wykona się console.log, bo fetch odrzuca promise tylko przy błędzie sieci",
+      "Kod zatrzyma się na await i nic nie wypisze",
+      "Przeglądarka ponowi żądanie automatycznie"
+    ],
+    "correct": 1,
+    "explanation": "fetch uznaje żądanie za udane, gdy dostał jakąkolwiek odpowiedź HTTP. Status trzeba sprawdzić samemu: if (!response.ok) throw new Error(...).",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-006",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Jak przekazać filtr do żądania GET, np. listę użytkowników tylko z Poznania?",
+    "options": [
+      "W treści żądania jako JSON",
+      "W parametrach zapytania: /users?city=Poznan",
+      "W nagłówku Content-Type",
+      "GET nie pozwala przekazywać żadnych danych"
+    ],
+    "correct": 1,
+    "explanation": "GET służy do odczytu i nie powinien mieć treści. Filtry, sortowanie i stronicowanie przekazuje się w query string, dzięki czemu adres da się zapisać, udostępnić i zbuforować.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/GET",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-007",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Co odróżnia statusy 4xx od 5xx?",
+    "options": [
+      "4xx to błędy sieci, 5xx to błędy przeglądarki",
+      "4xx oznacza problem po stronie żądania klienta, 5xx — błąd po stronie serwera",
+      "4xx to ostrzeżenia, 5xx to błędy krytyczne",
+      "Nie ma reguły, wybiera je autor API"
+    ],
+    "correct": 1,
+    "explanation": "Przy 4xx ponowienie tego samego żądania nic nie da — trzeba je poprawić. Przy 5xx żądanie mogło być poprawne, więc ponowienie po chwili ma sens.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+    "added_on": "2026-10-04"
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ai-tools-junior-001",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "prompt": "Asystent AI wygenerował funkcję, która wygląda poprawnie. Co robisz przed dodaniem jej do pull requesta?",
+    "options": [
+      "Nic, kod z AI jest już sprawdzony",
+      "Czytam ją, uruchamiam i testuję tak samo jak kod napisany samodzielnie",
+      "Dodaję komentarz, że kod pochodzi z AI, i to wystarczy",
+      "Proszę AI o potwierdzenie, że kod jest poprawny"
+    ],
+    "correct": 1,
+    "explanation": "Za kod w pull requeście odpowiada autor, niezależnie od tego, kto go napisał. Model potrafi wygenerować kod, który się kompiluje, a robi coś innego, niż miał — wychwytuje to dopiero uruchomienie i testy.",
+    "source_url": "https://docs.github.com/en/copilot/get-started/best-practices",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-002",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "prompt": "Czego nie należy wklejać do zewnętrznego narzędzia AI bez zgody firmy?",
+    "options": [
+      "Komunikatu błędu z konsoli",
+      "Kluczy API, haseł i danych klientów",
+      "Fragmentu publicznej dokumentacji",
+      "Pytania o składnię języka"
+    ],
+    "correct": 1,
+    "explanation": "Sekrety i dane osobowe wysłane do zewnętrznej usługi opuszczają firmę i mogą zostać zapisane w logach dostawcy. Przed wklejeniem kodu warto usunąć z niego klucze i znać zasady obowiązujące w zespole.",
+    "source_url": "https://owasp.org/projects/top-10-for-large-language-model-applications",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-003",
+    "topic": "working-with-ai",
+    "kind": "flashcard",
+    "prompt": "Co to jest halucynacja modelu i jak się przed nią chronisz przy pisaniu kodu?",
+    "answer": "Halucynacja to pewnie brzmiąca, ale nieprawdziwa odpowiedź: nieistniejąca funkcja biblioteki, zmyślony parametr, nieaktualne API. Ochrona: sprawdzam w oficjalnej dokumentacji to, czego nie znam, uruchamiam kod i testy zamiast wierzyć opisowi, proszę o małe kroki, które da się zweryfikować.",
+    "explanation": "Rekruter pyta o to, żeby sprawdzić, czy kandydat traktuje AI jak narzędzie, a nie wyrocznię.",
+    "source_url": "https://docs.github.com/en/copilot/get-started/best-practices",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-004",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "prompt": "Który opis zadania da najlepszy wynik od asystenta AI?",
+    "options": [
+      "„Napraw to”",
+      "„Kod nie działa, popraw”",
+      "Wskazanie pliku, oczekiwanego zachowania, treści błędu i ograniczeń rozwiązania",
+      "Jak najdłuższy opis, bez podziału na części"
+    ],
+    "correct": 2,
+    "explanation": "Model nie zna kontekstu, którego mu nie podano. Konkret — gdzie jest problem, co ma się dziać, co się dzieje i czego nie wolno ruszać — skraca liczbę poprawek. Duże zadania lepiej dzielić na mniejsze.",
+    "source_url": "https://docs.github.com/en/copilot/get-started/best-practices",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-005",
+    "topic": "working-with-ai",
+    "kind": "single_choice",
+    "prompt": "AI proponuje instalację pakietu npm, o którym nigdy nie słyszałeś. Co robisz?",
+    "options": [
+      "Instaluję, skoro model go zna",
+      "Sprawdzam w rejestrze, czy pakiet istnieje, kto go utrzymuje i ile ma pobrań",
+      "Proszę AI, żeby samo go zainstalowało",
+      "Kopiuję kod pakietu ręcznie do projektu"
+    ],
+    "correct": 1,
+    "explanation": "Modele potrafią wymyślić nazwę pakietu. Atakujący rejestrują takie nazwy i umieszczają pod nimi złośliwy kod, więc instalacja „w ciemno” to realne ryzyko dla całego projektu.",
+    "source_url": "https://owasp.org/projects/top-10-for-large-language-model-applications",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-006",
+    "topic": "working-with-ai",
+    "kind": "flashcard",
+    "prompt": "Jak używasz narzędzi AI w codziennej pracy z kodem i gdzie stawiasz granicę?",
+    "answer": "Dobra odpowiedź jest konkretna: do czego (np. szkic testów, wyjaśnienie obcego kodu, powtarzalne przekształcenia, szukanie przyczyny błędu), jak sprawdzasz wynik (czytam, uruchamiam, testuję) i czego nie robisz (nie wklejam sekretów ani danych klientów, nie dodaję kodu, którego nie rozumiem).",
+    "explanation": "To pytanie pada coraz częściej w ogłoszeniach z wymaganiem „AI”. Warto mieć jeden prawdziwy przykład z własnej pracy.",
+    "source_url": "https://docs.github.com/en/copilot/get-started/best-practices",
+    "added_on": "2026-10-04"
+  }
+]

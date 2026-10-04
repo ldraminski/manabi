@@ -82,5 +82,75 @@
     "title": "Renderowanie",
     "description": "JSX, listy i key, formularze",
     "icon": "atom"
+  },
+  {
+    "technology": "html",
+    "slug": "semantics-and-forms",
+    "title": "Semantyka i formularze",
+    "description": "Znaczniki z sensem, etykiety, dostępność",
+    "icon": "layout"
+  },
+  {
+    "technology": "html",
+    "slug": "loading",
+    "title": "Ładowanie strony",
+    "description": "Skrypty, defer i async",
+    "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "box-and-layout",
+    "title": "Model pudełkowy i układ",
+    "description": "box-sizing, flexbox, pozycjonowanie",
+    "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "cascade",
+    "title": "Kaskada i jednostki",
+    "description": "Specyficzność, em i rem",
+    "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "responsive",
+    "title": "Responsywność",
+    "description": "Mobile-first, media queries",
+    "icon": "layout"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "http-basics",
+    "title": "HTTP i REST",
+    "description": "Metody, statusy, parametry",
+    "icon": "globe"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "browser-requests",
+    "title": "Żądania z przeglądarki",
+    "description": "fetch, CORS",
+    "icon": "globe"
+  },
+  {
+    "technology": "git",
+    "slug": "daily-workflow",
+    "title": "Codzienna praca z Gitem",
+    "description": "pull, stash, merge i rebase",
+    "icon": "branch"
+  },
+  {
+    "technology": "git",
+    "slug": "undoing",
+    "title": "Cofanie zmian",
+    "description": "reset, revert, .gitignore",
+    "icon": "branch"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "working-with-ai",
+    "title": "AI w pracy z kodem",
+    "description": "Weryfikacja, kontekst, bezpieczeństwo",
+    "icon": "spark"
   }
 ]
