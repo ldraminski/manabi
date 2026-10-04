@@ -48,6 +48,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "angular-junior-001",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-002",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-003",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-004",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -360,6 +392,70 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "nextjs-junior-001",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-002",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-003",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-004",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-001",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-002",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-003",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-004",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",
@@ -528,6 +624,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "testing-junior-001",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-002",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-003",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-004",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
     "id": "typescript-junior-001",
     "technology": "typescript",
     "level": "junior",
@@ -637,6 +765,38 @@
     "level": "junior",
     "topic": "generics-and-operators",
     "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-001",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-002",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-003",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-004",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "flashcard",
     "added_on": "2026-10-04"
   }
 ]

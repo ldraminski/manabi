@@ -1,0 +1,69 @@
+[
+  {
+    "id": "angular-junior-001",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Jak odczytać wartość sygnału count?",
+    "code": "const count = signal(0);",
+    "options": [
+      "count()",
+      "count.value",
+      "count.get",
+      "this.count$"
+    ],
+    "correct": 0,
+    "explanation": "Sygnał to funkcja-getter: wywołanie go zwraca wartość i pozwala Angularowi śledzić, gdzie sygnał jest używany.",
+    "source_url": "https://angular.dev/guide/signals",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-002",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Chcesz zwiększyć wartość sygnału count o 1 na podstawie poprzedniej wartości. Które wywołanie jest poprawne?",
+    "options": [
+      "count = count + 1",
+      "count.value++",
+      "count.update(value => value + 1)",
+      "count.set(count + 1)"
+    ],
+    "correct": 2,
+    "explanation": "update() przyjmuje funkcję, która z poprzedniej wartości liczy nową. set() ustawia wartość wprost — zadziałałoby count.set(count() + 1), ale nie count.set(count + 1), bo count to funkcja, a nie liczba.",
+    "source_url": "https://angular.dev/guide/signals",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-003",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Co się stanie po wywołaniu doubleCount.set(3)?",
+    "code": "const count = signal(0);\nconst doubleCount = computed(() => count() * 2);",
+    "options": [
+      "doubleCount przyjmie wartość 3 do czasu zmiany count",
+      "Błąd — computed jest tylko do odczytu i nie ma metody set",
+      "count przyjmie wartość 1,5",
+      "Nic, wywołanie zostanie zignorowane"
+    ],
+    "correct": 1,
+    "explanation": "Sygnały computed wyprowadzają wartość z innych sygnałów i nie są zapisywalne — nie mają metody set. Są też leniwe i zapamiętywane: liczą się przy pierwszym odczycie i ponownie dopiero po zmianie zależności.",
+    "source_url": "https://angular.dev/guide/signals",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-004",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Do czego służy wyrażenie track w bloku @for?",
+    "code": "@for (item of items; track item.id) {\n  <li>{{ item.name }}</li>\n} @empty {\n  <li>Brak elementów</li>\n}",
+    "options": [
+      "Sortuje elementy listy",
+      "Zapisuje historię zmian listy do debugowania",
+      "Ogranicza liczbę renderowanych elementów",
+      "Wiąże dane z węzłami DOM, dzięki czemu Angular przy zmianie danych wykonuje minimum operacji na DOM"
+    ],
+    "correct": 3,
+    "explanation": "Najlepiej śledzić po unikalnym polu, np. item.id. $index nadaje się do statycznych kolekcji, a śledzenie po samym obiekcie (track item) to ostateczność, bo może znacznie spowolnić aktualizacje.",
+    "source_url": "https://angular.dev/guide/templates/control-flow",
+    "added_on": "2026-10-04"
+  }
+]

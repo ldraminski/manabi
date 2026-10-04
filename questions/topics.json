@@ -152,5 +152,40 @@
     "title": "AI w pracy z kodem",
     "description": "Weryfikacja, kontekst, bezpieczeństwo",
     "icon": "spark"
+  },
+  {
+    "technology": "nextjs",
+    "slug": "app-router",
+    "title": "App Router",
+    "description": "page i layout, segmenty dynamiczne, 'use client'",
+    "icon": "layout"
+  },
+  {
+    "technology": "vue",
+    "slug": "reactivity-and-templates",
+    "title": "Reaktywność i szablony",
+    "description": "computed, v-if i v-show, v-for, v-model",
+    "icon": "braces"
+  },
+  {
+    "technology": "angular",
+    "slug": "signals-and-templates",
+    "title": "Sygnały i szablony",
+    "description": "signal, computed, @for i track",
+    "icon": "braces"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "runtime-basics",
+    "title": "Podstawy środowiska",
+    "description": "Blokowanie pętli zdarzeń, process.env, moduły ES",
+    "icon": "clock"
+  },
+  {
+    "technology": "testing",
+    "slug": "unit-tests",
+    "title": "Testy jednostkowe",
+    "description": "Zapytania Testing Library, mocki w Vitest",
+    "icon": "list"
   }
 ]

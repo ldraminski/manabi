@@ -1,0 +1,61 @@
+[
+  {
+    "id": "vue-junior-001",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Czym computed różni się od metody wywoływanej w szablonie?",
+    "options": [
+      "computed liczy się przy każdym renderze, a metoda tylko raz",
+      "computed jest zapamiętywany i liczy się ponownie dopiero, gdy zmienią się jego reaktywne zależności",
+      "computed może być asynchroniczny, a metoda nie",
+      "Nie ma różnicy, to tylko inna składnia"
+    ],
+    "correct": 1,
+    "explanation": "Wynik computed jest cache'owany na podstawie reaktywnych zależności. Metoda w szablonie wykonuje się przy każdym renderze. Z tego samego powodu computed(() => Date.now()) nigdy się nie zaktualizuje — Date.now() nie jest reaktywną zależnością.",
+    "source_url": "https://vuejs.org/guide/essentials/computed.html",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-002",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Panel jest przełączany bardzo często. Której dyrektywy lepiej użyć i dlaczego?",
+    "options": [
+      "v-if, bo przy każdym przełączeniu tworzy element od nowa",
+      "v-for, bo renderuje element tylko raz",
+      "v-show, bo element zostaje w DOM, a przełączana jest tylko właściwość CSS display",
+      "v-else, bo nie wymaga warunku"
+    ],
+    "correct": 2,
+    "explanation": "v-if przy każdym przełączeniu niszczy i tworzy blok od nowa (wyższy koszt przełączania), v-show renderuje element zawsze i zmienia tylko display (wyższy koszt pierwszego renderu). Do częstego przełączania lepszy jest v-show, do warunku, który rzadko się zmienia — v-if.",
+    "source_url": "https://vuejs.org/guide/essentials/conditional.html",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-003",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Po co podawać :key w v-for?",
+    "options": [
+      "Żeby lista renderowała się w kolejności alfabetycznej",
+      "Żeby Vue mógł śledzić tożsamość elementów i poprawnie je przestawiać zamiast łatać w miejscu",
+      "Bo bez key v-for w ogóle nie działa",
+      "Żeby elementy dostały atrybut id w HTML"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie Vue łata elementy w miejscu według indeksu. Przy zmianie kolejności komponenty lub pola formularza mogą wtedy zatrzymać stan niewłaściwego elementu. Klucz powinien być prymitywem (string, liczba), np. item.id — nie obiektem.",
+    "source_url": "https://vuejs.org/guide/essentials/list.html",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-004",
+    "topic": "reactivity-and-templates",
+    "kind": "flashcard",
+    "prompt": "Co robi v-model na polu tekstowym?",
+    "code": "<input v-model=\"text\">\n<!-- działa jak: -->\n<input :value=\"text\" @input=\"event => text = event.target.value\">",
+    "answer": "To skrót dwukierunkowego wiązania: ustawia właściwość value pola na wartość ze stanu i nasłuchuje zdarzenia input, które zapisuje nową wartość z powrotem do stanu. Zastępuje ręczne :value i @input.",
+    "explanation": "Dla checkboxa i radia v-model używa checked i zdarzenia change. Modyfikator .lazy synchronizuje po change zamiast po każdym input.",
+    "source_url": "https://vuejs.org/guide/essentials/forms.html",
+    "added_on": "2026-10-04"
+  }
+]

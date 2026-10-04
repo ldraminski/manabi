@@ -1,0 +1,66 @@
+[
+  {
+    "id": "nextjs-junior-001",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "W App Routerze tworzysz folder app/blog. Co musisz dodać, żeby adres /blog był dostępny publicznie?",
+    "options": [
+      "Plik index.html w folderze app/blog",
+      "Plik page.tsx w folderze app/blog",
+      "Wpis w pliku routes.json",
+      "Nic — każdy folder w app jest od razu trasą"
+    ],
+    "correct": 1,
+    "explanation": "Folder wyznacza segment adresu, ale publiczną trasą staje się dopiero wtedy, gdy zawiera plik page (page.js, page.tsx itd.).",
+    "source_url": "https://nextjs.org/docs/app/getting-started/layouts-and-pages",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-002",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Jak w App Routerze utworzyć jedną trasę obsługującą adresy /blog/pierwszy-post, /blog/drugi-post itd.?",
+    "options": [
+      "Folder app/blog/:slug z plikiem page.tsx",
+      "Plik app/blog/*.tsx",
+      "Folder app/blog/[slug] z plikiem page.tsx",
+      "Folder app/blog/{slug} z plikiem page.tsx"
+    ],
+    "correct": 2,
+    "explanation": "Nazwa folderu w nawiasach kwadratowych tworzy segment dynamiczny. Jego wartość trafia do strony w params.",
+    "source_url": "https://nextjs.org/docs/app/getting-started/layouts-and-pages",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-003",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Co dzieje się z layoutem (layout.tsx) podczas przechodzenia między stronami, które go współdzielą?",
+    "options": [
+      "Zachowuje stan i nie renderuje się ponownie",
+      "Jest za każdym razem montowany od nowa",
+      "Przeładowuje całą stronę w przeglądarce",
+      "Renderuje się ponownie, ale traci stan"
+    ],
+    "correct": 0,
+    "explanation": "Layout to UI współdzielone przez kilka stron. Przy nawigacji zostaje na miejscu: zachowuje stan, pozostaje interaktywny i nie renderuje się ponownie — zmienia się tylko strona w środku.",
+    "source_url": "https://nextjs.org/docs/app/getting-started/layouts-and-pages",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-004",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "W komponencie w App Routerze chcesz użyć useState i onClick. Co musisz zrobić?",
+    "options": [
+      "Nic — wszystkie komponenty domyślnie działają w przeglądarce",
+      "Zmienić rozszerzenie pliku na .client.tsx",
+      "Dodać export const runtime = 'browser'",
+      "Dodać dyrektywę 'use client' na początku pliku, nad importami"
+    ],
+    "correct": 3,
+    "explanation": "Strony i layouty są domyślnie Server Components, a te nie obsługują stanu ani zdarzeń. 'use client' wyznacza granicę: plik i to, co importuje, trafia do paczki dla przeglądarki. Dlatego dyrektywę dodaje się tylko w interaktywnych komponentach, a nie w całym drzewie.",
+    "source_url": "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+    "added_on": "2026-10-04"
+  }
+]

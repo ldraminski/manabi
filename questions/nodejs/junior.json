@@ -1,0 +1,66 @@
+[
+  {
+    "id": "nodejs-junior-001",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Co jest wadą fs.readFileSync w kodzie serwera obsługującego wiele żądań?",
+    "options": [
+      "Nie potrafi czytać plików tekstowych",
+      "Blokuje wykonywanie innego kodu JavaScript, dopóki cały plik nie zostanie odczytany",
+      "Zwraca Promise, o którym łatwo zapomnieć",
+      "Działa tylko w trybie CommonJS"
+    ],
+    "correct": 1,
+    "explanation": "Synchroniczne metody I/O blokują pętlę zdarzeń — w tym czasie serwer nie obsłuży żadnego innego żądania. Wersje asynchroniczne (fs.readFile z callbackiem albo fs/promises) są nieblokujące.",
+    "source_url": "https://nodejs.org/learn/asynchronous-work/overview-of-blocking-vs-non-blocking",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-002",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz aplikację poleceniem PORT=3000 node app.js. Jaki typ ma process.env.PORT?",
+    "options": [
+      "number",
+      "bigint",
+      "string",
+      "undefined"
+    ],
+    "correct": 2,
+    "explanation": "Zmienne środowiskowe to tekst. Nawet przypisanie liczby do process.env zamienia ją na string, dlatego port trzeba przekonwertować, np. Number(process.env.PORT).",
+    "source_url": "https://nodejs.org/api/process.html#processenv",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-003",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Kiedy Node.js wczyta plik .js jako moduł ES (import/export), a nie CommonJS?",
+    "options": [
+      "Gdy najbliższy nadrzędny package.json ma pole \"type\": \"module\"",
+      "Zawsze, od Node.js 12",
+      "Gdy plik leży w folderze src",
+      "Gdy w pliku nie ma słowa require"
+    ],
+    "correct": 0,
+    "explanation": "O formacie plików .js decyduje pole \"type\" w najbliższym package.json. Niezależnie od niego pliki .mjs są zawsze modułami ES, a .cjs — CommonJS.",
+    "source_url": "https://nodejs.org/api/packages.html",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-004",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "W module ES (plik .mjs) dostajesz błąd, że __dirname nie jest zdefiniowane. Czego użyć zamiast niego?",
+    "options": [
+      "process.cwd()",
+      "import.meta.dirname",
+      "require('path').dirname",
+      "module.dirname"
+    ],
+    "correct": 1,
+    "explanation": "__dirname i __filename istnieją tylko w CommonJS. W modułach ES ich odpowiednikami są import.meta.dirname i import.meta.filename. process.cwd() to co innego: katalog, z którego uruchomiono proces, a nie katalog pliku.",
+    "source_url": "https://nodejs.org/api/esm.html#no-__filename-or-__dirname",
+    "added_on": "2026-10-04"
+  }
+]

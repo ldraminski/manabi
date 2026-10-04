@@ -1,0 +1,66 @@
+[
+  {
+    "id": "testing-junior-001",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Którego zapytania Testing Library zalecają używać w pierwszej kolejności?",
+    "options": [
+      "getByTestId",
+      "querySelector po klasie CSS",
+      "getByRole",
+      "getByText"
+    ],
+    "correct": 2,
+    "explanation": "Testy powinny przypominać to, jak użytkownik korzysta ze strony. getByRole szuka po roli w drzewie dostępności, zwykle z opcją name, np. getByRole('button', { name: /wyślij/i }). getByTestId to ostateczność.",
+    "source_url": "https://testing-library.com/docs/queries/about",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-002",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Chcesz sprawdzić, że komunikat o błędzie NIE jest wyświetlany. Którego zapytania użyjesz?",
+    "options": [
+      "getByText — zwraca null, gdy nic nie znajdzie",
+      "queryByText — zwraca null, gdy nic nie znajdzie",
+      "findByText — zwraca false, gdy nic nie znajdzie",
+      "getAllByText — zwraca pustą tablicę"
+    ],
+    "correct": 1,
+    "explanation": "getBy* rzuca błąd, gdy elementu nie ma, więc test padłby przed asercją. queryBy* zwraca null i nadaje się do sprawdzania braku elementu, np. expect(screen.queryByText('Błąd')).toBeNull().",
+    "source_url": "https://testing-library.com/docs/queries/about",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-003",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Element pojawia się na ekranie dopiero po odpowiedzi z API. Którego zapytania najlepiej użyć?",
+    "options": [
+      "screen.getByText(...)",
+      "screen.queryByText(...)",
+      "screen.getAllByText(...)",
+      "await screen.findByText(...)"
+    ],
+    "correct": 3,
+    "explanation": "findBy* zwraca Promise, który ponawia wyszukiwanie, aż element się pojawi albo minie limit czasu. getBy* i queryBy* sprawdzają DOM tylko raz, od razu.",
+    "source_url": "https://testing-library.com/docs/queries/about",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-004",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Co robi vi.fn() w Vitest?",
+    "options": [
+      "Uruchamia pojedynczy test",
+      "Podmienia cały moduł na atrapę",
+      "Tworzy funkcję-mock, która zapamiętuje argumenty i wyniki wywołań",
+      "Mierzy czas wykonania funkcji"
+    ],
+    "correct": 2,
+    "explanation": "Na takiej funkcji można potem sprawdzić np. expect(onSave).toHaveBeenCalledWith(...). Bez przekazanej implementacji mock zwraca undefined. Do podmiany całego modułu służy vi.mock.",
+    "source_url": "https://vitest.dev/api/vi",
+    "added_on": "2026-10-04"
+  }
+]
