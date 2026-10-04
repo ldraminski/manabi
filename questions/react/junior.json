@@ -1,0 +1,198 @@
+[
+  {
+    "id": "react-junior-001",
+    "topic": "lists",
+    "kind": "single_choice",
+    "prompt": "Po co elementom listy potrzebny jest atrybut key?",
+    "options": [
+      "Żeby lista renderowała się szybciej przy pierwszym wyświetleniu",
+      "Żeby React rozpoznał, który element jest którym między kolejnymi renderami",
+      "Żeby można było stylować elementy listy w CSS",
+      "Jest opcjonalny i służy tylko do debugowania"
+    ],
+    "correct": 1,
+    "explanation": "Po key React dopasowuje elementy z poprzedniego i nowego renderu. Klucz ma być stabilny i unikalny wśród rodzeństwa, np. id z danych. Indeks tablicy jako key psuje stan elementów przy sortowaniu, wstawianiu i usuwaniu.",
+    "source_url": "https://react.dev/learn/rendering-lists",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-002",
+    "topic": "state",
+    "kind": "single_choice",
+    "prompt": "count ma wartość 0. Jaką wartość będzie miał po kliknięciu?\n\nfunction handleClick() {\n  setCount(count + 1);\n  setCount(count + 1);\n  setCount(count + 1);\n}",
+    "options": ["3", "1", "0", "Błąd: nie można wywołać setCount kilka razy"],
+    "correct": 1,
+    "explanation": "W trakcie jednego renderu count jest stałą o wartości 0, więc każde wywołanie to setCount(0 + 1). React zbiera aktualizacje i renderuje raz, z wynikiem 1.",
+    "source_url": "https://react.dev/learn/queueing-a-series-of-state-updates",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-003",
+    "topic": "state",
+    "kind": "single_choice",
+    "prompt": "Jak zapisać aktualizację stanu, żeby trzy wywołania pod rząd zwiększyły licznik o 3?",
+    "options": [
+      "setCount(count++)",
+      "setCount(count + 3) jest jedynym sposobem",
+      "setCount((current) => current + 1)",
+      "await setCount(count + 1)"
+    ],
+    "correct": 2,
+    "explanation": "Funkcja przekazana do settera dostaje najświeższą wartość z kolejki aktualizacji, a nie wartość z bieżącego renderu. Używaj jej zawsze, gdy nowy stan zależy od poprzedniego.",
+    "source_url": "https://react.dev/reference/react/useState",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-004",
+    "topic": "effects",
+    "kind": "single_choice",
+    "prompt": "Kiedy uruchomi się ten efekt?\n\nuseEffect(() => {\n  loadData();\n}, []);",
+    "options": [
+      "Po każdym renderze komponentu",
+      "Tylko po pierwszym renderze, gdy komponent pojawi się na ekranie",
+      "Przed pierwszym renderem",
+      "Nigdy — pusta tablica wyłącza efekt"
+    ],
+    "correct": 1,
+    "explanation": "Pusta tablica zależności oznacza, że efekt nie zależy od żadnych wartości, więc uruchamia się raz po zamontowaniu. W trybie deweloperskim ze Strict Mode React celowo montuje komponent dwukrotnie, żeby wychwycić brak sprzątania.",
+    "source_url": "https://react.dev/reference/react/useEffect",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-005",
+    "topic": "props-and-state",
+    "kind": "flashcard",
+    "prompt": "Czym różnią się props od state?",
+    "answer": "Props to dane przekazane komponentowi z zewnątrz przez rodzica — komponent tylko je czyta. State to dane, które komponent sam trzyma i sam zmienia przez setter; zmiana stanu wywołuje ponowny render. Dane płyną w dół przez props, a dziecko zgłasza zmiany w górę, wywołując funkcję dostaną w props.",
+    "explanation": "Dobre uzupełnienie: jeśli wartość da się wyliczyć z props albo z innego stanu, nie powinna być osobnym stanem.",
+    "source_url": "https://react.dev/learn/passing-props-to-a-component",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-006",
+    "topic": "state",
+    "kind": "single_choice",
+    "prompt": "Dlaczego po tym kodzie ekran może się nie odświeżyć?\n\nuser.name = 'Ola';\nsetUser(user);",
+    "options": [
+      "Bo setUser działa asynchronicznie i trzeba dodać await",
+      "Bo do settera trafił ten sam obiekt, więc React uznaje, że stan się nie zmienił",
+      "Bo właściwości obiektów w stanie są zamrożone",
+      "Bo stan może przechowywać tylko wartości proste"
+    ],
+    "correct": 1,
+    "explanation": "React porównuje referencje. Zmodyfikowany, ale ten sam obiekt wygląda dla niego jak brak zmiany. Stan traktuje się jako niemutowalny: setUser({ ...user, name: 'Ola' }).",
+    "source_url": "https://react.dev/learn/updating-objects-in-state",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-007",
+    "topic": "hooks",
+    "kind": "single_choice",
+    "prompt": "Który kod łamie zasady hooków?",
+    "options": [
+      "Wywołanie useState na początku komponentu",
+      "Wywołanie useEffect wewnątrz własnego hooka useUser",
+      "Wywołanie useState wewnątrz instrukcji if",
+      "Dwa wywołania useState pod rząd w jednym komponencie"
+    ],
+    "correct": 2,
+    "explanation": "Hooki wolno wywoływać tylko na najwyższym poziomie komponentu albo własnego hooka — nie w warunkach, pętlach ani funkcjach zagnieżdżonych. React rozpoznaje hooki po kolejności wywołań, która musi być taka sama w każdym renderze.",
+    "source_url": "https://react.dev/reference/rules/rules-of-hooks",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-008",
+    "topic": "effects",
+    "kind": "single_choice",
+    "prompt": "Do czego służy funkcja zwracana z useEffect?\n\nuseEffect(() => {\n  const id = setInterval(tick, 1000);\n  return () => clearInterval(id);\n}, []);",
+    "options": [
+      "Uruchamia się zaraz po efekcie i zwraca jego wynik",
+      "Sprząta po efekcie: przed jego kolejnym uruchomieniem i przy odmontowaniu komponentu",
+      "Uruchamia się tylko wtedy, gdy efekt rzuci błąd",
+      "Pozwala przekazać wartość do komponentu rodzica"
+    ],
+    "correct": 1,
+    "explanation": "To funkcja czyszcząca. Bez niej interwał, subskrypcja czy nasłuchiwanie zdarzeń działałyby dalej po zniknięciu komponentu, co kończy się wyciekami i podwójnymi wywołaniami.",
+    "source_url": "https://react.dev/learn/synchronizing-with-effects",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-009",
+    "topic": "refs",
+    "kind": "single_choice",
+    "prompt": "Co się stanie po zmianie ref.current w obiekcie zwróconym przez useRef?",
+    "options": [
+      "Komponent wyrenderuje się ponownie",
+      "Wartość zostanie zapamiętana, ale komponent się nie przerenderuje",
+      "React rzuci błąd, bo ref jest tylko do odczytu",
+      "Wartość zresetuje się przy następnym renderze"
+    ],
+    "correct": 1,
+    "explanation": "Ref przechowuje wartość między renderami bez wywoływania renderu. Dlatego nadaje się do rzeczy, których nie widać na ekranie: identyfikator timera, odwołanie do elementu DOM. Jeśli wartość ma być wyświetlana, powinna być stanem.",
+    "source_url": "https://react.dev/reference/react/useRef",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-010",
+    "topic": "state",
+    "kind": "flashcard",
+    "prompt": "Co oznacza „podniesienie stanu” (lifting state up) i kiedy się je stosuje?",
+    "answer": "Gdy dwa komponenty muszą korzystać z tych samych danych, stan przenosi się do ich najbliższego wspólnego rodzica. Rodzic przekazuje wartość w dół przez props razem z funkcją do jej zmiany. Dzięki temu jest jedno źródło prawdy i komponenty nie rozjeżdżają się między sobą.",
+    "explanation": "Przykład do podania: dwa pola formularza, które mają się wzajemnie przeliczać, albo lista i licznik zaznaczonych pozycji.",
+    "source_url": "https://react.dev/learn/sharing-state-between-components",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-011",
+    "topic": "conditional-rendering",
+    "kind": "single_choice",
+    "prompt": "Co pojawi się na ekranie, gdy count ma wartość 0?\n\n<div>{count && <Badge />}</div>",
+    "options": ["Nic, pusty div", "Komponent Badge", "Liczba 0", "Błąd renderowania"],
+    "correct": 2,
+    "explanation": "Operator && zwraca lewą stronę, gdy jest falsy. React pomija false, null i undefined, ale liczbę 0 wyświetla. Bezpieczniej napisać count > 0 && <Badge />.",
+    "source_url": "https://react.dev/learn/conditional-rendering",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-012",
+    "topic": "jsx",
+    "kind": "single_choice",
+    "prompt": "Komponent ma zwrócić nagłówek i akapit obok siebie, bez dodatkowego elementu w DOM. Jak to zapisać?",
+    "options": [
+      "Zwrócić oba elementy jeden po drugim, bez opakowania",
+      "Opakować je w fragment: <>...</>",
+      "Opakować je w <div>, innej możliwości nie ma",
+      "Zwrócić je jako string z HTML-em"
+    ],
+    "correct": 1,
+    "explanation": "Komponent musi zwrócić jeden element nadrzędny. Fragment (<>...</> albo <Fragment>) grupuje elementy bez dodawania węzła do DOM.",
+    "source_url": "https://react.dev/learn/writing-markup-with-jsx",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-013",
+    "topic": "forms",
+    "kind": "flashcard",
+    "prompt": "Czym różni się pole kontrolowane (controlled) od niekontrolowanego (uncontrolled)?",
+    "answer": "W polu kontrolowanym wartość trzyma stan Reacta: input dostaje value i onChange, a każda zmiana przechodzi przez setter. W polu niekontrolowanym wartość trzyma sam DOM; ustawia się najwyżej defaultValue, a odczytuje przez ref albo przy wysłaniu formularza. Kontrolowane dają walidację i formatowanie na bieżąco, niekontrolowane są prostsze przy zwykłych formularzach.",
+    "explanation": "Typowy błąd: podanie value bez onChange — pole staje się tylko do odczytu, a React wypisuje ostrzeżenie.",
+    "source_url": "https://react.dev/reference/react-dom/components/input",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-014",
+    "topic": "effects",
+    "kind": "single_choice",
+    "prompt": "Kiedy uruchamia się efekt zapisany bez tablicy zależności?\n\nuseEffect(() => {\n  document.title = title;\n});",
+    "options": [
+      "Tylko raz, po pierwszym renderze",
+      "Po każdym renderze komponentu",
+      "Tylko gdy zmieni się title",
+      "Nigdy — brak tablicy to błąd"
+    ],
+    "correct": 1,
+    "explanation": "Brak drugiego argumentu oznacza uruchamianie po każdym renderze. Pusta tablica [] to raz po zamontowaniu, a [title] — po zamontowaniu i po każdej zmianie title.",
+    "source_url": "https://react.dev/reference/react/useEffect",
+    "added_on": "2026-10-04"
+  }
+]

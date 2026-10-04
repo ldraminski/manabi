@@ -1,0 +1,16 @@
+[
+  { "slug": "javascript", "name": "JavaScript", "aliases": ["js", "ecmascript", "es6", "es2015+"] },
+  { "slug": "typescript", "name": "TypeScript", "aliases": ["ts"] },
+  { "slug": "react", "name": "React", "aliases": ["react.js", "reactjs"] },
+  { "slug": "nextjs", "name": "Next.js", "aliases": ["next", "next.js", "nextjs"] },
+  { "slug": "vue", "name": "Vue", "aliases": ["vue.js", "vuejs", "vue 3"] },
+  { "slug": "angular", "name": "Angular", "aliases": ["angular 2+"] },
+  { "slug": "html", "name": "HTML", "aliases": ["html5"] },
+  { "slug": "css", "name": "CSS", "aliases": ["css3", "sass", "scss"] },
+  { "slug": "nodejs", "name": "Node.js", "aliases": ["node", "node.js"] },
+  { "slug": "git", "name": "Git", "aliases": ["github", "gitlab"] },
+  { "slug": "testing", "name": "Testing", "aliases": ["jest", "vitest", "testing library", "cypress", "playwright", "unit tests"] },
+  { "slug": "rest-api", "name": "REST API", "aliases": ["rest", "http", "api"] },
+  { "slug": "aws", "name": "AWS", "aliases": ["amazon web services"] },
+  { "slug": "ai-tools", "name": "AI tools", "aliases": ["ai", "llm", "copilot", "claude code", "cursor"] }
+]

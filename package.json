@@ -1,0 +1,11 @@
+{
+  "name": "manabi",
+  "private": true,
+  "type": "module",
+  "description": "Interview prep PWA: paste a job offer, take a short test, get a study plan.",
+  "scripts": {
+    "questions:build": "node scripts/questions.mjs --write",
+    "questions:check": "node scripts/questions.mjs --check"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,243 @@
+[
+  {
+    "id": "javascript-junior-001",
+    "topic": "types",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?\n\nconsole.log(typeof null);",
+    "options": ["\"null\"", "\"object\"", "\"undefined\"", "\"number\""],
+    "correct": 1,
+    "explanation": "typeof null zwraca \"object\". To historyczny błąd języka, którego nie da się już naprawić bez psucia istniejących stron. Żeby sprawdzić null, porównuj wprost: value === null.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-002",
+    "topic": "variables",
+    "kind": "single_choice",
+    "prompt": "Co się stanie po wykonaniu tego kodu?\n\nconst user = { name: 'Ala' };\nuser.name = 'Ola';",
+    "options": [
+      "Błąd: nie można zmieniać stałej",
+      "Nic się nie zmieni, przypisanie zostanie po cichu zignorowane",
+      "Właściwość name zmieni się na 'Ola'",
+      "Powstanie nowy obiekt, a user dalej wskazuje na stary"
+    ],
+    "correct": 2,
+    "explanation": "const blokuje ponowne przypisanie zmiennej, a nie zmianę zawartości obiektu. Błąd pojawiłby się przy user = { ... }. Żeby zablokować zmiany właściwości, trzeba użyć np. Object.freeze.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-003",
+    "topic": "equality",
+    "kind": "single_choice",
+    "prompt": "Jakie wartości mają te dwa wyrażenia?\n\n0 == '0'\n0 === '0'",
+    "options": ["true i true", "false i false", "true i false", "false i true"],
+    "correct": 2,
+    "explanation": "== przed porównaniem konwertuje typy, więc '0' staje się liczbą 0. === porównuje bez konwersji: liczba i string to różne typy, wynik false.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-004",
+    "topic": "closures",
+    "kind": "flashcard",
+    "prompt": "Czym jest domknięcie (closure)? Podaj prosty przykład zastosowania.",
+    "answer": "Domknięcie to funkcja razem z dostępem do zmiennych z zakresu, w którym powstała — także wtedy, gdy zewnętrzna funkcja już się zakończyła. Przykład: licznik, w którym makeCounter() trzyma zmienną count, a zwrócona funkcja ją zwiększa. Z zewnątrz count nie da się zmienić inaczej niż przez tę funkcję.",
+    "explanation": "Na rozmowie warto dodać, do czego to służy: ukrywanie stanu, funkcje-fabryki, handlery zdarzeń i callbacki pamiętające swoje dane.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-005",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "prompt": "Co będzie w zmiennych po wykonaniu kodu?\n\nconst numbers = [1, 2, 3];\nconst doubled = numbers.map((n) => n * 2);",
+    "options": [
+      "numbers: [2, 4, 6], doubled: [2, 4, 6]",
+      "numbers: [1, 2, 3], doubled: [2, 4, 6]",
+      "numbers: [1, 2, 3], doubled: undefined",
+      "numbers: [2, 4, 6], doubled: undefined"
+    ],
+    "correct": 1,
+    "explanation": "map zwraca nową tablicę i nie zmienia oryginału. Dla porównania forEach nic nie zwraca (undefined).",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-006",
+    "topic": "types",
+    "kind": "single_choice",
+    "prompt": "W której odpowiedzi wszystkie wartości są „falsy”, czyli w warunku if zachowują się jak false?",
+    "options": [
+      "0, '', null, undefined, NaN",
+      "0, '0', [], {}",
+      "[], {}, null",
+      "'false', '0', undefined"
+    ],
+    "correct": 0,
+    "explanation": "Wartości falsy to: false, 0, -0, 0n, '', null, undefined i NaN. Pusta tablica, pusty obiekt oraz niepuste stringi ('0', 'false') są truthy.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Glossary/Falsy",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-007",
+    "topic": "hoisting",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?\n\nconsole.log(a);\nvar a = 5;",
+    "options": ["5", "undefined", "ReferenceError", "null"],
+    "correct": 1,
+    "explanation": "Deklaracja var jest przenoszona na początek zakresu (hoisting), ale przypisanie zostaje na miejscu. W chwili wywołania console.log zmienna istnieje i ma wartość undefined.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Glossary/Hoisting",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-008",
+    "topic": "hoisting",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?\n\nconsole.log(a);\nlet a = 5;",
+    "options": ["5", "undefined", "ReferenceError", "null"],
+    "correct": 2,
+    "explanation": "Zmienne let i const od początku bloku do linii z deklaracją są w tzw. temporal dead zone. Odwołanie się do nich w tym czasie rzuca ReferenceError.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-009",
+    "topic": "equality",
+    "kind": "flashcard",
+    "prompt": "Czym różni się == od === i którego używać na co dzień?",
+    "answer": "== porównuje po konwersji typów (np. 1 == '1' daje true), === porównuje wartość i typ bez konwersji. Na co dzień używa się ===, bo wynik jest przewidywalny. Częsty wyjątek: value == null, które łapie jednocześnie null i undefined.",
+    "explanation": "Dobrze jest umieć podać jeden zaskakujący przykład, np. '' == 0 daje true.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-010",
+    "topic": "event-loop",
+    "kind": "single_choice",
+    "prompt": "W jakiej kolejności pojawią się litery?\n\nconsole.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\nconsole.log('D');",
+    "options": ["A, B, C, D", "A, D, B, C", "A, D, C, B", "A, C, D, B"],
+    "correct": 2,
+    "explanation": "Najpierw wykonuje się kod synchroniczny (A, D). Potem mikrozadania, czyli callbacki promise'ów (C). Dopiero na końcu zadania z kolejki timerów (B), nawet przy opóźnieniu 0.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-011",
+    "topic": "functions",
+    "kind": "single_choice",
+    "prompt": "Co jest prawdą o this w funkcji strzałkowej?",
+    "options": [
+      "Zawsze wskazuje na obiekt globalny",
+      "Nie ma własnego this — bierze je z otaczającego zakresu",
+      "Wskazuje na obiekt, na którym funkcję wywołano",
+      "Można je ustawić metodą bind"
+    ],
+    "correct": 1,
+    "explanation": "Funkcja strzałkowa nie tworzy własnego this, tylko korzysta z this miejsca, w którym została zdefiniowana. Dlatego call, apply i bind go nie zmieniają, a funkcja strzałkowa słabo nadaje się na metodę obiektu.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-012",
+    "topic": "destructuring",
+    "kind": "single_choice",
+    "prompt": "Jakie wartości mają a i b?\n\nconst [a, , b] = [1, 2, 3];",
+    "options": ["a = 1, b = 2", "a = 1, b = 3", "a = 1, b = undefined", "Błąd składni"],
+    "correct": 1,
+    "explanation": "Pusty element między przecinkami pomija pozycję w tablicy. a dostaje pierwszy element, b trzeci.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-013",
+    "topic": "objects",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?\n\nconst original = { name: 'Ala', address: { city: 'Poznań' } };\nconst copy = { ...original };\ncopy.address.city = 'Gdańsk';\nconsole.log(original.address.city);",
+    "options": ["'Poznań'", "'Gdańsk'", "undefined", "Błąd"],
+    "correct": 1,
+    "explanation": "Spread robi płytką kopię: kopiuje właściwości pierwszego poziomu, ale zagnieżdżone obiekty nadal są współdzielone. Do głębokiej kopii służy np. structuredClone.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-014",
+    "topic": "operators",
+    "kind": "single_choice",
+    "prompt": "Jakie wartości zwrócą te wyrażenia?\n\n0 ?? 10\n0 || 10",
+    "options": ["0 i 0", "10 i 10", "0 i 10", "10 i 0"],
+    "correct": 2,
+    "explanation": "?? sięga po prawą stronę tylko wtedy, gdy lewa to null albo undefined, więc 0 zostaje. || sięga po prawą stronę przy każdej wartości falsy, a 0 jest falsy.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-015",
+    "topic": "async",
+    "kind": "flashcard",
+    "prompt": "Co zwraca funkcja oznaczona jako async i co robi await?",
+    "answer": "Funkcja async zawsze zwraca Promise — zwrócona wartość staje się jego wynikiem, a rzucony błąd odrzuceniem. await wstrzymuje wykonanie tej funkcji do rozstrzygnięcia promise'a i zwraca jego wynik; nie blokuje reszty programu. Błędy łapie się przez try/catch.",
+    "explanation": "Częsta dopytka: jak uruchomić kilka zapytań równolegle? Odpowiedź: Promise.all zamiast kolejnych await.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-016",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "prompt": "Co zwróci to wyrażenie?\n\n[1, 2, 3, 4].find((n) => n > 2)",
+    "options": ["[3, 4]", "3", "true", "2"],
+    "correct": 1,
+    "explanation": "find zwraca pierwszy element spełniający warunek (albo undefined, gdy żaden nie pasuje). Tablicę wszystkich pasujących elementów zwraca filter.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-017",
+    "topic": "dom-events",
+    "kind": "flashcard",
+    "prompt": "Na czym polega propagacja zdarzeń (bubbling) i jak ją zatrzymać?",
+    "answer": "Zdarzenie wywołane na elemencie „wędruje” w górę drzewa DOM i uruchamia handlery tego samego typu na kolejnych przodkach. Zatrzymuje je event.stopPropagation(). Dzięki bubblingowi działa delegacja zdarzeń: jeden handler na rodzicu obsługuje kliknięcia wszystkich dzieci.",
+    "explanation": "Nie myl z event.preventDefault(), które blokuje domyślną akcję przeglądarki (np. wysłanie formularza), a nie propagację.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-018",
+    "topic": "operators",
+    "kind": "single_choice",
+    "prompt": "Co zwróci ostatnia linia?\n\nconst user = { name: 'Ala' };\nuser.address?.city",
+    "options": ["TypeError", "null", "undefined", "''"],
+    "correct": 2,
+    "explanation": "Optional chaining (?.) przerywa wyrażenie i zwraca undefined, gdy wartość po lewej to null albo undefined. Bez niego user.address.city rzuciłoby TypeError.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-019",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "prompt": "Co zwróci to wyrażenie?\n\n[1, 2, 3].reduce((sum, n) => sum + n, 0)",
+    "options": ["[1, 3, 6]", "6", "'123'", "0"],
+    "correct": 1,
+    "explanation": "reduce sprowadza tablicę do jednej wartości. Drugi argument (0) to wartość początkowa akumulatora; kolejne kroki to 0+1, 1+2, 3+3.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-020",
+    "topic": "web-storage",
+    "kind": "single_choice",
+    "prompt": "Jak poprawnie zapisać obiekt w localStorage?",
+    "options": [
+      "localStorage.setItem('user', user)",
+      "localStorage.setItem('user', JSON.stringify(user))",
+      "localStorage.user = { ...user }",
+      "localStorage.setItem('user', user.toString())"
+    ],
+    "correct": 1,
+    "explanation": "localStorage przechowuje wyłącznie stringi. Obiekt zapisany wprost zamieni się na \"[object Object]\". Trzeba go zserializować przez JSON.stringify, a przy odczycie użyć JSON.parse.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
+    "added_on": "2026-10-04"
+  }
+]

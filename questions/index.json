@@ -1,0 +1,386 @@
+[
+  {
+    "id": "javascript-junior-001",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-002",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "variables",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-003",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "equality",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-004",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "closures",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-005",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-006",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-007",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "hoisting",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-008",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "hoisting",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-009",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "equality",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-010",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "event-loop",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-011",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "functions",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-012",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "destructuring",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-013",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "objects",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-014",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "operators",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-015",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "async",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-016",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-017",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "dom-events",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-018",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "operators",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-019",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "arrays",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-020",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "web-storage",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-001",
+    "technology": "react",
+    "level": "junior",
+    "topic": "lists",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-002",
+    "technology": "react",
+    "level": "junior",
+    "topic": "state",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-003",
+    "technology": "react",
+    "level": "junior",
+    "topic": "state",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-004",
+    "technology": "react",
+    "level": "junior",
+    "topic": "effects",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-005",
+    "technology": "react",
+    "level": "junior",
+    "topic": "props-and-state",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-006",
+    "technology": "react",
+    "level": "junior",
+    "topic": "state",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-007",
+    "technology": "react",
+    "level": "junior",
+    "topic": "hooks",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-008",
+    "technology": "react",
+    "level": "junior",
+    "topic": "effects",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-009",
+    "technology": "react",
+    "level": "junior",
+    "topic": "refs",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-010",
+    "technology": "react",
+    "level": "junior",
+    "topic": "state",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-011",
+    "technology": "react",
+    "level": "junior",
+    "topic": "conditional-rendering",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-012",
+    "technology": "react",
+    "level": "junior",
+    "topic": "jsx",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-013",
+    "technology": "react",
+    "level": "junior",
+    "topic": "forms",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-014",
+    "technology": "react",
+    "level": "junior",
+    "topic": "effects",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-001",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "basic-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-002",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "union-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-003",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "interfaces",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-004",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "object-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-005",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "utility-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-006",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "utility-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-007",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "narrowing",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-008",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "generics",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-009",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "compilation",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-010",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "tsconfig",
+    "kind": "flashcard",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-011",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "object-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-012",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "literal-types",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-013",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "functions",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-014",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "type-operators",
+    "kind": "single_choice",
+    "added_on": "2026-10-04"
+  }
+]
