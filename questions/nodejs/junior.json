@@ -62,5 +62,129 @@
     "explanation": "__dirname i __filename istnieją tylko w CommonJS. W modułach ES ich odpowiednikami są import.meta.dirname i import.meta.filename. process.cwd() to co innego: katalog, z którego uruchomiono proces, a nie katalog pliku.",
     "source_url": "https://nodejs.org/api/esm.html#no-__filename-or-__dirname",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "nodejs-junior-005",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "prompt": "W pliku .env masz PORT=3000, a aplikację uruchamiasz poleceniem PORT=8080 node --env-file=.env app.js. Jaką wartość ma process.env.PORT?",
+    "options": [
+      "\"8080\"",
+      "\"3000\"",
+      "undefined",
+      "Node.js zgłosi błąd konfliktu zmiennych"
+    ],
+    "correct": 0,
+    "explanation": "Flaga --env-file wczytuje zmienne z pliku do process.env, ale gdy ta sama zmienna jest już ustawiona w środowisku, pierwszeństwo ma wartość ze środowiska. Flaga jest wbudowana w Node.js (od wersji 20.6), więc do prostych przypadków nie potrzeba pakietu dotenv.",
+    "source_url": "https://nodejs.org/api/cli.html",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-006",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "prompt": "Co robi polecenie node --watch index.js?",
+    "options": [
+      "Restartuje proces Node.js, gdy zmieni się któryś z importowanych plików",
+      "Odświeża kartę przeglądarki po każdej zmianie w kodzie",
+      "Wypisuje w konsoli listę zmienionych plików, ale nie restartuje procesu",
+      "Uruchamia skrypt tylko wtedy, gdy plik index.js został zmieniony od ostatniego uruchomienia"
+    ],
+    "correct": 0,
+    "explanation": "Tryb --watch obserwuje pliki importowane przez aplikację i przy zmianie restartuje proces. To wbudowany zamiennik narzędzi takich jak nodemon. Listę obserwowanych ścieżek można zmienić flagą --watch-path.",
+    "source_url": "https://nodejs.org/api/cli.html",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-007",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz skrypt poleceniem node greet.js Ania. Co wypisze ten kod?",
+    "code": "console.log(process.argv[2]);",
+    "options": [
+      "Ania",
+      "Bezwzględną ścieżkę do pliku greet.js",
+      "Bezwzględną ścieżkę do programu node",
+      "undefined"
+    ],
+    "correct": 0,
+    "explanation": "process.argv[0] to ścieżka do programu node, process.argv[1] to ścieżka do uruchomionego skryptu, a argumenty przekazane przez użytkownika zaczynają się od indeksu 2. Dlatego często pisze się process.argv.slice(2).",
+    "source_url": "https://nodejs.org/api/process.html#processargv",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-008",
+    "topic": "cli-and-tooling",
+    "kind": "flashcard",
+    "prompt": "Skrypt CLI ma zakończyć się z błędem, ale najpierw wypisać komunikat na stdout. Lepiej użyć process.exit(1) czy process.exitCode = 1? Dlaczego?",
+    "answer": "process.exitCode = 1. Proces kończy się wtedy naturalnie, po dokończeniu oczekujących operacji, a kod wyjścia 1 sygnalizuje błąd (0 oznacza sukces). process.exit(1) kończy proces natychmiast i może uciąć jeszcze niezapisane dane, np. wyjście na stdout.",
+    "explanation": "Dokumentacja Node.js zaleca ustawianie process.exitCode zamiast wywoływania process.exit(), bo exit() przerywa wszystkie oczekujące operacje asynchroniczne, w tym zapisy do process.stdout.",
+    "source_url": "https://nodejs.org/api/process.html#processexitcode",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-009",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "prompt": "Chcesz pisać i uruchamiać testy wbudowanym test runnerem Node.js, bez instalowania Jest ani Vitest. Co wybierzesz?",
+    "options": [
+      "Polecenie node --test i import test from 'node:test'",
+      "Polecenie node test.js i import test from 'test'",
+      "Polecenie npx node-test i import { test } from 'node:assert'",
+      "Polecenie node --check i import test from 'node:test'"
+    ],
+    "correct": 0,
+    "explanation": "Wbudowany test runner jest stabilny od Node.js 20. Moduł jest dostępny wyłącznie pod nazwą z prefiksem node: (import 'test' bez prefiksu go nie znajdzie). node --test uruchamia pliki pasujące do domyślnych wzorców, np. **/*.test.js albo pliki w katalogu test/.",
+    "source_url": "https://nodejs.org/api/test.html",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-010",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Co trafi do zmiennej data?",
+    "code": "import { readFile } from 'node:fs/promises';\n\nconst data = await readFile('notes.txt');",
+    "options": [
+      "Obiekt Buffer z surowymi bajtami pliku",
+      "String z treścią pliku w UTF-8",
+      "Tablica linii pliku",
+      "Nierozwiązany Promise"
+    ],
+    "correct": 0,
+    "explanation": "Bez podanego kodowania readFile zwraca Buffer. Żeby dostać tekst, podaj kodowanie: await readFile('notes.txt', 'utf8'). Promise jest już rozwiązany przez await.",
+    "source_url": "https://nodejs.org/api/fs.html",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-011",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Dlaczego do budowania ścieżek lepiej użyć path.join('uploads', fileName) niż 'uploads/' + fileName?",
+    "options": [
+      "path.join używa separatora właściwego dla systemu (\\ na Windows, / na POSIX) i normalizuje wynik",
+      "path.join sprawdza, czy plik istnieje",
+      "path.join zawsze zwraca ścieżkę bezwzględną",
+      "path.join chroni przed ścieżkami typu ../../etc/passwd"
+    ],
+    "correct": 0,
+    "explanation": "path.join skleja segmenty separatorem systemu i normalizuje wynik, np. path.join('/foo', 'bar', '..') daje '/foo'. Nie sprawdza istnienia pliku ani nie tworzy ścieżki bezwzględnej (to robi path.resolve). Normalizacja rozwiązuje '..', więc nie chroni przed wyjściem poza katalog — to trzeba sprawdzić osobno.",
+    "source_url": "https://nodejs.org/api/path.html#pathjoinpaths",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-012",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Obiekt EventEmitter emituje zdarzenie 'error', a nikt nie zarejestrował dla niego listenera. Co się stanie?",
+    "options": [
+      "Błąd zostanie rzucony, wypisze się stack trace i proces Node.js się zakończy",
+      "Zdarzenie zostanie po cichu zignorowane",
+      "Błąd trafi do console.warn, a proces będzie działał dalej",
+      "Zdarzenie poczeka, aż ktoś doda listener"
+    ],
+    "correct": 0,
+    "explanation": "Zdarzenie 'error' jest traktowane specjalnie: bez listenera błąd jest rzucany i zamyka proces. Dlatego dla emiterów, które mogą zgłaszać błędy (np. strumieni), zawsze dodaje się emitter.on('error', ...).",
+    "source_url": "https://nodejs.org/api/events.html",
+    "added_on": "2026-10-05"
   }
 ]

@@ -456,6 +456,70 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "nodejs-junior-005",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-006",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-007",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-008",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "cli-and-tooling",
+    "kind": "flashcard",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-009",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "cli-and-tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-010",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-011",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-012",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-05"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",

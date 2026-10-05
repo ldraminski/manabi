@@ -178,8 +178,15 @@
     "technology": "nodejs",
     "slug": "runtime-basics",
     "title": "Podstawy środowiska",
-    "description": "Blokowanie pętli zdarzeń, process.env, moduły ES",
+    "description": "Pętla zdarzeń, process.env, moduły ES, fs, path, zdarzenia",
     "icon": "clock"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "cli-and-tooling",
+    "title": "Uruchamianie i narzędzia",
+    "description": "process.argv, kody wyjścia, --watch, --env-file, node --test",
+    "icon": "layout"
   },
   {
     "technology": "testing",
