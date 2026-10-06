@@ -189,6 +189,27 @@
     "icon": "layout"
   },
   {
+    "technology": "nodejs",
+    "slug": "event-loop-internals",
+    "title": "Pętla zdarzeń od środka",
+    "description": "nextTick, mikrozadania, setImmediate, pula wątków, worker_threads",
+    "icon": "clock"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "streams-and-buffers",
+    "title": "Strumienie i bufory",
+    "description": "pipeline, backpressure, bajty a znaki",
+    "icon": "list"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "production-runtime",
+    "title": "Node.js na produkcji",
+    "description": "Nieobsłużone błędy, AsyncLocalStorage, require(esm)",
+    "icon": "braces"
+  },
+  {
     "technology": "testing",
     "slug": "unit-tests",
     "title": "Testy jednostkowe",

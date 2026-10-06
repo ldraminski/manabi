@@ -520,6 +520,118 @@
     "added_on": "2026-10-05"
   },
   {
+    "id": "nodejs-mid-001",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-002",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-003",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-004",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-005",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-006",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-007",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-008",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-009",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-010",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-011",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-012",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-013",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-014",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-06"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",

@@ -1,0 +1,230 @@
+[
+  {
+    "id": "nodejs-mid-001",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Plik app.js to moduł CommonJS. W jakiej kolejności pojawią się napisy po uruchomieniu node app.js?",
+    "code": "Promise.resolve().then(() => console.log('promise'));\nprocess.nextTick(() => console.log('nextTick'));\nsetTimeout(() => console.log('timeout'), 0);\nconsole.log('sync');",
+    "options": [
+      "sync, promise, nextTick, timeout",
+      "sync, nextTick, promise, timeout",
+      "nextTick, sync, promise, timeout",
+      "sync, timeout, nextTick, promise"
+    ],
+    "correct": 1,
+    "explanation": "Najpierw kończy się kod synchroniczny. Potem Node.js opróżnia kolejkę process.nextTick, a zaraz po niej kolejkę mikrozadań (then, queueMicrotask). Timer czeka na kolejną fazę pętli zdarzeń. Uwaga: w module ES kolejność nextTick i promise jest odwrotna, bo moduł wykonuje się już w trakcie opróżniania kolejki mikrozadań.",
+    "source_url": "https://nodejs.org/api/process.html#when-to-use-queuemicrotask-vs-processnexttick",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-002",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Co wypisze się jako pierwsze w tym kodzie?",
+    "code": "const fs = require('node:fs');\n\nfs.readFile(__filename, () => {\n  setTimeout(() => console.log('timeout'), 0);\n  setImmediate(() => console.log('immediate'));\n});",
+    "options": [
+      "Zawsze timeout, bo ma opóźnienie 0",
+      "Kolejność jest losowa i zależy od wydajności procesu",
+      "Zawsze immediate",
+      "Oba naraz, w jednej fazie pętli zdarzeń"
+    ],
+    "correct": 2,
+    "explanation": "Wewnątrz callbacku I/O pętla zdarzeń przechodzi najpierw do fazy check, w której działają callbacki setImmediate, a dopiero w następnej iteracji do timerów. Kolejność jest niedeterministyczna tylko wtedy, gdy oba wywołania padną w głównym module, poza cyklem I/O.",
+    "source_url": "https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick#setimmediate-vs-settimeout",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-003",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Funkcja w serwerze HTTP rekurencyjnie wywołuje process.nextTick(), żeby przetwarzać dużą kolejkę zadań po kawałku. Jaki będzie skutek?",
+    "options": [
+      "Serwer przestanie obsługiwać nowe żądania, dopóki rekurencja trwa",
+      "Zadania będą przeplatane z obsługą żądań, bo nextTick oddaje sterowanie pętli zdarzeń",
+      "Node.js przeniesie zadania do puli wątków libuv",
+      "Proces rzuci błąd przepełnienia stosu po kilku tysiącach wywołań"
+    ],
+    "correct": 0,
+    "explanation": "Kolejka nextTick jest opróżniana w całości, zanim pętla zdarzeń przejdzie dalej. Rekurencyjne nextTick nie pozwala jej dojść do fazy poll, więc I/O zostaje zagłodzone. Do dzielenia pracy na kawałki lepiej nadaje się setImmediate. Nie ma tu przepełnienia stosu, bo każde wywołanie startuje z pustego stosu.",
+    "source_url": "https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick#understanding-processnexttick",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-004",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Które z tych zadań Node.js wykonuje w puli wątków libuv (Worker Pool), a nie w wątku pętli zdarzeń?",
+    "options": [
+      "JSON.parse() na dużym stringu",
+      "Odbieranie danych z gniazda TCP",
+      "Sortowanie dużej tablicy przez Array.prototype.sort()",
+      "crypto.pbkdf2()"
+    ],
+    "correct": 3,
+    "explanation": "Pula wątków obsługuje m.in. asynchroniczne API fs, dns.lookup(), zlib oraz kosztowne funkcje crypto, takie jak pbkdf2 i scrypt. Sieciowe I/O obsługuje pętla zdarzeń przez mechanizmy systemu (epoll, kqueue). Synchroniczny kod JavaScript, jak JSON.parse czy sort, zawsze blokuje wątek, w którym działa.",
+    "source_url": "https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop#what-code-runs-on-the-worker-pool",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-005",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "W którym przypadku przeniesienie pracy do worker_threads realnie odciąży serwer?",
+    "options": [
+      "Wysyłanie wielu równoległych zapytań do bazy danych",
+      "Generowanie miniatur obrazów w czystym JavaScripcie",
+      "Czytanie wielu plików z dysku przez fs/promises",
+      "Obsługa większej liczby połączeń HTTP naraz"
+    ],
+    "correct": 1,
+    "explanation": "Wątki robocze przydają się przy operacjach obciążających procesor, wykonywanych w JavaScripcie. Przy pracy I/O niewiele pomagają — wbudowane asynchroniczne I/O Node.js jest wydajniejsze niż przenoszenie go do workerów.",
+    "source_url": "https://nodejs.org/api/worker_threads.html",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-006",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.10 dodał util.debounce(). Czym rozwiążą się obietnice first i second?",
+    "code": "import { debounce } from 'node:util';\n\nconst save = debounce(async (value) => value, 50);\n\nconst first = save(1);\nconst second = save(2);",
+    "options": [
+      "first: 1, second: 2",
+      "first: undefined, second: 2",
+      "first zostaje odrzucona z AbortError, second: 2",
+      "first: 2, second: 2"
+    ],
+    "correct": 3,
+    "explanation": "Funkcja jest wywoływana raz, z argumentami z ostatniego wywołania w oknie. Domyślnie obietnice ze wszystkich wywołań rozwiązują się tym samym wynikiem. Odrzucenie AbortError dla wcześniejszych wywołań włącza dopiero opcja rejectOnCancel: true.",
+    "source_url": "https://nodejs.org/api/util.html#utildebouncefn-wait-options",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-007",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "Łączysz strumienie przez readable.pipe(gzip).pipe(writable). W połowie odczytu plik źródłowy zgłasza błąd. Co się stanie z pozostałymi strumieniami?",
+    "options": [
+      "pipe() przekaże błąd dalej i zamknie wszystkie strumienie",
+      "Strumień docelowy nie zostanie zamknięty automatycznie — trzeba to zrobić ręcznie albo użyć pipeline()",
+      "Strumień docelowy zostanie zamknięty, a plik wynikowy usunięty",
+      "pipe() ponowi odczyt od miejsca, w którym wystąpił błąd"
+    ],
+    "correct": 1,
+    "explanation": "Przy błędzie w źródle pipe() nie zamyka strumienia docelowego, co grozi wyciekiem zasobów. stream.pipeline() przekazuje błędy, sprząta wszystkie strumienie i wywołuje callback (lub rozwiązuje obietnicę) po zakończeniu.",
+    "source_url": "https://nodejs.org/api/stream.html#readablepipedestination-options",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-008",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "W pętli zapisujesz dużo danych przez writable.write(chunk). Jedno z wywołań zwróciło false. Co należy zrobić?",
+    "options": [
+      "Przerwać zapis i poczekać na zdarzenie 'drain', zanim zapiszesz kolejne dane",
+      "Ponowić write() z tym samym fragmentem, bo nie został zapisany",
+      "Zignorować to — false oznacza tylko, że zapis był wolniejszy",
+      "Wywołać writable.end() i otworzyć nowy strumień"
+    ],
+    "correct": 0,
+    "explanation": "false oznacza, że wewnętrzny bufor strumienia przekroczył highWaterMark. Fragment został przyjęty, więc nie trzeba go ponawiać, ale dalsze pisanie bez czekania na 'drain' zwiększa zużycie pamięci. To mechanizm backpressure.",
+    "source_url": "https://nodejs.org/api/stream.html#event-drain",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-009",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?",
+    "code": "const text = 'zażółć';\nconsole.log(text.length, Buffer.byteLength(text));",
+    "options": [
+      "6 6",
+      "6 12",
+      "6 10",
+      "10 10"
+    ],
+    "correct": 2,
+    "explanation": "length liczy jednostki kodu UTF-16, a Buffer.byteLength — bajty po zakodowaniu, domyślnie w UTF-8. Litery z, a zajmują po 1 bajcie, a ż, ó, ł, ć po 2, więc razem 10. Ma to znaczenie np. przy nagłówku Content-Length.",
+    "source_url": "https://nodejs.org/api/buffer.html#static-method-bufferbytelengthstring-encoding",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-010",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "W funkcji async chcesz skompresować plik przez gzip, poczekać na koniec i obsłużyć błędy zwykłym try/catch. Czego użyjesz?",
+    "options": [
+      "fs.createReadStream(src).pipe(zlib.createGzip()).pipe(fs.createWriteStream(dest))",
+      "await pipeline(...) z modułu node:stream/promises",
+      "await fs.createReadStream(src).pipe(...), bo pipe() zwraca obietnicę",
+      "await zlib.gzip(src, dest), bo zlib.gzip przyjmuje ścieżki plików i zwraca obietnicę"
+    ],
+    "correct": 1,
+    "explanation": "pipeline() z node:stream/promises zwraca obietnicę, która rozwiązuje się po zakończeniu przetwarzania i odrzuca przy błędzie w dowolnym strumieniu. pipe() zwraca strumień docelowy, nie obietnicę, a zlib.gzip() przyjmuje dane w pamięci i callback, nie ścieżki.",
+    "source_url": "https://nodejs.org/api/stream.html#streams-promises-api",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-011",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "W aplikacji pojawia się odrzucona obietnica bez .catch() ani try/catch. Nie ma też handlera process.on('unhandledRejection'). Co zrobi Node.js przy domyślnych ustawieniach?",
+    "options": [
+      "Wypisze ostrzeżenie i będzie działał dalej",
+      "Zignoruje błąd",
+      "Zakończy proces z błędem, tak jak przy nieprzechwyconym wyjątku",
+      "Ponowi obietnicę przy następnej iteracji pętli zdarzeń"
+    ],
+    "correct": 2,
+    "explanation": "Od Node.js 15 domyślny tryb --unhandled-rejections to throw: jeśli nie ma handlera unhandledRejection, odrzucenie jest zgłaszane jak nieprzechwycony wyjątek i proces kończy się z niezerowym kodem. Wcześniej było to tylko ostrzeżenie.",
+    "source_url": "https://nodejs.org/api/cli.html#--unhandled-rejectionsmode",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-012",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Jak poprawnie używać process.on('uncaughtException')?",
+    "options": [
+      "Zalogować błąd i kontynuować obsługę żądań, żeby serwer się nie wyłączył",
+      "Synchronicznie posprzątać zasoby i zakończyć proces; restart zostawić zewnętrznemu nadzorcy",
+      "Rzucić błąd ponownie wewnątrz handlera, żeby trafił do kolejnego handlera",
+      "Nie używać go wcale — Node.js i tak ignoruje to zdarzenie w trybie produkcyjnym"
+    ],
+    "correct": 1,
+    "explanation": "Nieprzechwycony wyjątek oznacza, że aplikacja jest w nieokreślonym stanie, więc wznawianie pracy nie jest bezpieczne. Handler służy do synchronicznego sprzątania przed zamknięciem. Ponowne uruchomienie powinien zapewnić osobny proces, np. menedżer procesów lub orkiestrator.",
+    "source_url": "https://nodejs.org/api/process.html#warning-using-uncaughtexception-correctly",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-013",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Chcesz, żeby każdy wpis w logach zawierał identyfikator bieżącego żądania HTTP, bez przekazywania go jako argumentu przez wszystkie funkcje. Czego użyjesz?",
+    "options": [
+      "Zmiennej globalnej ustawianej na początku obsługi żądania",
+      "AsyncLocalStorage z modułu node:async_hooks",
+      "process.env.REQUEST_ID ustawianego dla każdego żądania",
+      "worker_threads — osobnego wątku dla każdego żądania"
+    ],
+    "correct": 1,
+    "explanation": "AsyncLocalStorage tworzy magazyn, który zachowuje spójność przez operacje asynchroniczne: wartość ustawiona w run() jest widoczna w kodzie wywołanym z tego kontekstu, także po await. Zmienna globalna czy process.env są wspólne dla wszystkich żądań obsługiwanych równolegle, więc wartości by się mieszały.",
+    "source_url": "https://nodejs.org/api/async_context.html#class-asynclocalstorage",
+    "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-014",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Moduł CommonJS wywołuje require('./config.mjs'), a config.mjs używa top-level await. Co się stanie w aktualnych wersjach Node.js?",
+    "options": [
+      "require() zwróci obietnicę z eksportami modułu",
+      "require() zablokuje wątek, aż await się zakończy",
+      "Zostanie rzucony błąd ERR_REQUIRE_ASYNC_MODULE — taki moduł trzeba wczytać przez import()",
+      "Moduł ES nigdy nie może być wczytany przez require()"
+    ],
+    "correct": 2,
+    "explanation": "require() potrafi wczytać moduł ES, ale tylko w pełni synchroniczny. Jeśli moduł lub coś, co importuje, używa top-level await, Node.js rzuca ERR_REQUIRE_ASYNC_MODULE i należy użyć import().",
+    "source_url": "https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require",
+    "added_on": "2026-10-06"
+  }
+]
