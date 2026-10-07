@@ -226,5 +226,55 @@
     "explanation": "require() potrafi wczytać moduł ES, ale tylko w pełni synchroniczny. Jeśli moduł lub coś, co importuje, używa top-level await, Node.js rzuca ERR_REQUIRE_ASYNC_MODULE i należy użyć import().",
     "source_url": "https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require",
     "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-015",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.10 dodał util.throttle(). Co stanie się z trzecim wywołaniem send()?",
+    "code": "import { throttle } from 'node:util';\n\nconst send = throttle(async (msg) => post(msg), 2, 1000);\n\nsend('a');\nsend('b');\nsend('c');",
+    "options": [
+      "Zostanie po cichu pominięte",
+      "Trafi do kolejki i wykona się, gdy zacznie się kolejne okno 1000 ms",
+      "Wykona się od razu, bo limit dotyczy tylko wywołań synchronicznych",
+      "Rzuci synchronicznie wyjątek ERR_THROTTLED"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie (overflow: 'queue') wywołania ponad limit są kolejkowane w kolejności przyjścia, a nie odrzucane. Kolejka jest przetwarzana grupami po limit wywołań, gdy zaczyna się następne okno. Throttlowana funkcja zwraca Promise z wynikiem fn.",
+    "source_url": "https://nodejs.org/api/util.html#utilthrottlefn-limit-interval-options",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-mid-016",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Używasz util.throttle(fn, 10, 1000, { overflow: 'drop' }) i ignorujesz obietnice zwracane przez odrzucone wywołania. Co się stanie?",
+    "options": [
+      "Proces dostanie zdarzenie 'unhandledRejection' i przy domyślnych ustawieniach się zakończy",
+      "Odrzucone wywołania i tak trafią do kolejki",
+      "Obietnice odrzucone z ERR_THROTTLED są oznaczone jako obsłużone, więc nie będzie unhandledRejection",
+      "fn zostanie wywołana z argumentem undefined"
+    ],
+    "correct": 2,
+    "explanation": "Przy overflow: 'drop' wywołania bez wolnej pojemności od razu dostają obietnicę odrzuconą błędem ERR_THROTTLED. Ta obietnica jest oznaczona jako obsłużona, więc jej zignorowanie nie wywoła 'unhandledRejection'. Jeśli zrobisz await, nadal zobaczysz odrzucenie.",
+    "source_url": "https://nodejs.org/api/util.html#utilthrottlefn-limit-interval-options",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-mid-017",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Od Node.js 26.10 node:sqlite inaczej traktuje undefined w parametrach zapytania. Co zapisze ten kod w kolumnie note?",
+    "code": "import { DatabaseSync } from 'node:sqlite';\n\nconst db = new DatabaseSync(':memory:');\ndb.exec('CREATE TABLE t (note TEXT)');\ndb.prepare('INSERT INTO t (note) VALUES ($note)').run({ $note: undefined });",
+    "options": [
+      "Napis 'undefined'",
+      "NULL — undefined jest zapisywane tak samo jak pominięty parametr",
+      "Pusty napis",
+      "Nic, bo run() rzuca ERR_INVALID_ARG_TYPE"
+    ],
+    "correct": 1,
+    "explanation": "undefined jest zapisywane jako NULL, więc { $note: undefined } działa tak samo jak {} (niezwiązany parametr też jest NULL). Przy odczycie NULL zawsze wraca jako null, nigdy jako undefined.",
+    "source_url": "https://nodejs.org/api/sqlite.html#type-conversion-between-javascript-and-sqlite",
+    "added_on": "2026-10-07"
   }
 ]

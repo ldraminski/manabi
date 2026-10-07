@@ -215,5 +215,33 @@
     "title": "Testy jednostkowe",
     "description": "Zapytania Testing Library, mocki w Vitest",
     "icon": "list"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "coding-agents",
+    "title": "Agenci kodujący",
+    "description": "CLAUDE.md, plan mode, kontekst, uprawnienia i hooki",
+    "icon": "spark"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "builtin-modules",
+    "title": "Nowe moduły wbudowane",
+    "description": "util.throttle, node:sqlite",
+    "icon": "list"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "production-operations",
+    "title": "Utrzymanie w produkcji",
+    "description": "Snapshoty sterty, opóźnienie pętli, zamykanie serwera",
+    "icon": "clock"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "scaling-and-isolation",
+    "title": "Skalowanie i izolacja",
+    "description": "cluster, stan w pamięci, model uprawnień",
+    "icon": "layout"
   }
 ]

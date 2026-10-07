@@ -48,6 +48,62 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "ai-tools-junior-007",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-008",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-009",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-010",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-011",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-012",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-013",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
     "id": "angular-junior-001",
     "technology": "angular",
     "level": "junior",
@@ -630,6 +686,70 @@
     "topic": "production-runtime",
     "kind": "single_choice",
     "added_on": "2026-10-06"
+  },
+  {
+    "id": "nodejs-mid-015",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-mid-016",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-mid-017",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-001",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-002",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-003",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-004",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-005",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-07"
   },
   {
     "id": "react-junior-001",

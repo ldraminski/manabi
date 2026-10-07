@@ -82,5 +82,117 @@
     "explanation": "To pytanie pada coraz częściej w ogłoszeniach z wymaganiem „AI”. Warto mieć jeden prawdziwy przykład z własnej pracy.",
     "source_url": "https://docs.github.com/en/copilot/get-started/best-practices",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "ai-tools-junior-007",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "W repozytorium jest wspólny CLAUDE.md. Gdzie zapiszesz swoje prywatne instrukcje dla tego projektu (np. adres Twojego środowiska testowego), żeby nie trafiły do gita?",
+    "options": [
+      "W ~/.claude/CLAUDE.md, bo ten plik dotyczy tylko tego projektu",
+      "W ./CLAUDE.local.md dodanym do .gitignore",
+      "Na końcu ./CLAUDE.md, w sekcji oznaczonej jako prywatna",
+      "W pliku README.md, bo Claude Code czyta go na starcie"
+    ],
+    "correct": 1,
+    "explanation": "CLAUDE.local.md w katalogu projektu służy do osobistych ustawień dla jednego projektu i ładuje się razem z CLAUDE.md. Trzeba go dodać do .gitignore. ~/.claude/CLAUDE.md też jest prywatny, ale działa we wszystkich projektach, a ./CLAUDE.md jest wspólny dla zespołu przez repozytorium.",
+    "source_url": "https://code.claude.com/docs/en/memory",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-008",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "W CLAUDE.md napisałeś „Nigdy nie edytuj plików w katalogu migrations/”. Chcesz mieć pewność, że ta zasada nie zostanie złamana. Co robisz?",
+    "options": [
+      "Dopisujesz tę zasadę kilka razy, żeby była lepiej widoczna",
+      "Przenosisz zasadę na początek pliku CLAUDE.md",
+      "Dodajesz hook (np. PreToolUse), który blokuje zapis do tego katalogu",
+      "Nic, bo instrukcje z CLAUDE.md są wymuszane tak samo jak ustawienia"
+    ],
+    "correct": 2,
+    "explanation": "Claude traktuje CLAUDE.md jako kontekst, a nie wymuszaną konfigurację, więc instrukcja może zostać pominięta. Hooki są deterministyczne: skrypt uruchamia się zawsze w danym momencie i może zablokować akcję. Do rzeczy, które muszą się dziać bez wyjątków, służą hooki (albo reguły uprawnień).",
+    "source_url": "https://code.claude.com/docs/en/memory",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-009",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "Która z tych linijek najbardziej opłaca się w pliku CLAUDE.md?",
+    "options": [
+      "„Pisz czysty, czytelny kod”",
+      "„Testy uruchamiaj przez npm run test:unit -- <plik>, nie przez cały zestaw”",
+      "Opis każdego pliku w katalogu src/",
+      "Pełna dokumentacja API zewnętrznej biblioteki"
+    ],
+    "correct": 1,
+    "explanation": "CLAUDE.md ładuje się w każdej sesji, więc powinien zawierać to, czego Claude nie zgadnie z kodu: komendy, nietypowe zasady stylu, sposób uruchamiania testów. Oczywiste hasła, opisy plików i długą dokumentację lepiej pominąć albo podlinkować — zbyt długi plik sprawia, że ważne zasady giną.",
+    "source_url": "https://code.claude.com/docs/en/best-practices",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-010",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "Skończyłeś w Claude Code poprawkę logowania i zaczynasz w tej samej sesji zupełnie inne zadanie. Co zalecają dobre praktyki?",
+    "options": [
+      "Uruchomić /clear, żeby wyczyścić kontekst przed nowym zadaniem",
+      "Kontynuować — im więcej kontekstu, tym lepsze odpowiedzi",
+      "Wkleić jeszcze raz całe CLAUDE.md do rozmowy",
+      "Przełączyć się na mniejszy model"
+    ],
+    "correct": 0,
+    "explanation": "Okno kontekstu mieści całą rozmowę: wiadomości, przeczytane pliki i wyniki komend. Gdy się zapełnia, jakość odpowiedzi spada, a model może „zapominać” wcześniejsze instrukcje. Między niezwiązanymi zadaniami zaleca się /clear.",
+    "source_url": "https://code.claude.com/docs/en/best-practices",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-011",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "Kiedy według dobrych praktyk warto zacząć pracę z Claude Code od trybu planowania (plan mode)?",
+    "options": [
+      "Zawsze, nawet przy poprawce literówki",
+      "Nigdy, bo plan mode spowalnia pracę",
+      "Tylko gdy projekt nie ma testów",
+      "Gdy zmiana obejmuje wiele plików, nie znasz kodu albo nie masz pewności co do podejścia"
+    ],
+    "correct": 3,
+    "explanation": "Plan mode oddziela poznawanie kodu od wprowadzania zmian, ale dodaje narzut. Dokumentacja radzi: jeśli umiesz opisać diff jednym zdaniem (literówka, log, zmiana nazwy), poproś o zmianę od razu; planowanie opłaca się przy niepewnym podejściu, zmianach w wielu plikach i nieznanym kodzie.",
+    "source_url": "https://code.claude.com/docs/en/best-practices",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-012",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "Które polecenie dla agenta AI najlepiej pozwala mu samodzielnie sprawdzić, czy zadanie jest zrobione?",
+    "options": [
+      "„Napisz funkcję walidującą adres e-mail”",
+      "„Napisz funkcję walidującą adres e-mail, tylko dobrze”",
+      "„Napisz validateEmail. Przypadki: user@example.com → true, invalid → false, user@.com → false. Po implementacji uruchom testy”",
+      "„Napisz funkcję walidującą adres e-mail i powiedz, czy działa”"
+    ],
+    "correct": 2,
+    "explanation": "Agent kończy, gdy praca „wygląda na skończoną”. Jeśli dostanie sprawdzenie, które zwraca wynik zaliczone/niezaliczone (testy, build, linter), sam uruchamia je i poprawia kod, aż przejdzie. Zapewnienie „działa” bez uruchomienia niczego nie dowodzi.",
+    "source_url": "https://code.claude.com/docs/en/best-practices",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-013",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "W ustawieniach Claude Code masz regułę deny „Bash(aws *)” i regułę allow „Bash(aws s3 ls)”. Co się stanie, gdy Claude zechce uruchomić aws s3 ls?",
+    "options": [
+      "Polecenie zostanie zablokowane, bo reguły deny są sprawdzane przed allow",
+      "Polecenie się wykona, bo reguła allow jest bardziej szczegółowa",
+      "Claude Code zgłosi błąd sprzecznych reguł i nie uruchomi się",
+      "Wygra reguła, która jest zapisana później w pliku"
+    ],
+    "correct": 0,
+    "explanation": "Reguły są sprawdzane w kolejności deny, potem ask, potem allow, i decyduje pierwsze dopasowanie. Szczegółowość reguły nie zmienia tej kolejności, więc allow nie może zrobić wyjątku od szerszego deny.",
+    "source_url": "https://code.claude.com/docs/en/permissions",
+    "added_on": "2026-10-07"
   }
 ]

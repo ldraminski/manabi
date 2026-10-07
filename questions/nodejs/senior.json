@@ -1,0 +1,82 @@
+[
+  {
+    "id": "nodejs-senior-001",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Serwis na produkcji powoli traci pamięć. Chcesz dodać endpoint administracyjny, który wywołuje v8.writeHeapSnapshot(). O jakim ryzyku musisz pamiętać?",
+    "options": [
+      "Snapshot zapisuje się w tle i nie ma wpływu na działanie procesu",
+      "Snapshot jest synchroniczny i blokuje pętlę zdarzeń, a do jego utworzenia potrzeba około dwa razy tyle pamięci, ile zajmuje sterta, więc proces może zostać zabity przez OOM killer",
+      "Snapshot obejmuje wszystkie worker_threads, więc plik będzie bardzo duży",
+      "writeHeapSnapshot() działa tylko z flagą --inspect"
+    ],
+    "correct": 1,
+    "explanation": "Generowanie snapshotu blokuje pętlę zdarzeń na czas zależny od rozmiaru sterty i wymaga pamięci około dwukrotności sterty. Snapshot dotyczy jednego izolatu V8 — z wątku głównego nie widać workerów. Na produkcji wykonuje się go na jednej instancji zdjętej z ruchu i z zapasem pamięci.",
+    "source_url": "https://nodejs.org/api/v8.html#v8writeheapsnapshotfilenameoptions",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-002",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Chcesz na dashboardzie śledzić, czy pętla zdarzeń serwisu nie jest blokowana (np. p99 opóźnienia). Czego użyjesz?",
+    "options": [
+      "process.memoryUsage()",
+      "os.loadavg()",
+      "perf_hooks.monitorEventLoopDelay(), które zbiera histogram opóźnień pętli w nanosekundach",
+      "process.cpuUsage() porównywane z liczbą żądań"
+    ],
+    "correct": 2,
+    "explanation": "monitorEventLoopDelay() zwraca histogram (min, max, mean, percentile()) opóźnień pętli zdarzeń w nanosekundach. Zużycie pamięci czy load average systemu nie mówią bezpośrednio, jak długo callbacki czekają na wykonanie.",
+    "source_url": "https://nodejs.org/api/perf_hooks.html#perf_hooksmonitoreventloopdelayoptions",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-003",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Przy SIGTERM serwis HTTP wywołuje server.close(). Co ta metoda robi w aktualnych wersjach Node.js?",
+    "options": [
+      "Natychmiast zrywa wszystkie połączenia, także te w trakcie obsługi żądania",
+      "Przestaje przyjmować nowe połączenia i zamyka bezczynne połączenia keep-alive; trwające żądania mogą się dokończyć",
+      "Tylko przestaje przyjmować nowe połączenia — bezczynne połączenia keep-alive trzeba zawsze zamknąć ręcznie",
+      "Kończy proces z kodem 0"
+    ],
+    "correct": 1,
+    "explanation": "server.close() przestaje przyjmować nowe połączenia i zamyka połączenia, które nie wysyłają żądania ani nie czekają na odpowiedź. Od Node.js 19 obejmuje to bezczynne połączenia keep-alive, więc closeIdleConnections() nie jest już potrzebne. Do twardego zerwania wszystkiego służy closeAllConnections().",
+    "source_url": "https://nodejs.org/api/http.html#serverclosecallback",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-004",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Zespół chce uruchomić aplikację w module cluster na wszystkich rdzeniach. Sesje użytkowników są dziś trzymane w obiekcie Map w pamięci procesu. Jaki problem się pojawi?",
+    "options": [
+      "Żaden — workery w cluster współdzielą pamięć z procesem głównym",
+      "Cluster nie działa z serwerami HTTP",
+      "Każdy worker to osobny proces z własną pamięcią, a Node.js nie kieruje kolejnych żądań klienta do tego samego workera, więc sesja może „zniknąć”",
+      "Workery będą nadpisywać sobie nawzajem te same wpisy w Map"
+    ],
+    "correct": 2,
+    "explanation": "Workery cluster to osobne procesy, a Node.js nie dostarcza logiki routingu (sticky sessions). Dokumentacja wprost radzi nie polegać na danych w pamięci dla sesji i logowania — stan trzeba przenieść do współdzielonego magazynu, np. Redisa lub bazy.",
+    "source_url": "https://nodejs.org/api/cluster.html#how-it-works",
+    "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-005",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Platforma ma uruchamiać wtyczki pisane przez klientów. Ktoś proponuje: „uruchommy je przez node --permission bez --allow-fs-write i --allow-child-process, to bezpieczny sandbox”. Jak to oceniasz?",
+    "options": [
+      "Słusznie — model uprawnień jest stabilny i izoluje niezaufany kod",
+      "Słusznie, pod warunkiem dodania --permission-audit",
+      "Niesłusznie, bo --permission działa tylko w worker_threads",
+      "Niesłusznie — model uprawnień to „pas bezpieczeństwa” dla zaufanego kodu i nie chroni przed złośliwym kodem; niezaufany kod trzeba izolować na poziomie systemu (kontener, osobny proces z ograniczeniami)"
+    ],
+    "correct": 3,
+    "explanation": "Dokumentacja opisuje model uprawnień jako „seat belt”: chroni zaufany kod przed przypadkowym dostępem do zasobów, ale złośliwy kod może go obejść. Zgodnie z polityką bezpieczeństwa Node.js ufa każdemu kodowi, który uruchamia. --permission-audit tylko raportuje naruszenia, niczego nie blokuje.",
+    "source_url": "https://nodejs.org/api/permissions.html#permission-model",
+    "added_on": "2026-10-07"
+  }
+]
