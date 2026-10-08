@@ -78,5 +78,85 @@
     "explanation": "Dokumentacja opisuje model uprawnień jako „seat belt”: chroni zaufany kod przed przypadkowym dostępem do zasobów, ale złośliwy kod może go obejść. Zgodnie z polityką bezpieczeństwa Node.js ufa każdemu kodowi, który uruchamia. --permission-audit tylko raportuje naruszenia, niczego nie blokuje.",
     "source_url": "https://nodejs.org/api/permissions.html#permission-model",
     "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-006",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Histogram z monitorEventLoopDelay() czyta też inny moduł, więc nie możesz wywoływać reset(). Chcesz co 10 s raportować p99 tylko z ostatniego interwału. Jak to zrobić w Node.js 26.11?",
+    "options": [
+      "Odejmować od siebie kolejne wartości histogram.percentile(99)",
+      "Co interwał robić histogram.snapshot() i liczyć current.diff(previous)",
+      "Raportować histogram.mean, bo średnia sama się aktualizuje",
+      "Nie da się bez reset() — trzeba utworzyć osobny histogram dla każdego odczytu"
+    ],
+    "correct": 1,
+    "explanation": "snapshot() i diff() (nowe w 26.11) pozwalają policzyć wartości zarejestrowane między dwoma migawkami bez zmieniania źródła. Percentyli nie da się odejmować — różnica p99 to nie p99 z interwału. Jeśli ktoś jednak zresetuje histogram, diff() rzuci ERR_INVALID_STATE, więc warto porównywać resetCount.",
+    "source_url": "https://nodejs.org/api/perf_hooks.html#histogramdiffother",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-007",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Serwis bez reverse proxy przyjmuje uploady trwające ponad 5 minut i odrzuca je z kodem 408. Ktoś proponuje ustawić server.requestTimeout = 0. Co odpowiesz?",
+    "options": [
+      "To dobre rozwiązanie — 0 oznacza nieskończony limit i nie ma skutków ubocznych",
+      "Lepiej ustawić większą, ale niezerową wartość — przy 0 serwer bez proxy traci ochronę przed atakami DoS powolnymi żądaniami",
+      "requestTimeout nie ma związku z 408 — winny jest keepAliveTimeout",
+      "Trzeba wyłączyć headersTimeout, bo to on ucina uploady"
+    ],
+    "correct": 1,
+    "explanation": "requestTimeout (domyślnie 300 000 ms) ogranicza czas na odebranie całego żądania; po nim serwer odpowiada 408 i zamyka połączenie. Dokumentacja wymaga wartości niezerowej, by chronić przed DoS, gdy przed serwerem nie ma reverse proxy. Można też przenieść duże uploady poza ten serwer, np. do bezpośredniego uploadu do storage.",
+    "source_url": "https://nodejs.org/api/http.html#serverrequesttimeout",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-008",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Utrzymujesz wewnętrzną bibliotekę klienta bazy danych używaną przez wiele zespołów. Chcesz, żeby mogli podpiąć dowolne narzędzie APM bez zależności biblioteki od konkretnego dostawcy. Jakie podejście zaproponujesz?",
+    "options": [
+      "Publikować zdarzenia na nazwanych kanałach node:diagnostics_channel, opisać w dokumentacji ich nazwy i kształt danych, a kosztowne dane budować tylko gdy channel.hasSubscribers",
+      "Dodać do biblioteki SDK najpopularniejszego dostawcy APM",
+      "Logować każde zapytanie przez console.log i parsować logi",
+      "Nadpisywać globalnie metody biblioteki w każdej aplikacji (monkey patching)"
+    ],
+    "correct": 0,
+    "explanation": "diagnostics_channel służy autorom modułów do raportowania danych diagnostycznych bez wiedzy, kto je odbiera. Zalecane są kanały tworzone na najwyższym poziomie modułu, nazwy z prefiksem modułu i udokumentowany format wiadomości. hasSubscribers pozwala pominąć przygotowanie kosztownych danych, gdy nikt nie słucha.",
+    "source_url": "https://nodejs.org/api/diagnostics_channel.html#public-api",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-009",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Wątek główny przekazuje workerowi bufor 200 MB wywołaniem worker.postMessage({ buf }, [buf]), gdzie buf to ArrayBuffer. Co się dzieje z buf w wątku głównym?",
+    "options": [
+      "Nadal można go używać, bo dane zostały skopiowane",
+      "Zostaje przeniesiony i nie nadaje się już do użycia po stronie wysyłającej",
+      "Oba wątki współdzielą tę samą pamięć i mogą ją równolegle modyfikować",
+      "postMessage rzuci błąd, bo ArrayBuffer nie może być na liście transferList"
+    ],
+    "correct": 1,
+    "explanation": "Obiekty z transferList są przenoszone, nie kopiowane, więc po stronie wysyłającej przestają być użyteczne. Bez transferList pamięć ArrayBuffera zostałaby skopiowana. Wspólną pamięć daje SharedArrayBuffer — i jego nie umieszcza się na transferList.",
+    "source_url": "https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-010",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Zadania klientów uruchamiasz w worker_threads z resourceLimits: { maxOldGenerationSizeMb: 256 }. Co ten limit gwarantuje?",
+    "options": [
+      "Że cały proces nigdy nie przekroczy 256 MB pamięci",
+      "Ogranicza tylko stertę JS tego workera — nie obejmuje danych zewnętrznych, np. ArrayBufferów, a proces nadal może paść przy globalnym braku pamięci",
+      "Że worker zostanie przeniesiony do osobnego procesu po przekroczeniu limitu",
+      "Nic — w workerach ta opcja jest ignorowana, działa tylko --max-old-space-size"
+    ],
+    "correct": 1,
+    "explanation": "resourceLimits ograniczają tylko silnik JS w danym workerze, bez danych zewnętrznych, w tym ArrayBufferów. Proces może zakończyć się mimo limitów przy globalnym braku pamięci. Do twardej izolacji zadań klientów potrzebne są osobne procesy lub kontenery. Uwaga: --max-old-space-size, jeśli jest ustawione, nadpisuje maxOldGenerationSizeMb.",
+    "source_url": "https://nodejs.org/api/worker_threads.html#new-workerfilename-options",
+    "added_on": "2026-10-08"
   }
 ]

@@ -276,5 +276,53 @@
     "explanation": "undefined jest zapisywane jako NULL, więc { $note: undefined } działa tak samo jak {} (niezwiązany parametr też jest NULL). Przy odczycie NULL zawsze wraca jako null, nigdy jako undefined.",
     "source_url": "https://nodejs.org/api/sqlite.html#type-conversion-between-javascript-and-sqlite",
     "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-mid-018",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Dostajesz bufor bajtów UTF-8 i przed dekodowaniem chcesz sprawdzić, czy powstały napis nie przekroczy 10 000 znaków (liczonych jak string.length). Czego użyjesz w Node.js 26.11?",
+    "options": [
+      "Buffer.byteLength(buf)",
+      "buf.length",
+      "Buffer.stringLength(buf)",
+      "buf.toString().length"
+    ],
+    "correct": 2,
+    "explanation": "Buffer.stringLength() (nowość w 26.11) zwraca długość w jednostkach UTF-16 — tę samą, co string.length — napisu, który powstałby z buf.toString(), bez dekodowania. Buffer.byteLength() i buf.length liczą bajty, a toString().length wymaga zdekodowania całości.",
+    "source_url": "https://nodejs.org/api/buffer.html#static-method-bufferstringlengthinput-encoding",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-mid-019",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Proxy kopiuje nagłówki z konfiguracji użytkownika i ma po cichu pomijać te o niepoprawnej nazwie. Kod jest na gorącej ścieżce, więc nie chcesz try/catch. Co wybierzesz w Node.js 26.11?",
+    "options": [
+      "http.validateHeaderName(name), które zwraca false dla złej nazwy",
+      "http.isValidHeaderName(name), które zwraca true albo false",
+      "response.setHeader(name, value), bo pomija niepoprawne nagłówki",
+      "Wyrażenie /^[a-z-]+$/ na nazwie nagłówka"
+    ],
+    "correct": 1,
+    "explanation": "http.isValidHeaderName() (nowość w 26.11) robi to samo sprawdzenie co validateHeaderName(), ale zwraca wartość logiczną zamiast rzucać błąd. validateHeaderName() i setHeader() rzucają wyjątek, a takie wyrażenie odrzuciłoby poprawne nazwy, np. X-Request-Id.",
+    "source_url": "https://nodejs.org/api/http.html#httpisvalidheadernamename",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-mid-020",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Skrypt testów w CI czasem wisi. Uruchamiasz go przez node --process-timeout=5m run-tests.js (Node.js 26.11). Co się stanie, jeśli po 5 minutach proces nadal działa?",
+    "options": [
+      "Node.js wyśle sobie SIGTERM i wywoła handlery zdarzenia 'exit'",
+      "Proces zakończy się kodem 124 i wypisze na stderr, co trzymało pętlę zdarzeń przy życiu, bez emitowania 'exit'",
+      "W wątku głównym zostanie rzucony wyjątek, który można złapać",
+      "Pojawi się ostrzeżenie, a proces będzie działał dalej"
+    ],
+    "correct": 1,
+    "explanation": "--process-timeout kończy proces kodem 124 (jak polecenie timeout). Przed wyjściem wypisuje stos wątku głównego albo listę zasobów podtrzymujących pętlę zdarzeń. Zdarzenia 'beforeExit' i 'exit' nie są emitowane, bo to kod JavaScript może być przyczyną zawieszenia. Flaga jest w fazie aktywnego rozwoju (Stability 1.1).",
+    "source_url": "https://nodejs.org/api/cli.html#--process-timeoutduration",
+    "added_on": "2026-10-08"
   }
 ]

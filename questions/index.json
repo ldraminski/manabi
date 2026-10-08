@@ -104,6 +104,86 @@
     "added_on": "2026-10-07"
   },
   {
+    "id": "ai-tools-mid-001",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-002",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-003",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-004",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-005",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-006",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-007",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-008",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-009",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-010",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
     "id": "angular-junior-001",
     "technology": "angular",
     "level": "junior",
@@ -712,6 +792,30 @@
     "added_on": "2026-10-07"
   },
   {
+    "id": "nodejs-mid-018",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-mid-019",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-mid-020",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -750,6 +854,46 @@
     "topic": "scaling-and-isolation",
     "kind": "single_choice",
     "added_on": "2026-10-07"
+  },
+  {
+    "id": "nodejs-senior-006",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-007",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-008",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-009",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-010",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-08"
   },
   {
     "id": "react-junior-001",

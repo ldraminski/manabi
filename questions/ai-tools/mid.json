@@ -1,0 +1,162 @@
+[
+  {
+    "id": "ai-tools-mid-001",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "W trakcie sesji Claude Code dopisujesz nową zasadę do głównego CLAUDE.md w katalogu projektu. Kiedy Claude zacznie się do niej stosować?",
+    "options": [
+      "Od razu przy następnej wiadomości",
+      "Dopiero po /clear, /compact albo ponownym uruchomieniu",
+      "Dopiero po zrobieniu commita z tą zmianą",
+      "Nigdy — CLAUDE.md czytany jest tylko przy pierwszym uruchomieniu w repozytorium"
+    ],
+    "correct": 1,
+    "explanation": "CLAUDE.md z katalogu projektu i użytkownika jest wczytywany raz na starcie sesji i trzymany w pamięci. Edycja w trakcie nie psuje cache, ale też nie działa — nowa treść wejdzie po /clear, /compact lub restarcie.",
+    "source_url": "https://code.claude.com/docs/en/prompt-caching#editing-claude-md-mid-session",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-002",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Jesteś głęboko w długiej sesji i przełączasz model przez /model. Czym to skutkuje przy następnym zapytaniu?",
+    "options": [
+      "Niczym — cache promptu jest wspólny dla wszystkich modeli",
+      "Rozmowa zostaje automatycznie skrócona do podsumowania",
+      "Cała historia rozmowy jest przetwarzana od nowa bez trafień w cache",
+      "Tracisz historię rozmowy i zaczynasz od pustego kontekstu"
+    ],
+    "correct": 2,
+    "explanation": "Każdy model ma własny cache. Po zmianie modelu następne zapytanie czyta całą historię bez trafień w cache, mimo że treść jest identyczna — dlatego taka tura jest wolniejsza i droższa.",
+    "source_url": "https://code.claude.com/docs/en/prompt-caching#switching-models",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-003",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "W ~/.claude/settings.json ustawiłeś spinnerTipsEnabled na false, ale commitowany .claude/settings.json zespołu ustawia true. Jak wyłączyć podpowiedzi tylko dla siebie w tym projekcie?",
+    "options": [
+      "Nie da się — ustawienia użytkownika zawsze wygrywają, więc problem nie istnieje",
+      "Zmienić wartość w .claude/settings.json i zrobić commit",
+      "Ustawić false w .claude/settings.local.json tego projektu",
+      "Dopisać zasadę do CLAUDE.md"
+    ],
+    "correct": 2,
+    "explanation": "Kolejność od najważniejszego: managed, --settings z linii poleceń, .claude/settings.local.json, .claude/settings.json, ~/.claude/settings.json. Ustawienia projektu nadpisują Twoje osobiste, ale settings.local.json stoi nad nimi i dotyczy tylko Ciebie. Wyjątek: listy, np. permissions.allow, są łączone, a nie nadpisywane.",
+    "source_url": "https://code.claude.com/docs/en/settings#settings-precedence",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-004",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Chcesz podłączyć serwer MCP z własnym tokenem tylko w tym jednym projekcie, tak żeby konfiguracja nie trafiła do repozytorium. Który zakres wybierasz?",
+    "options": [
+      "local (domyślny) — zapis w ~/.claude.json pod ścieżką tego projektu",
+      "project — zapis w .mcp.json w katalogu projektu",
+      "user — zapis w ~/.claude.json dostępny we wszystkich projektach",
+      "Dowolny, bo konfiguracja MCP nigdy nie trafia do repozytorium"
+    ],
+    "correct": 0,
+    "explanation": "Zakres local jest domyślny: serwer działa tylko w projekcie, w którym go dodano, i jest prywatny — zapisuje się w ~/.claude.json w katalogu domowym. Zakres project trafia do .mcp.json, który commituje się dla zespołu, a user udostępnia serwer we wszystkich Twoich projektach.",
+    "source_url": "https://code.claude.com/docs/en/mcp#local-scope",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-005",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Kolega dodał serwer MCP przez claude mcp add --scope project i zacommitował .mcp.json. Co się stanie, gdy sklonujesz repozytorium i uruchomisz Claude Code?",
+    "options": [
+      "Serwer połączy się automatycznie bez żadnego pytania",
+      "Serwer zostanie zignorowany, dopóki nie dodasz go ponownie poleceniem claude mcp add",
+      "Claude Code poprosi Cię o zatwierdzenie serwera z .mcp.json, zanim się z nim połączy",
+      "Serwer przeniesie się do Twojego zakresu user"
+    ],
+    "correct": 2,
+    "explanation": "Zakres project zapisuje serwer w .mcp.json, żeby cały zespół miał te same narzędzia. Ze względów bezpieczeństwa sklonowane repozytorium nie może samo zatwierdzić swoich serwerów — do zatwierdzenia pozostają w stanie „Pending approval”.",
+    "source_url": "https://code.claude.com/docs/en/mcp#project-scope",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-006",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Hook PreToolUse ma blokować polecenia z DROP TABLE. Skrypt wypisuje komunikat na stderr i kończy się kodem 1. Co się stanie, gdy Claude spróbuje uruchomić takie polecenie?",
+    "options": [
+      "Polecenie zostanie zablokowane, bo każdy niezerowy kod blokuje akcję",
+      "Polecenie się wykona, a hook zostanie zgłoszony jako błąd nieblokujący — do blokowania służy kod 2",
+      "Claude Code wyłączy wszystkie hooki do końca sesji",
+      "Sesja zostanie przerwana"
+    ],
+    "correct": 1,
+    "explanation": "Blokuje tylko kod wyjścia 2 (z powodem na stderr) albo odpowiednia odpowiedź JSON. Inny niezerowy kod bez JSON-a na stdout to błąd nieblokujący: akcja przechodzi, a w transkrypcie pojawia się komunikat o błędzie hooka. Z kolei exit 0 w PreToolUse niczego nie zatwierdza — dalej działa zwykły mechanizm uprawnień.",
+    "source_url": "https://code.claude.com/docs/en/hooks-guide#hook-output",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-007",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Na zdarzenie PreToolUse dla Bash masz dwa hooki: jeden loguje polecenie do pliku i zwraca allow, drugi zwraca deny dla rm -rf. Co się dzieje przy poleceniu rm -rf build?",
+    "options": [
+      "Wygrywa hook zarejestrowany jako pierwszy",
+      "Oba hooki wykonują się do końca, a decyzją jest deny, bo stosowana jest najbardziej restrykcyjna odpowiedź",
+      "Drugi hook nie uruchomi się, bo pierwszy już zwrócił allow",
+      "Claude Code pyta użytkownika, bo decyzje są sprzeczne"
+    ],
+    "correct": 1,
+    "explanation": "Wszystkie pasujące hooki wykonują się do końca, a potem wyniki są łączone. Dla decyzji PreToolUse obowiązuje najbardziej restrykcyjna: deny, defer, ask, allow. Deny jednego hooka nie zatrzymuje efektów ubocznych innych, więc logowanie i tak się wykona.",
+    "source_url": "https://code.claude.com/docs/en/hooks-guide#combine-results-from-multiple-hooks",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-008",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Zespół ma 600-linijkowy przewodnik po konwencjach API, potrzebny tylko przy pracy nad endpointami. Gdzie go umieścić, żeby nie zużywał kontekstu w każdej sesji?",
+    "options": [
+      "W CLAUDE.md, bo tylko on jest zawsze czytany",
+      "W skillu — w każdej sesji ładuje się tylko jego opis, a pełna treść dopiero przy użyciu",
+      "W hooku SessionStart, który wypisze go na stdout",
+      "W komentarzu w pliku package.json"
+    ],
+    "correct": 1,
+    "explanation": "CLAUDE.md ładuje się w całości w każdej sesji, więc warto trzymać go krótko (zalecenie: do 200 linii). Materiał referencyjny lepiej przenieść do skilla: opis jest widoczny cały czas, a pełna treść trafia do kontekstu dopiero, gdy skill jest użyty.",
+    "source_url": "https://code.claude.com/docs/en/features-overview#claude-md-vs-rules-vs-skills",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-009",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Testy w projekcie wypisują tysiące linii logów, a Tobie wystarczy wiedzieć, które padły i dlaczego. Dlaczego warto zlecić ich uruchomienie subagentowi?",
+    "options": [
+      "Subagent działa we własnym oknie kontekstu i zwraca tylko podsumowanie, więc logi nie zapychają głównej rozmowy",
+      "Subagent nie zużywa limitów użycia",
+      "Subagent ma automatycznie pełne uprawnienia bez pytania o zgodę",
+      "Subagent uruchamia testy szybciej, bo działa na innym serwerze"
+    ],
+    "correct": 0,
+    "explanation": "Subagent pracuje w osobnym kontekście, a do głównej rozmowy wraca tylko wynik. To dobre miejsce na operacje z dużą ilością danych: testy, logi, dokumentację. Jego zapytania liczą się jednak do tych samych limitów, co główna rozmowa.",
+    "source_url": "https://code.claude.com/docs/en/sub-agents#isolate-high-volume-operations",
+    "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-010",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz równoległą sesję przez claude --worktree feature-x. Aplikacja w nowym worktree nie startuje, bo brakuje pliku .env, który jest w .gitignore. Dlaczego i co zrobić?",
+    "options": [
+      "Worktree to świeży checkout tylko śledzonych plików; pliki z .gitignore można kopiować automatycznie przez .worktreeinclude",
+      "Worktree współdzieli katalog z główną kopią, więc .env został usunięty — trzeba go przywrócić z kosza",
+      "Claude Code nie obsługuje plików .env w worktree",
+      "Wystarczy usunąć .env z .gitignore i zacommitować go"
+    ],
+    "correct": 0,
+    "explanation": "Worktree powstaje w .claude/worktrees/<nazwa> na nowej gałęzi i zawiera tylko pliki śledzone przez Git, więc zależności i pliki z .gitignore trzeba przygotować osobno. Plik .worktreeinclude wskazuje, które ignorowane pliki kopiować do każdego nowego worktree. Commitowanie sekretów nie jest rozwiązaniem.",
+    "source_url": "https://code.claude.com/docs/en/worktrees#copy-gitignored-files-into-worktrees",
+    "added_on": "2026-10-08"
+  }
+]

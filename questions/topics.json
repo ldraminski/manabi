@@ -224,17 +224,31 @@
     "icon": "spark"
   },
   {
+    "technology": "ai-tools",
+    "slug": "agent-context",
+    "title": "Kontekst i konfiguracja agenta",
+    "description": "CLAUDE.md w trakcie sesji, cache, ustawienia, zakresy MCP",
+    "icon": "layout"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "agent-automation",
+    "title": "Automatyzacja agenta",
+    "description": "Hooki, skille, subagenci, worktree",
+    "icon": "spark"
+  },
+  {
     "technology": "nodejs",
     "slug": "builtin-modules",
     "title": "Nowe moduły wbudowane",
-    "description": "util.throttle, node:sqlite",
+    "description": "util.throttle, node:sqlite, Buffer.stringLength, --process-timeout",
     "icon": "list"
   },
   {
     "technology": "nodejs",
     "slug": "production-operations",
     "title": "Utrzymanie w produkcji",
-    "description": "Snapshoty sterty, opóźnienie pętli, zamykanie serwera",
+    "description": "Snapshoty sterty, opóźnienie pętli, limity czasu HTTP, diagnostics_channel",
     "icon": "clock"
   },
   {
