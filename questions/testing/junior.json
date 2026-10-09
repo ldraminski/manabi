@@ -62,5 +62,70 @@
     "explanation": "Na takiej funkcji można potem sprawdzić np. expect(onSave).toHaveBeenCalledWith(...). Bez przekazanej implementacji mock zwraca undefined. Do podmiany całego modułu służy vi.mock.",
     "source_url": "https://vitest.dev/api/vi",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "testing-junior-005",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Który test w Vitest przejdzie?",
+    "code": "const a = { id: 1 }\nconst b = { id: 1 }",
+    "options": [
+      "expect(a).toBe(b)",
+      "expect(a).toEqual(b)",
+      "Oba",
+      "Żaden"
+    ],
+    "correct": 1,
+    "explanation": "toBe porównuje przez Object.is — dla obiektów sprawdza, czy to ta sama referencja, a a i b to dwa różne obiekty. toEqual porównuje rekurencyjnie strukturę i wartości, więc przejdzie. toBe stosuj do prymitywów albo gdy naprawdę chcesz sprawdzić tożsamość obiektu.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/expect.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-006",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Czym toStrictEqual różni się od toEqual w Vitest?",
+    "options": [
+      "toStrictEqual porównuje obiekty przez referencję",
+      "toStrictEqual sprawdza też klucze o wartości undefined, dziury w tablicach i to, czy typy obiektów (klasy) są takie same",
+      "toStrictEqual działa tylko dla tablic",
+      "Nie ma różnicy, to alias"
+    ],
+    "correct": 1,
+    "explanation": "toEqual porównuje rekurencyjnie strukturę, ale np. { a: undefined, b: 2 } uzna za równe { b: 2 }. toStrictEqual tego nie przepuści, sprawdzi też rzadkie tablice ([, 1] vs [undefined, 1]) i klasę obiektu (instancja klasy vs zwykły literał).",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/expect.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-007",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "W pliku testu wywołanie vi.mock('./api') stoi pod instrukcjami import. Czy moduł ./api zostanie zamockowany dla importowanego kodu?",
+    "options": [
+      "Nie, vi.mock działa tylko dla importów zapisanych po nim",
+      "Tak, bo vi.mock jest przenoszony (hoistowany) na początek pliku i wykonuje się przed importami",
+      "Tylko jeśli test jest async",
+      "Tylko w trybie watch"
+    ],
+    "correct": 1,
+    "explanation": "Vitest przenosi wywołania vi.mock na górę pliku, więc wykonują się przed wszystkimi importami — miejsce w pliku nie ma znaczenia. Skutek uboczny: w fabryce vi.mock nie użyjesz zmiennych zadeklarowanych w pliku, chyba że przez vi.hoisted (albo użyjesz vi.doMock, który nie jest hoistowany).",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-008",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Dlaczego Testing Library zaleca user-event zamiast fireEvent do symulowania kliknięć i wpisywania tekstu?",
+    "options": [
+      "fireEvent nie działa z Reactem",
+      "user-event symuluje całą interakcję jak w przeglądarce (wiele zdarzeń, np. focus, keydown, input) i nie pozwoli kliknąć ukrytego elementu ani pisać w wyłączonym polu",
+      "user-event jest synchroniczny, więc testy są szybsze",
+      "fireEvent został usunięty z Testing Library"
+    ],
+    "correct": 1,
+    "explanation": "fireEvent wysyła jedno zdarzenie DOM. Prawdziwa interakcja wywołuje ich kilka i ma ograniczenia, które user-event odwzorowuje. Zalecany wzorzec: const user = userEvent.setup() przed renderem, potem await user.click(...) — metody user-event zwracają Promise.",
+    "source_url": "https://github.com/testing-library/testing-library-docs/blob/main/docs/user-event/intro.mdx",
+    "added_on": "2026-10-09"
   }
 ]

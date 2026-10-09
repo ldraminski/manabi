@@ -65,5 +65,70 @@
     "explanation": "Najlepiej śledzić po unikalnym polu, np. item.id. $index nadaje się do statycznych kolekcji, a śledzenie po samym obiekcie (track item) to ostateczność, bo może znacznie spowolnić aktualizacje.",
     "source_url": "https://angular.dev/guide/templates/control-flow",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "angular-junior-005",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Jak w nowym control flow pokazać komunikat, gdy lista items jest pusta?",
+    "code": "@for (item of items(); track item.id) {\n  <li>{{ item.name }}</li>\n} ??? {\n  <li>Brak elementów</li>\n}",
+    "options": [
+      "@else",
+      "@empty",
+      "@default",
+      "@if (!items().length) — @for nie ma takiego bloku"
+    ],
+    "correct": 1,
+    "explanation": "Blok @empty umieszczony zaraz po zamykającym nawiasie @for wyświetla się, gdy kolekcja nie ma elementów. @else należy do @if, a @default do @switch.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/control-flow.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-006",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Komponent ma pole value = input(0). Jak odczytać jego wartość w kodzie komponentu?",
+    "options": [
+      "this.value",
+      "this.value()",
+      "this.value.get()",
+      "this.value.value"
+    ],
+    "correct": 1,
+    "explanation": "input() zwraca InputSignal, więc wartość czyta się wywołując sygnał: this.value() (w szablonie value()). Dzięki temu input można używać w computed i effect.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-007",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Czy komponent może sam zmienić wartość swojego inputu zadeklarowanego przez input()?",
+    "options": [
+      "Tak, przez this.value.set(1)",
+      "Nie, sygnały z input() są tylko do odczytu — wartość ustawia rodzic przez binding",
+      "Tak, przez zwykłe przypisanie this.value = 1",
+      "Tylko w ngOnInit"
+    ],
+    "correct": 1,
+    "explanation": "InputSignal nie ma metod set ani update. Jeśli komponent potrzebuje stanu pochodnego, użyj computed albo lokalnego signal; jeśli ma zmieniać wartość i odsyłać ją rodzicowi (dwukierunkowo), służy do tego model().",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-008",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Komponent ma pole closed = output<string>(). Jak wyemitować zdarzenie i odebrać jego dane w rodzicu?",
+    "options": [
+      "W dziecku this.closed.set('ok'); w rodzicu [closed]=\"onClose()\"",
+      "W dziecku this.closed.emit('ok'); w rodzicu (closed)=\"onClose($event)\"",
+      "W dziecku this.closed('ok'); w rodzicu @closed=\"onClose\"",
+      "W dziecku dispatchEvent(new Event('closed')); zdarzenie wybąbelkuje do rodzica"
+    ],
+    "correct": 1,
+    "explanation": "output() zwraca OutputEmitterRef z metodą emit(). Rodzic słucha składnią event bindingu (nazwa) i dostaje przekazaną wartość w $event. Zdarzenia z output() nie bąbelkują w górę DOM.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/outputs.md",
+    "added_on": "2026-10-09"
   }
 ]

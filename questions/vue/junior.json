@@ -57,5 +57,87 @@
     "explanation": "Dla checkboxa i radia v-model używa checked i zdarzenia change. Modyfikator .lazy synchronizuje po change zamiast po każdym input.",
     "source_url": "https://vuejs.org/guide/essentials/forms.html",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-005",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Gdzie trzeba pisać .value przy pracy z ref w <script setup>?",
+    "code": "const count = ref(0)",
+    "options": [
+      "Wszędzie, również w szablonie: {{ count.value }}",
+      "W kodzie JavaScript (count.value++), ale w szablonie wystarczy {{ count }}, bo refy najwyższego poziomu są automatycznie rozpakowywane",
+      "Nigdzie, ref zachowuje się jak zwykła zmienna",
+      "Tylko w szablonie"
+    ],
+    "correct": 1,
+    "explanation": "ref() zwraca obiekt z właściwością .value i w skrypcie trzeba jej używać do odczytu i zapisu. W szablonie Vue rozpakowuje refy najwyższego poziomu automatycznie. Częsty błąd: count++ w skrypcie zamiast count.value++.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/reactivity-fundamentals.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-006",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Komponent potomny dostaje prop initialCount i chce go zwiększać po kliknięciu. Co zrobić?",
+    "options": [
+      "Zmieniać props.initialCount bezpośrednio — Vue zsynchronizuje to z rodzicem",
+      "Utworzyć lokalny ref zainicjalizowany wartością propa, np. const count = ref(props.initialCount), i zmieniać ten ref",
+      "Użyć v-if, żeby wymusić ponowne utworzenie komponentu",
+      "Nie da się, propsów nie można odczytywać w skrypcie"
+    ],
+    "correct": 1,
+    "explanation": "Propsy płyną w jedną stronę: od rodzica do dziecka. Zmiana propa w dziecku powoduje ostrzeżenie w konsoli. Jeśli prop to tylko wartość startowa, skopiuj go do lokalnego stanu; jeśli trzeba go przekształcić, użyj computed. Gdy rodzic ma poznać zmianę — wyemituj zdarzenie.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/props.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-007",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Komponent Wnuk emituje zdarzenie save. Czy listener @save ustawiony na komponencie Dziadek (dwa poziomy wyżej) je odbierze?",
+    "options": [
+      "Tak, zdarzenia komponentów bąbelkują jak zdarzenia DOM",
+      "Nie, zdarzenia emitowane przez komponenty nie bąbelkują — rodzic słyszy tylko swoje bezpośrednie dziecko",
+      "Tak, ale tylko jeśli użyto defineEmits",
+      "Tylko w trybie deweloperskim"
+    ],
+    "correct": 1,
+    "explanation": "W przeciwieństwie do natywnych zdarzeń DOM, zdarzenia z emit nie bąbelkują. Pośredni komponent musi je przekazać dalej albo trzeba użyć wspólnego stanu (np. Pinia). W <script setup> zdarzenia emitujesz funkcją z const emit = defineEmits(['save']).",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/events.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-008",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Co wyświetli przycisk, jeśli rodzic użyje go jako <SubmitButton /> bez żadnej treści?",
+    "code": "<!-- SubmitButton.vue -->\n<button type=\"submit\">\n  <slot>Wyślij</slot>\n</button>",
+    "options": [
+      "Pusty przycisk",
+      "Przycisk z tekstem „Wyślij”",
+      "Błąd kompilacji, bo slot wymaga treści",
+      "Napis <slot>"
+    ],
+    "correct": 1,
+    "explanation": "Treść między <slot> a </slot> to treść domyślna (fallback) — wyświetla się, gdy rodzic nic nie przekaże. <SubmitButton>Zapisz</SubmitButton> pokaże „Zapisz”.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/slots.md",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-009",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Do których danych ma dostęp treść przekazana do slotu przez rodzica (bez scoped slots)?",
+    "options": [
+      "Tylko do danych komponentu dziecka",
+      "Do danych rodzica, w którego szablonie jest zapisana — nie do danych dziecka",
+      "Do danych obu komponentów",
+      "Do żadnych, slot przyjmuje tylko statyczny tekst"
+    ],
+    "correct": 1,
+    "explanation": "Treść slotu jest kompilowana w zakresie rodzica, tak jak reszta jego szablonu. Jeśli dziecko ma udostępnić dane treści slotu, przekazuje je jako atrybuty <slot> — to scoped slots (v-slot=\"slotProps\").",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/slots.md",
+    "added_on": "2026-10-09"
   }
 ]

@@ -161,6 +161,13 @@
     "icon": "layout"
   },
   {
+    "technology": "nextjs",
+    "slug": "loading-and-errors",
+    "title": "Ładowanie i błędy",
+    "description": "loading.tsx, error.tsx, notFound()",
+    "icon": "clock"
+  },
+  {
     "technology": "vue",
     "slug": "reactivity-and-templates",
     "title": "Reaktywność i szablony",
@@ -168,11 +175,25 @@
     "icon": "braces"
   },
   {
+    "technology": "vue",
+    "slug": "components",
+    "title": "Komponenty",
+    "description": "Propsy, emit, sloty",
+    "icon": "layout"
+  },
+  {
     "technology": "angular",
     "slug": "signals-and-templates",
     "title": "Sygnały i szablony",
     "description": "signal, computed, @for i track",
     "icon": "braces"
+  },
+  {
+    "technology": "angular",
+    "slug": "components",
+    "title": "Komponenty",
+    "description": "input(), output()",
+    "icon": "layout"
   },
   {
     "technology": "nodejs",

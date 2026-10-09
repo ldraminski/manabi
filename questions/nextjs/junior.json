@@ -62,5 +62,70 @@
     "explanation": "Strony i layouty są domyślnie Server Components, a te nie obsługują stanu ani zdarzeń. 'use client' wyznacza granicę: plik i to, co importuje, trafia do paczki dla przeglądarki. Dlatego dyrektywę dodaje się tylko w interaktywnych komponentach, a nie w całym drzewie.",
     "source_url": "https://nextjs.org/docs/app/getting-started/server-and-client-components",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-005",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Kiedy komponent <Link> z Next.js (App Router, domyślne ustawienia) prefetchuje trasę, do której prowadzi?",
+    "options": [
+      "Dopiero po kliknięciu w link",
+      "Gdy link pojawi się w widocznym obszarze strony — ale tylko w buildzie produkcyjnym",
+      "Zawsze przy pierwszym renderze aplikacji, dla wszystkich linków na stronie",
+      "Tylko w trybie deweloperskim (next dev)"
+    ],
+    "correct": 1,
+    "explanation": "Prefetch startuje, gdy <Link> wchodzi w viewport (od razu lub po przewinięciu), i działa tylko w produkcji — w next dev go nie zobaczysz. Ile danych zostanie pobranych, zależy od tego, czy trasa jest statyczna czy dynamiczna; prefetch={false} wyłącza go całkowicie.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/02-components/link.mdx",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-006",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "prompt": "Co robi plik loading.tsx umieszczony w folderze segmentu, np. app/dashboard?",
+    "options": [
+      "Opakowuje page.tsx tego segmentu (i to, co pod nim) w granicę <Suspense> i pokazuje swój UI jako fallback podczas ładowania",
+      "Zastępuje layout.tsx, dopóki strona się nie załaduje",
+      "Uruchamia się tylko przy pierwszym wejściu na stronę, nigdy przy nawigacji",
+      "Blokuje nawigację, dopóki wszystkie dane nie zostaną pobrane"
+    ],
+    "correct": 0,
+    "explanation": "loading.tsx to skrót do React Suspense: Next.js sam opakowuje page.tsx i zagnieżdżone segmenty w <Suspense> z tym plikiem jako fallbackiem. Nie opakowuje layout.tsx z tego samego segmentu — współdzielony layout zostaje widoczny i interaktywny podczas ładowania.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/loading.mdx",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-007",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "prompt": "Tworzysz app/dashboard/error.tsx. Który warunek musi spełniać ten plik?",
+    "options": [
+      "Musi być komponentem serwerowym z async",
+      "Musi zaczynać się od 'use client', bo granice błędów są komponentami klienckimi",
+      "Musi eksportować funkcję generateMetadata",
+      "Musi znajdować się w folderze app/, nigdy w podfolderze"
+    ],
+    "correct": 1,
+    "explanation": "Error boundaries w React działają tylko po stronie klienta, więc error.tsx musi mieć dyrektywę 'use client'. Uwaga: error.tsx nie łapie błędów z layout.tsx tego samego segmentu — do tego służy error.tsx w segmencie nadrzędnym, a dla root layoutu global-error.tsx.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/error.mdx",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-008",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "prompt": "Co się stanie po wywołaniu notFound() w komponencie strony?",
+    "code": "import { notFound } from 'next/navigation'\n\nexport default async function Page({ params }) {\n  const post = await getPost((await params).slug)\n  if (!post) {\n    notFound()\n  }\n  return <h1>{post.title}</h1>\n}",
+    "options": [
+      "Nic, dopóki nie napiszesz return notFound()",
+      "Funkcja rzuca specjalny błąd, przerywa renderowanie segmentu i wyświetla stronę 404 (lub not-found.tsx)",
+      "Przekierowuje użytkownika na stronę główną",
+      "Zwraca null, więc strona renderuje się pusta"
+    ],
+    "correct": 1,
+    "explanation": "notFound() rzuca błąd, który Next.js zamienia na stronę 404 — kod po wywołaniu się nie wykona, więc return nie jest potrzebny. Typ zwracany to never, dlatego TypeScript po tym if wie, że post jest zdefiniowany. Własny wygląd strony 404 ustawisz w pliku not-found.tsx.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/not-found.mdx",
+    "added_on": "2026-10-09"
   }
 ]

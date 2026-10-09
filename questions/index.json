@@ -216,6 +216,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "angular-junior-005",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-006",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-007",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-008",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -558,6 +590,38 @@
     "topic": "app-router",
     "kind": "single_choice",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "nextjs-junior-005",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-006",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-007",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-008",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
   },
   {
     "id": "nodejs-junior-001",
@@ -1096,6 +1160,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "testing-junior-005",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-006",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-007",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-008",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
     "id": "typescript-junior-001",
     "technology": "typescript",
     "level": "junior",
@@ -1238,5 +1334,45 @@
     "topic": "reactivity-and-templates",
     "kind": "flashcard",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "vue-junior-005",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-006",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-007",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-008",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-009",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-09"
   }
 ]
