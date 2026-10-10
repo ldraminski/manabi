@@ -88,5 +88,69 @@
     "explanation": "Zwykły skrypt w <head> zatrzymuje parsowanie strony na czas pobrania i wykonania. defer pobiera plik równolegle, a wykonuje go po zbudowaniu DOM, z zachowaniem kolejności skryptów. async też pobiera w tle, ale uruchamia od razu po pobraniu, bez gwarancji kolejności.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-007",
+    "topic": "loading",
+    "kind": "single_choice",
+    "prompt": "Co robi atrybut loading=\"lazy\" na znaczniku <img>?",
+    "options": [
+      "Wczytuje obrazek w niższej jakości",
+      "Wczytuje obrazek dopiero wtedy, gdy zbliża się on do widocznego obszaru strony",
+      "Wczytuje obrazek po zakończeniu ładowania wszystkich skryptów",
+      "Ukrywa obrazek do czasu kliknięcia"
+    ],
+    "correct": 1,
+    "explanation": "Przeglądarka odkłada pobranie obrazka, aż znajdzie się on w pewnej odległości od viewportu. Domyślna wartość to eager — obrazek ładuje się od razu, niezależnie od tego, czy jest widoczny.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-008",
+    "topic": "document",
+    "kind": "single_choice",
+    "prompt": "Po co na stronie responsywnej dodaje się <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">?",
+    "options": [
+      "Żeby strona ładowała się szybciej na telefonach",
+      "Żeby zablokować przybliżanie strony",
+      "Żeby przeglądarka mobilna nie renderowała strony w szerokim wirtualnym oknie i nie pomniejszała jej",
+      "Żeby wyszukiwarki rozpoznały stronę jako mobilną"
+    ],
+    "correct": 2,
+    "explanation": "Bez tego znacznika wiele przeglądarek mobilnych renderuje stronę np. na 980 px i ją zmniejsza, przez co media queries dla wąskich ekranów w ogóle się nie uruchamiają. width=device-width ustawia szerokość viewportu na szerokość urządzenia.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-009",
+    "topic": "document",
+    "kind": "single_choice",
+    "prompt": "Do czego służy atrybut lang, np. <html lang=\"pl\">?",
+    "options": [
+      "Określa język treści, dzięki czemu m.in. czytniki ekranu wybierają właściwą wymowę",
+      "Włącza automatyczne tłumaczenie strony",
+      "Ustawia kodowanie znaków dokumentu",
+      "Wybiera wersję HTML, w której napisano stronę"
+    ],
+    "correct": 0,
+    "explanation": "lang podaje język elementu jako tag BCP 47. Bez niego język jest nieznany, a technologie asystujące mogą czytać polski tekst z angielską wymową. Kodowanie ustawia się osobno, przez <meta charset>.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-010",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Formularz ma pole <input type=\"email\" name=\"email\"> bez atrybutu required. Użytkownik zostawia je puste i klika „Wyślij”. Co się stanie?",
+    "options": [
+      "Przeglądarka zablokuje wysłanie, bo pusty tekst nie jest adresem e-mail",
+      "Przeglądarka wpisze w pole przykładowy adres",
+      "Formularz zostanie wysłany, ale bez pola email",
+      "Formularz zostanie wysłany"
+    ],
+    "correct": 3,
+    "explanation": "Pole typu email przechodzi walidację, gdy jest puste albo zawiera poprawnie sformatowany adres. Żeby wymusić wypełnienie, trzeba dodać required.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/email",
+    "added_on": "2026-10-10"
   }
 ]

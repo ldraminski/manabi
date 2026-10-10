@@ -105,5 +105,69 @@
     "explanation": "Przy 4xx ponowienie tego samego żądania nic nie da — trzeba je poprawić. Przy 5xx żądanie mogło być poprawne, więc ponowienie po chwili ma sens.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-008",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Chcesz zmienić tylko e-mail użytkownika, nie wysyłając całego obiektu. Która metoda HTTP najlepiej to opisuje?",
+    "options": [
+      "PUT",
+      "POST",
+      "GET",
+      "PATCH"
+    ],
+    "correct": 3,
+    "explanation": "PATCH służy do częściowej modyfikacji zasobu. PUT zastępuje cały zasób przesłaną reprezentacją i z definicji jest idempotentny; PATCH nie zawsze.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-009",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Serwer poprawnie usunął zasób po żądaniu DELETE i nie ma nic do odesłania. Jaki status najlepiej pasuje?",
+    "options": [
+      "204 No Content",
+      "201 Created",
+      "404 Not Found",
+      "304 Not Modified"
+    ],
+    "correct": 0,
+    "explanation": "204 oznacza sukces bez treści odpowiedzi. Odpowiedź 204 nie może mieć body. Jeśli API chce zwrócić np. usunięty obiekt, używa 200 z treścią.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/204",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-010",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "prompt": "Frontend wysyła z przeglądarki żądanie DELETE do API w innej domenie. W zakładce Network widzisz przed nim dodatkowe żądanie. Jaką ma metodę?",
+    "options": [
+      "HEAD",
+      "OPTIONS",
+      "GET",
+      "CONNECT"
+    ],
+    "correct": 1,
+    "explanation": "To tzw. preflight CORS: przeglądarka sama wysyła OPTIONS z nagłówkami Origin i Access-Control-Request-Method, żeby zapytać serwer, czy pozwala na takie żądanie. Proste żądania (np. zwykły GET) go nie wymagają.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-011",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "API zwraca status 429 Too Many Requests. Który nagłówek odpowiedzi może podpowiedzieć klientowi, kiedy spróbować ponownie?",
+    "options": [
+      "Cache-Control",
+      "Location",
+      "Retry-After",
+      "WWW-Authenticate"
+    ],
+    "correct": 2,
+    "explanation": "429 oznacza przekroczenie limitu żądań. Retry-After mówi, ile sekund (albo do kiedy) klient powinien poczekać. WWW-Authenticate towarzyszy statusowi 401, a Location np. przekierowaniom i 201.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429",
+    "added_on": "2026-10-10"
   }
 ]

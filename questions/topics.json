@@ -94,7 +94,14 @@
     "technology": "html",
     "slug": "loading",
     "title": "Ładowanie strony",
-    "description": "Skrypty, defer i async",
+    "description": "Skrypty, obrazki, defer i async",
+    "icon": "layout"
+  },
+  {
+    "technology": "html",
+    "slug": "document",
+    "title": "Struktura dokumentu",
+    "description": "Meta viewport, język strony",
     "icon": "layout"
   },
   {

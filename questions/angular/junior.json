@@ -130,5 +130,38 @@
     "explanation": "output() zwraca OutputEmitterRef z metodą emit(). Rodzic słucha składnią event bindingu (nazwa) i dostaje przekazaną wartość w $event. Zdarzenia z output() nie bąbelkują w górę DOM.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/outputs.md",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "angular-junior-009",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Co wyświetli ten szablon, gdy role ma wartość \"editor\"?",
+    "code": "@switch (role) {\n  @case ('admin') { <app-admin /> }\n  @case ('editor') { <app-editor /> }\n  @default { <app-viewer /> }\n}",
+    "options": [
+      "<app-editor /> i <app-viewer />",
+      "Nic, bo brakuje break",
+      "Tylko <app-editor />",
+      "Tylko <app-viewer />"
+    ],
+    "correct": 2,
+    "explanation": "@switch porównuje wartość operatorem === i nie ma przechodzenia do kolejnych bloków (fallthrough), więc break nie jest potrzebny. @default pokazuje się tylko wtedy, gdy żaden @case nie pasuje.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/control-flow.md",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "angular-junior-010",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Jak w szablonie Angulara zapisać warunek z gałęzią alternatywną?",
+    "options": [
+      "@if (isLoggedIn) { ... } @otherwise { ... }",
+      "@if (isLoggedIn) { ... } @else { ... }",
+      "<div *if=\"isLoggedIn; else other\">",
+      "@if (isLoggedIn) { ... } @default { ... }"
+    ],
+    "correct": 1,
+    "explanation": "Blok @if może mieć dowolną liczbę bloków @else if i jeden @else. @default należy do @switch, a składnię *ngIf z „; else” zastępuje wbudowany control flow.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/control-flow.md",
+    "added_on": "2026-10-10"
   }
 ]

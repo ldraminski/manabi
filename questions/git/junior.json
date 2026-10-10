@@ -88,5 +88,69 @@
     "explanation": "revert nie zmienia istniejącej historii, więc nie psuje pracy innym. reset z wymuszonym pushem przepisuje historię współdzielonej gałęzi i u reszty zespołu kończy się konfliktami.",
     "source_url": "https://git-scm.com/docs/git-revert",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "git-junior-007",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Właśnie zrobiłeś commit (jeszcze niewypchnięty) i zauważyłeś literówkę w jego opisie. Jak ją najprościej poprawić?",
+    "options": [
+      "git revert HEAD",
+      "git reset --hard HEAD~1",
+      "git commit --amend",
+      "git stash"
+    ],
+    "correct": 2,
+    "explanation": "--amend zastępuje ostatni commit nowym, z poprawionym opisem (i ewentualnie dodatkowymi zmianami z indeksu). Powstaje nowy commit o innym identyfikatorze, dlatego nie poprawia się tak commitów już wypchniętych na wspólną gałąź.",
+    "source_url": "https://git-scm.com/docs/git-commit",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-008",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Które polecenie tworzy nową gałąź feature/login i od razu się na nią przełącza?",
+    "options": [
+      "git switch feature/login",
+      "git switch -c feature/login",
+      "git branch feature/login",
+      "git merge feature/login"
+    ],
+    "correct": 1,
+    "explanation": "git switch -c (--create) tworzy gałąź i przełącza się na nią — to odpowiednik git branch, a potem git switch. Samo git branch tylko tworzy gałąź, a git switch bez -c przełącza na istniejącą.",
+    "source_url": "https://git-scm.com/docs/git-switch",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-009",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Dodałeś plik do indeksu (git add), ale nie chcesz go w najbliższym commicie. Zmiany w pliku mają zostać. Które polecenie wybierzesz?",
+    "options": [
+      "git restore plik.js",
+      "git rm plik.js",
+      "git clean -f plik.js",
+      "git restore --staged plik.js"
+    ],
+    "correct": 3,
+    "explanation": "git restore --staged przywraca wersję pliku w indeksie z HEAD, czyli zdejmuje go ze stage, a katalog roboczy zostaje nietknięty. git restore bez --staged nadpisałby Twoje zmiany w pliku wersją z indeksu.",
+    "source_url": "https://git-scm.com/docs/git-restore",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-010",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Zmieniłeś dwa pliki i jeden z nich dodałeś przez git add. Co pokaże samo git diff (bez opcji)?",
+    "options": [
+      "Tylko zmiany jeszcze niedodane do indeksu",
+      "Zmiany w obu plikach",
+      "Tylko zmiany dodane do indeksu",
+      "Różnice między gałęzią lokalną a zdalną"
+    ],
+    "correct": 0,
+    "explanation": "git diff porównuje katalog roboczy z indeksem, więc pokazuje to, czego jeszcze nie dodałeś. Zmiany przygotowane do commita zobaczysz przez git diff --staged (synonim --cached).",
+    "source_url": "https://git-scm.com/docs/git-diff",
+    "added_on": "2026-10-10"
   }
 ]

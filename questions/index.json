@@ -248,6 +248,22 @@
     "added_on": "2026-10-09"
   },
   {
+    "id": "angular-junior-009",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "angular-junior-010",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -304,6 +320,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "css-junior-008",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-009",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-010",
+    "technology": "css",
+    "level": "junior",
+    "topic": "responsive",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-011",
+    "technology": "css",
+    "level": "junior",
+    "topic": "cascade",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -352,6 +400,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "git-junior-007",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-008",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-009",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-010",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
     "id": "html-junior-001",
     "technology": "html",
     "level": "junior",
@@ -398,6 +478,38 @@
     "topic": "loading",
     "kind": "single_choice",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "html-junior-007",
+    "technology": "html",
+    "level": "junior",
+    "topic": "loading",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-008",
+    "technology": "html",
+    "level": "junior",
+    "topic": "document",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-009",
+    "technology": "html",
+    "level": "junior",
+    "topic": "document",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-010",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
   },
   {
     "id": "javascript-junior-001",
@@ -622,6 +734,22 @@
     "topic": "loading-and-errors",
     "kind": "single_choice",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-009",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "nextjs-junior-010",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
   },
   {
     "id": "nodejs-junior-001",
@@ -1126,6 +1254,38 @@
     "topic": "http-basics",
     "kind": "single_choice",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "rest-api-junior-008",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-009",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-010",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-011",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-10-10"
   },
   {
     "id": "testing-junior-001",

@@ -127,5 +127,37 @@
     "explanation": "notFound() rzuca błąd, który Next.js zamienia na stronę 404 — kod po wywołaniu się nie wykona, więc return nie jest potrzebny. Typ zwracany to never, dlatego TypeScript po tym if wie, że post jest zdefiniowany. Własny wygląd strony 404 ustawisz w pliku not-found.tsx.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/not-found.mdx",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "nextjs-junior-009",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "W pliku .env masz API_URL=https://api.example.com. Komponent kliencki (\"use client\") odczytuje process.env.API_URL. Co dostanie w przeglądarce?",
+    "options": [
+      "undefined, bo do przeglądarki trafiają tylko zmienne z prefiksem NEXT_PUBLIC_",
+      "https://api.example.com",
+      "Błąd kompilacji",
+      "Wartość pobraną z serwera przy każdym renderze"
+    ],
+    "correct": 0,
+    "explanation": "Zmienne bez prefiksu NEXT_PUBLIC_ są dostępne tylko po stronie serwera. Zmienne z NEXT_PUBLIC_ Next.js wkleja do bundla podczas next build, więc są widoczne dla każdego i zamrożone z wartością z czasu budowania.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/environment-variables.mdx",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "nextjs-junior-010",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Używasz <Image src=\"https://example.com/avatar.png\" alt=\"Avatar\" width={64} height={64} /> z next/image. Co trzeba jeszcze skonfigurować?",
+    "options": [
+      "Nic, zewnętrzne adresy działają domyślnie",
+      "Zamienić src na import statyczny",
+      "Dodać prop priority do komponentu",
+      "Dodać adres do images.remotePatterns w next.config"
+    ],
+    "correct": 3,
+    "explanation": "Zewnętrzny URL w src musi pasować do wzorca w remotePatterns — to chroni przed optymalizowaniem dowolnych obrazków z sieci. Dla obrazków z sieci trzeba też podać width i height (albo fill), bo Next.js nie zna ich wymiarów.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/02-components/image.mdx",
+    "added_on": "2026-10-10"
   }
 ]

@@ -104,5 +104,70 @@
     "explanation": "Element z display: none nie zajmuje miejsca i jest pomijany przez czytniki ekranu. Element z visibility: hidden jest niewidoczny, ale nadal rezerwuje swoje miejsce w układzie.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "css-junior-008",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Kontener grid ma szerokość 300 px, brak odstępów i grid-template-columns: 1fr 2fr. Jak szerokie będą kolumny (przy pustych komórkach)?",
+    "options": [
+      "150 px i 150 px",
+      "1 px i 2 px",
+      "100 px i 200 px",
+      "300 px i 600 px"
+    ],
+    "correct": 2,
+    "explanation": "fr to ułamek pozostałej wolnej przestrzeni kontenera. Razem są 3 części: pierwsza kolumna dostaje 1/3 z 300 px, druga 2/3. Gdyby treść w komórce była szersza niż przydział, kolumna mogłaby się rozszerzyć.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/flex_value",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-009",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Czy właściwość gap działa w kontenerze z display: flex?",
+    "options": [
+      "Nie, działa tylko w gridzie",
+      "Tak, ustawia odstępy między elementami flex",
+      "Tylko w kierunku kolumnowym (flex-direction: column)",
+      "Tylko gdy włączone jest flex-wrap"
+    ],
+    "correct": 1,
+    "explanation": "gap ustawia odstępy między wierszami i kolumnami w kontenerach grid, flex i wielokolumnowych. W flexboksie to zwykle wygodniejsze niż marginesy na elementach.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/gap",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-010",
+    "topic": "responsive",
+    "kind": "single_choice",
+    "prompt": "Kiedy zastosują się style w @media (min-width: 768px) { ... }?",
+    "options": [
+      "Gdy szerokość viewportu jest mniejsza niż 768 px",
+      "Gdy szerokość ekranu urządzenia wynosi dokładnie 768 px",
+      "Gdy szerokość viewportu wynosi 768 px lub więcej",
+      "Gdy element ma co najmniej 768 px szerokości"
+    ],
+    "correct": 2,
+    "explanation": "width to szerokość viewportu, a min-width sprawdza jej minimalną wartość. Tak dokłada się style dla coraz szerszych ekranów w podejściu mobile-first. Do sprawdzania rozmiaru elementu służą container queries.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/width",
+    "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-011",
+    "topic": "cascade",
+    "kind": "single_choice",
+    "prompt": "Zmienna --brand nie jest nigdzie zdefiniowana. Jaki kolor będzie miał przycisk?",
+    "code": ".button {\n  color: var(--brand, tomato);\n}",
+    "options": [
+      "Czarny, bo var() bez wartości zwraca black",
+      "tomato",
+      "Przezroczysty",
+      "Reguła jest błędna i przeglądarka zignoruje cały blok"
+    ],
+    "correct": 1,
+    "explanation": "Drugi argument var() to wartość zapasowa. Używa się jej, gdy zmienna nie ma używalnej wartości, np. nie została zdefiniowana.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
+    "added_on": "2026-10-10"
   }
 ]
