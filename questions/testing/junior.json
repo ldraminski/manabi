@@ -127,5 +127,68 @@
     "explanation": "fireEvent wysyła jedno zdarzenie DOM. Prawdziwa interakcja wywołuje ich kilka i ma ograniczenia, które user-event odwzorowuje. Zalecany wzorzec: const user = userEvent.setup() przed renderem, potem await user.click(...) — metody user-event zwracają Promise.",
     "source_url": "https://github.com/testing-library/testing-library-docs/blob/main/docs/user-event/intro.mdx",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-009",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "prompt": "W teście Playwright wywołujesz await page.getByRole('button', { name: 'Zapisz' }).click(), a przycisk staje się aktywny dopiero po chwili. Co zrobi Playwright?",
+    "options": [
+      "Kliknie od razu, nawet w nieaktywny przycisk",
+      "Rzuci błąd od razu, bo przycisk jest wyłączony",
+      "Poczeka, aż przycisk będzie widoczny, stabilny i aktywny, a potem kliknie; jeśli nie zdąży przed limitem czasu, rzuci TimeoutError",
+      "Trzeba wcześniej dodać page.waitForTimeout(1000), inaczej test zawsze padnie"
+    ],
+    "correct": 2,
+    "explanation": "Przed akcją Playwright sprawdza m.in., czy element jest widoczny, stabilny, odbiera zdarzenia i jest aktywny (enabled), i czeka, aż te warunki zostaną spełnione. Ręczne czekanie na sztywny czas nie jest potrzebne i spowalnia testy.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/actionability.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-010",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "prompt": "Komunikat „Zapisano” pojawia się po odpowiedzi z serwera. Która asercja w Playwright Test poczeka na niego, zamiast sprawdzić stronę tylko raz?",
+    "options": [
+      "expect(await page.getByText('Zapisano').isVisible()).toBe(true)",
+      "await expect(page.getByText('Zapisano')).toBeVisible()",
+      "expect(page.getByText('Zapisano')).toBeTruthy()"
+    ],
+    "correct": 1,
+    "explanation": "Asercje wywoływane na lokatorze, np. toBeVisible(), ponawiają sprawdzanie, aż warunek się spełni albo minie limit (domyślnie 5 sekund), dlatego trzeba je await-ować. isVisible() sprawdza stan tylko raz, a toBeTruthy() na obiekcie lokatora zawsze przejdzie.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-assertions-js.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-011",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "prompt": "Pierwszy test Playwright loguje użytkownika, a drugi zakłada, że użytkownik jest już zalogowany. Co się stanie przy domyślnej konfiguracji Playwright Test?",
+    "options": [
+      "Drugi test zadziała, bo testy współdzielą jedną przeglądarkę i ciasteczka",
+      "Drugi test nie zobaczy sesji, bo każdy test dostaje nowy, izolowany kontekst przeglądarki z własnymi ciasteczkami i localStorage",
+      "Drugi test zadziała tylko wtedy, gdy testy uruchamiają się równolegle",
+      "Playwright automatycznie przeniesie ciasteczka z poprzedniego testu"
+    ],
+    "correct": 1,
+    "explanation": "Playwright Test tworzy dla każdego testu osobny BrowserContext — coś jak profil incognito. Testy nie powinny zależeć od siebie nawzajem; wspólne logowanie robi się np. przez zapisany stan (storageState) albo w beforeEach.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/browser-contexts.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-012",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "prompt": "Który lokator Playwright jest zalecany do znalezienia przycisku „Wyślij”?",
+    "options": [
+      "page.locator('#form > div:nth-child(3) > button')",
+      "page.locator('xpath=//form/div[3]/button')",
+      "page.getByRole('button', { name: 'Wyślij' })",
+      "page.locator('.btn-primary')"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja zaleca lokatory oparte na tym, co widzi użytkownik i technologie asystujące, przede wszystkim getByRole. Selektory CSS i XPath są powiązane ze strukturą DOM i łatwo się psują po zmianach w markupie.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/locators.md",
+    "added_on": "2026-10-11"
   }
 ]

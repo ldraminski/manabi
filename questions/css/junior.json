@@ -169,5 +169,21 @@
     "explanation": "Drugi argument var() to wartość zapasowa. Używa się jej, gdy zmienna nie ma używalnej wartości, np. nie została zdefiniowana.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/var",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "css-junior-012",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Nagłówek ma position: sticky, ale nie przykleja się podczas przewijania. Czego najpewniej brakuje?",
+    "options": [
+      "z-index",
+      "Wartości dla top (lub innej właściwości inset), np. top: 0",
+      "display: block",
+      "overflow: visible na samym nagłówku"
+    ],
+    "correct": 1,
+    "explanation": "Element sticky potrzebuje co najmniej jednej właściwości inset (np. top) różnej od auto na osi przyklejania. Bez niej zachowuje się jak position: relative.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/position/index.md",
+    "added_on": "2026-10-11"
   }
 ]

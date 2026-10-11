@@ -169,5 +169,21 @@
     "explanation": "429 oznacza przekroczenie limitu żądań. Retry-After mówi, ile sekund (albo do kiedy) klient powinien poczekać. WWW-Authenticate towarzyszy statusowi 401, a Location np. przekierowaniom i 201.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "rest-api-junior-012",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "prompt": "Wysyłasz fetch z metodą POST i body: JSON.stringify(user). Który nagłówek informuje serwer o formacie treści żądania?",
+    "options": [
+      "Accept: application/json",
+      "Content-Type: application/json",
+      "Authorization: application/json",
+      "Content-Length: application/json"
+    ],
+    "correct": 1,
+    "explanation": "Content-Type opisuje format body wysyłanego żądania. Accept mówi, jaki format odpowiedzi klient chce dostać.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/fetch_api/using_fetch/index.md",
+    "added_on": "2026-10-11"
   }
 ]

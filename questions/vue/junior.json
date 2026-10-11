@@ -139,5 +139,54 @@
     "explanation": "Treść slotu jest kompilowana w zakresie rodzica, tak jak reszta jego szablonu. Jeśli dziecko ma udostępnić dane treści slotu, przekazuje je jako atrybuty <slot> — to scoped slots (v-slot=\"slotProps\").",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/slots.md",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-010",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Chcesz w <script setup> odczytać szerokość elementu DOM z szablonu. W którym miejscu kod ma pewność, że elementy DOM komponentu już istnieją?",
+    "options": [
+      "Bezpośrednio na górze <script setup>",
+      "W callbacku onMounted",
+      "W computed",
+      "W funkcji przekazanej do defineProps"
+    ],
+    "correct": 1,
+    "explanation": "onMounted uruchamia się po pierwszym renderze, gdy węzły DOM komponentu są już utworzone. Kod na najwyższym poziomie <script setup> wykonuje się wcześniej, podczas setupu, zanim cokolwiek trafi do DOM.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/lifecycle.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-junior-011",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Dlaczego ten szablon w Vue 3 zgłosi błąd, że todo nie jest zdefiniowane?",
+    "code": "<li v-for=\"todo in todos\" v-if=\"!todo.isComplete\">\n  {{ todo.name }}\n</li>",
+    "options": [
+      "Bo v-if ma na tym samym elemencie wyższy priorytet niż v-for i wykonuje się, zanim powstanie zmienna todo",
+      "Bo v-for wymaga zawsze podania :key",
+      "Bo w v-if nie wolno używać operatora !",
+      "Bo v-for nie działa na elemencie <li>"
+    ],
+    "correct": 0,
+    "explanation": "W Vue 3 v-if na tym samym węźle co v-for jest wyliczany pierwszy, więc nie ma dostępu do zmiennej pętli. Rozwiązanie: przenieść v-for na otaczający <template> albo przefiltrować listę w computed.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/list.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-junior-012",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "W <script setup> używasz defineProps i defineEmits. Co trzeba zaimportować z 'vue', żeby zadziałały?",
+    "options": [
+      "defineProps i defineEmits",
+      "Tylko defineProps",
+      "Nic — to makra kompilatora dostępne w <script setup> bez importu",
+      "Trzeba zaimportować defineComponent"
+    ],
+    "correct": 2,
+    "explanation": "defineProps i defineEmits są makrami kompilatora: działają tylko w <script setup>, nie importuje się ich i znikają po kompilacji.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/sfc-script-setup.md",
+    "added_on": "2026-10-11"
   }
 ]

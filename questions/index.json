@@ -264,6 +264,22 @@
     "added_on": "2026-10-10"
   },
   {
+    "id": "angular-junior-011",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "angular-junior-012",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -352,6 +368,14 @@
     "added_on": "2026-10-10"
   },
   {
+    "id": "css-junior-012",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -432,6 +456,22 @@
     "added_on": "2026-10-10"
   },
   {
+    "id": "git-junior-011",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "git-junior-012",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
     "id": "html-junior-001",
     "technology": "html",
     "level": "junior",
@@ -510,6 +550,22 @@
     "topic": "semantics-and-forms",
     "kind": "single_choice",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-011",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "html-junior-012",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
   },
   {
     "id": "javascript-junior-001",
@@ -750,6 +806,22 @@
     "topic": "app-router",
     "kind": "single_choice",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "nextjs-junior-011",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "nextjs-junior-012",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
   },
   {
     "id": "nodejs-junior-001",
@@ -1288,6 +1360,14 @@
     "added_on": "2026-10-10"
   },
   {
+    "id": "rest-api-junior-012",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "browser-requests",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
     "id": "testing-junior-001",
     "technology": "testing",
     "level": "junior",
@@ -1350,6 +1430,38 @@
     "topic": "unit-tests",
     "kind": "single_choice",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "testing-junior-009",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-010",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-011",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-012",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "e2e-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
   },
   {
     "id": "typescript-junior-001",
@@ -1534,5 +1646,29 @@
     "topic": "components",
     "kind": "single_choice",
     "added_on": "2026-10-09"
+  },
+  {
+    "id": "vue-junior-010",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-junior-011",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-junior-012",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-10-11"
   }
 ]

@@ -152,5 +152,37 @@
     "explanation": "Pole typu email przechodzi walidację, gdy jest puste albo zawiera poprawnie sformatowany adres. Żeby wymusić wypełnienie, trzeba dodać required.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/email",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "html-junior-011",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Wewnątrz <form> dodajesz <button>Pokaż hasło</button> bez atrybutu type. Co się stanie po kliknięciu?",
+    "options": [
+      "Nic, przycisk bez type nie ma domyślnej akcji",
+      "Formularz zostanie wysłany, bo domyślny type przycisku w formularzu to submit",
+      "Formularz zostanie wyczyszczony",
+      "Przeglądarka pokaże błąd walidacji"
+    ],
+    "correct": 1,
+    "explanation": "Przycisk powiązany z formularzem bez atrybutu type działa jak type=\"submit\". Przyciski, które nie mają wysyłać formularza, powinny mieć type=\"button\".",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/button/index.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "html-junior-012",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Formularz ma <input type=\"checkbox\" name=\"newsletter\" value=\"yes\">. Użytkownik go nie zaznacza i wysyła formularz. Co dostanie serwer?",
+    "options": [
+      "newsletter=no",
+      "newsletter=",
+      "newsletter=false",
+      "Nic — pole newsletter w ogóle nie zostanie wysłane"
+    ],
+    "correct": 3,
+    "explanation": "Niezaznaczony checkbox nie wysyła ani nazwy, ani wartości. Serwer musi traktować brak pola jako „nie zaznaczono”.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/input/checkbox/index.md",
+    "added_on": "2026-10-11"
   }
 ]

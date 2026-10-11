@@ -199,7 +199,7 @@
     "technology": "angular",
     "slug": "components",
     "title": "Komponenty",
-    "description": "input(), output()",
+    "description": "input(), output(), inject()",
     "icon": "layout"
   },
   {
@@ -243,6 +243,13 @@
     "title": "Testy jednostkowe",
     "description": "Zapytania Testing Library, mocki w Vitest",
     "icon": "list"
+  },
+  {
+    "technology": "testing",
+    "slug": "e2e-tests",
+    "title": "Testy end-to-end",
+    "description": "Playwright: lokatory, auto-waiting, izolacja testów",
+    "icon": "globe"
   },
   {
     "technology": "ai-tools",

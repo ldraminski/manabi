@@ -163,5 +163,37 @@
     "explanation": "Blok @if może mieć dowolną liczbę bloków @else if i jeden @else. @default należy do @switch, a składnię *ngIf z „; else” zastępuje wbudowany control flow.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/control-flow.md",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "angular-junior-011",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Przycisk ma być wyłączony, gdy sygnał isSaving ma wartość true. Który zapis jest poprawny?",
+    "options": [
+      "<button disabled=\"isSaving()\">Zapisz</button>",
+      "<button [disabled]=\"isSaving()\">Zapisz</button>",
+      "<button (disabled)=\"isSaving()\">Zapisz</button>",
+      "<button disabled=\"isSaving\">Zapisz</button>"
+    ],
+    "correct": 1,
+    "explanation": "Nawiasy kwadratowe to wiązanie właściwości (property binding): Angular ustawia właściwość disabled elementu DOM na wynik wyrażenia i aktualizuje ją przy zmianach. Bez nawiasów wartość to zwykły tekst atrybutu, a nawiasy okrągłe służą do nasłuchiwania zdarzeń.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/binding.md",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "angular-junior-012",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Gdzie w komponencie można wywołać inject(UserService)?",
+    "options": [
+      "W inicjalizatorze pola klasy albo w konstruktorze",
+      "W dowolnej metodzie, np. w obsłudze kliknięcia",
+      "Tylko w ngOnInit",
+      "Tylko w pliku main.ts"
+    ],
+    "correct": 0,
+    "explanation": "inject() działa tylko w kontekście wstrzykiwania (injection context), czyli m.in. podczas tworzenia komponentu, dyrektywy lub serwisu: w inicjalizatorze pola albo w konstruktorze. Wywołanie później, np. w handlerze kliknięcia, rzuci błąd.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/di/overview.md",
+    "added_on": "2026-10-11"
   }
 ]

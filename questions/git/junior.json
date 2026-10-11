@@ -152,5 +152,37 @@
     "explanation": "git diff porównuje katalog roboczy z indeksem, więc pokazuje to, czego jeszcze nie dodałeś. Zmiany przygotowane do commita zobaczysz przez git diff --staged (synonim --cached).",
     "source_url": "https://git-scm.com/docs/git-diff",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "git-junior-011",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "git branch -d feature/old odmawia usunięcia gałęzi. Co najpewniej jest przyczyną?",
+    "options": [
+      "Gałąź ma niescalone commity — nie jest w pełni scalona ze swoim upstreamem (a gdy go nie ma, z HEAD)",
+      "Gałąź istnieje też na zdalnym repozytorium",
+      "Gałąź ma zbyt długą nazwę",
+      "Opcja -d usuwa tylko gałęzie zdalne"
+    ],
+    "correct": 0,
+    "explanation": "-d usuwa gałąź tylko wtedy, gdy jest w pełni scalona — chroni przed utratą pracy. -D to skrót od --delete --force i usuwa gałąź bez tego sprawdzenia.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-branch.adoc",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "git-junior-012",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Na innej gałęzi jest jeden commit z poprawką, którego potrzebujesz u siebie, bez scalania całej gałęzi. Którego polecenia użyjesz?",
+    "options": [
+      "git merge <commit>",
+      "git cherry-pick <commit>",
+      "git rebase <commit>",
+      "git revert <commit>"
+    ],
+    "correct": 1,
+    "explanation": "git cherry-pick nakłada zmiany wprowadzone przez wskazany commit na bieżącą gałąź i zapisuje je jako nowy commit. revert robi odwrotność — dodaje commit cofający zmiany.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-cherry-pick.adoc",
+    "added_on": "2026-10-11"
   }
 ]

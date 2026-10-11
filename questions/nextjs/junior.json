@@ -159,5 +159,37 @@
     "explanation": "Zewnętrzny URL w src musi pasować do wzorca w remotePatterns — to chroni przed optymalizowaniem dowolnych obrazków z sieci. Dla obrazków z sieci trzeba też podać width i height (albo fill), bo Next.js nie zna ich wymiarów.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/02-components/image.mdx",
     "added_on": "2026-10-10"
+  },
+  {
+    "id": "nextjs-junior-011",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Masz plik app/(marketing)/about/page.tsx. Pod jakim adresem będzie dostępna ta strona?",
+    "options": [
+      "/(marketing)/about",
+      "/marketing/about",
+      "/about",
+      "Nigdzie — nawiasy w nazwie folderu są niedozwolone"
+    ],
+    "correct": 2,
+    "explanation": "Folder w nawiasach to grupa tras (route group). Służy do organizacji kodu, np. wspólnego layoutu dla części stron, i nie jest częścią adresu URL.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/route-groups.mdx",
+    "added_on": "2026-10-11"
+  },
+  {
+    "id": "nextjs-junior-012",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Strona app/contact/page.tsx ma na górze 'use client' i eksportuje const metadata = { title: 'Kontakt' }. Co jest nie tak?",
+    "options": [
+      "Nic, metadata działa w każdym komponencie",
+      "Eksport metadata (i generateMetadata) jest obsługiwany tylko w komponentach serwerowych",
+      "metadata trzeba eksportować jako default",
+      "title musi być ustawiony w pliku next.config.js"
+    ],
+    "correct": 1,
+    "explanation": "Metadane muszą być wyliczone na serwerze, zanim strona się wyrenderuje, żeby trafiły do początkowego HTML. Logikę kliencką przenosi się do osobnego komponentu, a page.tsx zostaje komponentem serwerowym.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/generate-metadata.mdx",
+    "added_on": "2026-10-11"
   }
 ]
