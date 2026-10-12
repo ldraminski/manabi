@@ -158,5 +158,53 @@
     "explanation": "resourceLimits ograniczają tylko silnik JS w danym workerze, bez danych zewnętrznych, w tym ArrayBufferów. Proces może zakończyć się mimo limitów przy globalnym braku pamięci. Do twardej izolacji zadań klientów potrzebne są osobne procesy lub kontenery. Uwaga: --max-old-space-size, jeśli jest ustawione, nadpisuje maxOldGenerationSizeMb.",
     "source_url": "https://nodejs.org/api/worker_threads.html#new-workerfilename-options",
     "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-011",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Jest październik 2026. Node.js 26 ma status Current, a 24 i 22 są w LTS. Zespół chce od razu przenieść produkcję na 26, „bo to najnowsza wersja”. Co mówią zalecenia projektu Node.js?",
+    "options": [
+      "Na produkcji należy używać tylko wydań Active LTS lub Maintenance LTS, więc do czasu wejścia 26 w LTS zostajecie na wersji LTS, np. 24",
+      "Na produkcję zalecana jest gałąź Current, bo najszybciej dostaje poprawki bezpieczeństwa",
+      "Wersje parzyste są gotowe na produkcję od pierwszego dnia, więc 26 można wdrażać od razu",
+      "Należy wybrać najstarszą wspieraną wersję LTS, bo najdłużej zostanie objęta wsparciem"
+    ],
+    "correct": 0,
+    "explanation": "Strona wydań Node.js mówi wprost: produkcja tylko na Active LTS lub Maintenance LTS. Faza Current trwa sześć miesięcy i daje autorom bibliotek czas na dostosowanie się. Najstarsza LTS ma najkrótsze pozostałe wsparcie, nie najdłuższe.",
+    "source_url": "https://nodejs.org/en/about/previous-releases",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-012",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Projekt Node.js zapowiedział zmianę harmonogramu wydań od wersji 27. Jak ona wygląda?",
+    "options": [
+      "Wersje nieparzyste nadal nie dostaną LTS, zmienia się tylko długość wsparcia",
+      "Jedna wersja główna na rok i każda przechodzi do LTS po sześciomiesięcznej fazie Current, poprzedzonej sześcioma miesiącami fazy Alpha",
+      "Każda wersja główna będzie LTS od dnia wydania, bez fazy Current",
+      "Wersje główne będą wychodzić co kwartał, a LTS dostanie co czwarta"
+    ],
+    "correct": 1,
+    "explanation": "Od Node.js 27 cykl jest roczny i każda wersja główna trafia do LTS po fazie Current (sześć miesięcy, a przed nią sześć miesięcy fazy Alpha). Znika podział na parzyste wersje LTS i nieparzyste, które wygasały po pół roku — plan aktualizacji można oprzeć na jednej wersji rocznie.",
+    "source_url": "https://nodejs.org/en/about/previous-releases",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-013",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Serwis Node.js stoi za load balancerem, który trzyma bezczynne połączenia keep-alive do backendu przez 60 s. Sporadycznie pojawiają się błędy 502, zawsze na pierwszym żądaniu po chwili ciszy. Serwer HTTP ma domyślne ustawienia. Co jest najbardziej prawdopodobną przyczyną?",
+    "options": [
+      "server.keepAliveTimeout domyślnie wynosi 5 s, więc Node zamyka bezczynne połączenie, którego load balancer wciąż chce użyć; ustaw go dłużej niż idle timeout load balancera",
+      "server.headersTimeout jest za krótki i trzeba ustawić go na 0",
+      "Serwer HTTP w Node.js domyślnie nie obsługuje keep-alive i zamyka połączenie po każdej odpowiedzi",
+      "http.Agent ma domyślnie keepAlive: false, więc load balancer nie może utrzymać połączenia"
+    ],
+    "correct": 0,
+    "explanation": "Po wysłaniu ostatniej odpowiedzi serwer czeka keepAliveTimeout (domyślnie 5000 ms, plus bufor keepAliveTimeoutBuffer, domyślnie 1 s) na kolejne dane, a potem niszczy gniazdo. Load balancer uważa połączenie za żywe przez 60 s, więc czasem wysyła żądanie w gniazdo, które Node właśnie zamyka — i zwraca 502. Backend musi trzymać bezczynne połączenia dłużej niż proxy przed nim. http.Agent dotyczy klienta HTTP, nie serwera.",
+    "source_url": "https://nodejs.org/api/http.html#serverkeepalivetimeout",
+    "added_on": "2026-10-12"
   }
 ]

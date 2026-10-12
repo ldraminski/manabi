@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ai-tools-senior-001",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Workflow CI uruchamia claude -p \"Zrób review tego PR\" na checkoucie kodu z pull requestów, także z forków. Czym grozi uruchomienie go bez --bare?",
+    "options": [
+      "Niczym — w trybie -p Claude Code nie czyta konfiguracji z repozytorium",
+      "Sesja -p wykona hooki z .claude/settings.json z PR-a i połączy się z serwerami MCP z jego .mcp.json, bez okna zaufania folderu i bez pytania o zgodę",
+      "Claude Code zatrzyma się na oknie zaufania folderu i job zawiśnie do timeoutu",
+      "Hooki z repozytorium się wykonają, ale serwery MCP z .mcp.json czekają na zatwierdzenie, więc się nie połączą"
+    ],
+    "correct": 1,
+    "explanation": "Bez --bare sesja -p ładuje to samo co interaktywna — hooki, skille, .mcp.json, CLAUDE.md — także w folderze, któremu nigdy nie zaufano, i nie pokazuje przy tym żadnego okna zgody. Autor PR-a może więc dopisać hook, który wykona się w Twoim CI. --bare pomija tę autodetekcję; potrzebną konfigurację podajesz jawnie flagami (--settings, --mcp-config, --append-system-prompt).",
+    "source_url": "https://code.claude.com/docs/en/headless#start-faster-with-bare-mode",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-002",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Nocny job uruchamia claude -p z --allowedTools \"Read,Edit,Bash(npm test *)\". Wszystko, co w zwykłym trybie wymagałoby zgody i nie jest objęte tą listą, ma zostać odrzucone — bez klasyfikatora i bez automatycznie zatwierdzanych poleceń plikowych. Który tryb uprawnień przekażesz?",
+    "options": [
+      "--permission-mode acceptEdits",
+      "--permission-mode dontAsk",
+      "--permission-mode auto"
+    ],
+    "correct": 1,
+    "explanation": "dontAsk odrzuca każde wywołanie, które inaczej wymagałoby zgody; przechodzą tylko akcje niewymagające zgody (np. odczyt plików w katalogu roboczym) i to, co obejmują --allowedTools lub reguły allow. acceptEdits dodatkowo sam zatwierdza polecenia typu mkdir, mv, cp, a auto oddaje decyzje klasyfikatorowi. Tryb warto podać jawnie, bo domyślny tryb startowy sesji może być auto.",
+    "source_url": "https://code.claude.com/docs/en/headless#auto-approve-tools",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-003",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Skrypt CI ma na podstawie odpowiedzi Claude’a nadać PR-owi etykietę i potrzebuje niezawodnie odczytać pole risk o wartości \"low\" albo \"high\". Co wybierasz?",
+    "options": [
+      "Prośbę w prompcie o „sam JSON, bez komentarza” i parsowanie domyślnego wyjścia tekstowego",
+      "--output-format json z --json-schema i odczyt pola structured_output",
+      "--output-format stream-json i szukanie słowa high w zdarzeniach",
+      "--verbose, który wypisuje odpowiedź modelu jako JSON"
+    ],
+    "correct": 1,
+    "explanation": "Z --json-schema odpowiedź musi pasować do schematu, a wynik trafia do pola structured_output obok metadanych (session_id, koszt). Niepoprawny schemat kończy uruchomienie błędem, zamiast po cichu zwrócić tekst. Prośba w prompcie nie daje gwarancji formatu, a szukanie słowa w strumieniu zdarzeń jest kruche.",
+    "source_url": "https://code.claude.com/docs/en/headless#get-structured-output",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-004",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Wrapper w CI uruchamia claude -p i uznaje job za udany, jeśli na stderr nic się nie pojawiło. W nocy job przeszedł na zielono, choć poświadczenia wygasły i Claude nic nie zrobił. Co poprawić?",
+    "options": [
+      "Sprawdzać kod wyjścia procesu: przy błędzie w trakcie przebiegu, np. braku uwierzytelnienia, Claude Code kończy się kodem różnym od zera, a opis błędu wypisuje jako wynik na stdout",
+      "Dodać --verbose, żeby błędy uwierzytelnienia trafiały na stderr",
+      "Parsować tekst odpowiedzi, bo w trybie -p Claude Code zawsze kończy się kodem 0",
+      "Dodać --bare, bo tylko w tym trybie błędy uwierzytelnienia przerywają uruchomienie"
+    ],
+    "correct": 0,
+    "explanation": "claude -p kończy się kodem 0 przy sukcesie i niezerowym, gdy uruchomienie się nie powiedzie. Na stderr trafiają tylko błędy wykryte przed startem, np. nieznana flaga; błąd w trakcie przebiegu jest wypisywany jako wynik na stdout. Skrypt powinien więc rozgałęziać się po kodzie wyjścia.",
+    "source_url": "https://code.claude.com/docs/en/headless#basic-usage",
+    "added_on": "2026-10-12"
+  }
+]

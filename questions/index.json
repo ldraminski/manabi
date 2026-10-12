@@ -184,6 +184,54 @@
     "added_on": "2026-10-08"
   },
   {
+    "id": "ai-tools-mid-011",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-mid-012",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-001",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-002",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-003",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-004",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
     "id": "angular-junior-001",
     "technology": "angular",
     "level": "junior",
@@ -728,6 +776,38 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "javascript-mid-001",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-002",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-003",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-004",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
     "id": "nextjs-junior-001",
     "technology": "nextjs",
     "level": "junior",
@@ -1158,6 +1238,30 @@
     "topic": "scaling-and-isolation",
     "kind": "single_choice",
     "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-senior-011",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-012",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-013",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-10-12"
   },
   {
     "id": "react-junior-001",

@@ -292,5 +292,19 @@
     "title": "Skalowanie i izolacja",
     "description": "cluster, stan w pamięci, model uprawnień",
     "icon": "layout"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "agents-in-ci",
+    "title": "Agenci w CI",
+    "description": "claude -p, tryb --bare, uprawnienia bez człowieka, wynik w JSON",
+    "icon": "spark"
+  },
+  {
+    "technology": "javascript",
+    "slug": "async-patterns",
+    "title": "Współbieżność obietnic",
+    "description": "Promise.all i allSettled, await w serii, AbortSignal",
+    "icon": "clock"
   }
 ]

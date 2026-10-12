@@ -1,0 +1,70 @@
+[
+  {
+    "id": "javascript-mid-001",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "fetchUser() odrzuca się po 100 ms, a fetchOrders() spełnia się po 2 s. Co się stanie?",
+    "code": "const [user, orders] = await Promise.all([\n  fetchUser(),\n  fetchOrders(),\n]);",
+    "options": [
+      "Po 100 ms await rzuca błędem z fetchUser(); fetchOrders() nie zostaje anulowane i działa dalej w tle",
+      "Po 100 ms await rzuca błędem, a fetchOrders() zostaje automatycznie przerwane",
+      "await czeka 2 s i zwraca tablicę z błędem na pierwszej pozycji",
+      "await czeka 2 s, a potem rzuca błędem z fetchUser()"
+    ],
+    "correct": 0,
+    "explanation": "Promise.all() odrzuca się od razu przy pierwszym odrzuceniu, z jego powodem. Nie anuluje pozostałych operacji — żeby przerwać żądanie, trzeba przekazać mu AbortSignal. Kolejne odrzucenia są ignorowane i nie wywołują unhandledrejection.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-002",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Co zawiera results[1]?",
+    "code": "const results = await Promise.allSettled([\n  Promise.resolve(1),\n  Promise.reject(new Error('boom')),\n]);",
+    "options": [
+      "{ status: 'rejected', reason: Error('boom') }",
+      "{ status: 'rejected', value: undefined }",
+      "Nic — await rzuca błędem boom, zanim results zostanie przypisane",
+      "Error('boom')"
+    ],
+    "correct": 0,
+    "explanation": "Promise.allSettled() zawsze się spełnia i zwraca tablicę obiektów w kolejności wejścia: { status: \"fulfilled\", value } albo { status: \"rejected\", reason }. Przydaje się, gdy zadania są niezależne i chcesz znać wynik każdego.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-003",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Ile mniej więcej trwa a(), a ile b()?",
+    "code": "const wait = (ms) => new Promise((r) => setTimeout(r, ms));\n\nasync function a() {\n  await wait(2000);\n  await wait(1000);\n}\n\nasync function b() {\n  const x = wait(2000);\n  const y = wait(1000);\n  await x;\n  await y;\n}",
+    "options": [
+      "a(): 3 s, b(): 2 s",
+      "Obie 3 s",
+      "Obie 2 s",
+      "a(): 3 s, b(): 1 s"
+    ],
+    "correct": 0,
+    "explanation": "W a() drugi timer startuje dopiero po pierwszym await, więc czasy się sumują. W b() oba timery startują od razu i biegną równolegle — całość trwa tyle, co najwolniejszy. Gdy chcesz poczekać na kilka niezależnych operacji, uruchom je przed await, najczęściej przez Promise.all().",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#await_and_concurrency",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-004",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Serwer nie odpowiada przez 10 s. Co wypisze ten kod w przeglądarce?",
+    "code": "try {\n  const res = await fetch(url, { signal: AbortSignal.timeout(5000) });\n  console.log(res.status);\n} catch (err) {\n  console.log(err.name);\n}",
+    "options": [
+      "TimeoutError",
+      "AbortError",
+      "TypeError",
+      "Nic — signal przerywa tylko odczyt body, więc fetch czeka na odpowiedź serwera"
+    ],
+    "correct": 0,
+    "explanation": "AbortSignal.timeout() przerywa sygnał z powodem DOMException o nazwie TimeoutError i z tym błędem odrzuca się fetch. AbortError zobaczysz, gdy przerwanie przyjdzie z innego miejsca, np. z abort() na AbortController bez argumentu albo z przycisku „stop” przeglądarki — po nazwie odróżnisz timeout od anulowania.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+    "added_on": "2026-10-12"
+  }
+]

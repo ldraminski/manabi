@@ -158,5 +158,38 @@
     "explanation": "Worktree powstaje w .claude/worktrees/<nazwa> na nowej gałęzi i zawiera tylko pliki śledzone przez Git, więc zależności i pliki z .gitignore trzeba przygotować osobno. Plik .worktreeinclude wskazuje, które ignorowane pliki kopiować do każdego nowego worktree. Commitowanie sekretów nie jest rozwiązaniem.",
     "source_url": "https://code.claude.com/docs/en/worktrees#copy-gitignored-files-into-worktrees",
     "added_on": "2026-10-08"
+  },
+  {
+    "id": "ai-tools-mid-011",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Piszesz skill /deploy, który wdraża aplikację na produkcję. Ma się uruchamiać tylko wtedy, gdy sam wpiszesz /deploy, a nie wtedy, gdy Claude uzna, że pasuje do rozmowy. Co ustawiasz we frontmatterze SKILL.md?",
+    "options": [
+      "user-invocable: false",
+      "disable-model-invocation: true",
+      "allowed-tools z pustą listą",
+      "Dopisek w description: „Nie uruchamiaj automatycznie”"
+    ],
+    "correct": 1,
+    "explanation": "Przy disable-model-invocation: true Claude nie wywoła skilla sam, zostaje tylko /deploy. Opis skilla nie trafia wtedy nawet do kontekstu. user-invocable: false działa odwrotnie: chowa skill z menu / i zostawia go wyłącznie Claude’owi. allowed-tools nie decyduje o tym, kto wywołuje skill, a prośba w opisie niczego nie gwarantuje.",
+    "source_url": "https://code.claude.com/docs/en/skills#control-who-invokes-a-skill",
+    "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-mid-012",
+    "topic": "agent-automation",
+    "kind": "single_choice",
+    "prompt": "Co robi pole allowed-tools w tym skillu, gdy wpiszesz /commit?",
+    "code": "---\nname: commit\ndescription: Stage and commit the current changes\ndisable-model-invocation: true\nallowed-tools: Bash(git add *) Bash(git commit *)\n---",
+    "options": [
+      "Zawęża dostępne narzędzia do tych dwóch poleceń — wszystkie inne są w tej turze zablokowane",
+      "W turze, w której wywołano skill, Claude uruchamia te polecenia bez pytania o zgodę; pozostałe narzędzia nadal są dostępne i podlegają zwykłym ustawieniom uprawnień",
+      "Na stałe dopisuje te reguły do permissions.allow w .claude/settings.json",
+      "Pozwala Claude’owi samodzielnie wywoływać ten skill, bez wpisywania /commit"
+    ],
+    "correct": 1,
+    "explanation": "allowed-tools tylko wstępnie zatwierdza wymienione narzędzia na czas tury, w której wywołano skill — zgoda wygasa przy Twojej następnej wiadomości. Nie ogranicza puli narzędzi; do tego służy disallowed-tools albo reguły deny. Uwaga: pole działa także w skillach z repozytorium, więc przeglądaj je przed uruchomieniem Claude Code w cudzym projekcie.",
+    "source_url": "https://code.claude.com/docs/en/skills#pre-approve-tools-for-a-skill",
+    "added_on": "2026-10-12"
   }
 ]
