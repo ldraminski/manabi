@@ -232,6 +232,70 @@
     "added_on": "2026-10-12"
   },
   {
+    "id": "ai-tools-senior-005",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-006",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-007",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-008",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-009",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "flashcard",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-010",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-011",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-012",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
     "id": "angular-junior-001",
     "technology": "angular",
     "level": "junior",
@@ -806,6 +870,70 @@
     "topic": "async-patterns",
     "kind": "single_choice",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-005",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-006",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-007",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-008",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-009",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-010",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-011",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-012",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
   },
   {
     "id": "nextjs-junior-001",
@@ -1774,5 +1902,37 @@
     "topic": "components",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-mid-001",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-002",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-003",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-004",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-13"
   }
 ]

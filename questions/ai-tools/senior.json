@@ -61,5 +61,127 @@
     "explanation": "claude -p kończy się kodem 0 przy sukcesie i niezerowym, gdy uruchomienie się nie powiedzie. Na stderr trafiają tylko błędy wykryte przed startem, np. nieznana flaga; błąd w trakcie przebiegu jest wypisywany jako wynik na stdout. Skrypt powinien więc rozgałęziać się po kodzie wyjścia.",
     "source_url": "https://code.claude.com/docs/en/headless#basic-usage",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-senior-005",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Administrator chce, żeby w firmie używano tylko modeli z zatwierdzonej listy, więc w managed settings Claude Code ustawia \"model\": \"claude-sonnet-…\". Czy to wystarczy?",
+    "options": [
+      "Tak — managed settings mają najwyższy priorytet, więc nikt nie wybierze innego modelu",
+      "Nie — managed model to tylko domyślny punkt startowy; ograniczenie wyboru robią availableModels i deniedModels",
+      "Nie — model da się ustawić tylko zmienną ANTHROPIC_MODEL, klucz model w managed settings jest ignorowany",
+      "Tak, ale dopiero po wyłączeniu polecenia /model w ustawieniach użytkownika"
+    ],
+    "correct": 1,
+    "explanation": "Według dokumentacji managed model jest wartością startową, a nie blokadą. Blokadami są availableModels (lista dozwolonych) i deniedModels. Gdy organizacja je ustawi, flagi takie jak --model wybierają już tylko spośród dozwolonych modeli.",
+    "source_url": "https://code.claude.com/docs/en/settings#settings-precedence",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-006",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Zespół commituje .claude/settings.json z allow [\"Bash(npm run *)\"] i deny [\"Read(./.env)\"]. Nowa osoba klonuje repo i uruchamia claude, ale jeszcze nie zaakceptowała okna zaufania folderu. Co już działa?",
+    "options": [
+      "Obie reguły — plik jest w repozytorium, więc obowiązuje od razu",
+      "Żadna — dopóki folder nie jest zaufany, Claude Code ignoruje cały .claude/settings.json",
+      "Reguła deny działa od razu, a allow dopiero po zaakceptowaniu okna zaufania",
+      "Reguła allow działa od razu, a deny dopiero po zaakceptowaniu okna zaufania"
+    ],
+    "correct": 2,
+    "explanation": "Reguły allow i additionalDirectories z projektu rozszerzają uprawnienia, więc Claude Code stosuje je dopiero po zaakceptowaniu okna zaufania, które je wypisuje. Reguły deny i ask tylko ograniczają, dlatego obowiązują od razu. W claude -p okna nie ma, a reguły allow z niezaufanego folderu są pomijane z ostrzeżeniem.",
+    "source_url": "https://code.claude.com/docs/en/permissions#project-allow-rules-and-workspace-trust",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-007",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Managed settings firmy zawierają deny dla Bash(curl *). Job CI uruchamia claude -p --allowedTools \"Bash(curl *)\". Co się stanie, gdy Claude spróbuje użyć curl?",
+    "options": [
+      "curl zadziała — flaga z linii poleceń nadpisuje ustawienia z plików",
+      "curl zadziała, bo w trybie -p managed settings nie są wczytywane",
+      "curl zostanie zablokowany — deny z dowolnego poziomu wygrywa, a managed reguły nie da się nadpisać nawet z linii poleceń",
+      "Claude Code przerwie start z błędem konfliktu reguł"
+    ],
+    "correct": 2,
+    "explanation": "Narzędzie zablokowane na jakimkolwiek poziomie nie może zostać dopuszczone przez inny poziom. Dokumentacja podaje dokładnie ten przykład: managed deny nie nadpisze --allowedTools. Działa to tylko w jedną stronę — --disallowedTools może dodać ograniczenia ponad te z managed settings.",
+    "source_url": "https://code.claude.com/docs/en/permissions#settings-precedence",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-008",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Organizacja włączyła sandbox w managed settings (\"sandbox\": { \"enabled\": true }). Dział bezpieczeństwa widzi, że polecenia, które padły w sandboxie, Claude czasem ponawia poza nim, a na maszynach bez bubblewrap Claude Code działa bez sandboxa. Co dodać do managed settings?",
+    "options": [
+      "\"allowUnsandboxedCommands\": false i \"failIfUnavailable\": true",
+      "Regułę deny dla całego narzędzia Bash",
+      "\"autoAllowBashIfSandboxed\": false",
+      "Nic — gdy sandbox jest włączony w managed settings, żadne polecenie nie może wyjść poza niego"
+    ],
+    "correct": 0,
+    "explanation": "allowUnsandboxedCommands: false sprawia, że Claude Code ignoruje parametr dangerouslyDisableSandbox, więc nieudanego polecenia nie da się ponowić bez sandboxa. failIfUnavailable: true blokuje start Claude Code, gdy sandbox nie może ruszyć (np. brak bubblewrap na Linuksie), zamiast cicho przejść na wykonanie bez izolacji. autoAllowBashIfSandboxed decyduje tylko o pytaniu o zgodę, a deny dla Bash zablokowałby całą pracę.",
+    "source_url": "https://code.claude.com/docs/en/sandboxing#enforce-sandboxing-with-managed-settings",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-009",
+    "topic": "team-governance",
+    "kind": "flashcard",
+    "prompt": "Masz już dopracowane reguły uprawnień (allow/deny) w Claude Code. Po co zespołowi dodatkowo sandbox?",
+    "answer": "To dwie różne warstwy. Reguły uprawnień decydują przed uruchomieniem narzędzia, na podstawie treści polecenia (w trybie auto także oceny klasyfikatora), i obejmują wszystkie narzędzia: Bash, Read, Edit, WebFetch, MCP. Sandbox jest egzekwowany przez system operacyjny na działającym procesie Basha i jego procesach potomnych, więc ogranicza dostęp do plików i sieci niezależnie od tego, co wybrał model — także gdy prompt injection obejdzie decyzję Claude’a albo dopuszczone polecenie robi więcej, niż sugeruje nazwa. Razem dają obronę w głąb.",
+    "explanation": "Dokumentacja opisuje uprawnienia i sandbox jako warstwy komplementarne: uprawnienia sprawdzane są przed wykonaniem i obejmują każde narzędzie, a sandbox działa tylko dla poleceń powłoki (Bash, PowerShell, Monitor), ale jego granica trzyma niezależnie od decyzji modelu.",
+    "source_url": "https://code.claude.com/docs/en/sandboxing#permission-rules",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-010",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Żeby nie klikać zgód, zespół commituje w .claude/settings.json \"permissions\": { \"defaultMode\": \"bypassPermissions\" }. Co się stanie u osób, które sklonują repo?",
+    "options": [
+      "Wszyscy zaczną sesje w trybie bypassPermissions",
+      "Tryb zadziała dopiero po zaakceptowaniu okna zaufania folderu",
+      "Nic — wartości auto i bypassPermissions klucza defaultMode nie działają z ustawień projektu ani lokalnych; trzeba je ustawić w ustawieniach użytkownika, managed albo przez --permission-mode",
+      "Claude Code odrzuci cały plik ustawień jako niepoprawny"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja wymienia to wprost: defaultMode z wartością auto lub bypassPermissions nie działa z .claude/settings.json ani .claude/settings.local.json. Repozytorium nie może więc samo wyłączyć pytań o zgodę każdemu, kto je sklonuje. Taką decyzję podejmuje użytkownik albo organizacja.",
+    "source_url": "https://code.claude.com/docs/en/settings#a-value-you-set-is-ignored",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-011",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Masz uruchomić claude -p w cudzym repozytorium i nie chcesz, żeby wykonały się jego hooki. W ~/.claude/settings.json ustawiasz \"disableAllHooks\": true. Czy to wystarczy?",
+    "options": [
+      "Tak — disableAllHooks z ustawień użytkownika wyłącza hooki wszędzie",
+      "Nie — ustawienia projektu mają wyższy priorytet niż użytkownika i mogą ustawić false; przekaż --settings '{\"disableAllHooks\": true}' przy tym uruchomieniu",
+      "Tak, bo w trybie -p hooki z repozytorium nigdy się nie wykonują",
+      "Nie — hooków nie da się wyłączyć; jedyną opcją jest usunięcie katalogu .claude"
+    ],
+    "correct": 1,
+    "explanation": "W kolejności priorytetów ustawienia projektu stoją nad ustawieniami użytkownika, więc repozytorium może nadpisać Twoje disableAllHooks. --settings jest wyżej niż wszystkie pliki poza managed. Hooki z ustawień repozytorium wykonują się w claude -p nawet w folderze, któremu nigdy nie zaufano. Alternatywy: --bare albo --setting-sources user.",
+    "source_url": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-012",
+    "topic": "team-governance",
+    "kind": "single_choice",
+    "prompt": "Managed settings ustawiają sandbox.filesystem.allowRead na listę zatwierdzonych ścieżek. Programista dopisuje własne wpisy allowRead w ~/.claude/settings.json. Co się stanie?",
+    "options": [
+      "Jego wpisy są ignorowane, bo managed settings zawsze nadpisują cały klucz",
+      "Listy się łączą, więc programista poszerza dostęp; żeby temu zapobiec, trzeba ustawić allowManagedReadPathsOnly: true w managed settings",
+      "Jego lista zastępuje listę z managed settings, bo jest bardziej szczegółowa",
+      "Claude Code odmówi startu z powodu konfliktu ustawień"
+    ],
+    "correct": 1,
+    "explanation": "Dla kluczy logicznych (enabled, failIfUnavailable) wartość managed wygrywa, ale tablice, takie jak allowRead, są łączone ze wszystkich wczytanych zakresów. Programista może więc poszerzyć politykę, chyba że administrator włączy blokadę allowManagedReadPathsOnly (dla domen analogicznie allowManagedDomainsOnly).",
+    "source_url": "https://code.claude.com/docs/en/sandboxing#keep-developers-from-widening-the-policy",
+    "added_on": "2026-10-13"
   }
 ]

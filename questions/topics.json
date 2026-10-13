@@ -306,5 +306,26 @@
     "title": "Współbieżność obietnic",
     "description": "Promise.all i allSettled, await w serii, AbortSignal",
     "icon": "clock"
+  },
+  {
+    "technology": "javascript",
+    "slug": "objects-and-data",
+    "title": "Obiekty i dane",
+    "description": "structuredClone, JSON, sortowanie, WeakMap, Object.groupBy",
+    "icon": "braces"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "team-governance",
+    "title": "Agenci w organizacji",
+    "description": "Ustawienia zarządzane, zaufanie folderu, sandbox, polityki dla zespołu",
+    "icon": "spark"
+  },
+  {
+    "technology": "vue",
+    "slug": "reactivity-in-depth",
+    "title": "Reaktywność od środka",
+    "description": "Ograniczenia reactive(), źródła watch, deep, sprzątanie po watcherze",
+    "icon": "braces"
   }
 ]

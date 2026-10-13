@@ -1,0 +1,70 @@
+[
+  {
+    "id": "vue-mid-001",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co pokaże szablon, który wyświetla state.count, po wywołaniu increment()?",
+    "code": "const state = reactive({ count: 0 })\nlet { count } = state\n\nfunction increment() {\n  count++\n}",
+    "options": [
+      "0 — count jest zwykłą zmienną odłączoną od state.count, więc state się nie zmienia",
+      "1 — destrukturyzacja zachowuje reaktywność",
+      "1, ale dopiero po wywołaniu nextTick()",
+      "Vue rzuci błąd, bo właściwości obiektu z reactive() są tylko do odczytu"
+    ],
+    "correct": 0,
+    "explanation": "reactive() śledzi dostęp do właściwości obiektu. Gdy wyciągniesz prymitywną właściwość przez destrukturyzację (albo przekażesz ją do funkcji), dostajesz zwykłą kopię wartości bez połączenia z obiektem. Dlatego dokumentacja zaleca ref() jako podstawowe API stanu; przy reactive() można użyć toRefs().",
+    "source_url": "https://vuejs.org/guide/essentials/reactivity-fundamentals#limitations-of-reactive",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-002",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dlaczego ten watcher nie reaguje na zmiany obj.count?",
+    "code": "const obj = reactive({ count: 0 })\n\nwatch(obj.count, (count) => {\n  console.log(`count: ${count}`)\n})",
+    "options": [
+      "watch() dostaje liczbę — wartość obj.count z chwili wywołania — a nie reaktywne źródło; trzeba przekazać getter () => obj.count",
+      "watch() nie obsługuje obiektów z reactive(), tylko ref()",
+      "Brakuje opcji { deep: true }",
+      "Brakuje opcji { immediate: true }, bez niej watcher nigdy się nie uruchamia"
+    ],
+    "correct": 0,
+    "explanation": "Źródłem watch() może być ref (także computed), obiekt reaktywny, getter albo tablica takich źródeł. obj.count obliczone w miejscu wywołania to zwykła liczba, której Vue nie umie śledzić. Getter () => obj.count odczytuje właściwość w trakcie śledzenia, więc zmiana jest wykrywana.",
+    "source_url": "https://vuejs.org/guide/essentials/watchers#watch-source-types",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-003",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Kod zmienia state.filters.status = 'done'. Czy callback się wykona?",
+    "code": "const state = reactive({ filters: { status: 'all' } })\n\nwatch(\n  () => state.filters,\n  () => loadTasks()\n)",
+    "options": [
+      "Nie — watcher z getterem zwracającym obiekt odpala się tylko, gdy getter zwróci inny obiekt; trzeba dodać { deep: true } albo obserwować state.filters bezpośrednio",
+      "Tak — watch() zawsze śledzi zagnieżdżone właściwości",
+      "Tak, ale dopiero przy następnym renderze komponentu",
+      "Nie — zagnieżdżonych właściwości obiektu z reactive() nie da się obserwować"
+    ],
+    "correct": 0,
+    "explanation": "watch() jest domyślnie płytki. Getter () => state.filters zwraca ciągle ten sam obiekt, więc mutacja jego pola nie wywoła callbacku — dopiero podmiana całego state.filters. Przekazanie samego obiektu reaktywnego (watch(state.filters, …)) tworzy niejawnie watcher głęboki; to samo daje { deep: true }. Przy głębokim watcherze newValue i oldValue wskazują ten sam obiekt, a przechodzenie dużych struktur bywa kosztowne.",
+    "source_url": "https://vuejs.org/guide/essentials/watchers#deep-watchers",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-004",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Watcher ma przerywać nieaktualne żądanie, gdy id zmieni się przed jego zakończeniem (Vue 3.5+). Co jest nie tak?",
+    "code": "watch(id, async (newId) => {\n  const controller = new AbortController()\n  const res = await fetch(`/api/tasks/${newId}`, {\n    signal: controller.signal,\n  })\n  onWatcherCleanup(() => controller.abort())\n  tasks.value = await res.json()\n})",
+    "options": [
+      "onWatcherCleanup() jest wywołane po await, a musi być wywołane synchronicznie, przed pierwszym await w callbacku",
+      "Nic, kod jest poprawny",
+      "onWatcherCleanup() działa tylko w watchEffect(), nie w watch()",
+      "fetch wywołany w watcherze nie przyjmuje AbortSignal"
+    ],
+    "correct": 0,
+    "explanation": "onWatcherCleanup() rejestruje funkcję sprzątającą, którą Vue wywołuje przed ponownym uruchomieniem watchera. Według dokumentacji trzeba ją wywołać w synchronicznej części callbacku watch lub funkcji watchEffect — nie po await. Tu rejestracja następuje dopiero po zakończeniu fetch, więc nie przerwie trwającego żądania. Przenieś wywołanie przed await.",
+    "source_url": "https://vuejs.org/guide/essentials/watchers#side-effect-cleanup",
+    "added_on": "2026-10-13"
+  }
+]

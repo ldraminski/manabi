@@ -66,5 +66,139 @@
     "explanation": "AbortSignal.timeout() przerywa sygnał z powodem DOMException o nazwie TimeoutError i z tym błędem odrzuca się fetch. AbortError zobaczysz, gdy przerwanie przyjdzie z innego miejsca, np. z abort() na AbortController bez argumentu albo z przycisku „stop” przeglądarki — po nazwie odróżnisz timeout od anulowania.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "javascript-mid-005",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Co się stanie po wykonaniu tego kodu?",
+    "code": "const user = {\n  name: 'Ala',\n  tags: ['admin'],\n  greet() { return 'Cześć'; },\n};\nconst copy = structuredClone(user);",
+    "options": [
+      "structuredClone rzuci wyjątek DataCloneError, bo funkcji nie da się sklonować",
+      "copy będzie głęboką kopią bez metody greet",
+      "copy będzie głęboką kopią, a greet będzie tą samą funkcją co w user",
+      "copy będzie płytką kopią, tak jak przy { ...user }"
+    ],
+    "correct": 0,
+    "explanation": "structuredClone() robi głęboką kopię i obsługuje m.in. Date, Map, Set i referencje cykliczne, ale funkcji algorytm structured clone nie kopiuje — próba kończy się wyjątkiem DOMException DataCloneError. Nie przenosi też prototypu, getterów ani setterów.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-006",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Jaki tekst zwróci JSON.stringify?",
+    "code": "JSON.stringify({\n  id: 1,\n  note: undefined,\n  onClick() {},\n  createdAt: new Date(0),\n});",
+    "options": [
+      "{\"id\":1,\"createdAt\":\"1970-01-01T00:00:00.000Z\"}",
+      "{\"id\":1,\"note\":null,\"createdAt\":\"1970-01-01T00:00:00.000Z\"}",
+      "{\"id\":1,\"note\":undefined,\"onClick\":{},\"createdAt\":{}}",
+      "{\"id\":1,\"createdAt\":0}"
+    ],
+    "correct": 0,
+    "explanation": "undefined, funkcje i symbole nie są poprawnymi wartościami JSON: we właściwościach obiektu są pomijane (w tablicy zamieniają się na null). Date ma metodę toJSON(), która zwraca to samo co toISOString(), więc data trafia do JSON-a jako tekst w UTC — po JSON.parse() nie wróci jako obiekt Date.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-007",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Co zwróci to wyrażenie?",
+    "code": "[10, 1, 9, 100].sort()",
+    "options": [
+      "[1, 10, 100, 9]",
+      "[1, 9, 10, 100]",
+      "[100, 10, 9, 1]",
+      "TypeError — sort() bez argumentu działa tylko na tekstach"
+    ],
+    "correct": 0,
+    "explanation": "Bez funkcji porównującej sort() zamienia elementy na tekst i porównuje je po jednostkach UTF-16, więc \"100\" wypada przed \"9\". Do liczb podaj komparator: (a, b) => a - b. Uwaga: sort() sortuje tablicę w miejscu i zwraca tę samą tablicę.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-008",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Funkcja dostaje tablicę prices z propsów i ma zwrócić posortowaną listę. Dlaczego lepiej użyć prices.toSorted((a, b) => a - b) niż prices.sort((a, b) => a - b)?",
+    "options": [
+      "toSorted() zwraca nową tablicę i nie zmienia prices, a sort() sortuje oryginał w miejscu",
+      "toSorted() sortuje liczby numerycznie bez komparatora, a sort() nie",
+      "toSorted() jest asynchroniczne i nie blokuje wątku przy dużych tablicach",
+      "toSorted() sortuje stabilnie, a sort() nie gwarantuje zachowania kolejności równych elementów"
+    ],
+    "correct": 0,
+    "explanation": "toSorted() to kopiująca wersja sort(): zwraca nową, posortowaną tablicę, a oryginał zostaje nietknięty. sort() modyfikuje tablicę w miejscu, co przy danych współdzielonych (propsy, stan) daje trudne do znalezienia błędy. Komparator działa w obu tak samo — bez niego obie porównują elementy jako tekst. Obie metody są stabilne (sort() od ES2019).",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSorted",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-009",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Biblioteka przechowuje metadane elementów DOM w new WeakMap(), a nie w new Map(). Co jest prawdą o tym wyborze?",
+    "options": [
+      "Wpis w WeakMap nie trzyma elementu przy życiu — po usunięciu elementu z DOM i zniknięciu innych referencji może on zostać zebrany przez GC, ale za to WeakMap nie pozwala wylistować kluczy",
+      "WeakMap automatycznie usuwa wpisy po określonym czasie, jak cache z TTL",
+      "WeakMap przyjmuje jako klucz dowolną wartość, także string z id elementu",
+      "WeakMap działa jak Map, ale szybciej się po niej iteruje, bo nie ma size"
+    ],
+    "correct": 0,
+    "explanation": "Klucze WeakMap muszą być obiektami (albo niezarejestrowanymi symbolami) i są trzymane słabo: obecność w WeakMap nie blokuje garbage collectora. Dlatego WeakMap nie ma keys(), size ani iteracji — wynik zależałby od stanu GC. Gdy potrzebujesz listy kluczy, użyj Map.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-010",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Co się stanie w ostatniej linii?",
+    "code": "const items = [\n  { name: 'jabłko', type: 'fruit' },\n  { name: 'marchew', type: 'vegetable' },\n];\nconst groups = Object.groupBy(items, (item) => item.type);\ngroups.hasOwnProperty('fruit');",
+    "options": [
+      "TypeError: groups.hasOwnProperty is not a function",
+      "Zwróci true",
+      "Zwróci false, bo Object.groupBy zwraca Map, a nie obiekt",
+      "Zwróci undefined"
+    ],
+    "correct": 0,
+    "explanation": "Object.groupBy() zwraca obiekt z prototypem null, więc nie dziedziczy metod z Object.prototype, takich jak hasOwnProperty czy toString. Sprawdzaj klucze przez Object.hasOwn(groups, \"fruit\") albo operator in. Grupowanie do Map daje osobna metoda Map.groupBy().",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-011",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Oba serwery lustrzane zwracają błąd. Co trafi do err w bloku catch?",
+    "code": "try {\n  const data = await Promise.any([\n    fetchFromMirrorA(),\n    fetchFromMirrorB(),\n  ]);\n} catch (err) {\n  console.log(err);\n}",
+    "options": [
+      "AggregateError, którego err.errors zawiera oba powody odrzucenia w kolejności wejścia",
+      "Błąd z tego serwera, który odpowiedział jako pierwszy",
+      "Błąd z tego serwera, który odpowiedział jako ostatni",
+      "Nic — Promise.any spełnia się wartością undefined, gdy wszystkie obietnice się odrzucą"
+    ],
+    "correct": 0,
+    "explanation": "Promise.any() spełnia się pierwszą udaną wartością, a odrzuca się dopiero, gdy odrzucą się wszystkie obietnice — wtedy z AggregateError. Jego pole errors trzyma powody w kolejności przekazanych obietnic, niezależnie od kolejności ich zakończenia.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any",
+    "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-012",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "save() zwraca Promise i trwa ok. 100 ms. Kiedy pojawi się „Zapisano”?",
+    "code": "async function saveAll(items) {\n  items.forEach(async (item) => {\n    await save(item);\n  });\n  console.log('Zapisano');\n}",
+    "options": [
+      "Od razu, zanim którykolwiek zapis się skończy — forEach nie czeka na Promise zwracane przez callback",
+      "Po zakończeniu wszystkich zapisów, bo każdy callback ma await",
+      "Po zakończeniu pierwszego zapisu",
+      "Nigdy — forEach z funkcją async rzuca SyntaxError"
+    ],
+    "correct": 0,
+    "explanation": "forEach() oczekuje funkcji synchronicznej: wywołuje callback i ignoruje zwrócony Promise, więc saveAll idzie dalej od razu. Odrzucenia z save() nie trafią też do try/catch wokół forEach. Zapisy po kolei: for...of z await; równolegle: await Promise.all(items.map(save)).",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach",
+    "added_on": "2026-10-13"
   }
 ]
