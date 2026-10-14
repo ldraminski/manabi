@@ -1,0 +1,104 @@
+[
+  {
+    "id": "typescript-mid-001",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Do unii Shape dodano Triangle, ale w switch nie dopisano nowego case. Co się stanie?",
+    "code": "type Shape = Circle | Square | Triangle;\n\nfunction getArea(shape: Shape) {\n  switch (shape.kind) {\n    case 'circle':\n      return Math.PI * shape.radius ** 2;\n    case 'square':\n      return shape.sideLength ** 2;\n    default:\n      const _exhaustiveCheck: never = shape;\n      return _exhaustiveCheck;\n  }\n}",
+    "options": [
+      "Błąd kompilacji w linii z never: w gałęzi default shape ma typ Triangle, którego nie da się przypisać do never",
+      "Kod się skompiluje, a dla trójkąta funkcja zwróci undefined",
+      "Błąd w czasie działania programu przy przypisaniu do zmiennej typu never",
+      "TypeScript automatycznie doda brakujący case"
+    ],
+    "correct": 0,
+    "explanation": "Do never nie da się przypisać żadnego innego typu. Gdy wszystkie warianty unii są obsłużone, w default shape jest zawężone do never i przypisanie przechodzi. Nowy, nieobsłużony wariant zostaje w default, więc kompilator zgłasza błąd — to sprawdzenie kompletności (exhaustiveness checking).",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Narrowing.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-002",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma birds w TypeScript 5.5 lub nowszym?",
+    "code": "declare const nationalBirds: Map<string, Bird>;\ndeclare const countries: string[];\n\nconst birds = countries\n  .map(country => nationalBirds.get(country))\n  .filter(bird => bird !== undefined);",
+    "options": [
+      "(Bird | undefined)[]",
+      "Bird[]",
+      "any[]",
+      "unknown[]"
+    ],
+    "correct": 1,
+    "explanation": "Od TypeScript 5.5 kompilator sam wnioskuje predykat typu (bird is Bird) dla funkcji takich jak bird => bird !== undefined, więc filter zwraca Bird[]. W starszych wersjach wynik miał typ (Bird | undefined)[] i trzeba było jawnie napisać predykat.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%205.5.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-003",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Co daje satisfies w porównaniu z adnotacją const palette: Record<Colors, string | RGB>?",
+    "code": "type Colors = 'red' | 'green' | 'blue';\ntype RGB = [red: number, green: number, blue: number];\n\nconst palette = {\n  red: [255, 0, 0],\n  green: '#00ff00',\n  blue: [0, 0, 255],\n} satisfies Record<Colors, string | RGB>;\n\nconst greenNormalized = palette.green.toUpperCase();",
+    "options": [
+      "satisfies działa jak as: wymusza typ bez sprawdzania zgodności",
+      "satisfies sprawdza typ dopiero w czasie działania programu",
+      "satisfies sprawdza, że obiekt pasuje do typu (np. wyłapie literówkę w kluczu), ale zostawia mu najbardziej konkretny typ — palette.green nadal jest string, więc toUpperCase() się kompiluje",
+      "Nie ma różnicy, to nowsza składnia tej samej adnotacji"
+    ],
+    "correct": 2,
+    "explanation": "Z adnotacją Record<Colors, string | RGB> typ palette.green to string | RGB, więc wywołanie toUpperCase() byłoby błędem. satisfies (od TypeScript 4.9) waliduje wyrażenie względem typu, nie zmieniając typu wynikowego. Jak każda konstrukcja typów znika przy kompilacji.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%204.9.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-004",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma StrArrOrNumArr?",
+    "code": "type ToArray<Type> = Type extends any ? Type[] : never;\n\ntype StrArrOrNumArr = ToArray<string | number>;",
+    "options": [
+      "(string | number)[]",
+      "string[] | number[]",
+      "never",
+      "any[]"
+    ],
+    "correct": 1,
+    "explanation": "Typ warunkowy działający na parametrze generycznym jest rozdzielny (distributive): dla unii stosuje się go do każdego członu osobno, czyli ToArray<string> | ToArray<number>. Żeby dostać (string | number)[], trzeba objąć obie strony extends nawiasami kwadratowymi: [Type] extends [any].",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Conditional%20Types.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-005",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Jakie typy mają A i B?",
+    "code": "type GetReturnType<Type> = Type extends (...args: never[]) => infer Return\n  ? Return\n  : never;\n\ntype A = GetReturnType<() => number>;\ntype B = GetReturnType<string>;",
+    "options": [
+      "A: number, B: string",
+      "A: () => number, B: never",
+      "A: number, B: unknown",
+      "A: number, B: never"
+    ],
+    "correct": 3,
+    "explanation": "infer wprowadza w gałęzi true nową zmienną typu, którą TypeScript wnioskuje z dopasowania. () => number pasuje do wzorca funkcji, więc Return = number. string nie jest funkcją, więc wybierana jest gałąź false — never. Wbudowany ReturnType<T> działa na tej samej zasadzie.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Conditional%20Types.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-006",
+    "topic": "advanced-types",
+    "kind": "single_choice",
+    "prompt": "Które wywołanie zgłosi błąd kompilacji?",
+    "code": "interface SquareConfig {\n  color?: string;\n  width?: number;\n}\ndeclare function createSquare(config: SquareConfig): void;\n\nconst options = { colour: 'red', width: 100 };\n\ncreateSquare({ colour: 'red', width: 100 }); // A\ncreateSquare(options);                      // B",
+    "options": [
+      "Oba",
+      "Tylko A — literał obiektu przekazany bezpośrednio przechodzi sprawdzanie nadmiarowych właściwości, a zmienna options nie",
+      "Tylko B",
+      "Żadne, bo wszystkie pola SquareConfig są opcjonalne"
+    ],
+    "correct": 1,
+    "explanation": "Literały obiektów przypisywane do zmiennej o danym typie albo przekazywane jako argument przechodzą sprawdzanie nadmiarowych właściwości (excess property checks): colour nie istnieje w SquareConfig, więc A jest błędem. options ma własny wywnioskowany typ i jest sprawdzane tylko pod kątem zgodności — width pasuje, więc B przechodzi, a literówka zostaje niezauważona.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Object%20Types.md",
+    "added_on": "2026-10-14"
+  }
+]

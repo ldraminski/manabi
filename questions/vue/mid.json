@@ -66,5 +66,133 @@
     "explanation": "onWatcherCleanup() rejestruje funkcję sprzątającą, którą Vue wywołuje przed ponownym uruchomieniem watchera. Według dokumentacji trzeba ją wywołać w synchronicznej części callbacku watch lub funkcji watchEffect — nie po await. Tu rejestracja następuje dopiero po zakończeniu fetch, więc nie przerwie trwającego żądania. Przenieś wywołanie przed await.",
     "source_url": "https://vuejs.org/guide/essentials/watchers#side-effect-cleanup",
     "added_on": "2026-10-13"
+  },
+  {
+    "id": "vue-mid-005",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Czy szablon wyświetlający state.count odświeży się po wywołaniu update()?",
+    "code": "const state = shallowRef({ count: 1 })\n\nfunction update() {\n  state.value.count = 2\n}",
+    "options": [
+      "Tak — shallowRef śledzi zagnieżdżone właściwości tak samo jak ref()",
+      "Tak, ale dopiero po wywołaniu nextTick()",
+      "Nie — shallowRef reaguje tylko na przypisanie do .value; trzeba podmienić cały obiekt: state.value = { count: 2 }",
+      "Nie — shallowRef w ogóle nie jest reaktywny, służy tylko do przechowywania danych"
+    ],
+    "correct": 2,
+    "explanation": "W shallowRef() wartość wewnętrzna jest przechowywana tak, jak jest — bez zamiany na głęboko reaktywny obiekt. Reaktywny jest tylko dostęp do .value: mutacja zagnieżdżonego pola nie wywoła aktualizacji, podmiana całego obiektu tak. shallowRef stosuje się głównie do optymalizacji dużych struktur danych i integracji z zewnętrznym stanem.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/reactivity-advanced.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-006",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Element #counter wyświetla count, które na początku wynosi 0. Co wypisze console.log po pierwszym wywołaniu increment()?",
+    "code": "const count = ref(0)\n\nfunction increment() {\n  count.value++\n  console.log(document.getElementById('counter').textContent)\n}",
+    "options": [
+      "\"1\" — Vue aktualizuje DOM synchronicznie przy każdej zmianie refa",
+      "\"0\" — Vue buforuje aktualizacje DOM do następnego „ticka”; żeby odczytać zaktualizowany DOM, trzeba najpierw wykonać await nextTick()",
+      "undefined — textContent nie jest dostępny dla elementów renderowanych przez Vue",
+      "Vue rzuci błąd, bo nie wolno czytać DOM w funkcji zmieniającej stan"
+    ],
+    "correct": 1,
+    "explanation": "Zmiany stanu nie są nanoszone na DOM synchronicznie. Vue zbiera je do następnego „ticka”, żeby każdy komponent zaktualizował się tylko raz, niezależnie od liczby zmian. nextTick() zwraca Promise (albo przyjmuje callback), który rozwiązuje się po zakończeniu aktualizacji DOM.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/general.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-007",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Każdy TodoRow ma własne pole tekstowe trzymane w stanie komponentu. Po usunięciu pierwszego zadania tekst wpisany w pierwszym wierszu pojawia się przy innym zadaniu. Co jest przyczyną?",
+    "code": "<TodoRow\n  v-for=\"(todo, index) in todos\"\n  :key=\"index\"\n  :todo=\"todo\"\n/>",
+    "options": [
+      "Brak modyfikatora .lazy na v-model wewnątrz TodoRow",
+      "v-for na komponentach trzeba owinąć w <template>",
+      "Vue nie pozwala trzymać stanu w komponentach renderowanych przez v-for",
+      "key oparty na indeksie: po usunięciu elementu indeksy się przesuwają, więc Vue zostawia istniejące komponenty z ich stanem i podaje im inne zadania; key powinien być stabilnym identyfikatorem, np. todo.id"
+    ],
+    "correct": 3,
+    "explanation": "Domyślnie Vue łata elementy listy „w miejscu” według pozycji. To działa tylko wtedy, gdy wynik nie zależy od stanu komponentów potomnych ani tymczasowego stanu DOM (np. wartości pól). key mówi Vue, który węzeł odpowiada któremu elementowi danych — indeks się zmienia po usunięciu, a id zostaje.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/list.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-008",
+    "topic": "components-in-depth",
+    "kind": "flashcard",
+    "prompt": "Na co kompilator rozwija defineModel() w komponencie potomnym (Vue 3.4+)?",
+    "code": "<!-- Child.vue -->\n<script setup>\nconst model = defineModel()\n</script>\n\n<template>\n  <input v-model=\"model\" />\n</template>",
+    "answer": "Na prop modelValue, z którym synchronizowana jest wartość lokalnego refa, oraz zdarzenie update:modelValue, emitowane, gdy dziecko zmieni model.value. Po stronie rodzica <Child v-model=\"x\" /> to skrót :model-value=\"x\" i @update:model-value=\"v => x = v\".",
+    "explanation": "defineModel() zwraca ref działający jak wiązanie dwukierunkowe: odczyt daje wartość z rodzica, zapis emituje zdarzenie, które aktualizuje stan rodzica. Przed 3.4 trzeba było samemu zadeklarować prop modelValue i emit update:modelValue.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/v-model.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-009",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent działa na Vue 3.5. Co się stanie, gdy rodzic zmieni prop foo?",
+    "code": "<script setup>\nconst { foo } = defineProps(['foo'])\n\nwatchEffect(() => {\n  console.log(foo)\n})\n</script>",
+    "options": [
+      "Nic — destrukturyzacja zawsze odcina reaktywność, więc watchEffect wykona się tylko raz",
+      "Vue zgłosi błąd, bo propsów nie wolno destrukturyzować",
+      "watchEffect uruchomi się ponownie tylko wtedy, gdy foo jest obiektem",
+      "watchEffect uruchomi się ponownie — od 3.5 kompilator zamienia odczyt foo na props.foo, więc zależność jest śledzona"
+    ],
+    "correct": 3,
+    "explanation": "W Vue 3.4 i starszych foo byłoby zwykłą stałą. Od 3.5 kompilator dopisuje props. do odczytów zmiennych zdestrukturyzowanych z defineProps w tym samym <script setup>. Uwaga: watch(foo, …) nadal nie zadziała, bo przekazuje wartość zamiast źródła — trzeba użyć gettera () => foo.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/props.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-010",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent-przodek udostępnia ref przez provide(), a komponent potomny musi ten stan zmieniać. Co zaleca dokumentacja Vue?",
+    "options": [
+      "Provider udostępnia razem ze stanem funkcję, która go zmienia, a potomek ją wywołuje — mutacje zostają w providerze",
+      "Potomek przypisuje nową wartość bezpośrednio do wstrzykniętego refa — to najprostsze i zalecane",
+      "Provider udostępnia location.value zamiast refa, żeby potomek dostał kopię",
+      "Stanu udostępnionego przez provide() w ogóle nie da się zmieniać, trzeba użyć zewnętrznej biblioteki stanu"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja zaleca trzymać mutacje reaktywnego stanu w providerze, żeby stan i jego zmiany były w jednym miejscu. Gdy potomek musi coś zmienić, provider udostępnia funkcję do tego. Żeby zablokować bezpośrednie zmiany, można opakować wartość w readonly(). Przekazanie location.value dałoby potomkowi zwykłą wartość bez reaktywności.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/provide-inject.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-011",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Rodzic używa <MyButton class=\"large\" @click=\"save\" />. Atrybut class i listener mają trafić na <button>, a nie na zewnętrzny <div>. Co zrobić w MyButton?",
+    "code": "<!-- MyButton.vue -->\n<div class=\"btn-wrapper\">\n  <button class=\"btn\">Zapisz</button>\n</div>",
+    "options": [
+      "Dodać ref na <button> — atrybuty przechodzące trafiają na element z atrybutem ref",
+      "Ustawić inheritAttrs: false (w <script setup> przez defineOptions) i dodać v-bind=\"$attrs\" na <button>",
+      "Użyć w rodzicu @click.native",
+      "Nic — atrybuty przechodzące trafiają zawsze na pierwszy element <button> w szablonie"
+    ],
+    "correct": 1,
+    "explanation": "Atrybuty i listenery, których komponent nie zadeklarował jako props ani emits (np. class, style, id, v-on), trafiają automatycznie na element główny — tu <div>. inheritAttrs: false wyłącza to zachowanie, a v-bind=\"$attrs\" pozwala wskazać inny element. Modyfikatora .native nie ma w Vue 3.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/attrs.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-012",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Szablon komponentu CustomLayout ma trzy elementy główne: <header>, <main> i <footer>. Rodzic używa <CustomLayout id=\"layout\" />, a komponent nigdzie nie używa $attrs. Co zrobi Vue?",
+    "options": [
+      "Doda id do <header>, bo to pierwszy element",
+      "Doda id do wszystkich trzech elementów",
+      "Nie doda id nigdzie automatycznie i wyświetli ostrzeżenie w czasie działania; trzeba jawnie użyć v-bind=\"$attrs\" na wybranym elemencie",
+      "Zgłosi błąd kompilacji, bo komponent musi mieć jeden element główny"
+    ],
+    "correct": 2,
+    "explanation": "Automatyczne przekazywanie atrybutów działa tylko przy jednym elemencie głównym. Przy kilku Vue nie wie, gdzie je umieścić, więc ostrzega, dopóki $attrs nie zostanie jawnie zbindowane. Vue 3 pozwala na komponenty z wieloma elementami głównymi (fragmenty).",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/attrs.md",
+    "added_on": "2026-10-14"
   }
 ]

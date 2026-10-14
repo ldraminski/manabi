@@ -327,5 +327,33 @@
     "title": "Reaktywność od środka",
     "description": "Ograniczenia reactive(), źródła watch, deep, sprzątanie po watcherze",
     "icon": "braces"
+  },
+  {
+    "technology": "vue",
+    "slug": "components-in-depth",
+    "title": "Komponenty od środka",
+    "description": "Klucze w listach, defineModel, provide/inject, $attrs",
+    "icon": "layout"
+  },
+  {
+    "technology": "react",
+    "slug": "rendering-in-depth",
+    "title": "Renderowanie od środka",
+    "description": "Zachowanie i reset stanu, key, memo",
+    "icon": "atom"
+  },
+  {
+    "technology": "react",
+    "slug": "effects-in-depth",
+    "title": "Efekty od środka",
+    "description": "Wyścigi żądań, stan pochodny, useEffectEvent",
+    "icon": "atom"
+  },
+  {
+    "technology": "typescript",
+    "slug": "advanced-types",
+    "title": "Zaawansowane typy",
+    "description": "never, predykaty, satisfies, typy warunkowe",
+    "icon": "type"
   }
 ]

@@ -1,0 +1,103 @@
+[
+  {
+    "id": "react-mid-001",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Po każdym kliknięciu przycisku tekst wpisany w pole znika. Dlaczego?",
+    "code": "export default function MyComponent() {\n  const [counter, setCounter] = useState(0);\n\n  function MyTextField() {\n    const [text, setText] = useState('');\n    return <input value={text} onChange={e => setText(e.target.value)} />;\n  }\n\n  return (\n    <>\n      <MyTextField />\n      <button onClick={() => setCounter(counter + 1)}>\n        Kliknięto {counter} razy\n      </button>\n    </>\n  );\n}",
+    "options": [
+      "Brakuje key na <MyTextField />",
+      "setCounter resetuje stan wszystkich komponentów potomnych",
+      "MyTextField jest definiowany wewnątrz MyComponent, więc przy każdym renderze powstaje nowa funkcja — dla Reacta to inny komponent na tej samej pozycji, więc jego stan jest resetowany",
+      "Pole kontrolowane zawsze traci wartość przy ponownym renderze rodzica"
+    ],
+    "correct": 2,
+    "explanation": "React zachowuje stan, dopóki na tej samej pozycji w drzewie renderuje się ten sam komponent. Funkcja zdefiniowana w ciele komponentu jest przy każdym renderze nowa, więc React traktuje ją jako inny typ i odtwarza poddrzewo od zera. Komponenty trzeba deklarować na najwyższym poziomie modułu.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/preserving-and-resetting-state.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-002",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent <Chat contact={to} /> trzyma w stanie szkic wiadomości. Po wybraniu innego odbiorcy szkic ma się wyczyścić. Jakie rozwiązanie zaleca dokumentacja React?",
+    "options": [
+      "Renderować <Chat key={to.id} contact={to} /> — zmiana key sprawi, że React utworzy komponent od nowa ze świeżym stanem",
+      "Czyścić stan w useEffect zależnym od contact",
+      "Owinąć Chat w memo",
+      "Trzymać szkic w useRef zamiast w useState"
+    ],
+    "correct": 0,
+    "explanation": "key nadaje komponentowi tożsamość. Inny key na tej samej pozycji oznacza dla Reacta inny komponent, więc cały stan poddrzewa jest resetowany. Czyszczenie stanu w efekcie też zadziała, ale najpierw wyrenderuje komponent z nieaktualnym szkicem, a potem drugi raz — dokumentacja odradza ten wzorzec.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/preserving-and-resetting-state.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-003",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Chart jest owinięty w memo, a mimo to renderuje się przy każdym renderze Page, nawet gdy zmienia się tylko theme. Dlaczego?",
+    "code": "const Chart = memo(function Chart({ person }) {\n  // ...\n});\n\nfunction Page({ name, age, theme }) {\n  return <Chart person={{ name, age }} />;\n}",
+    "options": [
+      "memo działa tylko dla komponentów klasowych",
+      "memo porównuje propsy głęboko, ale pomija obiekty zagnieżdżone",
+      "memo pomija tylko renderowania wywołane zmianą kontekstu",
+      "memo porównuje każdy prop przez Object.is; obiekt { name, age } powstaje od nowa przy każdym renderze Page, więc prop zawsze wygląda na zmieniony"
+    ],
+    "correct": 3,
+    "explanation": "memo pomija render, gdy wszystkie propsy są płytko równe poprzednim (Object.is). Nowy literał obiektu, tablicy albo funkcji tworzony w trakcie renderu rodzica nigdy nie jest równy poprzedniemu. Rozwiązania: przekazać name i age jako osobne propsy albo zapamiętać obiekt przez useMemo.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/memo.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-004",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Użytkownik szybko wpisuje „hello”. Czasem na ekranie zostają wyniki dla „hell”. Jak naprawić ten efekt?",
+    "code": "useEffect(() => {\n  fetchResults(query).then(json => {\n    setResults(json);\n  });\n}, [query]);",
+    "options": [
+      "Usunąć query z tablicy zależności",
+      "Dodać w efekcie flagę ignore, ustawiać ją na true w funkcji sprzątającej i wywoływać setResults tylko wtedy, gdy ignore jest false",
+      "Zamienić useEffect na useLayoutEffect",
+      "Przenieść wywołanie fetchResults bezpośrednio do ciała komponentu"
+    ],
+    "correct": 1,
+    "explanation": "Każda zmiana query uruchamia osobne żądanie, a odpowiedzi mogą wrócić w dowolnej kolejności — to wyścig (race condition). Funkcja sprzątająca poprzedniego efektu uruchamia się przed kolejnym, więc oznaczenie starej odpowiedzi jako nieaktualnej gwarantuje, że zapisany zostanie tylko wynik ostatniego żądania.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/you-might-not-need-an-effect.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-005",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co jest nie tak z tym kodem?",
+    "code": "function Form() {\n  const [firstName, setFirstName] = useState('Taylor');\n  const [lastName, setLastName] = useState('Swift');\n\n  const [fullName, setFullName] = useState('');\n  useEffect(() => {\n    setFullName(firstName + ' ' + lastName);\n  }, [firstName, lastName]);\n  // ...\n}",
+    "options": [
+      "Nic, to zalecany sposób liczenia wartości pochodnych",
+      "Efekt powinien mieć pustą tablicę zależności",
+      "fullName to nadmiarowy stan: wystarczy obliczyć go w trakcie renderowania; efekt powoduje dodatkowy render z nieaktualną wartością",
+      "setFullName w efekcie zawsze powoduje nieskończoną pętlę renderów"
+    ],
+    "correct": 2,
+    "explanation": "Wartość, którą da się wyliczyć z istniejących propsów lub stanu, nie powinna być osobnym stanem. Wersja z efektem najpierw renderuje komponent ze starym fullName, a potem od razu renderuje go ponownie. const fullName = firstName + \" \" + lastName jest prostsze i szybsze. Pętli nie ma, bo zależności po zapisie się nie zmieniają.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/you-might-not-need-an-effect.md",
+    "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-006",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Efekt łączy się z pokojem czatu i po połączeniu pokazuje powiadomienie w aktualnym motywie. Zmiana theme nie powinna powodować ponownego łączenia. Co zrobić?",
+    "code": "useEffect(() => {\n  const connection = createConnection(roomId);\n  connection.on('connected', () => {\n    showNotification('Połączono!', theme);\n  });\n  connection.connect();\n  return () => connection.disconnect();\n}, [roomId, theme]);",
+    "options": [
+      "Przenieść wywołanie showNotification do Effect Event utworzonego przez useEffectEvent; efekt zależy wtedy tylko od roomId, a Effect Event zawsze widzi najnowszy theme",
+      "Usunąć theme z tablicy zależności i wyłączyć ostrzeżenie lintera",
+      "Owinąć showNotification w useCallback z zależnością [theme] i dodać tę funkcję do zależności efektu",
+      "Przenieść theme z propsów do useState"
+    ],
+    "correct": 0,
+    "explanation": "Effect Event to część logiki efektu, która zachowuje się jak handler zdarzenia: widzi najnowsze propsy i stan, ale nie jest reaktywną zależnością, więc nie wymusza ponownej synchronizacji. Usunięcie theme z zależności spowoduje odczyt nieaktualnej wartości, a useCallback z [theme] nadal zmienia się przy zmianie motywu. Effect Event wolno wywoływać tylko z wnętrza efektów i nie dodaje się go do tablicy zależności.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useEffectEvent.md",
+    "added_on": "2026-10-14"
+  }
+]
