@@ -1,0 +1,124 @@
+[
+  {
+    "id": "git-mid-001",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz git bisect run ./test.sh. Jaki kod wyjścia powinien zwrócić skrypt, gdy danego commita nie da się przetestować (np. projekt się nie buduje)?",
+    "options": [
+      "0",
+      "1",
+      "125",
+      "255"
+    ],
+    "correct": 2,
+    "explanation": "git bisect run traktuje 0 jako „dobry”, kody od 1 do 127 (oprócz 125) jako „zły”, a 125 jako „nie da się sprawdzić” — taki commit jest pomijany jak przy git bisect skip. Inne kody, np. 255, przerywają bisekcję.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-bisect.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-002",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Po git reset --hard HEAD~3 okazało się, że te trzy commity były potrzebne. Nie zostały nigdzie wypchnięte. Jak je najprościej odzyskać?",
+    "options": [
+      "Nie da się — reset --hard trwale usuwa commity",
+      "git revert HEAD~3",
+      "Znaleźć poprzednią pozycję w git reflog (np. HEAD@{1}) i wykonać git reset --hard HEAD@{1}",
+      "git pull, bo Git trzyma kopię na serwerze"
+    ],
+    "correct": 2,
+    "explanation": "Reflog zapisuje, gdzie lokalnie wskazywały HEAD i gałęzie. HEAD@{1} to pozycja HEAD sprzed ostatniego ruchu, czyli sprzed resetu. Commity nadal są w repozytorium, dopóki nie usunie ich odśmiecanie. Wpisy reflogu wskazujące na commity nieosiągalne z gałęzi (jak te po resecie) domyślnie wygasają po 30 dniach. revert tworzy nowy commit odwracający zmiany i niczego tu nie przywróci.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-reflog.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-003",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Chcesz znaleźć commit, w którym z kodu zniknęło wywołanie legacyAuth(). Które polecenie do tego służy?",
+    "options": [
+      "git log -S legacyAuth",
+      "git log --author=legacyAuth",
+      "git log --grep=legacyAuth",
+      "git blame legacyAuth"
+    ],
+    "correct": 0,
+    "explanation": "git log -S<string> (tzw. pickaxe) pokazuje commity, które zmieniają liczbę wystąpień danego tekstu w plikach — czyli go dodają albo usuwają. --grep przeszukuje tylko opisy commitów, --author autorów, a git blame pokazuje autorów obecnych linii pliku, więc nie znajdzie linii, której już nie ma.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/diff-options.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-004",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Masz zmienione pliki śledzone i nowy, jeszcze niedodany plik notes.md. Wykonujesz git stash. Co się stanie z notes.md?",
+    "options": [
+      "Trafi do schowka razem z resztą zmian",
+      "Zostanie usunięty",
+      "Zostanie w katalogu roboczym — pliki nieśledzone trafiają do schowka dopiero z opcją -u (--include-untracked)",
+      "git stash odmówi działania, dopóki są pliki nieśledzone"
+    ],
+    "correct": 2,
+    "explanation": "Domyślnie git stash zapisuje i cofa zmiany w plikach śledzonych (w indeksie i katalogu roboczym). Nieśledzone pliki zostają na miejscu. Z -u są one też zapisywane do schowka i czyszczone z katalogu roboczego.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-stash.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-005",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Po rebase swojej gałęzi musisz ją wypchnąć z nadpisaniem. Dlaczego --force-with-lease jest bezpieczniejsze niż --force?",
+    "options": [
+      "Tworzy kopię zapasową gałęzi zdalnej przed nadpisaniem",
+      "Nadpisze gałąź zdalną tylko wtedy, gdy nadal wskazuje ona tam, gdzie Twoja gałąź śledząca (np. origin/feature) — jeśli ktoś w międzyczasie coś dopchnął, push się nie uda",
+      "Scala zmiany z gałęzi zdalnej przed nadpisaniem",
+      "Działa tylko dla gałęzi, które sam utworzyłeś"
+    ],
+    "correct": 1,
+    "explanation": "Bez podanej wartości oczekiwanej --force-with-lease porównuje stan gałęzi zdalnej z Twoją gałęzią śledzącą. Jeśli ktoś dopchnął commit, którego nie widziałeś, push zostanie odrzucony zamiast skasować jego pracę. Dokumentacja ostrzega, że ochronę osłabia git fetch uruchamiany w tle (np. przez edytor), bo przesuwa gałąź śledzącą bez Twojej wiedzy.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-push.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-006",
+    "topic": "shared-history",
+    "kind": "flashcard",
+    "prompt": "Jak poprawić commit sprzed kilku commitów na swojej gałęzi, nie zmieniając ręcznie listy w rebase -i?",
+    "answer": "Zrobić poprawkę i zapisać ją jako git commit --fixup=<hash>. Powstanie commit z tytułem „fixup! …”. Potem git rebase -i --autosquash <baza> sam przeniesie go zaraz za poprawiany commit i oznaczy jako fixup — zmiany zostaną wcielone, a opis oryginalnego commita zostanie bez zmian.",
+    "explanation": "Warto dodać, że --fixup=amend:<hash> pozwala przy okazji podmienić opis commita, a całą operację wykonuje się tylko na commitach, których nikt jeszcze nie pobrał.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-rebase.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-007",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "main nie przesunął się od momentu utworzenia gałęzi feature. Co zrobi git merge --no-ff feature wykonane na main?",
+    "options": [
+      "Przesunie wskaźnik main na ostatni commit feature (fast-forward)",
+      "Utworzy commit scalający, mimo że możliwy był fast-forward — w historii zostanie ślad, które commity należały do gałęzi",
+      "Odmówi scalenia, bo fast-forward jest możliwy",
+      "Spłaszczy wszystkie commity feature do jednego"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie (--ff) Git, gdy może, wykonuje fast-forward — tylko przesuwa wskaźnik gałęzi, bez commita scalającego. --no-ff zawsze tworzy commit scalający. Spłaszczenie do jednego commita to git merge --squash, a odmowę w razie braku fast-forwardu daje --ff-only.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/merge-options.adoc",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-008",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Chcesz wycofać commit scalający a1b2c3 na main poleceniem git revert a1b2c3. Git zgłasza błąd. Co trzeba dodać?",
+    "options": [
+      "--no-edit",
+      "-m 1 — numer rodzica uznawanego za główną linię; zmiany zostaną odwrócone względem niego",
+      "--hard",
+      "Nic — commitów scalających nie da się wycofać, trzeba użyć reset"
+    ],
+    "correct": 1,
+    "explanation": "Commit scalający ma dwóch rodziców i Git nie wie, którą stronę uznać za główną linię. -m (--mainline) wskazuje numer rodzica, licząc od 1; zwykle 1 to gałąź, na którą scalano. Uwaga z dokumentacji: po takim revercie ponowne scalenie tej samej gałęzi nie wniesie już wycofanych zmian, bo te commity są przodkami scalenia.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-revert.adoc",
+    "added_on": "2026-10-15"
+  }
+]

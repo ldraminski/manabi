@@ -584,6 +584,70 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "git-mid-001",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-002",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-003",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-004",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-005",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-006",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "flashcard",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-007",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-008",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
     "id": "html-junior-001",
     "technology": "html",
     "level": "junior",
@@ -1552,6 +1616,54 @@
     "added_on": "2026-10-14"
   },
   {
+    "id": "react-mid-007",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-008",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-009",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-010",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-011",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-012",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
     "id": "rest-api-junior-001",
     "technology": "rest-api",
     "level": "junior",
@@ -1902,6 +2014,54 @@
     "topic": "advanced-types",
     "kind": "single_choice",
     "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-007",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-008",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-009",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-010",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-011",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-012",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "added_on": "2026-10-15"
   },
   {
     "id": "vue-junior-001",

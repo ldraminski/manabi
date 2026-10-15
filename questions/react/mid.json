@@ -99,5 +99,105 @@
     "explanation": "Effect Event to część logiki efektu, która zachowuje się jak handler zdarzenia: widzi najnowsze propsy i stan, ale nie jest reaktywną zależnością, więc nie wymusza ponownej synchronizacji. Usunięcie theme z zależności spowoduje odczyt nieaktualnej wartości, a useCallback z [theme] nadal zmienia się przy zmianie motywu. Effect Event wolno wywoływać tylko z wnętrza efektów i nie dodaje się go do tablicy zależności.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useEffectEvent.md",
     "added_on": "2026-10-14"
+  },
+  {
+    "id": "react-mid-007",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "W trybie deweloperskim (Strict Mode) w konsoli widać dwa razy „Connecting…”. Co z tym zrobić?",
+    "code": "useEffect(() => {\n  const connection = createConnection();\n  connection.connect();\n}, []);",
+    "options": [
+      "Dodać ref, który blokuje drugie uruchomienie efektu",
+      "Dopisać funkcję czyszczącą, która zamyka połączenie — w produkcji efekt i tak uruchomi się raz, a w dev React celowo montuje komponent ponownie, żeby wykryć brak sprzątania",
+      "Przenieść połączenie do useLayoutEffect, który nie jest uruchamiany dwa razy",
+      "Wyłączyć Strict Mode, bo podwójne uruchomienie trafi też do produkcji"
+    ],
+    "correct": 1,
+    "explanation": "W trybie deweloperskim React od razu po pierwszym montażu odmontowuje i montuje komponent jeszcze raz. To test, czy efekt po sobie sprząta. Dokumentacja mówi wprost: pytanie nie brzmi „jak uruchomić efekt raz”, tylko „jak naprawić efekt, żeby działał po ponownym montażu” — zwykle przez funkcję czyszczącą. Blokowanie refem tylko ukrywa błąd.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/synchronizing-with-effects.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-008",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Tooltip musi zmierzyć swoją wysokość, żeby zdecydować, czy pokazać się nad elementem, czy pod nim. Z useEffect przez chwilę widać go w złym miejscu. Co zaleca dokumentacja?",
+    "options": [
+      "useLayoutEffect — uruchamia się po zmianie DOM, ale zanim przeglądarka odmaluje ekran, więc użytkownik zobaczy od razu właściwą pozycję",
+      "useMemo z pomiarem wysokości wewnątrz",
+      "setTimeout(…, 0) wewnątrz useEffect",
+      "Odczytać wysokość przez ref bezpośrednio w trakcie renderowania"
+    ],
+    "correct": 0,
+    "explanation": "useLayoutEffect to wersja useEffect, która odpala się przed odmalowaniem ekranu — React wykona ponowny render z poprawną pozycją, zanim cokolwiek się pokaże. Ma koszt: blokuje malowanie, dlatego dokumentacja każe go używać tylko do pomiarów układu, a w pozostałych przypadkach wybierać useEffect.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useLayoutEffect.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-009",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co jest problemem w tym komponencie?",
+    "code": "function ChatIndicator() {\n  const isOnline = useSyncExternalStore(\n    (callback) => {\n      window.addEventListener('online', callback);\n      window.addEventListener('offline', callback);\n      return () => {\n        window.removeEventListener('online', callback);\n        window.removeEventListener('offline', callback);\n      };\n    },\n    () => navigator.onLine\n  );\n  // ...\n}",
+    "options": [
+      "useSyncExternalStore nie może przyjmować funkcji jako argumentu",
+      "Funkcja subscribe jest tworzona przy każdym renderze, więc React będzie ponownie subskrybować magazyn przy każdym renderze — trzeba ją zadeklarować poza komponentem lub owinąć w useCallback",
+      "getSnapshot musi być funkcją asynchroniczną",
+      "Brakuje tablicy zależności jako trzeciego argumentu"
+    ],
+    "correct": 1,
+    "explanation": "Gdy przy kolejnym renderze przekażesz inną funkcję subscribe, React odpina się od magazynu i subskrybuje go od nowa. Funkcja zdefiniowana w ciele komponentu jest nowa przy każdym renderze. Rozwiązanie: przenieść ją poza komponent albo owinąć w useCallback, jeśli zależy od propsów.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useSyncExternalStore.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-010",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Wpisywanie w pole jest ociężałe, bo SlowList długo się renderuje. Dodano useDeferredValue, ale nic się nie poprawiło. Czego brakuje?",
+    "code": "function App() {\n  const [text, setText] = useState('');\n  const deferredText = useDeferredValue(text);\n  return (\n    <>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <SlowList text={deferredText} />\n    </>\n  );\n}\n\nfunction SlowList({ text }) { /* ... */ }",
+    "options": [
+      "SlowList trzeba owinąć w memo — inaczej przy szybkim renderze z poprzednią wartością i tak się wyrenderuje",
+      "Trzeba dodać opóźnienie, np. useDeferredValue(text, 300)",
+      "useDeferredValue działa tylko wewnątrz <Suspense>",
+      "Pole input musi być niekontrolowane"
+    ],
+    "correct": 0,
+    "explanation": "useDeferredValue najpierw renderuje komponent ze starą wartością (żeby input odświeżył się od razu), a nową wartość renderuje w tle, w sposób przerywalny. Pierwszy render da zysk tylko wtedy, gdy SlowList może go pominąć, bo jego propsy się nie zmieniły — a to zapewnia memo. useDeferredValue nie ma parametru opóźnienia; drugi argument to wartość początkowa.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useDeferredValue.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-011",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Projekt działa na React 19. Komponent MyInput ma przekazać ref do wewnętrznego <input>. Jak to zapisać?",
+    "options": [
+      "Tylko przez forwardRef — bez niego ref nie trafi do komponentu funkcyjnego",
+      "Odczytać ref z props jak każdy inny prop: function MyInput({ ref, ...props }) { return <input ref={ref} {...props} /> }",
+      "Przez useImperativeHandle, który jest wymagany przy każdym przekazaniu ref",
+      "Ref można przekazać tylko komponentom klasowym"
+    ],
+    "correct": 1,
+    "explanation": "Od React 19 ref jest zwykłym propem komponentu funkcyjnego, więc forwardRef nie jest już potrzebny. Dokumentacja oznacza forwardRef jako przeznaczony do wycofania w przyszłej wersji.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/forwardRef.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-012",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Przy każdym renderze MyApp (np. po zmianie trasy) przerysowują się wszystkie komponenty używające useContext(AuthContext), choć currentUser się nie zmienił. Jak to poprawić?",
+    "code": "function MyApp() {\n  const [currentUser, setCurrentUser] = useState(null);\n\n  function login(response) {\n    storeCredentials(response.credentials);\n    setCurrentUser(response.user);\n  }\n\n  return (\n    <AuthContext value={{ currentUser, login }}>\n      <Page />\n    </AuthContext>\n  );\n}",
+    "options": [
+      "Owinąć każdy komponent konsumujący w memo",
+      "Owinąć login w useCallback, a obiekt wartości w useMemo zależny od [currentUser, login]",
+      "Zamienić useContext na useRef",
+      "Przenieść AuthContext do osobnego pliku"
+    ],
+    "correct": 1,
+    "explanation": "Wartość kontekstu jest porównywana referencyjnie. Literał obiektu i funkcja zdefiniowane w ciele komponentu są przy każdym renderze nowe, więc React musi przerysować wszystkich konsumentów. memo na konsumentach nie pomoże — zmiana kontekstu przechodzi przez memo. Stabilna wartość z useMemo i useCallback sprawia, że konsumenci renderują się tylko po zmianie currentUser.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useContext.md",
+    "added_on": "2026-10-15"
   }
 ]

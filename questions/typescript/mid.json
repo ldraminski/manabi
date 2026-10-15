@@ -100,5 +100,107 @@
     "explanation": "Literały obiektów przypisywane do zmiennej o danym typie albo przekazywane jako argument przechodzą sprawdzanie nadmiarowych właściwości (excess property checks): colour nie istnieje w SquareConfig, więc A jest błędem. options ma własny wywnioskowany typ i jest sprawdzane tylko pod kątem zgodności — width pasuje, więc B przechodzi, a literówka zostaje niezauważona.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Object%20Types.md",
     "added_on": "2026-10-14"
+  },
+  {
+    "id": "typescript-mid-007",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma UnlockedAccount?",
+    "code": "type CreateMutable<Type> = {\n  -readonly [Property in keyof Type]: Type[Property];\n};\n\ntype LockedAccount = {\n  readonly id: string;\n  readonly name: string;\n};\n\ntype UnlockedAccount = CreateMutable<LockedAccount>;",
+    "options": [
+      "{ readonly id: string; readonly name: string }",
+      "{ id: string; name: string }",
+      "{ id?: string; name?: string }",
+      "Błąd kompilacji — readonly nie da się usunąć"
+    ],
+    "correct": 1,
+    "explanation": "W typie mapowanym modyfikator readonly lub ? można dodać (+, domyślnie) albo usunąć prefiksem -. -readonly zdejmuje readonly ze wszystkich pól. Analogicznie -? robi z pól opcjonalnych wymagane — tak działa wbudowany Required<T>.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Mapped%20Types.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-008",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma LazyPerson?",
+    "code": "type Getters<Type> = {\n  [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]\n};\n\ninterface Person {\n  name: string;\n  age: number;\n}\n\ntype LazyPerson = Getters<Person>;",
+    "options": [
+      "{ name: () => string; age: () => number }",
+      "{ getName: () => string; getAge: () => number }",
+      "{ getname: () => string; getage: () => number }",
+      "{ get: () => string | number }"
+    ],
+    "correct": 1,
+    "explanation": "Klauzula as w typie mapowanym zmienia nazwy kluczy. Tutaj nowa nazwa to typ szablonowy: get + nazwa z wielkiej litery (Capitalize). string & Property odfiltrowuje klucze, które nie są stringami (number, symbol), bo tylko stringi można wstawić do szablonu.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Mapped%20Types.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-009",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Ile członów ma unia EventName?",
+    "code": "type Entity = 'user' | 'order';\ntype Action = 'created' | 'updated' | 'deleted';\n\ntype EventName = `${Entity}_${Action}`;",
+    "options": [
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "correct": 3,
+    "explanation": "Gdy w miejscu interpolacji typu szablonowego stoi unia, TypeScript tworzy każdą możliwą kombinację, a unie z różnych pozycji są mnożone. 2 × 3 = 6: \"user_created\", \"user_updated\", \"user_deleted\", \"order_created\" itd.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Template%20Literal%20Types.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-010",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Wywołanie z \"blue\" się kompiluje, a powinno zgłosić błąd, bo kolor domyślny ma pochodzić z listy colors. Co poprawi sygnaturę?",
+    "code": "function createStreetLight<C extends string>(colors: C[], defaultColor?: C) {\n  // ...\n}\n\ncreateStreetLight(['red', 'yellow', 'green'], 'blue');",
+    "options": [
+      "Zmienić C extends string na C extends unknown",
+      "Zapisać defaultColor?: NoInfer<C>, żeby TypeScript nie brał tego argumentu pod uwagę przy wnioskowaniu C",
+      "Zapisać defaultColor?: keyof C",
+      "Nie da się tego wyrazić bez jawnego podania typu przy każdym wywołaniu"
+    ],
+    "correct": 1,
+    "explanation": "Bez NoInfer TypeScript zbiera kandydatów na C z obu argumentów i wnioskuje \"red\" | \"yellow\" | \"green\" | \"blue\", więc wywołanie przechodzi. NoInfer<T> (od TypeScript 5.4) wyklucza argument z wnioskowania: C powstaje tylko z colors, a \"blue\" zostaje odrzucone.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%205.4.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-011",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma M?",
+    "code": "type Mapish = { [key: string]: boolean };\ntype M = keyof Mapish;",
+    "options": [
+      "string",
+      "string | number",
+      "never",
+      "\"key\""
+    ],
+    "correct": 1,
+    "explanation": "Gdy typ ma sygnaturę indeksu typu string, keyof zwraca string | number. W JavaScripcie klucze obiektu są zawsze zamieniane na stringi, więc obj[0] to to samo co obj[\"0\"] — liczbowy klucz też jest poprawny.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Keyof%20Type%20Operator.md",
+    "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-012",
+    "topic": "type-transformations",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma Role?",
+    "code": "const roles = ['admin', 'editor', 'viewer'] as const;\n\ntype Role = typeof roles[number];",
+    "options": [
+      "string",
+      "\"admin\" | \"editor\" | \"viewer\"",
+      "readonly string[]",
+      "number"
+    ],
+    "correct": 1,
+    "explanation": "Dzięki as const tablica dostaje typ readonly [\"admin\", \"editor\", \"viewer\"] z typami literalnymi. Typ indeksowany [number] wyciąga typ dowolnego elementu, więc powstaje unia literałów. Bez as const elementy miałyby typ string i Role byłby po prostu string.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Indexed%20Access%20Types.md",
+    "added_on": "2026-10-15"
   }
 ]

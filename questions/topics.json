@@ -355,5 +355,26 @@
     "title": "Zaawansowane typy",
     "description": "never, predykaty, satisfies, typy warunkowe",
     "icon": "type"
+  },
+  {
+    "technology": "typescript",
+    "slug": "type-transformations",
+    "title": "Przekształcanie typów",
+    "description": "Typy mapowane, remapowanie kluczy, typy szablonowe, NoInfer",
+    "icon": "type"
+  },
+  {
+    "technology": "git",
+    "slug": "history-and-recovery",
+    "title": "Historia i odzyskiwanie",
+    "description": "bisect, reflog, log -S, stash z nieśledzonymi plikami",
+    "icon": "branch"
+  },
+  {
+    "technology": "git",
+    "slug": "shared-history",
+    "title": "Wspólna historia",
+    "description": "force-with-lease, fixup i autosquash, --no-ff, revert scalenia",
+    "icon": "branch"
   }
 ]
