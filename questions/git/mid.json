@@ -120,5 +120,69 @@
     "explanation": "Commit scalający ma dwóch rodziców i Git nie wie, którą stronę uznać za główną linię. -m (--mainline) wskazuje numer rodzica, licząc od 1; zwykle 1 to gałąź, na którą scalano. Uwaga z dokumentacji: po takim revercie ponowne scalenie tej samej gałęzi nie wniesie już wycofanych zmian, bo te commity są przodkami scalenia.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-revert.adoc",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-009",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Robisz git rebase main na swojej gałęzi feature i pojawia się konflikt. Która strona konfliktu jest oznaczona jako „ours”?",
+    "options": [
+      "Twoje commity z gałęzi feature",
+      "Dotychczas przepisana historia, zaczynająca się od main",
+      "Wersja z ostatniego wspólnego przodka obu gałęzi",
+      "Zawsze wersja ze zdalnego repozytorium"
+    ],
+    "correct": 1,
+    "explanation": "Rebase odtwarza commity z gałęzi feature jeden po drugim na wierzchu main. Dlatego w konflikcie „ours” to dotychczas przepisana seria zaczynająca się od main, a „theirs” to odtwarzany commit z Twojej gałęzi — strony są odwrócone względem zwykłego merge. To samo dotyczy opcji -X ours/-X theirs przy rebase.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-rebase.adoc",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-010",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Gałąź topic powstała z gałęzi next, ale chcesz przenieść tylko jej własne commity na master, bez commitów z next. Które polecenie to robi?",
+    "options": [
+      "git rebase master topic",
+      "git rebase --onto master next topic",
+      "git merge master topic",
+      "git cherry-pick next..master"
+    ],
+    "correct": 1,
+    "explanation": "git rebase --onto <newbase> <upstream> <branch> bierze commity z <branch>, których nie ma w <upstream> (tu: commity topic ponad next), i odtwarza je na <newbase> (master). Zwykłe git rebase master topic przeniosłoby też commity z next, bo ich nie ma w master.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-rebase.adoc",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-011",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Długo żyjąca gałąź jest regularnie rebase’owana na main i za każdym razem rozwiązujesz te same konflikty. Co pozwoli Gitowi automatycznie powtórzyć raz zapisane rozwiązania?",
+    "options": [
+      "git merge -X ours",
+      "Włączenie rerere.enabled w konfiguracji",
+      "git rebase --keep-base",
+      "git stash przed każdym rebase"
+    ],
+    "correct": 1,
+    "explanation": "git rerere (reuse recorded resolution) zapisuje, jak ręcznie rozwiązałeś dany konflikt, i stosuje to samo rozwiązanie, gdy identyczny konflikt pojawi się ponownie. Działa dopiero po ustawieniu zmiennej konfiguracyjnej rerere.enabled. -X ours nie powtarza Twoich rozwiązań, tylko w konflikcie zawsze wybiera jedną stronę.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-rerere.adoc",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-012",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "prompt": "Pracujesz na gałęzi feature w głównym katalogu repozytorium. Wykonujesz git worktree add ../hotfix feature. Co się stanie?",
+    "options": [
+      "Powstanie drugi katalog roboczy z tą samą gałęzią feature, współdzielący zmiany na bieżąco",
+      "Git odmówi, bo gałąź feature jest już wyewidencjonowana w innym worktree (chyba że użyjesz --force)",
+      "Git sklonuje całe repozytorium do ../hotfix jako osobną kopię",
+      "Git przełączy główny katalog na nową gałąź hotfix"
+    ],
+    "correct": 1,
+    "explanation": "git worktree pozwala mieć wyewidencjonowanych kilka gałęzi naraz w osobnych katalogach podpiętych do jednego repozytorium. Domyślnie add odmawia, gdy podana gałąź jest już wyewidencjonowana w innym worktree; to zabezpieczenie można obejść opcją --force. Typowo tworzy się worktree dla innej gałęzi, np. git worktree add ../hotfix main albo z -b dla nowej.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-worktree.adoc",
+    "added_on": "2026-10-16"
   }
 ]

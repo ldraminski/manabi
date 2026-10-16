@@ -1,0 +1,134 @@
+[
+  {
+    "id": "angular-mid-001",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ostatni console.log?",
+    "code": "const shippingOptions = signal(['Ground', 'Air', 'Sea']);\nconst selectedOption = linkedSignal(() => shippingOptions()[0]);\n\nselectedOption.set('Sea');\nshippingOptions.set(['Email', 'Will Call', 'Postal service']);\nconsole.log(selectedOption());",
+    "options": [
+      "'Sea'",
+      "'Email'",
+      "'Ground'",
+      "undefined"
+    ],
+    "correct": 1,
+    "explanation": "linkedSignal można ręcznie nadpisać przez set, ale gdy zmieni się sygnał, od którego zależy obliczenie, wartość jest wyliczana od nowa. Po shippingOptions.set(...) selectedOption wraca do pierwszej opcji z nowej listy, czyli 'Email'. Żeby zachować wybór użytkownika, używa się wariantu z source i computation, który dostaje poprzednią wartość.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/linked-signal.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-002",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Efekt ma się uruchamiać tylko przy zmianie currentUser, ale w logu chcesz też pokazać bieżącą wartość counter. Jak to zapisać?",
+    "options": [
+      "Odczytać counter przez untracked(counter)",
+      "Odczytać counter przez counter.value",
+      "Przenieść odczyt counter do computed",
+      "Odczytać counter w konstruktorze i zapisać w polu klasy"
+    ],
+    "correct": 0,
+    "explanation": "Efekt śledzi każdy sygnał odczytany synchronicznie w jego funkcji. untracked() pozwala odczytać sygnał bez dodawania go do zależności, więc zmiany counter nie uruchomią efektu ponownie. Sygnały Angulara nie mają pola value. Wartość zapisana w konstruktorze byłaby nieaktualna.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/overview.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-003",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dlaczego ten efekt nie uruchamia się ponownie po zmianie sygnału theme?",
+    "code": "effect(async () => {\n  const data = await fetchUserData();\n  console.log(`User: ${data.name}, Theme: ${theme()}`);\n});",
+    "options": [
+      "Efekty nie mogą być funkcjami async",
+      "Odczyt theme() jest po await, a kontekst reaktywny działa tylko dla kodu synchronicznego",
+      "theme trzeba przekazać do effect jako drugi argument",
+      "console.log w efekcie wyłącza śledzenie zależności"
+    ],
+    "correct": 1,
+    "explanation": "Angular śledzi tylko sygnały odczytane synchronicznie. Wszystko po pierwszym await jest już poza kontekstem reaktywnym, więc theme() nie zostaje zależnością. Rozwiązanie: odczytać theme() przed await (także jako argument wywoływanej funkcji).",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/overview.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-004",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Efekt ustawia setTimeout zależny od currentUser. Kiedy wywoła się funkcja zarejestrowana przez onCleanup?",
+    "code": "effect((onCleanup) => {\n  const user = currentUser();\n  const timer = setTimeout(() => {\n    console.log(`1 second ago, the user became ${user}`);\n  }, 1000);\n  onCleanup(() => clearTimeout(timer));\n});",
+    "options": [
+      "Tylko przy niszczeniu komponentu",
+      "Przed następnym uruchomieniem efektu oraz przy jego zniszczeniu",
+      "Zaraz po każdym uruchomieniu efektu",
+      "Nigdy automatycznie — trzeba ją wywołać ręcznie"
+    ],
+    "correct": 1,
+    "explanation": "Funkcja efektu może przyjąć onCleanup jako pierwszy parametr. Zarejestrowany callback Angular wywołuje przed kolejnym uruchomieniem efektu albo przy jego zniszczeniu — to miejsce na clearTimeout czy anulowanie żądania, które zaczęło się w poprzednim przebiegu.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/effect.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-005",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "showCount ma wartość false i odczytano już conditionalCount. Co się stanie, gdy teraz zmienisz count?",
+    "code": "const showCount = signal(false);\nconst count = signal(0);\nconst conditionalCount = computed(() => {\n  if (showCount()) {\n    return `The count is ${count()}.`;\n  } else {\n    return 'Nothing to see here!';\n  }\n});",
+    "options": [
+      "conditionalCount przeliczy się od razu",
+      "conditionalCount przeliczy się przy następnym odczycie",
+      "Nic — count nie jest teraz zależnością conditionalCount, bo nie został odczytany w ostatnim przebiegu",
+      "Angular zgłosi błąd, bo count nie jest używany"
+    ],
+    "correct": 2,
+    "explanation": "Zależności computed są dynamiczne: śledzone są tylko sygnały faktycznie odczytane podczas ostatniego wyliczenia. Przy showCount = false gałąź z count() się nie wykonała, więc zmiana count nie unieważnia wartości. Gdy showCount stanie się true, count znów zostanie zależnością.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/overview.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-006",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "resource ma params: () => ({ id: userId() }). Użytkownik szybko zmienia userId, zanim poprzednie ładowanie się skończyło. Co robi resource?",
+    "options": [
+      "Czeka na zakończenie poprzedniego loadera i dopiero wtedy uruchamia nowy",
+      "Przerywa trwające ładowanie (sygnalizuje to przez abortSignal) i uruchamia loader z nowymi params",
+      "Ignoruje zmianę, dopóki nie wywołasz reload()",
+      "Uruchamia oba loadery i pokazuje wynik tego, który skończy się później"
+    ],
+    "correct": 1,
+    "explanation": "resource przerywa trwające ładowanie, gdy params zmienią się w jego trakcie. Loader dostaje abortSignal, który można przekazać np. do fetch, żeby anulować rzeczywiste żądanie HTTP. Gdy params zwróci undefined, loader w ogóle się nie uruchamia, a status to 'idle'.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-007",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent HeavyChart jest użyty w bloku @defer, ale w tym samym pliku jest też odwołanie do niego przez zapytanie viewChild. Co się stanie z jego kodem?",
+    "options": [
+      "Zostanie załadowany leniwie, jak każda zależność w @defer",
+      "Zostanie załadowany od razu (eagerly), bo jest używany poza blokiem @defer",
+      "Kompilacja zakończy się błędem",
+      "Angular utworzy dwie kopie komponentu"
+    ],
+    "correct": 1,
+    "explanation": "Zależności @defer są ładowane leniwie tylko, gdy są standalone i nie ma do nich odwołań poza blokami @defer w tym samym pliku. Odwołanie poza blokiem albo w zapytaniu ViewChild powoduje, że zależność trafia do głównego pakietu i ładuje się od razu. Od razu ładują się też zależności bloków @placeholder, @loading i @error.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/defer.md",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-008",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent ma pole checked = model(false). Jak nazywa się output, który Angular tworzy dla tego modelu i emituje po checked.set(...)?",
+    "options": [
+      "checkedChange",
+      "checkedUpdate",
+      "modelChange",
+      "change"
+    ],
+    "correct": 0,
+    "explanation": "Dla każdego model input Angular automatycznie tworzy output o nazwie modelu z przyrostkiem Change. Emituje go przy każdym zapisie przez set albo update. To dzięki niemu działa wiązanie dwukierunkowe [(checked)]=\"isAdmin\" w rodzicu.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
+    "added_on": "2026-10-16"
+  }
+]

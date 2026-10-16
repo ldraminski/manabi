@@ -1,0 +1,131 @@
+[
+  {
+    "id": "nextjs-mid-001",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "prompt": "Jak w aktualnym Next.js (App Router) poprawnie odczytać slug w stronie app/blog/[slug]/page.tsx?",
+    "code": "export default async function Page({\n  params,\n}: {\n  params: Promise<{ slug: string }>\n}) {\n  // ?\n}",
+    "options": [
+      "const { slug } = params — params to zwykły obiekt",
+      "const { slug } = await params — params to Promise",
+      "const slug = useParams().slug w komponencie serwerowym",
+      "const slug = process.env.SLUG"
+    ],
+    "correct": 1,
+    "explanation": "Od Next.js 15 propsy params i searchParams strony są obietnicami — trzeba je odczytać przez await (albo hook use w komponencie klienckim). Synchroniczny dostęp działał w wersji 14 i wcześniejszych, w 15 tylko tymczasowo dla zgodności. useParams to hook dla komponentów klienckich.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/page.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-002",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "prompt": "Aktualny Next.js, projekt bez Cache Components. Strona pobiera dane przez fetch(url) bez opcji i nie używa cookies(), headers() ani searchParams. Po wdrożeniu użytkownicy widzą ciągle dane z momentu budowania. Dlaczego?",
+    "options": [
+      "fetch w Next.js domyślnie cache’uje odpowiedzi na zawsze",
+      "Trasa została wyrenderowana statycznie podczas next build, więc fetch wykonał się raz w czasie budowania",
+      "Przeglądarka cache’uje odpowiedź fetch z serwera",
+      "Dane są brane z pamięci HMR, która działa też na produkcji"
+    ],
+    "correct": 1,
+    "explanation": "Domyślne zachowanie fetch to „auto no cache”: w trybie deweloperskim zapytanie idzie przy każdym żądaniu, ale podczas next build trasa jest prerenderowana statycznie, więc fetch wykonuje się raz. Na każde żądanie fetch wykona się dopiero przy cache: 'no-store' albo gdy trasa używa Request-time API (np. cookies()). Samo cache’owanie fetch jest opt-in (force-cache).",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/fetch.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-003",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "prompt": "W Server Action zmieniasz produkt i chcesz odświeżyć wszystkie strony pasujące do app/product/[slug]/page.tsx. Które wywołanie jest poprawne?",
+    "options": [
+      "revalidatePath('/product/[slug]')",
+      "revalidatePath('/product/[slug]', 'page')",
+      "revalidatePath('/product/[slug]/page')",
+      "revalidatePath('/product/*')"
+    ],
+    "correct": 1,
+    "explanation": "Gdy ścieżka zawiera segment dynamiczny, np. /product/[slug], parametr type ('page' albo 'layout') jest wymagany. Do ścieżki nie dopisuje się /page ani /layout — od tego jest właśnie type. Dla dosłownej ścieżki, np. /product/1, type się pomija.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/revalidatePath.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-004",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "prompt": "Strona app/blog/[slug]/page.tsx zwraca z generateStaticParams 10 slugów i eksportuje dynamicParams = false. Co się stanie po wejściu na slug spoza tej listy?",
+    "options": [
+      "Strona wyrenderuje się na żądanie i zostanie zapisana w cache",
+      "Użytkownik dostanie 404",
+      "Next.js przekieruje na pierwszy wygenerowany slug",
+      "Build zakończy się błędem"
+    ],
+    "correct": 1,
+    "explanation": "generateStaticParams wskazuje, które ścieżki wygenerować podczas budowania. Opcja segmentu dynamicParams decyduje, co z pozostałymi: domyślnie (true) są renderowane przy pierwszej wizycie, a przy dynamicParams = false każda ścieżka spoza listy kończy się 404.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/generate-static-params.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-005",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Komponent serwerowy strony wywołuje (await cookies()).set('theme', 'dark') podczas renderowania. Co jest prawdą?",
+    "options": [
+      "To działa — ciasteczko trafi do odpowiedzi",
+      "Ustawianie ciasteczek podczas renderowania komponentu serwerowego nie jest obsługiwane — trzeba to zrobić w Server Function albo Route Handlerze",
+      "To działa tylko z 'use client' na górze pliku",
+      "cookies() jest synchroniczne, więc await rzuci błąd"
+    ],
+    "correct": 1,
+    "explanation": "Ciasteczka ustawia się nagłówkiem Set-Cookie, a HTTP nie pozwala dodać go po rozpoczęciu strumieniowania odpowiedzi. Dlatego set i delete działają tylko w Server Function albo Route Handlerze. W komponencie serwerowym można ciasteczka czytać. cookies() jest asynchroniczne i zwraca Promise.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/cookies.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-006",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "W Server Action po zapisie wywołujesz redirect('/orders') wewnątrz bloku try, a w catch logujesz błąd i zwracasz { error }. Przekierowanie nie działa. Dlaczego?",
+    "options": [
+      "redirect działa tylko w komponentach klienckich",
+      "redirect rzuca specjalny błąd (NEXT_REDIRECT), który przechwytuje Twój catch — trzeba go wywołać poza try",
+      "redirect wymaga pełnego adresu z domeną",
+      "W Server Action trzeba użyć permanentRedirect"
+    ],
+    "correct": 1,
+    "explanation": "redirect() kończy renderowanie, rzucając błąd NEXT_REDIRECT, który Next.js obsługuje. Jeśli wywołasz go w try, Twój catch go połknie. Dokumentacja zaleca wywoływać redirect poza blokiem try. permanentRedirect różni się tylko kodem (308 zamiast 307), nie rozwiązuje problemu.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/redirect.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-007",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "W najnowszym Next.js konwencja pliku middleware.ts jest oznaczona jako przestarzała. Co należy zrobić z istniejącym plikiem?",
+    "options": [
+      "Przenieść logikę do app/middleware/route.ts",
+      "Zmienić nazwę pliku na proxy.ts, a eksportowanej funkcji na proxy (jest na to codemod)",
+      "Nic — middleware.ts i proxy.ts to dwa różne mechanizmy",
+      "Przenieść kod do next.config.js w sekcji middleware"
+    ],
+    "correct": 1,
+    "explanation": "Konwencja pliku middleware jest przestarzała i została przemianowana na proxy. Plik proxy.ts leży w tym samym miejscu (katalog główny albo src) i działa przed renderowaniem tras. Codemod npx @next/codemod@canary middleware-to-proxy . zmienia nazwę pliku i funkcji.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/proxy.mdx",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-008",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Chcesz w Server Action zapisać zdarzenie analityczne tak, żeby nie opóźniało odpowiedzi dla użytkownika. Którego API Next.js użyjesz?",
+    "options": [
+      "after() z next/server",
+      "setTimeout bez await",
+      "useEffect w komponencie serwerowym",
+      "revalidatePath()"
+    ],
+    "correct": 0,
+    "explanation": "after() planuje callback do wykonania po zakończeniu odpowiedzi (albo prerenderu) — dokładnie do logowania i analityki, które nie powinny blokować odpowiedzi. Można go używać w komponentach serwerowych, Server Functions, Route Handlerach i Proxy. setTimeout bez await nie daje gwarancji, że praca się wykona, zanim środowisko zakończy obsługę żądania.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/after.mdx",
+    "added_on": "2026-10-16"
+  }
+]

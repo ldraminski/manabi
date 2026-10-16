@@ -374,7 +374,35 @@
     "technology": "git",
     "slug": "shared-history",
     "title": "Wspólna historia",
-    "description": "force-with-lease, fixup i autosquash, --no-ff, revert scalenia",
+    "description": "force-with-lease, autosquash, --no-ff, revert scalenia, rebase --onto, rerere, worktree",
     "icon": "branch"
+  },
+  {
+    "technology": "nextjs",
+    "slug": "data-and-caching",
+    "title": "Dane i cache",
+    "description": "params jako Promise, domyślny fetch, revalidatePath, dynamicParams",
+    "icon": "list"
+  },
+  {
+    "technology": "nextjs",
+    "slug": "server-runtime",
+    "title": "Serwer w Next.js",
+    "description": "cookies(), redirect w Server Action, proxy.ts, after()",
+    "icon": "globe"
+  },
+  {
+    "technology": "angular",
+    "slug": "signals-in-depth",
+    "title": "Sygnały od środka",
+    "description": "linkedSignal, untracked, efekty async i onCleanup, resource",
+    "icon": "braces"
+  },
+  {
+    "technology": "angular",
+    "slug": "components-in-depth",
+    "title": "Komponenty od środka",
+    "description": "@defer i ładowanie zależności, model()",
+    "icon": "layout"
   }
 ]

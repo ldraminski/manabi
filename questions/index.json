@@ -392,6 +392,70 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "angular-mid-001",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-002",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-003",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-004",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-005",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-006",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-007",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-008",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -646,6 +710,38 @@
     "topic": "shared-history",
     "kind": "single_choice",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "git-mid-009",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-010",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-011",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-012",
+    "technology": "git",
+    "level": "mid",
+    "topic": "shared-history",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
   },
   {
     "id": "html-junior-001",
@@ -1094,6 +1190,70 @@
     "topic": "app-router",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "nextjs-mid-001",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-002",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-003",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-004",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-005",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-006",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-007",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-008",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-16"
   },
   {
     "id": "nodejs-junior-001",
