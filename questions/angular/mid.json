@@ -130,5 +130,70 @@
     "explanation": "Dla każdego model input Angular automatycznie tworzy output o nazwie modelu z przyrostkiem Change. Emituje go przy każdym zapisie przez set albo update. To dzięki niemu działa wiązanie dwukierunkowe [(checked)]=\"isAdmin\" w rodzicu.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
     "added_on": "2026-10-16"
+  },
+  {
+    "id": "angular-mid-009",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jaką wartość będzie miał disabled() w komponencie AppButton po użyciu go tak jak w szablonie poniżej?",
+    "code": "// app-button.ts\ndisabled = input(false, { transform: booleanAttribute });\n\n<!-- szablon rodzica -->\n<app-button disabled=\"false\" />",
+    "options": [
+      "true — każdy niepusty tekst jest prawdziwy",
+      "false",
+      "Tekst \"false\"",
+      "Błąd kompilacji szablonu"
+    ],
+    "correct": 1,
+    "explanation": "booleanAttribute zamienia wartość atrybutu na boolean i traktuje dosłowny tekst \"false\" jako false. Sam atrybut bez wartości (<app-button disabled />) da true. Funkcje transformujące powinny być czyste.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-010",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Czy pole zadeklarowane przez model() może mieć opcję transform, tak jak input()?",
+    "options": [
+      "Tak, działa tak samo jak w input()",
+      "Tak, ale transformacja działa tylko przy wywołaniu set()",
+      "Nie — model() nie obsługuje transformacji wejścia",
+      "Tak, ale tylko z booleanAttribute i numberAttribute"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja wprost mówi, że model inputs nie obsługują transformacji. Jeśli wartość wejściowa musi być przekształcona, trzeba użyć zwykłego input() z transform i osobnego output().",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/inputs.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-011",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "UserCard ma ChangeDetectionStrategy.OnPush i pole user = input.required<User>(). Rodzic przekazuje [user]=\"user\", a po kliknięciu wykonuje this.user.name = 'Ola'. Co zobaczy użytkownik w UserCard?",
+    "options": [
+      "Nowe imię — Angular wykrywa zmiany pól obiektu",
+      "Stare imię — referencja obiektu się nie zmieniła, więc OnPush nie odświeży komponentu; trzeba przekazać nowy obiekt, np. { ...this.user, name: 'Ola' }",
+      "Błąd ExpressionChangedAfterItHasBeenCheckedError",
+      "Nowe imię, ale dopiero po przeładowaniu strony"
+    ],
+    "correct": 1,
+    "explanation": "Angular porównuje poprzednią i bieżącą wartość inputu przez Object.is. Mutacja pola nie zmienia referencji, więc komponent OnPush nie jest sprawdzany. Rozwiązaniem jest niemutowalna aktualizacja (nowy obiekt) albo trzymanie stanu w sygnałach.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/best-practices/runtime-performance/skipping-subtrees.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-012",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Nowy komponent ma ustawiać klasę active na swoim elemencie hosta i reagować na kliknięcie w niego. Który sposób zaleca dokumentacja Angulara?",
+    "options": [
+      "Właściwość host w @Component: host: { '[class.active]': 'isActive()', '(click)': 'toggle()' }",
+      "Dekoratory @HostBinding i @HostListener",
+      "inject(ElementRef) i addEventListener w konstruktorze",
+      "Owinąć cały szablon w <div> i tam dodać klasę oraz (click)"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja zaleca zawsze używać właściwości host zamiast @HostBinding i @HostListener — dekoratory istnieją tylko dla zgodności wstecznej. Ręczne addEventListener omija mechanizmy Angulara, a dodatkowy <div> nie zmienia samego elementu hosta.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/host-elements.md",
+    "added_on": "2026-10-17"
   }
 ]

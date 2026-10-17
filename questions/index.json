@@ -456,6 +456,38 @@
     "added_on": "2026-10-16"
   },
   {
+    "id": "angular-mid-009",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-010",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-011",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-012",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -550,6 +582,54 @@
     "topic": "box-and-layout",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "css-mid-001",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-002",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-003",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-004",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-005",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-006",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
   },
   {
     "id": "git-junior-001",
@@ -1254,6 +1334,38 @@
     "topic": "server-runtime",
     "kind": "single_choice",
     "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-009",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-010",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-011",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-012",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
   },
   {
     "id": "nodejs-junior-001",
@@ -2014,6 +2126,54 @@
     "topic": "e2e-tests",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-mid-001",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-002",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-003",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-004",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-005",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-006",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-17"
   },
   {
     "id": "typescript-junior-001",

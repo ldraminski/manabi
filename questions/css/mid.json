@@ -1,0 +1,102 @@
+[
+  {
+    "id": "css-mid-001",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor będzie miał akapit wewnątrz .card?",
+    "code": ":where(.card) p { color: gray; }\np { color: black; }",
+    "options": [
+      "gray — selektor z klasą jest bardziej specyficzny",
+      "black",
+      "Zależy od przeglądarki"
+    ],
+    "correct": 1,
+    "explanation": ":where() ma zawsze zerową specyficzność, więc :where(.card) p liczy się tak samo jak samo p (0,0,1). Przy remisie wygrywa reguła późniejsza w kodzie — black. Z :is(.card) p wygrałby gray, bo :is() przejmuje specyficzność najbardziej specyficznego argumentu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/selectors/_colon_where/index.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-002",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor będzie miał przycisk .btn?",
+    "code": "@layer base, components;\n\n@layer components {\n  .btn { color: blue; }\n}\n@layer base {\n  .btn { color: green; }\n}\n\n.btn { color: red; }",
+    "options": [
+      "blue",
+      "green",
+      "red"
+    ],
+    "correct": 2,
+    "explanation": "Style poza warstwami wygrywają ze stylami w warstwach (dla zwykłych deklaracji bez !important), więc wynik to red. Bez ostatniej reguły wygrałby blue: kolejność warstw wyznacza pierwsza deklaracja (@layer base, components), a późniejsza warstwa ma wyższy priorytet. Przy !important ta kolejność się odwraca.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@layer/index.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-003",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Tooltip ma z-index: 9999, a mimo to chowa się pod nagłówkiem z z-index: 2. Dlaczego?",
+    "code": ".panel { opacity: 0.99; }\n.panel .tooltip { position: absolute; z-index: 9999; }\n\n.header { position: relative; z-index: 2; }",
+    "options": [
+      "z-index działa tylko z position: fixed",
+      "opacity < 1 tworzy na .panel kontekst stosu, więc z-index tooltipa liczy się tylko wewnątrz .panel",
+      "Przeglądarki obcinają z-index do 999",
+      "Element z position: absolute ignoruje z-index"
+    ],
+    "correct": 1,
+    "explanation": "opacity mniejsze od 1 (a także m.in. transform, filter, isolation: isolate) tworzy nowy kontekst stosu. Wartości z-index dzieci mają znaczenie tylko w obrębie kontekstu rodzica, a cały .panel jest rysowany pod .header z z-index: 2.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/positioned_layout/stacking_context/index.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-004",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dwa sąsiednie bloki (display: block) stoją jeden pod drugim w zwykłym przepływie. Jaki będzie pionowy odstęp między nimi?",
+    "code": ".a { margin-bottom: 30px; }\n.b { margin-top: 20px; }",
+    "options": [
+      "50px",
+      "30px",
+      "20px",
+      "10px"
+    ],
+    "correct": 1,
+    "explanation": "Pionowe marginesy sąsiednich bloków się zapadają (margin collapsing): zostaje jeden margines o wartości większego z nich, czyli 30px. Nie dzieje się tak w kontenerze z display: flex lub grid, a marginesy poziome nie zapadają się wcale.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/box_model/margin_collapsing/index.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-005",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Długi tytuł zamiast skrócić się do wielokropka rozpycha wiersz poza ekran. Co dodać, żeby .main mógł się zwęzić?",
+    "code": ".row { display: flex; }\n.main { flex: 1; }\n.main .title {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}",
+    "options": [
+      "flex-shrink: 1 na .main",
+      "min-width: 0 na .main",
+      "flex-basis: 0 na .main",
+      "width: 100% na .title"
+    ],
+    "correct": 1,
+    "explanation": "Element flex ma domyślnie min-width: auto, czyli nie zwęzi się poniżej szerokości min-content swojej zawartości — a tu jest nią cały tytuł w jednej linii. min-width: 0 (albo overflow: hidden na .main) pozwala mu się skurczyć. flex: 1 już ustawia flex-shrink: 1 i flex-basis: 0, więc to nie pomoże.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/min-width/index.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-006",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Ten kod nie zmienia układu karty, choć karta ma ponad 400px szerokości. Dlaczego?",
+    "code": ".card { container-type: inline-size; }\n\n@container (min-width: 400px) {\n  .card { display: grid; }\n}",
+    "options": [
+      "Zapytanie @container sprawdza najbliższego przodka-kontener i stylizuje jego potomków, więc .card nie może zmienić siebie na podstawie własnego rozmiaru",
+      "Trzeba użyć container-type: size zamiast inline-size",
+      "@container działa tylko z nazwanymi kontenerami (container-name)",
+      "W @container nie można używać min-width"
+    ],
+    "correct": 0,
+    "explanation": "Bez nazwy @container odpytuje najbliższego przodka z odpowiednim container-type, a style stosuje do potomków kontenera. Trzeba więc ustawić container-type na elemencie nadrzędnym (np. wrapperze karty) albo w zapytaniu stylizować elementy wewnątrz .card.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@container/index.md",
+    "added_on": "2026-10-17"
+  }
+]

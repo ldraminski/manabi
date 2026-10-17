@@ -127,5 +127,69 @@
     "explanation": "after() planuje callback do wykonania po zakończeniu odpowiedzi (albo prerenderu) — dokładnie do logowania i analityki, które nie powinny blokować odpowiedzi. Można go używać w komponentach serwerowych, Server Functions, Route Handlerach i Proxy. setTimeout bez await nie daje gwarancji, że praca się wykona, zanim środowisko zakończy obsługę żądania.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/after.mdx",
     "added_on": "2026-10-16"
+  },
+  {
+    "id": "nextjs-mid-009",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "prompt": "Komponent app/dashboard/layout.tsx rzuca błąd podczas renderowania. W tym samym folderze jest app/dashboard/error.tsx. Co się stanie?",
+    "options": [
+      "app/dashboard/error.tsx przechwyci błąd i pokaże swój fallback",
+      "app/dashboard/error.tsx nie przechwyci tego błędu — nie obejmuje layoutu ze swojego segmentu; obsłuży go granica błędu wyżej, np. app/error.tsx",
+      "Next.js będzie ponawiał render layoutu, aż się uda",
+      "Błąd zostanie pominięty, a strona wyrenderuje się bez layoutu"
+    ],
+    "correct": 1,
+    "explanation": "error.tsx owija stronę i zagnieżdżone segmenty, ale nie layout.tsx ani template.tsx z tego samego segmentu. Żeby złapać błąd layoutu, granica błędu musi być w segmencie nadrzędnym. Błędy w głównym layoucie (app/layout.tsx) obsługuje global-error.tsx.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/error.mdx",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-010",
+    "topic": "data-and-caching",
+    "kind": "single_choice",
+    "prompt": "Server Action tworzy nowy post, a potem przekierowuje autora na listę postów, która ma od razu go pokazać. Dane listy są w cache z tagiem 'posts'. Którego wywołania użyć w akcji?",
+    "options": [
+      "revalidateTag('posts', 'max')",
+      "updateTag('posts')",
+      "revalidatePath('/posts', 'max')"
+    ],
+    "correct": 1,
+    "explanation": "updateTag działa tylko w Server Actions i od razu unieważnia dane z tagiem, więc kolejne żądanie pobiera świeże dane — to scenariusz „read-your-own-writes”. revalidateTag z profilem 'max' działa jak stale-while-revalidate: najpierw serwuje stare dane, a świeże pobiera w tle, więc autor mógłby nie zobaczyć swojego posta. Drugi argument revalidatePath to typ 'page' albo 'layout', a nie profil.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/updateTag.mdx",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-011",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Komponent serwerowy przekazuje do komponentu klienckiego (\"use client\") prop onSelect z funkcją strzałkową. Funkcja nie ma dyrektywy \"use server\". Co się stanie?",
+    "code": "// app/page.tsx (Server Component)\nimport { Picker } from './picker' // 'use client'\n\nexport default function Page() {\n  return <Picker onSelect={(id) => console.log(id)} />\n}",
+    "options": [
+      "Funkcja zostanie skopiowana do przeglądarki i zadziała jak zwykły callback",
+      "React zgłosi błąd — propsy z serwera do klienta muszą być serializowalne, a zwykła funkcja nie jest (wyjątkiem są Server Functions z \"use server\")",
+      "Funkcja wykona się na serwerze przy każdym kliknięciu po stronie klienta",
+      "Next.js automatycznie zamieni ją na Server Action"
+    ],
+    "correct": 1,
+    "explanation": "Propsy przekazywane z komponentu serwerowego do klienckiego muszą być serializowalne: prymitywy, tablice, Mapy, Sety, daty, zwykłe obiekty, elementy JSX, Promise oraz Server Functions. Zwykłej funkcji nie da się przesłać — trzeba zdefiniować callback w komponencie klienckim albo przekazać funkcję oznaczoną \"use server\".",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/rsc/use-client.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-012",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Plik lib/db.ts zaczyna się od import 'server-only'. Ktoś przez pomyłkę importuje go w komponencie klienckim. Co się stanie?",
+    "options": [
+      "Moduł trafi do przeglądarki, ale zmienne środowiskowe będą puste",
+      "Tylko ostrzeżenie w konsoli przeglądarki",
+      "Błąd podczas budowania — moduł oznaczony jako server-only nie może trafić do komponentu klienckiego",
+      "Next.js po cichu usunie import i komponent wyrenderuje się bez niego"
+    ],
+    "correct": 2,
+    "explanation": "Import 'server-only' oznacza moduł jako wyłącznie serwerowy. Próba zaimportowania go w komponencie klienckim kończy się błędem w czasie budowania, więc np. kod z sekretami czy dostępem do bazy nie wycieknie do paczki dla przeglądarki.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/05-server-and-client-components.mdx",
+    "added_on": "2026-10-17"
   }
 ]

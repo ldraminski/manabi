@@ -1,0 +1,100 @@
+[
+  {
+    "id": "testing-mid-001",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Plik testu w Vitest kończy się błędem ReferenceError już przy ładowaniu modułów. Dlaczego i jak to poprawić?",
+    "code": "import { vi } from 'vitest'\nimport { loadUser } from './user' // user.ts importuje ./api\n\nconst mockGet = vi.fn()\nvi.mock('./api', () => ({ get: mockGet }))",
+    "options": [
+      "mockGet musi być funkcją async",
+      "vi.mock jest przenoszony na górę pliku, więc fabryka nie widzi mockGet; zmienną trzeba utworzyć przez vi.hoisted",
+      "vi.mock trzeba wywołać w beforeEach",
+      "Fabryka musi zwracać default export"
+    ],
+    "correct": 1,
+    "explanation": "Vitest przenosi (hoistuje) vi.mock na początek pliku, przed importy i deklaracje, więc w fabryce nie można używać zmiennych zdefiniowanych poza nią. Rozwiązanie: const { mockGet } = vi.hoisted(() => ({ mockGet: vi.fn() })) przed vi.mock.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-002",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co zwróci ostatnie wywołanie mocka w aktualnym Vitest?",
+    "code": "const getPrice = vi.fn(() => 42)\ngetPrice.mockReturnValue(10)\ngetPrice.mockReset()\n\ngetPrice()",
+    "options": [
+      "10",
+      "undefined",
+      "42",
+      "Rzuci błąd, bo mock został usunięty"
+    ],
+    "correct": 2,
+    "explanation": "W Vitest mockReset czyści historię wywołań i przywraca implementację przekazaną do vi.fn(impl), czyli () => 42. Dla gołego vi.fn() byłaby to pusta funkcja zwracająca undefined. W Jest mockReset zawsze zostawia funkcję zwracającą undefined — to jedna z różnic między narzędziami.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/mock.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-003",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Testujesz funkcję z debounce 300 ms. Po vi.useFakeTimers() wywołujesz ją w teście. Jak sprawić, żeby callback się wykonał bez realnego czekania?",
+    "options": [
+      "await new Promise((r) => setTimeout(r, 300))",
+      "vi.advanceTimersByTime(300)",
+      "vi.clearAllTimers()",
+      "Nic — fałszywe timery wykonują callbacki od razu"
+    ],
+    "correct": 1,
+    "explanation": "vi.advanceTimersByTime(ms) uruchamia wszystkie zaplanowane timery, aż upłynie podana liczba milisekund. setTimeout w teście też jest podmieniony, więc taki Promise nigdy się nie rozwiąże bez przesunięcia czasu. clearAllTimers usuwa zaplanowane timery zamiast je wykonać.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-004",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Na liście są trzy wiersze, każdy z przyciskiem „Usuń”. Co zrobi await page.getByRole('button', { name: 'Usuń' }).click()?",
+    "options": [
+      "Kliknie pierwszy pasujący przycisk",
+      "Kliknie wszystkie trzy przyciski",
+      "Rzuci błąd, bo lokatory są ścisłe (strict) i akcja pasuje do więcej niż jednego elementu",
+      "Poczeka, aż na stronie zostanie tylko jeden taki przycisk"
+    ],
+    "correct": 2,
+    "explanation": "Lokatory Playwright są ścisłe: akcja na lokatorze, który pasuje do kilku elementów, rzuca wyjątek. Trzeba zawęzić lokator, np. page.getByRole('listitem').filter({ hasText: 'Produkt 2' }).getByRole('button', { name: 'Usuń' }). first() i nth() wyłączają tę kontrolę, ale nie są zalecane.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/locators.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-005",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Większość testów Playwright wymaga zalogowanego użytkownika, a testy nie zmieniają stanu konta na serwerze. Które podejście zaleca dokumentacja?",
+    "options": [
+      "Logowanie przez formularz w beforeEach każdego testu",
+      "Projekt setup loguje się raz i zapisuje storageState do pliku w playwright/.auth (w .gitignore); projekty testowe mają dependencies: ['setup'] i używają tego storageState",
+      "Zalogować się ręcznie i commitować plik z ciasteczkami do repozytorium",
+      "Uruchamiać wszystkie testy w jednym kontekście przeglądarki bez izolacji"
+    ],
+    "correct": 1,
+    "explanation": "Zalecane jest uwierzytelnienie raz w projekcie setup, zapis stanu (ciasteczka, storage) i ponowne użycie go w testach przez storageState. Plik może zawierać wrażliwe dane, więc nie powinien trafiać do repozytorium. Logowanie w każdym teście spowalnia zestaw.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/auth.md",
+    "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-006",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Strona pobiera /api/fruits zaraz po załadowaniu. Test wywołuje page.goto('/'), a dopiero potem page.route('**/api/fruits', ...) z route.fulfill. Dlaczego strona pokazuje prawdziwe dane?",
+    "options": [
+      "route.fulfill działa tylko dla żądań POST",
+      "Przechwytywanie obejmuje tylko żądania wysłane po zarejestrowaniu trasy — page.route trzeba wywołać przed page.goto",
+      "page.route działa tylko w trybie headless",
+      "Trzeba dodatkowo wywołać route.continue()"
+    ],
+    "correct": 1,
+    "explanation": "page.route przechwytuje żądania od momentu rejestracji. Żądanie wysłane podczas ładowania strony poszło wcześniej, więc trafiło do prawdziwego API. Dokumentacja pokazuje mockowanie API przed nawigacją. route.continue() przepuszcza żądanie dalej, czyli działa odwrotnie niż mock.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/mock.md",
+    "added_on": "2026-10-17"
+  }
+]

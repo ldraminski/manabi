@@ -404,5 +404,33 @@
     "title": "Komponenty od środka",
     "description": "@defer i ładowanie zależności, model()",
     "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "cascade-in-depth",
+    "title": "Kaskada od środka",
+    "description": "Specyficzność :where() i :is(), warstwy @layer",
+    "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "layout-in-depth",
+    "title": "Układ od środka",
+    "description": "Konteksty stosu, zapadanie marginesów, min-width we flexie, container queries",
+    "icon": "layout"
+  },
+  {
+    "technology": "testing",
+    "slug": "mocking-in-depth",
+    "title": "Mockowanie od środka",
+    "description": "vi.hoisted, mockReset, fałszywe timery w Vitest",
+    "icon": "list"
+  },
+  {
+    "technology": "testing",
+    "slug": "e2e-in-depth",
+    "title": "E2E od środka",
+    "description": "Ścisłe lokatory, storageState, mockowanie API w Playwright",
+    "icon": "globe"
   }
 ]
