@@ -1,0 +1,67 @@
+[
+  {
+    "id": "rest-api-mid-001",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Klient ponawia GET z nagłówkiem If-None-Match zawierającym ETag z poprzedniej odpowiedzi. Zasób się nie zmienił. Co powinien odpowiedzieć serwer?",
+    "options": [
+      "200 OK z pełną treścią",
+      "304 Not Modified bez treści — klient użyje wersji z cache",
+      "412 Precondition Failed",
+      "204 No Content"
+    ],
+    "correct": 1,
+    "explanation": "Serwer porównuje ETag z If-None-Match z bieżącą wersją zasobu. Gdy się zgadzają, odsyła 304 Not Modified bez treści, a klient uznaje zapisaną odpowiedź za aktualną. 412 dotyczy niespełnionych warunków typu If-Match przy zmianie zasobu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/etag/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-002",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co oznacza odpowiedź z nagłówkiem Cache-Control: no-cache?",
+    "options": [
+      "Odpowiedzi nie wolno zapisywać w żadnym cache",
+      "Odpowiedź można zapisać, ale przed każdym ponownym użyciem trzeba ją zweryfikować na serwerze",
+      "Odpowiedź można trzymać w cache tylko w przeglądarce, nie w CDN",
+      "To samo co max-age=0 i must-revalidate razem z no-store"
+    ],
+    "correct": 1,
+    "explanation": "no-cache pozwala zapisać odpowiedź, ale wymaga jej rewalidacji (np. przez ETag i If-None-Match) przed każdym użyciem. Zakaz zapisywania w jakimkolwiek cache to no-store. Za zapis tylko w przeglądarce odpowiada private.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-003",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dwie osoby edytują ten sam artykuł. Jak API może wykryć, że druga zapisuje zmiany na nieaktualnej wersji, i nie nadpisać pracy pierwszej?",
+    "options": [
+      "Klient wysyła PUT z If-Match: <ETag pobranej wersji>; gdy zasób już się zmienił, serwer odpowiada 412 Precondition Failed",
+      "Klient wysyła PUT z If-None-Match: *; serwer zwraca 304",
+      "Wystarczy użyć PATCH zamiast PUT",
+      "Serwer zawsze zwraca 409 dla drugiego PUT na ten sam zasób"
+    ],
+    "correct": 0,
+    "explanation": "If-Match z ETagiem pobranej wersji to warunek: zapisz tylko wtedy, gdy zasób nadal jest w tej wersji. Jeśli ktoś zmienił go w międzyczasie, ETag się nie zgadza i serwer odpowiada 412 Precondition Failed. To klasyczne rozwiązanie problemu utraconej aktualizacji (lost update). If-None-Match: * służy do czegoś innego — tworzenia zasobu tylko wtedy, gdy jeszcze nie istnieje.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/if-match/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-004",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Frontend z https://app.example.com wysyła fetch z credentials: 'include' do API w innej domenie. API odpowiada nagłówkami poniżej. Co się stanie?",
+    "code": "Access-Control-Allow-Origin: *\nAccess-Control-Allow-Credentials: true",
+    "options": [
+      "Żądanie się uda, bo * dopuszcza każdą domenę",
+      "Przeglądarka zablokuje dostęp do odpowiedzi — przy żądaniach z poświadczeniami serwer musi podać konkretny origin zamiast *",
+      "Przeglądarka wyśle żądanie bez ciasteczek i odpowiedź będzie dostępna",
+      "Serwer odrzuci żądanie statusem 403"
+    ],
+    "correct": 1,
+    "explanation": "Dla żądań z poświadczeniami (np. ciasteczkami) Access-Control-Allow-Origin nie może być *. Serwer musi odesłać konkretny origin, np. https://app.example.com (i wtedy dodać Vary: Origin). Z * przeglądarka zgłosi błąd CORS i nie udostępni odpowiedzi kodowi strony. Set-Cookie z takiej odpowiedzi też nie ustawi ciasteczka.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/cors/index.md",
+    "added_on": "2026-10-18"
+  }
+]

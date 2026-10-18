@@ -1,0 +1,69 @@
+[
+  {
+    "id": "html-mid-001",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Czym różni się otwarcie <dialog> przez showModal() od show()?",
+    "options": [
+      "Niczym poza animacją otwierania",
+      "showModal() czyni resztę strony nieaktywną (inert), pokazuje ::backdrop i pozwala zamknąć okno klawiszem Esc; show() otwiera okno niemodalne",
+      "show() działa tylko wewnątrz <form>",
+      "showModal() blokuje wykonywanie JavaScriptu do zamknięcia okna, jak alert()"
+    ],
+    "correct": 1,
+    "explanation": "Okno otwarte przez showModal() jest modalne: reszta strony staje się inert, widać pseudoelement ::backdrop, Esc zamyka okno, a czytniki ekranu dostają aria-modal=\"true\". show() (oraz atrybut open) otwiera okno niemodalne, a Esc go domyślnie nie zamyka. Żadna z metod nie blokuje JavaScriptu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/dialog/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-002",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Kiedy wykona się ten skrypt umieszczony w <head>?",
+    "code": "<script type=\"module\" src=\"app.js\"></script>",
+    "options": [
+      "Od razu, blokując parsowanie HTML",
+      "Po sparsowaniu dokumentu, tak jak skrypt z defer — moduły są domyślnie odroczone",
+      "Dopiero po zdarzeniu load, gdy wczytają się wszystkie obrazki",
+      "Nigdy — moduły trzeba importować z innego skryptu"
+    ],
+    "correct": 1,
+    "explanation": "Skrypty z type=\"module\" są domyślnie odroczone: pobierają się równolegle z parsowaniem i wykonują po jego zakończeniu, przed DOMContentLoaded. Atrybut defer nic na nich nie zmienia, a async sprawia, że moduł wykona się zaraz po pobraniu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/script/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-003",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Obrazek w bocznej kolumnie ma na ekranie 300px szerokości. Na monitorze 1440px przeglądarka i tak pobiera large.jpg. Dlaczego?",
+    "code": "<img\n  src=\"small.jpg\"\n  srcset=\"small.jpg 400w, large.jpg 1600w\"\n  alt=\"Wykres sprzedaży\">",
+    "options": [
+      "Przeglądarki zawsze wybierają największy plik z srcset",
+      "Brakuje sizes, więc przeglądarka przyjmuje 100vw i dobiera plik do szerokości całego okna",
+      "Deskryptory w muszą być podane w pikselach CSS (px)",
+      "src ma pierwszeństwo przed srcset"
+    ],
+    "correct": 1,
+    "explanation": "Przy deskryptorach w przeglądarka wybiera plik na podstawie sizes, czyli planowanej szerokości obrazka. Bez tego atrybutu domyślna wartość to 100vw, więc dla okna 1440px potrzebny jest duży plik. sizes=\"300px\" (albo sizes=\"auto\" przy loading=\"lazy\") pozwoli wybrać small.jpg.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/img/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-004",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jak zachowa się menu otwierane tym przyciskiem?",
+    "code": "<button popovertarget=\"menu\">Menu</button>\n<div id=\"menu\" popover>...</div>",
+    "options": [
+      "Otworzy się i zamknie tylko po ponownym kliknięciu przycisku",
+      "To popover typu auto: zamknie się po kliknięciu poza nim lub po Esc, a otwarcie innego popovera auto zamknie poprzedni (chyba że są zagnieżdżone)",
+      "Nie zadziała bez JavaScriptu wywołującego showPopover()",
+      "Otworzy się jako modal blokujący resztę strony"
+    ],
+    "correct": 1,
+    "explanation": "Pusty atrybut popover oznacza popover=\"auto\", który obsługuje light dismiss: klik poza nim lub Esc go zamyka, a otwarcie innego popovera auto zamyka poprzedni (poza zagnieżdżonymi). popover=\"manual\" trzeba zamykać jawnie. Przycisk z popovertarget przełącza popover bez JavaScriptu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/global_attributes/popover/index.md",
+    "added_on": "2026-10-18"
+  }
+]

@@ -98,5 +98,106 @@
     "explanation": "Bez nazwy @container odpytuje najbliższego przodka z odpowiednim container-type, a style stosuje do potomków kontenera. Trzeba więc ustawić container-type na elemencie nadrzędnym (np. wrapperze karty) albo w zapytaniu stylizować elementy wewnątrz .card.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@container/index.md",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "css-mid-007",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Długi URL w pierwszej kolumnie rozpycha ją, więc kolumny nie mają już proporcji 1:1. Która zmiana przywróci równe kolumny?",
+    "code": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}",
+    "options": [
+      "grid-template-columns: repeat(2, 1fr)",
+      "grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)",
+      "grid-template-columns: auto auto",
+      "justify-items: stretch na .grid"
+    ],
+    "correct": 1,
+    "explanation": "Samo 1fr oznacza minmax(auto, 1fr): ścieżka nie zwęzi się poniżej minimalnego rozmiaru zawartości, więc nieprzełamywalny tekst ją rozpycha. minmax(0, 1fr) usuwa to minimum i kolumny dzielą miejsce po równo (tekst trzeba wtedy jeszcze zawinąć albo przyciąć, np. overflow-wrap: anywhere). repeat(2, 1fr) to dokładnie to samo co 1fr 1fr.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/grid-template-columns/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-008",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Nagłówek z position: sticky przestał się przyklejać do góry okna po dodaniu jednej reguły. Której?",
+    "code": ".page { overflow: hidden; }\n.page .header { position: sticky; top: 0; }",
+    "options": [
+      "overflow: hidden na .page — sticky przykleja się do najbliższego przodka z mechanizmem przewijania, a nie do okna",
+      "top: 0 — sticky wymaga wartości ujemnej",
+      "Nic — sticky nie działa wewnątrz elementów blokowych",
+      "Trzeba dodać z-index"
+    ],
+    "correct": 0,
+    "explanation": "Element sticky przykleja się do najbliższego przodka z „mechanizmem przewijania”, który tworzy overflow: hidden, scroll, auto lub overlay — nawet jeśli ten przodek wcale się nie przewija. Gdy przewija się okno, a .page nie, nagłówek nie ma względem czego się przyklejać. Pomaga np. overflow: clip zamiast hidden.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/position/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-009",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Modal ma position: fixed i inset: 0, ale zamiast całego okna zakrywa tylko kartę, w której jest wyrenderowany. Co jest najbardziej prawdopodobną przyczyną?",
+    "code": ".card { transform: translateY(-2px); }\n.card .modal { position: fixed; inset: 0; }",
+    "options": [
+      "inset nie działa z position: fixed",
+      "Przodek z transform innym niż none staje się blokiem zawierającym dla elementów fixed",
+      "position: fixed zawsze odnosi się do najbliższego przodka z position: relative",
+      "Karta ma domyślnie overflow: hidden"
+    ],
+    "correct": 1,
+    "explanation": "Element fixed jest zwykle pozycjonowany względem viewportu, chyba że któryś przodek ma transform, perspective lub filter inne niż none (a także will-change: transform). Wtedy to ten przodek staje się blokiem zawierającym. Dlatego modale często renderuje się poza drzewem takich komponentów (np. przez portal) albo w <dialog>.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/position/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-010",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Kontener ma szerokość 400px i wysokość 1000px. Jaki górny padding dostanie dziecko?",
+    "code": ".parent { width: 400px; height: 1000px; }\n.child { padding-top: 50%; }",
+    "options": [
+      "500px",
+      "200px",
+      "0 — procenty w paddingu działają tylko w poziomie",
+      "Zależy od wysokości dziecka"
+    ],
+    "correct": 1,
+    "explanation": "Procentowy padding i margin — również pionowe — liczą się od szerokości bloku zawierającego, więc 50% z 400px to 200px. Od wysokości bloku zawierającego liczone są procenty height, top i bottom. Ta zasada stała za starym trikiem na proporcje (padding-top: 56.25%), dziś zastępowanym przez aspect-ratio.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/display/containing_block/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-011",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dlaczego aspect-ratio nie ma tu żadnego wpływu na wymiary .video?",
+    "code": ".video {\n  width: 640px;\n  height: 200px;\n  aspect-ratio: 16 / 9;\n}",
+    "options": [
+      "aspect-ratio działa tylko na <img> i <video>",
+      "Oba wymiary są ustawione, a aspect-ratio działa tylko wtedy, gdy co najmniej jeden z nich jest automatyczny",
+      "Proporcję trzeba zapisać jako 16:9",
+      "aspect-ratio wymaga display: block"
+    ],
+    "correct": 1,
+    "explanation": "Preferowana proporcja służy do wyliczenia wymiaru, który jest auto. Gdy width i height mają konkretne wartości, aspect-ratio nie ma czego wyliczać i jest pomijane. Wystarczy usunąć height (albo ustawić height: auto).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/aspect-ratio/index.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-012",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor będzie miał akapit wewnątrz <div class=\"card\"> (bez id)?",
+    "code": ":is(#main, .card) p { color: red; }\n.card p { color: blue; }",
+    "options": [
+      "blue — pierwsza reguła pasuje tu tylko przez .card, a druga jest później",
+      "red — :is() ma specyficzność najbardziej specyficznego argumentu, czyli #main",
+      "Zależy od tego, czy na stronie istnieje element #main"
+    ],
+    "correct": 1,
+    "explanation": ":is() przyjmuje specyficzność najbardziej specyficznego argumentu z listy, niezależnie od tego, który z nich faktycznie pasuje. Pierwsza reguła ma więc specyficzność (1,0,1) i wygrywa z .card p (0,1,1), mimo że stoi wcześniej. Z :where() byłoby odwrotnie, bo ma ono zerową specyficzność.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/selectors/_colon_is/index.md",
+    "added_on": "2026-10-18"
   }
 ]

@@ -105,6 +105,13 @@
     "icon": "layout"
   },
   {
+    "technology": "html",
+    "slug": "html-in-depth",
+    "title": "HTML od środka",
+    "description": "dialog, popover, moduły, responsywne obrazki",
+    "icon": "layout"
+  },
+  {
     "technology": "css",
     "slug": "box-and-layout",
     "title": "Model pudełkowy i układ",
@@ -137,6 +144,13 @@
     "slug": "browser-requests",
     "title": "Żądania z przeglądarki",
     "description": "fetch, CORS",
+    "icon": "globe"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "http-in-depth",
+    "title": "HTTP od środka",
+    "description": "Cache, żądania warunkowe, CORS z poświadczeniami",
     "icon": "globe"
   },
   {

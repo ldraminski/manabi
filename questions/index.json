@@ -632,6 +632,54 @@
     "added_on": "2026-10-17"
   },
   {
+    "id": "css-mid-007",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-008",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-009",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-010",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-011",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-012",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -918,6 +966,38 @@
     "topic": "semantics-and-forms",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "html-mid-001",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-002",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-003",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-004",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
   },
   {
     "id": "javascript-junior-001",
@@ -2032,6 +2112,38 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "rest-api-mid-001",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-002",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-003",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-004",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
     "id": "testing-junior-001",
     "technology": "testing",
     "level": "junior",
@@ -2174,6 +2286,54 @@
     "topic": "e2e-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-007",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-008",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-009",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-010",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-011",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-012",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-18"
   },
   {
     "id": "typescript-junior-001",

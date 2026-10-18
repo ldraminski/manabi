@@ -96,5 +96,104 @@
     "explanation": "page.route przechwytuje żądania od momentu rejestracji. Żądanie wysłane podczas ładowania strony poszło wcześniej, więc trafiło do prawdziwego API. Dokumentacja pokazuje mockowanie API przed nawigacją. route.continue() przepuszcza żądanie dalej, czyli działa odwrotnie niż mock.",
     "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/mock.md",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "testing-mid-007",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Po której linii Math.random przestanie być szpiegiem i znów będzie oryginalną funkcją?",
+    "code": "const spy = vi.spyOn(Math, 'random').mockReturnValue(0.5)\n\nspy.mockClear()   // A\nspy.mockReset()   // B\nspy.mockRestore() // C",
+    "options": [
+      "A",
+      "B",
+      "C",
+      "Żadnej — spyOn podmienia funkcję na stałe"
+    ],
+    "correct": 2,
+    "explanation": "mockClear czyści tylko historię wywołań. mockReset w Vitest czyści historię i przywraca oryginalną implementację, ale Math.random nadal jest szpiegiem. Dopiero mockRestore przywraca oryginalny deskryptor obiektu, więc Math.random znów jest prawdziwą funkcją. Na mocku z vi.fn() mockRestore działa tak samo jak mockReset.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/mock.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-008",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Chcesz zamockować tylko funkcję sendEmail z modułu ./mailer, a resztę jego eksportów zostawić prawdziwą. Jak to zrobić w Vitest?",
+    "options": [
+      "vi.mock('./mailer', () => ({ sendEmail: vi.fn() }))",
+      "vi.mock(import('./mailer'), async (importOriginal) => ({ ...(await importOriginal()), sendEmail: vi.fn() }))",
+      "vi.mock('./mailer') — automock podmienia tylko funkcje asynchroniczne",
+      "vi.spyOn('./mailer', 'sendEmail')"
+    ],
+    "correct": 1,
+    "explanation": "Fabryka vi.mock dostaje importOriginal, który zwraca prawdziwy moduł. Rozpakowanie go i nadpisanie jednego eksportu daje częściowy mock. Fabryka zwracająca tylko { sendEmail } sprawia, że pozostałe eksporty modułu znikają. Automock bez fabryki podmienia wszystkie funkcje na mocki.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-009",
+    "topic": "mocking-in-depth",
+    "kind": "single_choice",
+    "prompt": "Asercja nie przechodzi, choć czas przesunięto o 1000 ms. Co poprawi test?",
+    "code": "async function poll(onTick) {\n  await loadConfig() // zwraca rozwiązany Promise\n  setTimeout(onTick, 1000)\n}\n\nvi.useFakeTimers()\nconst onTick = vi.fn()\npoll(onTick)\nvi.advanceTimersByTime(1000)\nexpect(onTick).toHaveBeenCalled()",
+    "options": [
+      "Zwiększyć czas do 2000 ms",
+      "await vi.advanceTimersByTimeAsync(1000) — wersja async pozwala wykonać się kodowi po await i obejmuje timery ustawione asynchronicznie",
+      "Wywołać vi.runAllTimers() przed poll()",
+      "Zamienić vi.useFakeTimers() na vi.useRealTimers()"
+    ],
+    "correct": 1,
+    "explanation": "setTimeout jest wywoływany dopiero po await, czyli w mikrozadaniu. Synchroniczne advanceTimersByTime wykonuje się wcześniej, gdy timera jeszcze nie ma, więc większy czas nic nie da. advanceTimersByTimeAsync przepuszcza oczekujące callbacki Promise, dlatego obejmuje też timery ustawione asynchronicznie.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-010",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Ten test Playwright czasem przechodzi, a czasem nie. Dlaczego?",
+    "code": "await page.getByRole('button', { name: 'Zapisz' }).click()\nconst text = await page.getByRole('status').textContent()\nexpect(text).toBe('Zapisano')",
+    "options": [
+      "textContent() nie działa dla roli status",
+      "expect na zwykłym stringu nie ponawia sprawdzenia; trzeba użyć await expect(page.getByRole('status')).toHaveText('Zapisano')",
+      "Brakuje await przed expect",
+      "click() nie czeka na przycisk"
+    ],
+    "correct": 1,
+    "explanation": "textContent() odczytuje tekst raz, w chwili wywołania, a toBe to asercja bez ponawiania. Jeśli komunikat pojawi się chwilę później, test się wysypie. Asercje na lokatorach, takie jak toHaveText, ponawiają sprawdzenie aż do timeoutu. Dokumentacja zaleca je wszędzie, gdzie to możliwe.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-assertions-js.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-011",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Chcesz w Playwright poczekać na odpowiedź z /api/save wysłaną po kliknięciu „Zapisz”. Która kolejność jest poprawna?",
+    "options": [
+      "await click(), potem await page.waitForResponse('**/api/save')",
+      "const p = page.waitForResponse('**/api/save'); await click(); const res = await p",
+      "await page.waitForResponse('**/api/save'), potem await click()",
+      "Kolejność nie ma znaczenia, Playwright buforuje wszystkie odpowiedzi"
+    ],
+    "correct": 1,
+    "explanation": "Oczekiwanie trzeba zacząć przed akcją, ale bez await, i dopiero po kliknięciu poczekać na Promise. Jeśli waitForResponse wywołasz po kliknięciu, odpowiedź może przyjść wcześniej i test zawiśnie do timeoutu. await przed kliknięciem blokuje test, bo żądanie nigdy nie zostanie wysłane.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/network.md",
+    "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-012",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Zrzuty wzorcowe dla toHaveScreenshot() wygenerowano lokalnie na macOS i dodano do repo. Na CI (Linux) każdy taki test kończy się błędem „A snapshot doesn't exist”. Dlaczego?",
+    "options": [
+      "CI nie ma uprawnień do odczytu plików PNG",
+      "Nazwa pliku wzorca zawiera przeglądarkę i platformę (np. -chromium-darwin.png), więc na Linuksie szukany jest inny plik (-chromium-linux.png)",
+      "toHaveScreenshot działa tylko w trybie headed",
+      "Wzorce trzeba przechowywać w formacie WebP"
+    ],
+    "correct": 1,
+    "explanation": "Domyślna nazwa wzorca zawiera nazwę przeglądarki (lub projektu) i platformę, bo renderowanie różni się między systemami. Wzorce należy generować w tym samym środowisku, w którym działają testy, np. na CI albo w tym samym obrazie Dockera. Przy pierwszym uruchomieniu bez wzorca test zapisuje bieżący zrzut i kończy się błędem.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-snapshots-js.md",
+    "added_on": "2026-10-18"
   }
 ]
