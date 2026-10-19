@@ -65,5 +65,137 @@
     "explanation": "Pusty atrybut popover oznacza popover=\"auto\", który obsługuje light dismiss: klik poza nim lub Esc go zamyka, a otwarcie innego popovera auto zamyka poprzedni (poza zagnieżdżonymi). popover=\"manual\" trzeba zamykać jawnie. Przycisk z popovertarget przełącza popover bez JavaScriptu.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/global_attributes/popover/index.md",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "html-mid-005",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Gdy otwarty jest wysuwany panel, główna treść dostaje atrybut inert. Co to zmienia?",
+    "options": [
+      "Treść jest tylko wyszarzona, ale linki i przyciski nadal da się kliknąć i przejść do nich Tabem",
+      "Treść znika ze strony, tak jak przy display: none",
+      "Elementy w środku nie dostają fokusu ani kliknięć, wypadają z kolejności Tab i z drzewa dostępności, a wyszukiwanie na stronie ich nie znajduje",
+      "Blokowane jest tylko wysyłanie formularzy w tej części strony"
+    ],
+    "correct": 2,
+    "explanation": "inert sprawia, że element i wszystkie jego potomki stają się nieaktywne: nie da się ich kliknąć ani ustawić na nich fokusu, znikają z kolejności Tab i z drzewa dostępności, nie można zaznaczyć ich tekstu, a wyszukiwanie na stronie ich pomija. Treść nadal jest widoczna — inert sam nie zmienia wyglądu, styl trzeba dodać w CSS.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/global_attributes/inert/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-006",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Użytkownik otwiera drugą sekcję tego akordeonu. Co stanie się z pierwszą?",
+    "code": "<details name=\"faq\" open>\n  <summary>Jak zwrócić towar?</summary>\n  ...\n</details>\n<details name=\"faq\">\n  <summary>Ile trwa dostawa?</summary>\n  ...\n</details>",
+    "options": [
+      "Pierwsza sekcja zamknie się sama — elementy <details> z tym samym name tworzą grupę, w której otwarta jest tylko jedna",
+      "Nic, obie zostaną otwarte; name służy tylko do wysłania stanu w formularzu",
+      "Pierwsza zamknie się tylko wtedy, gdy dopiszesz obsługę zdarzenia toggle",
+      "Druga sekcja się nie otworzy, dopóki pierwsza jest otwarta"
+    ],
+    "correct": 0,
+    "explanation": "Atrybut name łączy elementy <details> w grupę: otwarcie jednego zamyka pozostałe, więc akordeon działa bez JavaScriptu. Jeśli kilka elementów z grupy ma w kodzie atrybut open, otwarty będzie tylko pierwszy z nich.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/details/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-007",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Duże zdjęcie na górze strony to element LCP i ładuje się za późno. Który atrybut <img> podpowiada przeglądarce, żeby pobrała je wcześniej niż inne obrazki?",
+    "options": [
+      "loading=\"lazy\"",
+      "decoding=\"async\"",
+      "importance=\"high\"",
+      "fetchpriority=\"high\""
+    ],
+    "correct": 3,
+    "explanation": "fetchpriority=\"high\" podnosi priorytet pobierania zasobu względem innych. To tylko wskazówka, a jej skutek zależy od przeglądarki, więc warto używać jej oszczędnie. loading=\"lazy\" działa odwrotnie — opóźnia pobranie, więc nie pasuje do obrazka LCP. decoding dotyczy dekodowania, a nie pobierania, a atrybut importance nie jest częścią standardu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/fetchpriority/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-008",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dlaczego ten kod wypisuje 0, chociaż w <template> jest element <li>?",
+    "code": "<template id=\"row\"><li class=\"item\"></li></template>\n<script>\n  const tpl = document.getElementById('row');\n  console.log(tpl.childNodes.length);\n</script>",
+    "options": [
+      "Przeglądarka usuwa zawartość <template> po zakończeniu parsowania",
+      "Zawartość <template> nie trafia do childNodes, tylko do DocumentFragment w tpl.content; żeby jej użyć, klonuje się tpl.content.cloneNode(true)",
+      "Element <li> jest niedozwolony w <template> i zostaje pominięty",
+      "childNodes działa tylko dla elementów widocznych na stronie"
+    ],
+    "correct": 1,
+    "explanation": "Treść wewnątrz <template> nie staje się dziećmi tego elementu, więc childNodes jest zawsze pusty. Przeglądarka umieszcza ją w DocumentFragment dostępnym przez właściwość content i domyślnie jej nie renderuje. Żeby jej użyć, klonuje się tpl.content i wstawia kopię do dokumentu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/template/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-009",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "prompt": "Użytkownik wpisał zajęty login i zobaczył błąd. Potem zmienił go na wolny, a formularz nadal nie chce się wysłać. Dlaczego?",
+    "code": "input.addEventListener('input', () => {\n  if (takenLogins.includes(input.value)) {\n    input.setCustomValidity('Ten login jest zajęty');\n  }\n});",
+    "options": [
+      "setCustomValidity działa tylko raz na całe życie strony",
+      "Po setCustomValidity trzeba wywołać form.submit(), żeby odblokować formularz",
+      "Komunikat nie jest nigdy czyszczony; pole jest niepoprawne, dopóki nie wywołasz setCustomValidity('')",
+      "Zdarzenie input nie odpala się dla pól tekstowych"
+    ],
+    "correct": 2,
+    "explanation": "Każdy niepusty komunikat ustawiony przez setCustomValidity oznacza pole jako niepoprawne, więc formularz nie przejdzie walidacji. Gdy błędu już nie ma, trzeba ustawić pusty napis: input.setCustomValidity(''). Tutaj brakuje gałęzi else, która by to robiła.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/htmlinputelement/setcustomvalidity/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-010",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "prompt": "Formularz ma pola required i dwa przyciski: „Wyślij” i „Zapisz szkic”. Jak sprawić, żeby tylko „Zapisz szkic” wysyłał formularz bez walidacji?",
+    "options": [
+      "Dodać formnovalidate do przycisku „Zapisz szkic”",
+      "Dodać novalidate do <form>",
+      "Ustawić type=\"button\" na przycisku „Zapisz szkic”",
+      "Ustawić type=\"reset\" na przycisku „Zapisz szkic”"
+    ],
+    "correct": 0,
+    "explanation": "formnovalidate na przycisku wysyłającym pomija walidację tylko przy wysyłce tym przyciskiem i nadpisuje ustawienie novalidate formularza. novalidate na <form> wyłączyłby walidację także dla „Wyślij”. type=\"button\" w ogóle nie wysyła formularza, a type=\"reset\" czyści pola.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/button/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-011",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co dostanie serwer po wysłaniu tego formularza?",
+    "code": "<form method=\"post\" action=\"/profile\">\n  <input name=\"id\" value=\"42\" disabled>\n  <input name=\"email\" value=\"ola@example.com\" readonly>\n  <button>Zapisz</button>\n</form>",
+    "options": [
+      "id=42 i email=ola@example.com",
+      "Tylko email=ola@example.com — pola disabled nie są wysyłane, a readonly są",
+      "Tylko id=42 — pola readonly nie są wysyłane",
+      "Nic — formularz z zablokowanymi polami nie da się wysłać"
+    ],
+    "correct": 1,
+    "explanation": "Pole z disabled nie dostaje fokusu i nie jest wysyłane z formularzem. Pole readonly nadal działa i dostaje fokus, a jego wartość jest wysyłana — użytkownik nie może jej tylko zmienić. Jeśli wartość ma trafić na serwer, ale nie może być edytowana, wybierz readonly.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/disabled/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-012",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jakie pole najlepiej pasuje do numeru karty płatniczej, jeśli na telefonie ma się pokazać klawiatura numeryczna?",
+    "options": [
+      "<input type=\"number\">",
+      "<input type=\"range\">",
+      "<input type=\"text\" inputmode=\"numeric\" pattern=\"[0-9 ]*\">",
+      "Nie da się tego zrobić bez JavaScriptu"
+    ],
+    "correct": 2,
+    "explanation": "type=\"number\" nadaje się do prawdziwych liczb, które warto zwiększać i zmniejszać (rola spinbutton). Numer karty czy kod pocztowy to tylko ciągi cyfr: nie liczy się na nich, a przypadkowe przewinięcie albo strzałka mogą zmienić wartość. Dla takich danych MDN poleca pole tekstowe z inputmode=\"numeric\" i pattern, ewentualnie z autocomplete (np. cc-number).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/input/number/index.md",
+    "added_on": "2026-10-19"
   }
 ]

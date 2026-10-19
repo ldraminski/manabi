@@ -1000,6 +1000,70 @@
     "added_on": "2026-10-18"
   },
   {
+    "id": "html-mid-005",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-006",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-007",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-008",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-009",
+    "technology": "html",
+    "level": "mid",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-010",
+    "technology": "html",
+    "level": "mid",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-011",
+    "technology": "html",
+    "level": "mid",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-012",
+    "technology": "html",
+    "level": "mid",
+    "topic": "forms-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -2142,6 +2206,70 @@
     "topic": "http-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-005",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-006",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-007",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-008",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-009",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-010",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-011",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-012",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-19"
   },
   {
     "id": "testing-junior-001",

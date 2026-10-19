@@ -112,6 +112,13 @@
     "icon": "layout"
   },
   {
+    "technology": "html",
+    "slug": "forms-in-depth",
+    "title": "Formularze od środka",
+    "description": "Własna walidacja, disabled i readonly, typy pól",
+    "icon": "layout"
+  },
+  {
     "technology": "css",
     "slug": "box-and-layout",
     "title": "Model pudełkowy i układ",
@@ -151,6 +158,13 @@
     "slug": "http-in-depth",
     "title": "HTTP od środka",
     "description": "Cache, żądania warunkowe, CORS z poświadczeniami",
+    "icon": "globe"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "api-design-in-depth",
+    "title": "Projektowanie API",
+    "description": "Przekierowania, operacje asynchroniczne, statusy błędów",
     "icon": "globe"
   },
   {

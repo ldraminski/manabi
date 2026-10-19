@@ -63,5 +63,135 @@
     "explanation": "Dla żądań z poświadczeniami (np. ciasteczkami) Access-Control-Allow-Origin nie może być *. Serwer musi odesłać konkretny origin, np. https://app.example.com (i wtedy dodać Vary: Origin). Z * przeglądarka zgłosi błąd CORS i nie udostępni odpowiedzi kodowi strony. Set-Cookie z takiej odpowiedzi też nie ustawi ciasteczka.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/cors/index.md",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "rest-api-mid-005",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Endpoint /reports zwraca JSON albo CSV w zależności od nagłówka Accept. Po wdrożeniu CDN klienci proszący o JSON czasem dostają CSV. Którego nagłówka odpowiedzi brakuje?",
+    "options": [
+      "Cache-Control: public",
+      "Vary: Accept",
+      "Content-Type: application/json",
+      "ETag"
+    ],
+    "correct": 1,
+    "explanation": "Vary podaje nagłówki żądania, które wpłynęły na treść odpowiedzi, a cache dodaje je do klucza. Bez Vary: Accept CDN traktuje obie wersje jako jedną odpowiedź dla tego URL i oddaje tę, którą zapisał jako pierwszą. Ten sam Vary powinien być we wszystkich odpowiedziach dla danego URL, także w 304.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/vary/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-006",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co oznacza ten nagłówek odpowiedzi?",
+    "code": "Cache-Control: max-age=60, s-maxage=3600",
+    "options": [
+      "Przeglądarka i CDN trzymają odpowiedź przez godzinę",
+      "Przeglądarka trzyma ją przez godzinę, a CDN przez 60 sekund",
+      "Odpowiedź jest świeża 60 sekund w prywatnym cache (przeglądarce) i godzinę we współdzielonym (np. CDN)",
+      "Wygrywa krótszy czas, więc wszędzie 60 sekund"
+    ],
+    "correct": 2,
+    "explanation": "s-maxage dotyczy tylko współdzielonych cache, takich jak CDN czy proxy, i dla nich nadpisuje max-age oraz Expires. Prywatny cache przeglądarki ignoruje s-maxage i stosuje max-age. Dzięki temu CDN może trzymać odpowiedź dłużej niż przeglądarki użytkowników.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-007",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Czy ten fetch do API w innej domenie wywoła żądanie preflight (OPTIONS)?",
+    "code": "fetch('https://api.example.com/orders', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify(order),\n});",
+    "options": [
+      "Nie, POST jest jedną z prostych metod, więc preflight nigdy nie jest potrzebny",
+      "Nie, preflight dotyczy tylko żądań z ciasteczkami",
+      "Tak, ale tylko w Safari",
+      "Tak — Content-Type: application/json nie jest na liście dozwolonej dla prostych żądań (urlencoded, multipart/form-data, text/plain)"
+    ],
+    "correct": 3,
+    "explanation": "Żądanie obejdzie się bez preflightu tylko wtedy, gdy spełnia wszystkie warunki naraz: metoda GET, HEAD lub POST, wyłącznie nagłówki z listy CORS-safelisted, a Content-Type to application/x-www-form-urlencoded, multipart/form-data lub text/plain. application/json nie spełnia ostatniego warunku, więc przeglądarka najpierw wyśle OPTIONS.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/cors/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-008",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "Endpoint POST /v1/orders tymczasowo obsługuje inny adres. Który status przekierowania gwarantuje, że klient powtórzy pod nowym adresem POST z tym samym body?",
+    "options": [
+      "307 Temporary Redirect",
+      "302 Found",
+      "303 See Other",
+      "301 Moved Permanently"
+    ],
+    "correct": 0,
+    "explanation": "307 gwarantuje, że przekierowane żądanie użyje tej samej metody i tego samego body. Przy 302 starsze klienty błędnie zmieniały metodę na GET, a 303 z założenia każe pobrać nowy adres przez GET. Dla GET 302 i 307 działają tak samo. 301 oznacza przeniesienie na stałe, a nie tymczasowe.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/307/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-009",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "Po wysłaniu formularza zamówienia (POST) użytkownik ma trafić na stronę potwierdzenia, a odświeżenie jej nie może wysłać zamówienia drugi raz. Jaką odpowiedź powinien zwrócić serwer na POST?",
+    "options": [
+      "200 z HTML-em potwierdzenia w treści",
+      "303 See Other z Location wskazującym stronę potwierdzenia",
+      "307 Temporary Redirect z Location wskazującym stronę potwierdzenia",
+      "304 Not Modified"
+    ],
+    "correct": 1,
+    "explanation": "Przy 303 klient zawsze pobiera adres z Location metodą GET, więc odświeżenie strony potwierdzenia powtarza tylko GET. To wzorzec Post/Redirect/Get. 307 zachowałby metodę i powtórzył POST, a przy 200 odświeżenie strony ponownie wysłałoby formularz.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/303/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-010",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "POST /reports zleca wygenerowanie raportu, które trwa kilka minut i odbywa się w osobnej kolejce. Jaki status najlepiej opisuje odpowiedź wysłaną od razu?",
+    "options": [
+      "201 Created",
+      "204 No Content",
+      "202 Accepted",
+      "200 OK z pustą treścią"
+    ],
+    "correct": 2,
+    "explanation": "202 Accepted znaczy, że żądanie przyjęto do przetworzenia, ale przetwarzanie się nie skończyło albo jeszcze nie zaczęło — i może się nie udać. HTTP nie wyśle później drugiej odpowiedzi z wynikiem, więc API musi dać klientowi inny sposób sprawdzenia stanu, np. adres zadania. 201 oznaczałby, że raport już powstał.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/202/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-011",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "Klient wysyła poprawny składniowo JSON z Content-Type: application/json, ale data końca rezerwacji jest wcześniejsza niż data początku. Który status opisuje dokładnie tę sytuację?",
+    "options": [
+      "415 Unsupported Media Type",
+      "406 Not Acceptable",
+      "413 Content Too Large",
+      "422 Unprocessable Content"
+    ],
+    "correct": 3,
+    "explanation": "422 oznacza, że serwer zrozumiał typ treści i składnia jest poprawna, ale nie może wykonać zawartych w niej instrukcji. Klient powinien się spodziewać, że ten sam niezmieniony request znowu się nie powiedzie. 415 dotyczy nieobsługiwanego formatu, 406 — braku formatu odpowiedzi zgodnego z Accept, a 413 — zbyt dużej treści.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/422/index.md",
+    "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-012",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "Kolekcja /users obsługuje tylko GET i POST. Klient wysyła DELETE /users i dostaje 405 Method Not Allowed. Który nagłówek serwer musi dołączyć do tej odpowiedzi?",
+    "options": [
+      "Allow z listą obsługiwanych metod, np. Allow: GET, POST",
+      "Retry-After",
+      "Location",
+      "WWW-Authenticate"
+    ],
+    "correct": 0,
+    "explanation": "Odpowiedź 405 musi zawierać nagłówek Allow z metodami, które ten zasób obecnie obsługuje. Retry-After podpowiada, kiedy spróbować ponownie (np. przy 429 lub 503), Location wskazuje adres przy przekierowaniach i 201, a WWW-Authenticate należy do odpowiedzi 401.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/405/index.md",
+    "added_on": "2026-10-19"
   }
 ]
