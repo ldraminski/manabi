@@ -296,6 +296,86 @@
     "added_on": "2026-10-13"
   },
   {
+    "id": "ai-tools-senior-013",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-014",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-015",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-016",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-017",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-018",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-019",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-020",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-021",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-022",
+    "technology": "ai-tools",
+    "level": "senior",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
     "id": "angular-junior-001",
     "technology": "angular",
     "level": "junior",
@@ -1870,6 +1950,86 @@
     "topic": "production-operations",
     "kind": "single_choice",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-014",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-015",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-016",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-017",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-018",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-019",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-020",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-021",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-022",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-023",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-10-20"
   },
   {
     "id": "react-junior-001",

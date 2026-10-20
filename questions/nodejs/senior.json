@@ -206,5 +206,168 @@
     "explanation": "Po wysłaniu ostatniej odpowiedzi serwer czeka keepAliveTimeout (domyślnie 5000 ms, plus bufor keepAliveTimeoutBuffer, domyślnie 1 s) na kolejne dane, a potem niszczy gniazdo. Load balancer uważa połączenie za żywe przez 60 s, więc czasem wysyła żądanie w gniazdo, które Node właśnie zamyka — i zwraca 502. Backend musi trzymać bezczynne połączenia dłużej niż proxy przed nim. http.Agent dotyczy klienta HTTP, nie serwera.",
     "source_url": "https://nodejs.org/api/http.html#serverkeepalivetimeout",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "nodejs-senior-014",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Serwis działa z node --permission --allow-fs-read=/srv/app --allow-fs-read=/etc/myapp. Przy starcie otwiera plik i trzyma deskryptor, a potem odbiera sobie uprawnienie. Co dzieje się z otwartym deskryptorem fd?",
+    "code": "const fs = require('node:fs');\nconst fd = fs.openSync('/etc/myapp/secrets.json', 'r');\nprocess.permission.drop('fs.read', '/etc/myapp');\n// później: fs.readSync(fd, buffer)",
+    "options": [
+      "Node.js zamyka go automatycznie przy wywołaniu drop()",
+      "Każdy odczyt przez fd rzuca od tej chwili ERR_ACCESS_DENIED",
+      "Zostaje otwarty i nadal można z niego czytać — drop() dotyczy tylko przyszłych sprawdzeń uprawnień, deskryptor trzeba zamknąć samemu",
+      "drop() rzuca błąd, bo nie można odebrać uprawnienia, dopóki istnieją otwarte deskryptory"
+    ],
+    "correct": 2,
+    "explanation": "process.permission.drop() jest nieodwracalne, ale wpływa tylko na przyszłe sprawdzenia dostępu. Nie zamyka ani nie odbiera dostępu do już otwartych zasobów: deskryptorów plików, gniazd, procesów potomnych czy workerów. Aplikacja musi je sama zamknąć lub zakończyć.",
+    "source_url": "https://nodejs.org/api/permissions.html#permissiondropscope-reference",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-015",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Chcesz wdrożyć model uprawnień (--permission) w dużej aplikacji, ale nikt nie wie, do jakich plików i usług ona sięga. Co daje flaga --permission-audit (Node.js 25.8+)?",
+    "options": [
+      "Wykonuje sprawdzenia uprawnień, ale niczego nie blokuje — każde naruszenie publikuje w node:diagnostics_channel, a aplikacja działa dalej",
+      "Działa jak --permission, ale przed rzuceniem ERR_ACCESS_DENIED wypisuje ostrzeżenie na stderr",
+      "Po zakończeniu procesu zapisuje plik z listą flag --allow-*, których aplikacja potrzebuje",
+      "Wymaga podania także --permission i wszystkich flag --allow-*"
+    ],
+    "correct": 0,
+    "explanation": "Tryb audytu nie rzuca ERR_ACCESS_DENIED. Naruszenia trafiają do kanałów diagnostics_channel, np. node:permission-model:fs czy node:permission-model:net, z polami permission i resource. Nie wymaga --permission ani flag --allow-*. Jeśli podasz obie flagi, wygrywa --permission i model działa w trybie wymuszania.",
+    "source_url": "https://nodejs.org/api/cli.html#--permission-audit",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-016",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Usługa uruchomiona tak jak niżej wywołuje child_process.spawn('convert', args) i tworzy new Worker('./resize.js'). Co się stanie?",
+    "code": "node --permission --allow-fs-read=* --allow-fs-write=/tmp server.js",
+    "options": [
+      "Oba wywołania zadziałają, bo dostęp do systemu plików został przyznany",
+      "spawn() zostanie zablokowany, a Worker zadziała, bo działa w tym samym procesie",
+      "Oba wywołania zostaną zablokowane (ERR_ACCESS_DENIED) — potrzebne są jeszcze --allow-child-process i --allow-worker",
+      "Oba zadziałają, ale proces potomny i worker dostaną pełne uprawnienia bez ograniczeń"
+    ],
+    "correct": 2,
+    "explanation": "Z --permission ograniczone jest wszystko, czego jawnie nie przyznano: system plików, sieć, tworzenie procesów, node:worker_threads, natywne dodatki, WASI i inspektor. Procesy i workery włącza się osobno przez --allow-child-process i --allow-worker. Model uprawnień to „pas bezpieczeństwa” dla zaufanego kodu, a nie sandbox chroniący przed złośliwym kodem.",
+    "source_url": "https://nodejs.org/api/permissions.html#permission-model",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-017",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Aplikacja działa w module cluster z 8 workerami na Linuksie. Ktoś proponuje NODE_CLUSTER_SCHED_POLICY=none, żeby workery same przyjmowały połączenia, „bo tak jest szybciej”. Co mówi o tym dokumentacja?",
+    "options": [
+      "To zalecane ustawienie produkcyjne — round-robin jest tylko dla Windows",
+      "W teorii to podejście jest wydajniejsze, ale w praktyce rozkład połączeń bywa bardzo nierówny przez planistę systemu; domyślny round-robin w procesie głównym jest lepiej zbalansowany",
+      "Ustawienie none wyłącza cluster i wszystkie połączenia trafiają do procesu głównego",
+      "Nie ma różnicy, bo na Linuksie jądro zawsze rozdziela połączenia po równo"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie (na wszystkich systemach poza Windows) proces główny przyjmuje połączenia i rozdziela je round-robin. Przy SCHED_NONE workery przyjmują połączenia same; dokumentacja opisuje obciążenia, w których ponad 70% połączeń trafiało do dwóch z ośmiu procesów. Polityka jest ustalana przy uruchomieniu pierwszego workera.",
+    "source_url": "https://nodejs.org/api/cluster.html#how-it-works",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-018",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Serwis w kontenerze z twardym limitem pamięci pada z braku pamięci. Dodajesz --heapsnapshot-near-heap-limit=3, żeby złapać snapshot sterty przed awarią. O czym trzeba pamiętać?",
+    "options": [
+      "Snapshot jest zapisywany po awarii z core dumpa, więc nie kosztuje nic w trakcie działania",
+      "Node.js gwarantuje zapisanie dokładnie trzech snapshotów",
+      "Tworzenie snapshotu zużywa dodatkową pamięć (w stercie V8 i poza nią), więc przy ciasnym limicie system może zabić proces, zanim snapshot powstanie",
+      "Flaga działa tylko z włączonym --inspect"
+    ],
+    "correct": 2,
+    "explanation": "Snapshot zapisywany jest, gdy sterta zbliża się do limitu. Jego wygenerowanie wymaga czasu oraz pamięci zarówno w stercie V8, jak i natywnej; im większa sterta, tym więcej. Node.js stara się zapisać co najmniej jeden i najwyżej max_count snapshotów, ale nie gwarantuje ich liczby, a proces zużywający za dużo pamięci może zostać zabity przez system.",
+    "source_url": "https://nodejs.org/api/cli.html#--heapsnapshot-near-heap-limitmax_count",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-019",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Zespół uruchamia serwis z --report-uncaught-exception i automatycznie wysyła raporty diagnostyczne do zewnętrznego systemu logów. Na co trzeba uważać?",
+    "options": [
+      "Raport domyślnie zawiera zmienne środowiskowe procesu, więc mogą do niego trafić sekrety — warto dodać --report-exclude-env",
+      "Raport zawiera pełny snapshot sterty, więc ma kilka gigabajtów",
+      "Raport jest w formacie binarnym i system logów go nie odczyta",
+      "Raport powstaje tylko na Windows"
+    ],
+    "correct": 0,
+    "explanation": "Raport diagnostyczny to JSON z m.in. stosem JS i natywnym, zasobami, stanem libuv i sekcją environmentVariables. Zmienne środowiskowe są dołączane domyślnie; --report-exclude-env je pomija. --report-compact zapisuje raport w jednej linii, wygodnej dla systemów logów.",
+    "source_url": "https://nodejs.org/api/report.html#usage",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-020",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Proces Node.js na produkcji (Linux) wygląda na zawieszony. Uruchomiono go z --report-on-signal bez innych flag raportu. Jak poprosić o raport diagnostyczny?",
+    "options": [
+      "Wysłać SIGUSR1",
+      "Wysłać SIGUSR2",
+      "Wysłać SIGTERM",
+      "Wysłać SIGKILL"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnym sygnałem raportu jest SIGUSR2; można go zmienić przez --report-signal. SIGUSR1 w Node.js włącza inspektor (debugger), SIGTERM prosi o zakończenie, a SIGKILL natychmiast zabija proces. Raporty na sygnał nie są dostępne na Windows.",
+    "source_url": "https://nodejs.org/api/report.html#usage",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-021",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Aplikację w TypeScripcie uruchamiasz z --enable-source-maps, ale stosy błędów nadal wskazują na skompilowane pliki .js. Okazuje się, że biblioteka do logów robi to, co w kodzie poniżej. Jak to naprawić?",
+    "code": "Error.prepareStackTrace = (error, frames) =>\n  frames.map((f) => `${f.getFileName()}:${f.getLineNumber()}`).join('\\n');",
+    "options": [
+      "Przenieść --enable-source-maps do NODE_OPTIONS — z linii poleceń flaga nie działa z bibliotekami",
+      "W nadpisanym Error.prepareStackTrace wywołać i zwrócić wynik oryginalnej funkcji, którą trzeba zapamiętać przed nadpisaniem",
+      "Usunąć pliki .map — Node.js wygeneruje je sam",
+      "Dodać --stack-trace-limit=0"
+    ],
+    "correct": 1,
+    "explanation": "Nadpisanie Error.prepareStackTrace może uniemożliwić --enable-source-maps poprawianie stosu. Dokumentacja zaleca zapamiętać oryginalną funkcję i w nadpisaniu zwracać wynik originalPrepareStackTrace(error, trace).",
+    "source_url": "https://nodejs.org/api/cli.html#--enable-source-maps",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-022",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Każde żądanie HTTP w serwisie logi zapisuje z error.stack, a serwis działa z --enable-source-maps. Jaki koszt wydajnościowy wiąże się z tą flagą według dokumentacji?",
+    "options": [
+      "Spowalnia wykonanie całego kodu JavaScript, bo wyłącza JIT",
+      "Nie ma żadnego kosztu — source mapy są przetwarzane przy kompilacji",
+      "Dodaje opóźnienie przy odczycie Error.stack, więc częsty dostęp do stosu odczuwalnie kosztuje",
+      "Podwaja zużycie pamięci sterty niezależnie od tego, czy powstają błędy"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja ostrzega, że source mapy mogą wprowadzać opóźnienie przy dostępie do Error.stack i przy częstym odczycie stosu trzeba wziąć to pod uwagę. Sam kod aplikacji wykonuje się normalnie.",
+    "source_url": "https://nodejs.org/api/cli.html#--enable-source-maps",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-023",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Klient HTTP używa new http.Agent({ keepAlive: true }). Żądania GET wysyłane po chwili bezczynności sporadycznie kończą się ECONNRESET. Co jest typową przyczyną i co zaleca dokumentacja?",
+    "options": [
+      "keepAlive nie działa z GET — trzeba używać POST",
+      "Przekroczono domyślny limit maxSockets równy 256",
+      "Serwer zamknął bezczynne połączenie w chwili, gdy agent użył go ponownie; można sprawdzić request.reusedSocket i ponowić żądania idempotentne",
+      "Trzeba ustawić keepAliveMsecs na 0, żeby wyłączyć pakiety TCP Keep-Alive"
+    ],
+    "correct": 2,
+    "explanation": "Gdy agent ponownie używa gniazda w tym samym momencie, w którym serwer je zamyka, żądanie może dostać ECONNRESET. request.reusedSocket mówi, czy żądanie poszło przez ponownie użyte gniazdo — wtedy bezpiecznie można ponowić żądanie idempotentne. Domyślne maxSockets to Infinity (256 to domyślne maxFreeSockets).",
+    "source_url": "https://nodejs.org/api/http.html#requestreusedsocket",
+    "added_on": "2026-10-20"
   }
 ]

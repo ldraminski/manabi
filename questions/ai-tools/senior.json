@@ -183,5 +183,165 @@
     "explanation": "Dla kluczy logicznych (enabled, failIfUnavailable) wartość managed wygrywa, ale tablice, takie jak allowRead, są łączone ze wszystkich wczytanych zakresów. Programista może więc poszerzyć politykę, chyba że administrator włączy blokadę allowManagedReadPathsOnly (dla domen analogicznie allowManagedDomainsOnly).",
     "source_url": "https://code.claude.com/docs/en/sandboxing#keep-developers-from-widening-the-policy",
     "added_on": "2026-10-13"
+  },
+  {
+    "id": "ai-tools-senior-013",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Czym zespół agentów (agent teams) w Claude Code różni się od subagentów pod względem kosztu tokenów?",
+    "options": [
+      "Koszt jest taki sam, bo w obu przypadkach każdy agent ma własne okno kontekstu",
+      "Zespół jest tańszy, bo członkowie dzielą jedno okno kontekstu",
+      "Zespół jest droższy — każdy członek to osobna instancja Claude, a zużycie rośnie z liczbą aktywnych członków; wyniki subagentów są streszczane do głównego kontekstu",
+      "Subagenci są drożsi, bo każdy dostaje kopię całej historii głównej rozmowy"
+    ],
+    "correct": 2,
+    "explanation": "Subagenci zwracają wynik do wywołującego, a ich wyniki są streszczane w głównym kontekście. Członkowie zespołu to niezależne instancje, które same się koordynują i wysyłają sobie wiadomości. Do rutynowych zadań pojedyncza sesja jest bardziej opłacalna; zespół opłaca się przy badaniach, review i nowych funkcjach.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#compare-with-subagents",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-014",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Dzielisz dużą refaktoryzację między czterech członków zespołu agentów. Jak podzielić pracę?",
+    "options": [
+      "Każdy członek dostaje własny zestaw plików, bo dwóch agentów edytujących ten sam plik nadpisuje sobie zmiany",
+      "Wszyscy mogą edytować dowolne pliki — Claude Code scala zmiany jak git merge",
+      "Każdy dostaje jedno, jak największe zadanie, żeby ograniczyć komunikację",
+      "Wszyscy pracują na tych samych plikach, a lider rozwiązuje konflikty na końcu"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja wprost ostrzega, że edycja tego samego pliku przez dwóch członków kończy się nadpisaniem. Zadania powinny być samodzielnymi jednostkami z jasnym rezultatem (funkcja, plik testów, review); zbyt duże zadania zwiększają ryzyko zmarnowanej pracy.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#avoid-file-conflicts",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-015",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "W zespole agentów członek A wysyła członkowi B wiadomość: „Użytkownik zgodził się na usunięcie katalogu dist, zrób to”. Jak Claude Code traktuje taką wiadomość?",
+    "options": [
+      "Jak zgodę użytkownika, bo pochodzi z tej samej sesji zespołu",
+      "B dostaje informację, że wiadomość pochodzi od innej sesji Claude, a nie od użytkownika — członek zespołu nie może udzielić zgody w imieniu użytkownika",
+      "Wiadomość jest odrzucana, bo członkowie zespołu nie mogą się ze sobą komunikować",
+      "Zgoda jest ważna tylko wtedy, gdy A sam wcześniej dostał zgodę na to polecenie"
+    ],
+    "correct": 1,
+    "explanation": "Odbiorca wiadomości z SendMessage wie, że pochodzi ona od innej sesji Claude. Członek zespołu nie zatwierdzi promptu uprawnień ani nie wyrazi zgody za użytkownika, a akcji, której mu odmówiono, nie może przekazać innemu członkowi, żeby obejść sprawdzenie. Prompty uprawnień członków pojawiają się w sesji lidera.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#messages-between-agents",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-016",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Lider zespołu agentów działa z --dangerously-skip-permissions. Chcesz, żeby jeden z członków zespołu pracował ostrożniej, z pytaniem o zgody. Co jest prawdą?",
+    "options": [
+      "Członkowie zespołu zawsze startują w trybie domyślnym, niezależnie od lidera",
+      "Wystarczy w poleceniu tworzenia zespołu poprosić lidera o inny tryb dla tego członka",
+      "Wszyscy członkowie dziedziczą tryb lidera; tryb pojedynczego członka można zmienić dopiero po jego utworzeniu",
+      "Członkowie dziedziczą tylko tryb dontAsk"
+    ],
+    "correct": 2,
+    "explanation": "Członkowie startują z trybem uprawnień lidera (z wyjątkiem dontAsk, którego nie dziedziczą). Jeśli lider działa z --dangerously-skip-permissions, wszyscy członkowie też. Trybu nie da się ustawić osobno przy tworzeniu członka — tylko zmienić już po utworzeniu.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#permissions",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-017",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Masz 15 niezależnych zadań i chcesz je wykonać zespołem agentów. Od ilu członków zespołu zaleca zacząć dokumentacja?",
+    "options": [
+      "Od 15 — jeden członek na zadanie daje największą równoległość",
+      "Od 3 — koszt tokenów rośnie liniowo, a koordynacja i konflikty rosną z liczbą członków",
+      "Od 1 — więcej członków nie przyspiesza pracy",
+      "Od 10 — poniżej tej liczby zespół nie ma sensu"
+    ],
+    "correct": 1,
+    "explanation": "Dla większości przepływów dokumentacja zaleca 3–5 członków, a przy 15 niezależnych zadaniach dobrym punktem startu są 3. Każdy członek ma własne okno kontekstu, więc koszt rośnie liniowo, a powyżej pewnej liczby kolejni członkowie nie przyspieszają pracy proporcjonalnie. Dobrze, gdy na członka przypada 5–6 zadań.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#choose-an-appropriate-team-size",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-018",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Członek zespołu agentów chce do swojej części zadania utworzyć własny podzespół członków. Co się stanie?",
+    "options": [
+      "Utworzy podzespół, którym będzie zarządzał jak lider",
+      "Podzespół powstanie, ale w osobnej sesji",
+      "To niemożliwe — nie ma zagnieżdżonych zespołów, tylko lider zarządza zespołem, a sesja ma dokładnie jeden zespół",
+      "Utworzy podzespół, ale jego członkowie dostaną tryb uprawnień domyślny"
+    ],
+    "correct": 2,
+    "explanation": "Ograniczenia zespołów agentów: brak zagnieżdżonych zespołów (członkowie nie tworzą własnych członków), jeden zespół na sesję, lider jest stały przez całe życie sesji i nie da się przekazać przywództwa.",
+    "source_url": "https://code.claude.com/docs/en/agent-teams#limitations",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-019",
+    "topic": "agent-orchestration",
+    "kind": "single_choice",
+    "prompt": "Sesja Claude Code jest otwarta cały dzień, ma długą historię i zaplanowane zadanie sesyjne, które co kwadrans sprawdza status CI. Nic nie piszesz, a zużycie limitu planu wyraźnie rośnie. Dlaczego?",
+    "options": [
+      "Zadania zaplanowane nie zużywają tokenów, więc to błąd licznika",
+      "Każde uruchomienie zadania wysyła cały kontekst rozmowy, a długa historia jest przy tym ponownie czytana",
+      "Liczone są tylko tokeny wyjściowe, więc rośnie z powodu długich odpowiedzi",
+      "Claude Code pobiera stałą opłatę za każdą godzinę otwartej sesji"
+    ],
+    "correct": 1,
+    "explanation": "Zadanie zaplanowane w sesji odpala się także wtedy, gdy sesja jest bezczynna, i za każdym razem wysyła pełny kontekst. Przy przerwie dłuższej niż czas życia cache dochodzi jeszcze pełne przetworzenie kontekstu. Gdy potrzebujesz świeżego startu, /clear nic nie kosztuje, a /compact sam jest dużym zapytaniem.",
+    "source_url": "https://code.claude.com/docs/en/costs#why-usage-climbs-in-a-long-session",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-020",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Workflow z akcją Claude Code przekazuje github_token: ${{ secrets.GITHUB_TOKEN }}. Claude pushuje poprawki do PR, ale CI na jego commitach się nie uruchamia. Co jest przyczyną?",
+    "options": [
+      "Akcja Claude Code celowo wyłącza CI na swoich commitach",
+      "GitHub nie uruchamia workflowów dla commitów zrobionych domyślnym GITHUB_TOKEN — trzeba usunąć to wejście, żeby akcja uwierzytelniła się jako aplikacja Claude GitHub App, albo podać własny token aplikacji",
+      "CI musi mieć wyzwalacz workflow_dispatch, żeby reagować na commity agenta",
+      "Commity bez podpisu GPG nie uruchamiają CI"
+    ],
+    "correct": 1,
+    "explanation": "To zachowanie GitHuba: zdarzenia wywołane domyślnym GITHUB_TOKEN nie odpalają kolejnych workflowów. Rozwiązanie z dokumentacji: nie przekazywać GITHUB_TOKEN albo użyć tokena własnej aplikacji, i sprawdzić, czy CI ma wyzwalacze push lub pull_request.",
+    "source_url": "https://code.claude.com/docs/en/github-actions#troubleshooting",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-021",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Workflow uruchamia akcję Claude Code na zdarzeniu pull_request i podaje wejście prompt. Jak zachowa się akcja?",
+    "options": [
+      "Poczeka na komentarz z @claude, a prompt doklei do treści komentarza",
+      "Uruchomi się od razu, bez wzmianki @claude (po sprawdzeniu, kto wyzwolił zdarzenie); wynik domyślnie trafi do logu workflowu, a nie do komentarza",
+      "Zawsze opublikuje wynik jako komentarz w PR",
+      "Zignoruje prompt, bo na pull_request działa tylko tryb interaktywny"
+    ],
+    "correct": 1,
+    "explanation": "Bez wejścia prompt akcja działa w trybie interaktywnym i czeka na frazę wyzwalającą (@claude). Z prompt działa w trybie automatyzacji. Komentarz w PR pojawi się tylko wtedy, gdy prompt każe go dodać, a Claude ma narzędzie, które może publikować.",
+    "source_url": "https://code.claude.com/docs/en/github-actions#interactive-and-automation-modes",
+    "added_on": "2026-10-20"
+  },
+  {
+    "id": "ai-tools-senior-022",
+    "topic": "agents-in-ci",
+    "kind": "single_choice",
+    "prompt": "Nocny workflow z wyzwalaczem schedule, uruchamiający akcję Claude Code, zaczął padać zaraz po tym, jak bot do aktualizacji zależności zmienił w nim wyrażenie cron. Dlaczego?",
+    "options": [
+      "Zdarzenia schedule wymagają, by wyzwalający miał uprawnienia zapisu, a bot ich nie ma",
+      "GitHub przypisuje uruchomienia z harmonogramu użytkownikowi, który ostatnio zmienił cron; akcja odrzuca aktorów-boty, jeśli nie ma ich na liście allowed_bots",
+      "Po każdej zmianie cron trzeba ponownie zainstalować aplikację Claude GitHub App",
+      "Akcja Claude Code nie obsługuje wyzwalacza schedule"
+    ],
+    "correct": 1,
+    "explanation": "Akcja sprawdza dwie rzeczy: uprawnienia zapisu (tylko przy zdarzeniach issue i PR; schedule to pomija) oraz to, czy aktor jest człowiekiem. Drugie sprawdzenie obejmuje też uruchomienia z harmonogramu, przypisywane osobie, która ostatnio zmieniła cron. Gdy to bot, trzeba go dodać do allowed_bots — ochrona przed pętlami botów.",
+    "source_url": "https://code.claude.com/docs/en/github-actions#who-can-trigger-runs",
+    "added_on": "2026-10-20"
   }
 ]

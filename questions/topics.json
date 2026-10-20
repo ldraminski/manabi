@@ -460,5 +460,19 @@
     "title": "E2E od środka",
     "description": "Ścisłe lokatory, storageState, mockowanie API w Playwright",
     "icon": "globe"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "diagnostics-and-resilience",
+    "title": "Diagnostyka i odporność",
+    "description": "Raporty diagnostyczne, snapshot sterty przy limicie, source mapy, ponawianie żądań keep-alive",
+    "icon": "clock"
+  },
+  {
+    "technology": "ai-tools",
+    "slug": "agent-orchestration",
+    "title": "Orkiestracja agentów",
+    "description": "Zespoły agentów a subagenci, podział pracy, uprawnienia członków, koszty długich sesji",
+    "icon": "spark"
   }
 ]
