@@ -1848,6 +1848,86 @@
     "added_on": "2026-10-08"
   },
   {
+    "id": "nodejs-mid-021",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-022",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-023",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-024",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-025",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-026",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-027",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-028",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-029",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-030",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -2030,6 +2110,38 @@
     "topic": "diagnostics-and-resilience",
     "kind": "single_choice",
     "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-024",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-025",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-026",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-027",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-10-21"
   },
   {
     "id": "react-junior-001",

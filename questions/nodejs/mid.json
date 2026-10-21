@@ -324,5 +324,169 @@
     "explanation": "--process-timeout kończy proces kodem 124 (jak polecenie timeout). Przed wyjściem wypisuje stos wątku głównego albo listę zasobów podtrzymujących pętlę zdarzeń. Zdarzenia 'beforeExit' i 'exit' nie są emitowane, bo to kod JavaScript może być przyczyną zawieszenia. Flaga jest w fazie aktywnego rozwoju (Stability 1.1).",
     "source_url": "https://nodejs.org/api/cli.html#--process-timeoutduration",
     "added_on": "2026-10-08"
+  },
+  {
+    "id": "nodejs-mid-021",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.8 dodał do node:sqlite metodę statement.close(). Co stanie się przy drugim wywołaniu close() w tym kodzie?",
+    "code": "import { Database } from 'node:sqlite';\n\nconst db = new Database(':memory:');\nconst stmt = db.prepare('SELECT 1');\nstmt.close();\nstmt.close();",
+    "options": [
+      "Nic — drugie wywołanie jest ignorowane",
+      "Zostanie rzucony wyjątek, bo instrukcja jest już sfinalizowana",
+      "Instrukcja zostanie ponownie przygotowana i od razu zamknięta",
+      "Zostanie zamknięte całe połączenie z bazą"
+    ],
+    "correct": 1,
+    "explanation": "close() rzuca wyjątek, jeśli instrukcja jest już sfinalizowana. Bez błędu przy ponownym zamknięciu działa za to statement[Symbol.dispose]() — tę metodę wywołuje deklaracja using, więc w niej podwójne zwolnienie nie szkodzi.",
+    "source_url": "https://nodejs.org/api/sqlite.html#statementclose",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-022",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Który zapis w node:sqlite jest bezpieczny, gdy id pochodzi od użytkownika?",
+    "code": "const sql = db.createTagStore();\n\n// A\nsql.get`SELECT * FROM users WHERE id = ${id}`;\n\n// B\ndb.prepare(`SELECT * FROM users WHERE id = ${id}`).get();",
+    "options": [
+      "Oba, bo node:sqlite sam escapuje szablony napisów",
+      "Tylko A — tag store wiąże ${id} jako parametr przygotowanej instrukcji",
+      "Tylko B — prepare() zawsze zamienia ${...} na parametry",
+      "Żaden, w node:sqlite trzeba ręcznie escapować wartości"
+    ],
+    "correct": 1,
+    "explanation": "W szablonie otagowanym przez SQLTagStore ${id} staje się parametrem związanym z przygotowaną instrukcją (a instrukcja trafia do cache LRU). W zwykłym szablonie napisów wartość jest wklejana do tekstu SQL, zanim prepare() go zobaczy — to otwiera drogę do SQL injection.",
+    "source_url": "https://nodejs.org/api/sqlite.html#databasecreatetagstoremaxsize",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-023",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "W Node.js 26.11 klasę DatabaseSync z node:sqlite przemianowano na Database. Co się stanie z istniejącym kodem new DatabaseSync('app.db')?",
+    "options": [
+      "Rzuci błąd, bo DatabaseSync usunięto",
+      "Zadziała i przy domyślnych flagach nie wypisze ostrzeżenia — DatabaseSync to alias z deprecjacją tylko w dokumentacji",
+      "Zadziała, ale każde wywołanie wypisze DeprecationWarning",
+      "Zadziała, ale metody zaczną zwracać obietnice, bo Database jest asynchroniczna"
+    ],
+    "correct": 1,
+    "explanation": "DatabaseSync zostaje jako alias Database (DEP0210, StatementSync analogicznie jako DEP0211). To deprecjacja tylko w dokumentacji, więc przy domyślnych flagach nie ma ostrzeżenia w runtime. API się nie zmieniło — wszystkie metody Database nadal są synchroniczne.",
+    "source_url": "https://nodejs.org/api/deprecations.html#dep0210-sqlitedatabasesync",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-024",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Testy uruchamiane przez node --test --test-randomize raz na kilka przebiegów padają w CI, a lokalnie przechodzą. Jak najprościej odtworzyć dokładnie tę kolejność u siebie?",
+    "options": [
+      "Uruchomić node --test --test-rerun-failures",
+      "Przepisać seed z podsumowania testów w CI i uruchomić node --test --test-random-seed=<seed>",
+      "Uruchomić testy z --test-concurrency=1",
+      "Nie da się — kolejność jest za każdym razem inna"
+    ],
+    "correct": 1,
+    "explanation": "Przy losowej kolejności runner wypisuje w podsumowaniu użyty seed. --test-random-seed odtwarza tę samą kolejność plików i testów, a sam w sobie włącza losowanie. Z --test-rerun-failures losowania nie można łączyć.",
+    "source_url": "https://nodejs.org/api/test.html#randomizing-tests-execution-order",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-025",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Raport pokrycia z node --test --experimental-test-coverage pokazuje 95%, ale wiesz, że kilka modułów nie jest importowanych przez żaden test i w raporcie ich nie ma. Co pomoże (Node.js 26.7+)?",
+    "options": [
+      "--test-coverage-include-all — doda pliki niezaładowane przez testy z pokryciem 0%",
+      "--test-coverage-lines=100",
+      "--test-coverage-exclude z pustym wzorcem",
+      "Nic — wbudowany runner liczy pokrycie tylko załadowanych plików"
+    ],
+    "correct": 0,
+    "explanation": "Domyślnie raport obejmuje tylko pliki, które testy faktycznie załadowały. --test-coverage-include-all (eksperymentalna) szuka plików źródłowych w katalogu roboczym i dopisuje nieużyte z zerowym pokryciem, z uwzględnieniem filtrów --test-coverage-include i --test-coverage-exclude. --test-coverage-lines ustawia tylko próg.",
+    "source_url": "https://nodejs.org/api/cli.html#--test-coverage-include-all",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-026",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Piszesz własny reporter dla node --test i chcesz pokazywać komunikaty z wnętrza testu na bieżąco, w kolejności wykonania. Czego używać w testach (Node.js 26.6+)?",
+    "options": [
+      "t.diagnostic(message)",
+      "t.log(message, data) — zdarzenie test:log jest emitowane od razu",
+      "console.log, bo tylko on trafia do reportera",
+      "t.todo(message)"
+    ],
+    "correct": 1,
+    "explanation": "t.log() emituje test:log natychmiast, w kolejności wykonania, i może dołączyć ustrukturyzowane dane. Komunikaty t.diagnostic() są buforowane i trafiają do wyjścia dopiero po wyniku testu.",
+    "source_url": "https://nodejs.org/api/test.html#contextlogmessage-data",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-027",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.1 dodał crypto.randomUUIDv7(). Dlaczego bywa lepszy od crypto.randomUUID() jako klucz główny w bazie?",
+    "options": [
+      "Gwarantuje ściśle rosnące wartości, nawet przy zmianie zegara",
+      "Jest krótszy, więc indeks zajmuje mniej miejsca",
+      "Ma znacznik czasu w najstarszych bitach, więc nowe klucze sortują się mniej więcej według czasu utworzenia",
+      "Nie używa losowości, więc jest szybszy"
+    ],
+    "correct": 2,
+    "explanation": "UUID v7 zaczyna się od 48-bitowego znacznika czasu w milisekundach, a reszta to bezpieczne kryptograficznie losowe bity. Dzięki temu nowe wiersze trafiają w okolice końca indeksu. Dokumentacja zastrzega, że zegar nie jest monotoniczny, więc ściśle rosnących wartości nie ma.",
+    "source_url": "https://nodejs.org/api/crypto.html#cryptorandomuuidv7options",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-028",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Nagłówek Content-Type od klienta może być niepoprawny. Co zwróci MIMEType.parse(header) dla napisu, którego nie da się sparsować (Node.js 26.8+)?",
+    "code": "import { MIMEType } from 'node:util';\n\nconst type = MIMEType.parse(req.headers['content-type'] ?? '');",
+    "options": [
+      "null",
+      "Rzuci TypeError, tak jak new MIMEType(header)",
+      "Obiekt MIMEType z typem application/octet-stream",
+      "undefined i ostrzeżenie w konsoli"
+    ],
+    "correct": 0,
+    "explanation": "MIMEType.parse() to niewyrzucająca wersja konstruktora: dla niepoprawnego napisu zwraca null. new MIMEType() w takiej sytuacji rzuca TypeError, więc wymagałby try/catch.",
+    "source_url": "https://nodejs.org/api/util.html#mimetypeparsestring",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-029",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Od Node.js 26.11 process.ref() i process.unref() są stabilne. Po co ich używać zamiast wywoływać obj.unref() bezpośrednio na obiekcie?",
+    "options": [
+      "Działają także na typach, które implementują protokół Symbol.for('nodejs.ref') i Symbol.for('nodejs.unref'), choć nie mają metod ref()/unref()",
+      "process.unref(obj) od razu niszczy obiekt i zwalnia jego zasoby",
+      "Po process.unref(timer) callback timera przestaje się wykonywać",
+      "Działają tylko w worker_threads"
+    ],
+    "correct": 0,
+    "explanation": "process.unref(obj) korzysta z protokołu Refable, więc działa też dla typów z Web API, do których nie da się dopisać metod ref() i unref(). Obiekt z unref nie trzyma pętli zdarzeń przy życiu. Dokumentacja podaje, że bezpośrednie metody ref()/unref() są wycofywane na rzecz protokołu.",
+    "source_url": "https://nodejs.org/api/process.html#processunrefmayberefable",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-030",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Jaką wartość ma message w tym kodzie po uruchomieniu node --experimental-import-text app.mjs?",
+    "code": "import message from './message.txt' with { type: 'text' };",
+    "options": [
+      "Treść pliku jako napis (eksport domyślny)",
+      "Buffer z bajtami pliku",
+      "Obiekt { text } z nazwanym eksportem",
+      "URL pliku jako napis"
+    ],
+    "correct": 0,
+    "explanation": "Moduły tekstowe (Node.js 26.5+, za flagą --experimental-import-text) mają tylko eksport domyślny: treść pliku jako napis. Atrybut with { type: 'text' } jest obowiązkowy, tak jak type: 'json' przy plikach JSON.",
+    "source_url": "https://nodejs.org/api/esm.html#text-modules",
+    "added_on": "2026-10-21"
   }
 ]

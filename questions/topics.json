@@ -474,5 +474,19 @@
     "title": "Orkiestracja agentów",
     "description": "Zespoły agentów a subagenci, podział pracy, uprawnienia członków, koszty długich sesji",
     "icon": "spark"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "data-and-testing",
+    "title": "Dane i testy bez zależności",
+    "description": "node:sqlite od środka, losowa kolejność testów, pokrycie, logi z testów",
+    "icon": "list"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "benchmarking",
+    "title": "Pomiary wydajności",
+    "description": "node:bench, rozgrzewka, eliminacja martwego kodu, porównywanie wyników",
+    "icon": "clock"
   }
 ]

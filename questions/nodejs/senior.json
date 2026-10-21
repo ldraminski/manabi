@@ -369,5 +369,70 @@
     "explanation": "Gdy agent ponownie używa gniazda w tym samym momencie, w którym serwer je zamyka, żądanie może dostać ECONNRESET. request.reusedSocket mówi, czy żądanie poszło przez ponownie użyte gniazdo — wtedy bezpiecznie można ponowić żądanie idempotentne. Domyślne maxSockets to Infinity (256 to domyślne maxFreeSockets).",
     "source_url": "https://nodejs.org/api/http.html#requestreusedsocket",
     "added_on": "2026-10-20"
+  },
+  {
+    "id": "nodejs-senior-024",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "W benchmarku node:bench kod po pętli sprawdza totalLength i rzuca błąd przy złym wyniku. Po co, skoro to poza mierzonym fragmentem?",
+    "code": "bench('construct', (b) => {\n  const operations = 10_000;\n  let totalLength = 0;\n\n  b.start();\n  for (let i = 0; i < operations; i++) {\n    totalLength += new URL(input).href.length;\n  }\n  b.end(operations);\n\n  if (totalLength !== operations * input.length) {\n    throw new Error('Unexpected URL result');\n  }\n});",
+    "options": [
+      "To wymaganie API — bez throw benchmark się nie uruchomi",
+      "Wynik pracy jest dzięki temu obserwowalny, więc optymalizator nie może usunąć mierzonej pracy jako martwego kodu",
+      "Żeby node:bench odjął czas sprawdzenia od wyniku",
+      "Żeby wymusić odśmiecanie pamięci między próbkami"
+    ],
+    "correct": 1,
+    "explanation": "Optymalizujący silnik może usunąć pracę, której wynik nigdy nie jest użyty, i wtedy benchmark mierzy pustą pętlę. Dokumentacja zaleca, żeby wartości z mierzonej pracy były widoczne poza mierzonym przedziałem, np. przez sprawdzenie sumy ze wszystkich wyników. Samo przekazywanie ich do nieużywanych zmiennych lokalnych nie wystarcza.",
+    "source_url": "https://nodejs.org/api/bench.html#measurement-integrity",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-025",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "W surowych próbkach z node:bench pierwsze kilka pomiarów jest wyraźnie wolniejszych od reszty. Co zrobić?",
+    "options": [
+      "Ustawić warmup: 0, żeby mierzyć od pierwszego wywołania",
+      "Zwiększyć warmup i dalej przeglądać surowe próbki",
+      "Nic — domyślna rozgrzewka gwarantuje stabilny stan optymalizacji",
+      "Uruchomić z --bench-isolation=process, które usuwa wolne próbki"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie przed pomiarami jest 10 nieraportowanych wywołań rozgrzewki, ale stała liczba nie gwarantuje stabilnego stanu optymalizacji JIT. Dokumentacja zaleca przeglądać próbki i zwiększyć warmup, gdy wczesne są stale wolniejsze. warmup: 0 pogorszy problem.",
+    "source_url": "https://nodejs.org/api/bench.html#measurement-model",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-026",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "Twoje narzędzie wywołuje node:bench ze zmienną liczbą operacji w próbkach (b.end(n) z różnym n). Czym jest wtedy summary.mean?",
+    "options": [
+      "Przepustowością łączną: suma operacji podzielona przez sumę czasu",
+      "Średnią arytmetyczną szybkości z poszczególnych próbek, każda z tą samą wagą",
+      "Medianą czasów trwania próbek",
+      "Średnią ważoną liczbą operacji w próbce"
+    ],
+    "correct": 1,
+    "explanation": "Każda próbka to jedna równoważna obserwacja jej rate, więc summary.mean to zwykła średnia szybkości. Przepustowość łączna waży próbki czasem trwania i przy zmiennej długości próbek może się różnić. Jeśli jej potrzebujesz, policz ją z surowych samples, sumując operacje jako bigint.",
+    "source_url": "https://nodejs.org/api/bench.html#dynamic-sampling-and-variable-batches",
+    "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-027",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "Zespół chce, żeby CI padało, gdy benchmark w node:bench zwolni o ponad 5% względem main. Co node:bench daje w tej sprawie?",
+    "options": [
+      "Wbudowany tryb baseline z progiem regresji",
+      "Surowe próbki, stabilne benchId, parametry i tagi — politykę porównania i test statystyczny musi zapewnić własne narzędzie",
+      "Automatyczny test t-Welcha z poziomem istotności 0,05",
+      "Porównanie z poprzednim przebiegiem zapisanym w pliku .bench"
+    ],
+    "correct": 1,
+    "explanation": "node:bench celowo nie wyznacza baseline'u ani nie zwraca wyniku pass/fail. Udostępnia dane, a wybór metody (np. Welch, test rangowy, analiza par), progu i korekty dla wielu porównań zostawia narzędziom wyżej. Histogramy z node:perf_hooks mogą w tym pomóc.",
+    "source_url": "https://nodejs.org/api/bench.html#comparing-benchmark-results",
+    "added_on": "2026-10-21"
   }
 ]
