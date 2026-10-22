@@ -1,0 +1,158 @@
+[
+  {
+    "id": "typescript-senior-001",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Monorepo ma kilkanaście pakietów w jednym tsconfig.json; sprawdzanie typów trwa długo, a edytor zużywa dużo pamięci. Co dają referencje projektów (references + composite) z tsc --build?",
+    "options": [
+      "Pozwalają budować pakiety bez generowania plików .d.ts",
+      "Każdy pakiet jest osobnym projektem; importy z projektu zależnego czytają jego wygenerowane pliki .d.ts, a tsc -b buduje tylko nieaktualne projekty we właściwej kolejności",
+      "Uruchamiają kompilację każdego pliku w osobnym wątku",
+      "Wyłączają tryb strict w projektach zależnych"
+    ],
+    "correct": 1,
+    "explanation": "Po podzieleniu kodu na projekty TypeScript zamiast źródeł projektu zależnego wczytuje jego .d.ts. tsc --build działa jak orkiestrator: buduje nieaktualne projekty w kolejności zależności i korzysta z przyrostowych informacji z poprzednich kompilacji.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/project-config/Project%20References.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-002",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Co zmienia włączenie \"composite\": true w tsconfig.json projektu?",
+    "options": [
+      "Łączy wszystkie pliki wyjściowe w jeden plik JavaScript",
+      "Włącza automatycznie wszystkie flagi z rodziny strict",
+      "Pozwala importować pliki .ts z rozszerzeniem w ścieżce",
+      "declaration domyślnie jest true, rootDir domyślnie wskazuje katalog z tsconfig.json, a wszystkie pliki implementacji muszą pasować do include lub files"
+    ],
+    "correct": 3,
+    "explanation": "composite wymusza ograniczenia, dzięki którym narzędzia (w tym tsc --build) szybko ustalą, czy projekt jest zbudowany. Pliki spoza include/files powodują błąd z listą brakujących plików. Przy composite domyślnie działa też kompilacja przyrostowa (.tsbuildinfo).",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/composite.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-003",
+    "topic": "build-at-scale",
+    "kind": "flashcard",
+    "prompt": "Zespół chce podzielić duży kod TypeScript na referencje projektów. Ile projektów to rozsądna liczba i co przemawia za wydzieleniem osobnego projektu?",
+    "answer": "Według zespołu TypeScript dla workspace z więcej niż jednym projektem rozsądny jest zakres ok. 5–20 projektów. Za mało projektów spowalnia edytor, za dużo daje narzut — np. typy wspólnej biblioteki są sprawdzane osobno w każdym projekcie, który jej używa. Projekt warto wydzielić, gdy ma inne miejsce docelowe (pakiet w monorepo), wymaga innych ustawień (lib, moduleResolution), zawiera deklaracje globalne, które chcemy ograniczyć, albo gdy usługa językowa edytora nie mieści całości w pamięci.",
+    "explanation": "Referencje projektów to mechanizm hermetyzacji i jak każdy taki mechanizm mają koszt. Dzieli się według granic kodu, nie „na zapas”.",
+    "source_url": "https://github.com/microsoft/TypeScript/wiki/Performance",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-004",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Dlaczego w dużych projektach zaleca się interface Foo extends Bar, Baz zamiast type Foo = Bar & Baz?",
+    "options": [
+      "Interfejsy tworzą jeden płaski typ obiektowy, wykrywają konflikty właściwości, a relacje między nimi są cache'owane — przecięcia są droższe w sprawdzaniu",
+      "Przecięcia nie są obsługiwane przy włączonym strict",
+      "Interfejsy są usuwane z JavaScriptu, a aliasy typów nie",
+      "Przecięcia działają tylko z typami prymitywnymi"
+    ],
+    "correct": 0,
+    "explanation": "Przecięcia rekurencyjnie łączą właściwości i czasem dają never zamiast błędu. Przy sprawdzaniu przypisania do przecięcia kompilator sprawdza każdy składnik osobno, zanim przejdzie do typu spłaszczonego. Relacje między interfejsami są cache'owane, więc extends jest tańsze i czytelniej wyświetla się w komunikatach.",
+    "source_url": "https://github.com/microsoft/TypeScript/wiki/Performance",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-005",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Funkcja przyjmuje parametr typu DivElement | ImgElement | … — unię kilkudziesięciu typów elementów. Kompilacja wyraźnie zwolniła. Co zaleca zespół TypeScript?",
+    "options": [
+      "Zamienić unię na any",
+      "Wydzielić typ bazowy ze wspólnymi polami, po którym dziedziczą poszczególne typy, i przyjmować typ bazowy",
+      "Zamienić unię na przecięcie",
+      "Włączyć skipLibCheck"
+    ],
+    "correct": 1,
+    "explanation": "Każdy argument trzeba porównać z każdym członem unii, a usuwanie zbędnych członów porównuje je parami, czyli kwadratowo. Przy kilkunastu i więcej członach to realny koszt. Hierarchia z typem bazowym zastępuje to jednym porównaniem.",
+    "source_url": "https://github.com/microsoft/TypeScript/wiki/Performance",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-006",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Build zgłasza konflikty, bo w node_modules są dwie różne wersje typów tej samej biblioteki. Ktoś proponuje włączyć skipLibCheck. Co mówi o tym dokumentacja?",
+    "options": [
+      "To jedyne rozwiązanie, bo konfliktów w .d.ts nie da się usunąć",
+      "skipLibCheck sprawdza tylko pliki .d.ts z node_modules, więc problem zniknie bez kosztów",
+      "skipLibCheck przyspiesza kompilację kosztem dokładności typów; w takim przypadku lepiej doprowadzić do jednej kopii zależności (np. przez resolutions menedżera pakietów)",
+      "skipLibCheck wyłącza sprawdzanie typów w całym projekcie"
+    ],
+    "correct": 2,
+    "explanation": "skipLibCheck pomija sprawdzanie wszystkich plików deklaracji, a TypeScript sprawdza tylko to, czego kod faktycznie używa. Może to ukryć niespójne definicje. Przy zduplikowanych typach dokumentacja zaleca usunąć duplikat z drzewa zależności, zamiast go maskować.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/skipLibCheck.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-007",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Projekt frontendowy nie korzysta z żadnych globalnych typów, a w node_modules jest wiele pakietów @types. Jak sprawić, by TypeScript ich nie wczytywał?",
+    "options": [
+      "Dodać node_modules/@types do exclude",
+      "Usunąć pakiety @types z package.json",
+      "Ustawić \"noLib\": true",
+      "Ustawić \"types\": [] w compilerOptions i dopisywać tam tylko potrzebne pakiety globalne"
+    ],
+    "correct": 3,
+    "explanation": "Domyślnie TypeScript dołącza każdy pakiet @types z node_modules, nawet nieimportowany. Spowalnia to tworzenie programu i może powodować konflikty globalnych deklaracji (np. „Duplicate identifier”). Pole types ogranicza automatyczne dołączanie; typy importowane jawnie nadal działają.",
+    "source_url": "https://github.com/microsoft/TypeScript/wiki/Performance",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-008",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "prompt": "Projekt jest transpilowany plik po pliku (np. esbuild), a w tsconfig jest isolatedModules. Dlaczego ten kod zgłasza błąd?",
+    "code": "import { UserType, createUser } from \"./user\";\nexport { UserType, createUser };",
+    "options": [
+      "Narzędzie przetwarzające jeden plik nie wie, czy UserType jest typem, który trzeba usunąć z eksportu — trzeba to zaznaczyć przez export type",
+      "isolatedModules zabrania ponownego eksportu czegokolwiek",
+      "createUser musi być importowane przez import type",
+      "isolatedModules wymaga eksportu domyślnego"
+    ],
+    "correct": 0,
+    "explanation": "tsc zna cały program i usuwa z emitu eksport samego typu. Transpilator pracujący na jednym pliku tego nie wie, a eksport nieistniejącej wartości byłby błędem w runtime. isolatedModules ostrzega o takich konstrukcjach; poprawka to export type { UserType }.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/isolatedModules.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-009",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "prompt": "Przy włączonym verbatimModuleSyntax: co zostanie z tych importów w wygenerowanym JavaScripcie?",
+    "code": "import type { A } from \"a\";\nimport { b, type c } from \"bcd\";\nimport { type xyz } from \"xyz\";",
+    "options": [
+      "Nic — wszystkie trzy importy zostaną usunięte",
+      "import { b } from \"bcd\"; oraz import {} from \"xyz\"; — pierwszy import zniknie",
+      "Wszystkie trzy importy zostaną bez zmian",
+      "import { b } from \"bcd\"; — pozostałe dwa znikną"
+    ],
+    "correct": 1,
+    "explanation": "verbatimModuleSyntax upraszcza zasady: import z modyfikatorem type na całej deklaracji znika, a import bez niego zostaje — usuwane są tylko poszczególne specyfikatory oznaczone type. Dlatego z \"xyz\" zostaje import {} from \"xyz\", który wciąż ładuje moduł (ma znaczenie dla efektów ubocznych).",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/verbatimModuleSyntax.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-010",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "prompt": "Serwis ma być uruchamiany przez node app.ts (type stripping), więc w tsconfig włączono erasableSyntaxOnly. Która konstrukcja zgłosi błąd?",
+    "options": [
+      "const config = { port: 3000 } as const;",
+      "namespace Types { export type Id = string; }",
+      "enum Status { Active, Disabled }",
+      "const port = 3000 satisfies number;"
+    ],
+    "correct": 2,
+    "explanation": "erasableSyntaxOnly dopuszcza tylko składnię TypeScript, którą da się po prostu wymazać. enum generuje kod w runtime, więc jest błędem — podobnie jak namespace z kodem, parameter properties i import =. Namespace zawierający wyłącznie typy, as const i satisfies da się wymazać. Node.js w trybie type stripping też nie obsługuje enum i nie czyta tsconfig.json, więc ta flaga pozwala złapać problem już w edytorze.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/erasableSyntaxOnly.md",
+    "added_on": "2026-10-22"
+  }
+]

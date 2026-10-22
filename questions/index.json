@@ -2352,6 +2352,78 @@
     "added_on": "2026-10-15"
   },
   {
+    "id": "react-senior-001",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-002",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-003",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-004",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-005",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-006",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-007",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-008",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-009",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
     "id": "rest-api-junior-001",
     "technology": "rest-api",
     "level": "junior",
@@ -2942,6 +3014,86 @@
     "topic": "type-transformations",
     "kind": "single_choice",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-senior-001",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-002",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-003",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "flashcard",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-004",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-005",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-006",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-007",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-008",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-009",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-010",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "added_on": "2026-10-22"
   },
   {
     "id": "vue-junior-001",

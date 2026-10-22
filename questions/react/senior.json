@@ -1,0 +1,147 @@
+[
+  {
+    "id": "react-senior-001",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Server Component renderuje <LikeButton onLike={() => console.log(\"like\")} />, a LikeButton pochodzi z modułu z dyrektywą 'use client'. Co się stanie?",
+    "options": [
+      "Zadziała: React zserializuje funkcję jako tekst i odtworzy ją w przeglądarce",
+      "Nie zadziała: propsy przekazywane z serwera do Client Component muszą być serializowalne, a zwykła funkcja zdefiniowana w Server Component nie jest (przekazać można np. Server Function z 'use server')",
+      "Zadziała, ale funkcja wykona się na serwerze przy każdym kliknięciu",
+      "Zadziała, bo LikeButton jest Client Component, więc jego propsy nie podlegają żadnym ograniczeniom"
+    ],
+    "correct": 1,
+    "explanation": "Granica serwer–klient przenosi propsy w postaci zserializowanej. Lista obsługiwanych typów obejmuje prymitywy, zwykłe obiekty, tablice, Map, Set, Date, Promise, elementy JSX i Server Functions. Zwykłe funkcje, klasy i instancje klas nie są obsługiwane — obsługę kliknięcia trzeba zdefiniować w module klienckim albo przekazać Server Function.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/rsc/use-client.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-002",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Który z tych propsów Server Component może przekazać do Client Component?",
+    "options": [
+      "Instancję klasy: new User(data)",
+      "Symbol utworzony przez Symbol(\"draft\")",
+      "Promise zwrócony przez fetchComments()",
+      "Obiekt utworzony przez Object.create(null)"
+    ],
+    "correct": 2,
+    "explanation": "Promise jest na liście typów serializowalnych — Client Component może go odczytać przez use(). Instancje klas (poza wbudowanymi jak Date czy Map), obiekty z prototypem null i symbole spoza globalnego rejestru (Symbol.for) nie są obsługiwane.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/rsc/use-client.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-003",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Dodajesz 'use client' na górze Dashboard.js, który importuje Chart.js i formatDate.js. Żaden z tych dwóch plików nie ma dyrektywy. Co z nimi będzie?",
+    "options": [
+      "Chart.js i formatDate.js zostaną modułami klienckimi, bo dyrektywa obejmuje moduł i wszystkie jego zależności przechodnie — trafią do paczki wysyłanej do przeglądarki",
+      "Pozostaną modułami serwerowymi, bo nie mają własnej dyrektywy",
+      "React zgłosi błąd, bo każdy importowany plik musi mieć własną dyrektywę 'use client'",
+      "Chart.js stanie się kliencki, a formatDate.js zostanie na serwerze, bo nie zawiera komponentu"
+    ],
+    "correct": 0,
+    "explanation": "'use client' wyznacza granicę w drzewie zależności modułów, nie w drzewie renderowania. Wszystko, co importuje moduł kliencki, też jest wykonywane na kliencie. Dlatego dyrektywę stawia się możliwie nisko — na interaktywnych liściach — żeby nie wciągać do paczki dużych części aplikacji.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/rsc/use-client.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-004",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Panel boczny jest owinięty w <Activity mode={open ? \"visible\" : \"hidden\"}>. Co się dzieje z nim, gdy open zmieni się na false?",
+    "options": [
+      "Komponenty zostają odmontowane, a ich stan jest tracony",
+      "Panel zostaje ukryty przez display: none, jego efekty są sprzątane (cleanup), a stan komponentów zostaje zachowany i wraca po ponownym pokazaniu",
+      "Panel zostaje ukryty, a jego efekty i subskrypcje działają dalej bez zmian",
+      "React usuwa panel z DOM, ale trzyma jego stan w pamięci"
+    ],
+    "correct": 1,
+    "explanation": "Ukryta granica Activity zostawia DOM, ukrywa go przez display: none i niszczy efekty dzieci, więc subskrypcje są czyszczone. Po powrocie do \"visible\" stan jest przywracany, a efekty tworzone na nowo. W trybie ukrytym dzieci dalej renderują się po zmianie propsów, ale z niższym priorytetem.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Activity.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-005",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Zakładka z odtwarzaczem <video> trafiła do <Activity mode=\"hidden\"> zamiast warunkowego renderowania. Po przełączeniu zakładki dźwięk filmu gra dalej. Jak to naprawić?",
+    "options": [
+      "Nie da się — Activity nie nadaje się do elementów multimedialnych",
+      "Dodać key do <video>, żeby React go zresetował",
+      "Dodać efekt, którego funkcja cleanup wywołuje pause() na elemencie wideo",
+      "Zamienić mode=\"hidden\" na style={{ visibility: \"hidden\" }}"
+    ],
+    "correct": 2,
+    "explanation": "Przy odmontowaniu przeglądarka zatrzymuje wideo, bo element znika z DOM. Ukryte Activity zostawia element w DOM, więc film gra dalej. Ponieważ Activity sprząta efekty przy ukrywaniu, wystarczy efekt z cleanupem, który pauzuje wideo.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Activity.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-006",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Czy setQuantity(saved) zostanie oznaczone jako Transition?",
+    "code": "startTransition(async () => {\n  const saved = await updateQuantity(next);\n  setQuantity(saved);\n});",
+    "options": [
+      "Tak, wszystko wewnątrz funkcji przekazanej do startTransition jest Transition",
+      "Tak, ale tylko gdy updateQuantity zwróci wynik w mniej niż 5 sekund",
+      "Nie, bo startTransition nie przyjmuje funkcji asynchronicznych",
+      "Nie, aktualizacje stanu po await trzeba obecnie owinąć w kolejne startTransition"
+    ],
+    "correct": 3,
+    "explanation": "React oznacza jako Transition aktualizacje zaplanowane synchronicznie w trakcie wywołania funkcji. Oczekiwanie (await) jest częścią Transition, ale set wywołany po await wymaga dodatkowego startTransition. Dokumentacja opisuje to jako znane ograniczenie, które ma zostać usunięte.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useTransition.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-007",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Który błąd zostanie przechwycony przez Error Boundary otaczający komponent?",
+    "options": [
+      "Wyjątek rzucony w handlerze onClick",
+      "Wyjątek rzucony w callbacku setTimeout",
+      "Wyjątek rzucony w funkcji przekazanej do startTransition z useTransition",
+      "Wyjątek rzucony w render samego Error Boundary"
+    ],
+    "correct": 2,
+    "explanation": "Error Boundary nie łapie błędów z handlerów zdarzeń, kodu asynchronicznego (setTimeout, requestAnimationFrame), renderowania na serwerze ani z samego siebie. Wyjątkiem jest startTransition z useTransition — błąd rzucony w tej funkcji trafia do najbliższego Error Boundary.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Component.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-008",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Zespół włącza React Compiler w dużej aplikacji. Co zrobić z istniejącymi useMemo i useCallback?",
+    "options": [
+      "Usunąć je wszystkie przed włączeniem kompilatora, bo kompilator z nimi nie działa",
+      "Nie trzeba ich masowo usuwać: zostają jako furtka do precyzyjnej kontroli memoizacji (np. wartość używana jako zależność efektu), a w nowym kodzie można polegać na kompilatorze",
+      "Zamienić je wszystkie na React.memo",
+      "Zostawić, bo kompilator pomija komponenty, w których występuje useMemo"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja zaleca w nowym kodzie zostawić memoizację kompilatorowi, a useMemo/useCallback stosować tam, gdzie potrzebna jest precyzyjna kontrola — typowo gdy zmemoizowana wartość jest zależnością efektu. Wdrożenie zależy od tego, jak dobrze kod przestrzega Rules of React.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/learn/react-compiler/introduction.md",
+    "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-009",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Lista zadań używa useOptimistic(todos, reducer), a rodzic aktualizuje todos dopiero po udanym zapisie. Akcja usuwania rzuca błąd. Co zobaczy użytkownik?",
+    "options": [
+      "Usunięte zadanie zniknie na stałe, bo optymistyczny stan zostaje do następnego odświeżenia strony",
+      "Aplikacja się wysypie, jeśli nie ma Error Boundary",
+      "Po zakończeniu Transition React wyrenderuje bieżące todos, więc zadanie wróci na listę; komunikat o błędzie trzeba pokazać samodzielnie",
+      "React automatycznie ponowi akcję"
+    ],
+    "correct": 2,
+    "explanation": "Stan optymistyczny istnieje tylko, dopóki Action trwa. Gdy akcja rzuci błąd, Transition i tak się kończy, a React renderuje aktualną wartość value. Rodzic nie zaktualizował todos, więc UI wraca do stanu sprzed zmiany. Błąd można złapać i pokazać użytkownikowi.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useOptimistic.md",
+    "added_on": "2026-10-22"
+  }
+]

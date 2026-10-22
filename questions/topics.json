@@ -488,5 +488,33 @@
     "title": "Pomiary wydajności",
     "description": "node:bench, rozgrzewka, eliminacja martwego kodu, porównywanie wyników",
     "icon": "clock"
+  },
+  {
+    "technology": "react",
+    "slug": "server-and-client",
+    "title": "Serwer i klient",
+    "description": "Granica 'use client', serializacja propsów do Client Components",
+    "icon": "atom"
+  },
+  {
+    "technology": "react",
+    "slug": "concurrent-ui",
+    "title": "Współbieżny interfejs",
+    "description": "Transitions, Activity, useOptimistic, Error Boundary, React Compiler",
+    "icon": "atom"
+  },
+  {
+    "technology": "typescript",
+    "slug": "build-at-scale",
+    "title": "TypeScript w dużej skali",
+    "description": "Referencje projektów, composite, wydajność sprawdzania typów, skipLibCheck",
+    "icon": "layout"
+  },
+  {
+    "technology": "typescript",
+    "slug": "emit-and-interop",
+    "title": "Emisja i transpilatory",
+    "description": "isolatedModules, verbatimModuleSyntax, erasableSyntaxOnly",
+    "icon": "type"
   }
 ]
