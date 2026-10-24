@@ -154,5 +154,38 @@
     "explanation": "erasableSyntaxOnly dopuszcza tylko składnię TypeScript, którą da się po prostu wymazać. enum generuje kod w runtime, więc jest błędem — podobnie jak namespace z kodem, parameter properties i import =. Namespace zawierający wyłącznie typy, as const i satisfies da się wymazać. Node.js w trybie type stripping też nie obsługuje enum i nie czyta tsconfig.json, więc ta flaga pozwala złapać problem już w edytorze.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/erasableSyntaxOnly.md",
     "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-011",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Monorepo chce generować pliki .d.ts szybkim narzędziem równolegle dla wszystkich pakietów, bez czekania na pełne sprawdzanie typów zależności. Włączono isolatedDeclarations. Który eksport zgłosi błąd?",
+    "code": "import { add } from './add';\n\nconst total = add(1, 2);\n\nexport let limit = 10;                 // A\nexport function twenty() { return 20; } // B\nexport function getTotal() {           // C\n  return total;\n}",
+    "options": [
+      "A, bo eksportowana zmienna musi mieć jawny typ",
+      "B, bo każda eksportowana funkcja musi mieć jawny typ zwracany",
+      "C, bo jej typ zwracany zależy od typu add z innego pliku, więc nie da się go ustalić bez type-checkera",
+      "Żaden — isolatedDeclarations zmienia tylko sposób emisji plików .d.ts, a nie raportuje błędów"
+    ],
+    "correct": 2,
+    "explanation": "isolatedDeclarations (TypeScript 5.5) zgłasza błąd, gdy publicznego API modułu nie da się opisać bez sprawdzania typów w innych plikach. Typy „trywialne” — literał 10 czy return 20 — są dopuszczone, a nieeksportowana zmienna total nie wymaga adnotacji. getTotal potrzebuje jawnego typu zwracanego. Opcja wymaga declaration lub composite i nie zmienia emisji, tylko raportowanie błędów.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%205.5.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "typescript-senior-012",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "prompt": "Biblioteka jest uruchamiana w trakcie developmentu bezpośrednio z plików .ts, więc importy mają rozszerzenie .ts. Do publikacji kompilujecie ją tsc z rewriteRelativeImportExtensions. Który import NIE zostanie przepisany na .js?",
+    "options": [
+      "import { a } from './utils.ts'",
+      "import { b } from '../lib/helpers.mts'",
+      "import { c } from 'some-package/file.ts'",
+      "import { d } from './view.tsx'"
+    ],
+    "correct": 2,
+    "explanation": "rewriteRelativeImportExtensions (TypeScript 5.7) przepisuje tylko ścieżki względne (zaczynające się od ./ lub ../) kończące się rozszerzeniem TypeScript: .ts → .js, .tsx → .jsx, .mts → .mjs, .cts → .cjs. Specyfikatory pakietów, importy z # i ścieżki bez rozszerzenia pozostają bez zmian. Dynamicznych ścieżek wyliczanych w runtime też nie da się przepisać.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%205.7.md",
+    "added_on": "2026-10-24"
   }
 ]

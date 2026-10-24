@@ -952,6 +952,54 @@
     "added_on": "2026-10-16"
   },
   {
+    "id": "git-senior-001",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-002",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-003",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-004",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-005",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-006",
+    "technology": "git",
+    "level": "senior",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
     "id": "html-junior-001",
     "technology": "html",
     "level": "junior",
@@ -1398,6 +1446,62 @@
     "topic": "async-patterns",
     "kind": "single_choice",
     "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-senior-001",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-002",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-003",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-004",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-005",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-006",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-007",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
   },
   {
     "id": "nextjs-junior-001",
@@ -2424,6 +2528,30 @@
     "added_on": "2026-10-22"
   },
   {
+    "id": "react-senior-010",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-011",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-012",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
     "id": "rest-api-junior-001",
     "technology": "rest-api",
     "level": "junior",
@@ -3094,6 +3222,22 @@
     "topic": "emit-and-interop",
     "kind": "single_choice",
     "added_on": "2026-10-22"
+  },
+  {
+    "id": "typescript-senior-011",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "typescript-senior-012",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "emit-and-interop",
+    "kind": "single_choice",
+    "added_on": "2026-10-24"
   },
   {
     "id": "vue-junior-001",

@@ -143,5 +143,56 @@
     "explanation": "Stan optymistyczny istnieje tylko, dopóki Action trwa. Gdy akcja rzuci błąd, Transition i tak się kończy, a React renderuje aktualną wartość value. Rodzic nie zaktualizował todos, więc UI wraca do stanu sprzed zmiany. Błąd można złapać i pokazać użytkownikowi.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useOptimistic.md",
     "added_on": "2026-10-22"
+  },
+  {
+    "id": "react-senior-010",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Dwa Server Components, Temperature i Precipitation, liczą ten sam raport dla tego samego miasta. Każdy z nich ma w sobie własne getReport = cache(calculateReport). Raport nadal liczy się dwa razy w jednym żądaniu. Dlaczego?",
+    "code": "import { cache } from 'react';\n\nexport function Temperature({ city }) {\n  const getReport = cache(calculateReport);\n  const report = getReport(city);\n  // ...\n}",
+    "options": [
+      "cache działa tylko w Client Components, w Server Components jest ignorowane",
+      "Każde wywołanie cache tworzy nową funkcję z osobną pamięcią podręczną; trzeba wywołać cache raz w osobnym module i importować tę samą funkcję w obu komponentach",
+      "cache porównuje argumenty przez JSON.stringify, a obiekt city nie jest serializowalny",
+      "cache zapamiętuje wynik tylko w obrębie jednego komponentu z założenia, współdzielenie między komponentami wymaga useMemo"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja cache podaje, że każde wywołanie cache tworzy nową funkcję, a różne zapamiętane funkcje nie dzielą pamięci podręcznej. Wywołanie cache wewnątrz komponentu dodatkowo tworzy nową funkcję przy każdym renderze. Zapamiętaną funkcję należy zdefiniować raz w module i importować tam, gdzie jest potrzebna. cache jest przeznaczone dla Server Components, a jego pamięć jest unieważniana między żądaniami.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/cache.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-011",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Client Component Albums czyta dane tak jak poniżej. Lista albumów nigdy się nie pojawia, a fallback Suspense wyświetla się w kółko. Co jest przyczyną?",
+    "code": "function Albums() {\n  const albums = use(fetch('/albums').then(r => r.json()));\n  return <AlbumList albums={albums} />;\n}",
+    "options": [
+      "use nie obsługuje Promise zwróconego przez fetch, tylko Promise utworzone przez new Promise",
+      "Brakuje await przed fetch",
+      "Promise jest tworzony w trakcie renderowania, więc po każdym zawieszeniu React renderuje od nowa i dostaje nowy Promise; Promise musi pochodzić z cache, frameworka lub Server Component",
+      "use można wywołać tylko w Server Component"
+    ],
+    "correct": 2,
+    "explanation": "React nie zachowuje stanu renderów, które zawiesiły się przed zamontowaniem — po każdym zawieszeniu renderuje od zera, więc Promise utworzony w renderze (także przez dopisanie .then do zbuforowanego Promise) jest za każdym razem nowy. Dokumentacja use wymaga, by w Client Components przekazywać ten sam, zbuforowany Promise, najlepiej utworzony poza renderowaniem.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/use.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-012",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Pole wyszukiwania jest kontrolowane przez stan text, a od niego zależy ciężka lista wyników. Ktoś owinął setText w startTransition, żeby lista nie blokowała pisania. Jakie podejście zaleca dokumentacja?",
+    "code": "function handleChange(e) {\n  startTransition(() => {\n    setText(e.target.value);\n  });\n}\n// ...\n<input value={text} onChange={handleChange} />",
+    "options": [
+      "Zostawić tak, bo to dokładnie zastosowanie Transition",
+      "Zamienić startTransition na setTimeout(…, 0)",
+      "Owinąć input w memo, żeby nie renderował się razem z listą",
+      "Aktualizować stan inputu synchronicznie, a do listy przekazać osobny stan aktualizowany w Transition albo wartość z useDeferredValue(text)"
+    ],
+    "correct": 3,
+    "explanation": "Aktualizacji w Transition nie da się użyć do sterowania polem tekstowym: Transition jest nieblokująca, a zmiana wartości inputu w odpowiedzi na zdarzenie change musi nastąpić synchronicznie. Dokumentacja proponuje dwa stany (synchroniczny dla inputu i drugi aktualizowany w Transition) albo jeden stan i useDeferredValue, która „zostaje w tyle” i dogania wartość nieblokującymi renderami.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useTransition.md",
+    "added_on": "2026-10-24"
   }
 ]

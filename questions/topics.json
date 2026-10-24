@@ -516,5 +516,19 @@
     "title": "Emisja i transpilatory",
     "description": "isolatedModules, verbatimModuleSyntax, erasableSyntaxOnly",
     "icon": "type"
+  },
+  {
+    "technology": "javascript",
+    "slug": "memory-and-concurrency",
+    "title": "Pamięć i współbieżność",
+    "description": "GC i WeakRef, mikrozadania, SharedArrayBuffer i Atomics, using, scheduler.yield",
+    "icon": "clock"
+  },
+  {
+    "technology": "git",
+    "slug": "git-at-scale",
+    "title": "Git w dużej skali",
+    "description": "Partial clone, płytkie klony, sparse-checkout, maintenance, range-diff, bezpieczny force push",
+    "icon": "branch"
   }
 ]

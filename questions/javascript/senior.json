@@ -1,0 +1,115 @@
+[
+  {
+    "id": "javascript-senior-001",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Biblioteka rejestruje obiekty połączeń w FinalizationRegistry, żeby w callbacku zamykać połączenia z bazą, gdy obiekt zostanie usunięty przez GC. Co jest główną wadą tego projektu?",
+    "options": [
+      "Callback wykona się synchronicznie w chwili zwolnienia obiektu, co może przerwać bieżący kod",
+      "Nie ma gwarancji, kiedy ani czy w ogóle callback zostanie wywołany, więc nie można na nim opierać zwalniania niezbędnych zasobów",
+      "FinalizationRegistry trzyma silną referencję do obiektu, więc obiekt nigdy nie zostanie usunięty",
+      "Callbacki działają tylko w przeglądarkach, a nie w Node.js"
+    ],
+    "correct": 1,
+    "explanation": "MDN odradza FinalizationRegistry tam, gdzie się da: kiedy, jak i czy GC w ogóle zadziała, zależy od silnika. Callback może zostać wywołany długo po zwolnieniu obiektu albo wcale, choć nigdy nie jest wywoływany synchronicznie. Rejestr nie trzyma silnej referencji do celu. Niezbędne zasoby trzeba zwalniać jawnie (np. close() albo using).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/finalizationregistry/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-002",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Cache trzyma wartości przez WeakRef. W jednej synchronicznej funkcji wywołujesz ref.deref() i dostajesz obiekt. Czy kolejne ref.deref() w tej samej funkcji, kilka linii dalej, może zwrócić undefined?",
+    "options": [
+      "Tak, GC może zadziałać w dowolnym momencie, także między dwoma liniami",
+      "Tak, ale tylko jeśli pomiędzy wywołaniami zostanie zaalokowana duża ilość pamięci",
+      "Nie, bo obiekt pobrany z deref() staje się na zawsze silnie osiągalny",
+      "Nie, obiekt pobrany przez deref() nie zostanie odzyskany przed końcem bieżącego zadania (job); zwolnienie da się „zobaczyć” dopiero między obrotami pętli zdarzeń"
+    ],
+    "correct": 3,
+    "explanation": "Specyfikacja gwarantuje, że cel WeakRef utworzonego lub odczytanego przez deref() w bieżącym zadaniu nie zostanie odzyskany do końca tego zadania (łącznie z reakcjami Promise wykonywanymi na jego końcu). Ma to ukryć zachowanie GC przed kodem. W kolejnych obrotach pętli deref() może już zwrócić undefined — albo nigdy, jeśli GC nie odzyska obiektu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/weakref/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-003",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Przetwarzasz w przeglądarce 100 000 elementów, dzieląc pracę na porcje. Każda porcja na końcu planuje następną przez queueMicrotask. Strona przestaje reagować do końca przetwarzania. Dlaczego?",
+    "options": [
+      "Pętla zdarzeń wykonuje mikrozadania, dopóki kolejka nie będzie pusta — także te dodane w trakcie — więc przeglądarka nie dostaje szansy na renderowanie ani obsługę zdarzeń; porcje trzeba planować jako osobne zadania",
+      "queueMicrotask ma limit 1000 wywołań na sekundę",
+      "Mikrozadania wykonują się w osobnym wątku, który blokuje główny wątek",
+      "Każde queueMicrotask wymusza ponowne renderowanie strony, co ją spowalnia"
+    ],
+    "correct": 0,
+    "explanation": "Po każdym zadaniu pętla zdarzeń wykonuje mikrozadania aż do opróżnienia kolejki, nawet jeśli wciąż dochodzą nowe; dopiero potem przeglądarka może zaktualizować rendering i przejść do kolejnego zadania. MDN ostrzega, że rekurencyjne dodawanie mikrozadań grozi zablokowaniem pętli zdarzeń.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/html_dom_api/microtask_guide/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-004",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Aplikacja chce przekazywać SharedArrayBuffer do Web Workera. Na produkcji postMessage z tym buforem zgłasza błąd. Czego najpewniej brakuje?",
+    "options": [
+      "Flagi { shared: true } w new Worker()",
+      "Izolacji między źródłami (cross-origin isolation): bezpiecznego kontekstu oraz nagłówków Cross-Origin-Opener-Policy i Cross-Origin-Embedder-Policy",
+      "Wywołania Atomics.init() przed utworzeniem bufora",
+      "Typu modułu w workerze: new Worker(url, { type: \"module\" })"
+    ],
+    "correct": 1,
+    "explanation": "Po atakach Spectre pamięć współdzielona została wyłączona, a potem przywrócona pod warunkiem, że dokument jest w bezpiecznym kontekście i jest cross-origin isolated (COOP i COEP). Stan można sprawdzić przez crossOriginIsolated; dopiero wtedy postMessage przestaje rzucać dla SharedArrayBuffer.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/sharedarraybuffer/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-005",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Kod czekający na sygnał od workera przez Atomics.wait(int32, 0, 0) działa w workerze, ale po przeniesieniu do głównego wątku strony rzuca wyjątek. Co jest właściwą poprawką?",
+    "options": [
+      "Owinąć wywołanie w try/catch i powtarzać w pętli",
+      "Zamienić Int32Array na zwykłą tablicę",
+      "Użyć Atomics.waitAsync, bo Atomics.wait blokuje wątek, a główny wątek nie może być blokowany (TypeError)",
+      "Wywołać Atomics.wait z timeoutem 0"
+    ],
+    "correct": 2,
+    "explanation": "Atomics.wait jest blokujące i działa tylko na Int32Array lub BigInt64Array opartych na SharedArrayBuffer. Gdy bieżącego wątku nie można zablokować — np. to główny wątek — rzuca TypeError. Nieblokującą, asynchroniczną wersją jest Atomics.waitAsync.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/atomics/wait/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-006",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Obiekty zwracane przez openFile() i lock() mają metodę [Symbol.dispose](). W jakiej kolejności zostaną zwolnione zasoby, jeśli process() rzuci wyjątek?",
+    "code": "function run() {\n  using file = openFile('data.txt');\n  using guard = lock();\n  process(file);\n}",
+    "options": [
+      "Najpierw guard, potem file — zawsze, także przy wyjątku; błędy z zwalniania są łączone z pierwotnym w SuppressedError",
+      "Najpierw file, potem guard, w kolejności deklaracji",
+      "Żaden — przy wyjątku dispose nie jest wywoływane, trzeba dodać try/finally",
+      "Tylko guard, bo zwalniana jest wyłącznie ostatnia deklaracja using"
+    ],
+    "correct": 0,
+    "explanation": "Gdy zakres się kończy, dispose wywoływane jest dla wszystkich deklaracji using w odwrotnej kolejności. Wszystkie disposery mają gwarancję wykonania, podobnie jak blok finally. Błędy rzucone przy zwalnianiu, razem z błędem, który przerwał zakres, są łączone w SuppressedError rzucany po zakończeniu zwalniania.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/statements/using/index.md",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-007",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Długie zadanie na głównym wątku dzielisz, wywołując między porcjami await scheduler.yield(). Kiedy wykona się kontynuacja względem zadań zaplanowanych przez scheduler.postTask()?",
+    "options": [
+      "Na samym końcu, po wszystkich oczekujących zadaniach postTask niezależnie od priorytetu",
+      "Natychmiast, jako mikrozadanie, bez oddawania sterowania przeglądarce",
+      "W losowej kolejności, zależnej od przeglądarki",
+      "Po zadaniach postTask o wyższym priorytecie \"user-blocking\", ale przed zadaniami postTask o tym samym priorytecie \"user-visible\" — trafia do kolejki o podwyższonym priorytecie"
+    ],
+    "correct": 3,
+    "explanation": "scheduler.yield() oddaje sterowanie głównemu wątkowi, a kontynuację planuje jako zadanie z priorytetem domyślnie \"user-visible\" (albo odziedziczonym z postTask). Trafia ono do kolejki z podwyższonym priorytetem: przed zadaniami postTask tego samego poziomu, ale po zadaniach wyższego poziomu \"user-blocking\". Dzięki temu przerwana praca nie ląduje na końcu kolejki.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/scheduler/yield/index.md",
+    "added_on": "2026-10-24"
+  }
+]

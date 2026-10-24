@@ -1,0 +1,98 @@
+[
+  {
+    "id": "git-senior-001",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "Repozytorium ma wiele lat historii i duże pliki binarne. Zespół rozważa git clone --filter=blob:none. Co jest prawdą o takim klonie?",
+    "options": [
+      "Pobiera tylko ostatni commit; starsza historia jest niedostępna do czasu git fetch --unshallow",
+      "Pomija zawartość plików (bloby) przy klonowaniu; brakujące bloby są dociągane z serwera (promisor remote) dopiero, gdy są potrzebne, np. przy checkout starszego commita — wymaga to dostępu do sieci",
+      "Pobiera wszystko, ale nie rozpakowuje blobów na dysk",
+      "Działa jak sparse-checkout: w katalogu roboczym pojawiają się tylko wybrane katalogi"
+    ],
+    "correct": 1,
+    "explanation": "Filtr blob:none pomija wszystkie bloby. Partial clone unika pobierania niepotrzebnych obiektów z góry, a brakujące obiekty są dociągane na żądanie z promisor remote. Dokumentacja zaznacza, że wymaga to bycia online i dostępności zdalnego repozytorium. To co innego niż płytki klon (--depth), który obcina historię commitów.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/technical/partial-clone.adoc",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-002",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "Job CI robi git clone --depth 1 <url>, a potem próbuje git checkout release/2.x. Git twierdzi, że nie zna takiej gałęzi, choć istnieje na serwerze. Dlaczego?",
+    "options": [
+      "--depth implikuje --single-branch, więc sklonowano tylko domyślną gałąź i kolejne fetch aktualizują tylko jej gałąź śledzącą; trzeba dodać --no-single-branch, --branch release/2.x albo pobrać tę gałąź jawnie",
+      "Płytki klon nie obsługuje git checkout w ogóle",
+      "Gałęzie z ukośnikiem w nazwie nie są pobierane przy --depth",
+      "release/2.x ma więcej niż jeden commit, a --depth 1 pozwala pobrać tylko gałęzie z jednym commitem"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja git clone: --depth tworzy płytki klon i implikuje --single-branch, chyba że podano --no-single-branch. Przy --single-branch klonowana jest tylko historia jednej gałęzi (z --branch albo wskazywanej przez HEAD zdalnego), a kolejne fetch aktualizują wyłącznie jej gałąź śledzącą.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-clone.adoc",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-003",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "W monorepo każdy zespół pracuje w kilku katalogach. Planujecie sparse-checkout. Dlaczego dokumentacja zaleca tryb cone zamiast --no-cone?",
+    "options": [
+      "Tryb cone pobiera z serwera mniej obiektów niż --no-cone",
+      "Tryb --no-cone nie pozwala wybrać więcej niż jednego katalogu",
+      "Tryb cone przyjmuje tylko katalogi, co pozwala uniknąć kosztownego dopasowywania wzorców (O(N*M)) przy każdej operacji na drzewie roboczym i działa z --sparse-index",
+      "Tryb cone automatycznie usuwa niepotrzebne katalogi z historii"
+    ],
+    "correct": 2,
+    "explanation": "Cone mode jest domyślny i przyjmuje listę katalogów. Tryb --no-cone używa wzorców w stylu .gitignore, przez co operacje takie jak pull, merge, rebase czy switch wymagają O(N*M) dopasowań (wzorce × ścieżki w indeksie), nie działa z --sparse-index i ma inne pułapki — dokumentacja go nie zaleca. Sam sparse-checkout nie zmienia tego, co jest pobierane z serwera; do tego służy partial clone.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-sparse-checkout.adoc",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-004",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "Chcesz, żeby duże repozytorium było optymalizowane w tle zamiast przez okazjonalne, długie git gc. Co robi git maintenance start?",
+    "options": [
+      "Jednorazowo uruchamia git gc --aggressive",
+      "Rejestruje repozytorium (wpis maintenance.repo w globalnej konfiguracji, zalecane harmonogramy zadań) i ustawia systemowy harmonogram, który co godzinę uruchamia git maintenance run --scheduled",
+      "Uruchamia proces demona Git, który działa do restartu komputera",
+      "Włącza optymalizacje wyłącznie na serwerze zdalnym"
+    ],
+    "correct": 1,
+    "explanation": "start wykonuje to samo co register — dodaje repozytorium do maintenance.repo w globalnej konfiguracji i włącza zalecane maintenance.<task>.schedule — a następnie konfiguruje zewnętrzny harmonogram, by co godzinę uruchamiał git maintenance run --scheduled. Domyślne zadania to m.in. commit-graph i prefetch co godzinę oraz loose-objects i incremental-repack codziennie.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-maintenance.adoc",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-005",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "Autor PR-a przepisał swoją serię commitów (rebase na nowy main plus poprawki po review) i wypchnął ją z nadpisaniem. Jak recenzent najlepiej sprawdzi, co faktycznie zmieniło się w poszczególnych commitach względem poprzedniej wersji?",
+    "options": [
+      "git diff old-tip new-tip — pokaże tylko poprawki z review",
+      "git log --oneline main..new-tip",
+      "git show new-tip",
+      "git range-diff main old-tip new-tip — dopasowuje odpowiadające sobie commity z obu wersji serii i pokazuje różnice między ich łatkami"
+    ],
+    "correct": 3,
+    "explanation": "git range-diff porównuje dwie wersje serii łatek: paruje commity, których łatki (autor, opis, diff) są do siebie podobne, i pokazuje różnice między nimi oraz commity dodane lub usunięte. Zwykły git diff między końcówkami po rebase zawiera także wszystkie zmiany, które przyszły z nowego main.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-range-diff.adoc",
+    "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-006",
+    "topic": "git-at-scale",
+    "kind": "single_choice",
+    "prompt": "Twoje IDE co kilka minut robi w tle git fetch origin. Po rebase wypychasz gałąź przez git push --force-with-lease (bez oczekiwanej wartości). Jakie jest ryzyko i co je ogranicza?",
+    "options": [
+      "Żadne — --force-with-lease zawsze porównuje z commitem, na którym oparłeś rebase",
+      "Push zawsze się nie powiedzie, bo fetch w tle blokuje force push",
+      "Fetch w tle przesuwa origin/<gałąź> na cudze nowe commity, więc lease je „widzi” i może je nadpisać; pomaga dodanie --force-if-includes albo podanie jawnej oczekiwanej wartości",
+      "Ryzyko dotyczy tylko gałęzi chronionych na serwerze"
+    ],
+    "correct": 2,
+    "explanation": "Bez oczekiwanej wartości --force-with-lease porównuje stan serwera z lokalną gałęzią śledzącą. Jeśli proces w tle robi git fetch, gałąź śledząca obejmuje cudze commity, których nie widziałeś, i ochrona przestaje działać. Dokumentacja git push poleca --force-if-includes (sprawdza, czy zmiany z gałęzi śledzącej zostały zintegrowane lokalnie), jawne --force-with-lease=<ref>:<expect> albo osobny remote do pushowania.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-push.adoc",
+    "added_on": "2026-10-24"
+  }
+]
