@@ -530,5 +530,19 @@
     "title": "Git w dużej skali",
     "description": "Partial clone, płytkie klony, sparse-checkout, maintenance, range-diff, bezpieczny force push",
     "icon": "branch"
+  },
+  {
+    "technology": "javascript",
+    "slug": "data-and-iteration",
+    "title": "Dane, klonowanie i iteratory",
+    "description": "Transfer buforów, structured clone, klucze WeakMap, leniwe iterator helpers",
+    "icon": "braces"
+  },
+  {
+    "technology": "git",
+    "slug": "advanced-tools",
+    "title": "Zaawansowane narzędzia",
+    "description": "rerere, strategia ort, bisect run, wygasanie refloga, fsmonitor, worktree",
+    "icon": "branch"
   }
 ]

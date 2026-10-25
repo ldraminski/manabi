@@ -94,5 +94,101 @@
     "explanation": "Bez oczekiwanej wartości --force-with-lease porównuje stan serwera z lokalną gałęzią śledzącą. Jeśli proces w tle robi git fetch, gałąź śledząca obejmuje cudze commity, których nie widziałeś, i ochrona przestaje działać. Dokumentacja git push poleca --force-if-includes (sprawdza, czy zmiany z gałęzi śledzącej zostały zintegrowane lokalnie), jawne --force-with-lease=<ref>:<expect> albo osobny remote do pushowania.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-push.adoc",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "git-senior-007",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Długo żyjąca gałąź feature jest co tydzień mergowana z aktualnym main i za każdym razem rozwiązujesz te same konflikty. Co da włączenie rerere.enabled?",
+    "options": [
+      "Git zapamięta Twoje rozwiązanie konfliktu i przy ponownym wystąpieniu tego samego konfliktu zastosuje je w katalogu roboczym; indeksu nie rusza, więc nadal sprawdzasz wynik i robisz git add",
+      "Git przy każdym konflikcie automatycznie wybierze wersję z main",
+      "Git przestanie zgłaszać konflikty w plikach, które raz już były w konflikcie, i od razu utworzy commit scalający",
+      "Konflikty trafią na osobną gałąź rerere do rozwiązania później"
+    ],
+    "correct": 0,
+    "explanation": "rerere (reuse recorded resolution) zapisuje stan konfliktu i ręczne rozwiązanie, a gdy ten sam konflikt pojawi się znowu, nakłada zapisane rozwiązanie trójstronnym merge’em. Wynik trafia do katalogu roboczego, indeks zostaje bez zmian. Po ustawieniu rerere.enabled git merge, git commit i git rebase wywołują rerere automatycznie.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-rerere.adoc",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-008",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Stary skrypt CI wywołuje git merge -s recursive. Co dzieje się w aktualnym Gicie (2.50 i nowszym)?",
+    "options": [
+      "Merge kończy się błędem, bo strategię recursive usunięto",
+      "recursive jest teraz synonimem ort, więc wykonuje się ta sama strategia, która jest domyślna przy merge’u jednej gałęzi",
+      "Uruchamia się stara implementacja recursive, wolniejsza od ort, ale nadal utrzymywana",
+      "Git przełącza się na strategię octopus"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja strategii merge: ort jest domyślną strategią przy pull lub merge jednej gałęzi i powstała jako następca recursive. Do v2.49.0 recursive była osobną implementacją, a od v2.50.0 jest przekierowana na ort.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/merge-strategies.adoc",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-009",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Skrypt dla git bisect run najpierw buduje projekt, a potem uruchamia test. Część commitów w badanym zakresie w ogóle się nie kompiluje. Jakim kodem skrypt powinien zakończyć się dla takiego commita?",
+    "options": [
+      "1 — bisect uzna commit za zły i dalej zawęzi zakres",
+      "0 — bisect zignoruje commit, bo nic nie przetestowano",
+      "125 — bisect pominie commit, którego nie da się przetestować",
+      "255 — kody powyżej 127 oznaczają „pomiń”"
+    ],
+    "correct": 2,
+    "explanation": "Dla git bisect run: 0 oznacza dobry commit, 1–127 z wyjątkiem 125 — zły, a specjalny kod 125 — commit, którego nie da się przetestować, więc jest pomijany. Każdy inny kod, w tym wartości powyżej 127, przerywa bisect. Zwrócenie 1 dla niekompilującego się commita oznaczyłoby go jako zły i mogło wskazać niewłaściwego winowajcę.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-bisect.adoc",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-010",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Dwa miesiące temu git reset --hard skasował Twoje commity, które nie były nigdzie wypchnięte ani osiągalne z żadnej gałęzi. W repozytorium regularnie działa git gc. Czy przy domyślnej konfiguracji odzyskasz je przez git reflog?",
+    "options": [
+      "Tak — reflog przechowuje wpisy bez limitu czasu",
+      "Tak — każdy wpis refloga żyje 90 dni, niezależnie od tego, na co wskazuje",
+      "Prawdopodobnie nie: gc usuwa po 30 dniach wpisy refloga wskazujące na commity nieosiągalne z obecnego czubka (gc.reflogExpireUnreachable), a potem nieosiągalne obiekty są usuwane po okresie karencji (domyślnie 2 tygodnie)",
+      "Nie, bo reflog jest czyszczony przy każdym git push"
+    ],
+    "correct": 2,
+    "explanation": "Domyślnie gc.reflogExpire to 90 dni, ale dla wpisów nieosiągalnych z obecnego czubka obowiązuje krótsze gc.reflogExpireUnreachable — 30 dni. Gdy wpis zniknie, commit nie jest już niczym chroniony, a git gc wywołuje prune --expire 2.weeks.ago. Utracone commity trzeba więc odzyskiwać szybko albo zawczasu wydłużyć te ustawienia.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/gc.adoc",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-011",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "W ogromnym monorepo git status trwa kilka sekund, bo Git skanuje cały katalog roboczy. Co zmieni git config core.fsmonitor true?",
+    "options": [
+      "Git przestanie sprawdzać pliki nieśledzone",
+      "Wbudowany w Gita demon fsmonitor będzie obserwował zmiany w systemie plików, a git status zapyta go o listę zmian zamiast skanować dysk; demon uruchomi się automatycznie",
+      "Nic, dopóki nie zainstalujesz Watchmana — Git nie ma własnego monitora plików",
+      "git status będzie liczony po stronie serwera zdalnego"
+    ],
+    "correct": 1,
+    "explanation": "git fsmonitor--daemon jest wbudowany w Gita i nie wymaga narzędzi zewnętrznych. Przy core.fsmonitor=true polecenia takie jak git status pytają demona o zmiany i w razie potrzeby same go uruchamiają. Domyślnie demon odmawia pracy z repozytoriami na zamontowanych zasobach sieciowych (fsmonitor.allowRemote to eksperymentalne obejście).",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-fsmonitor--daemon.adoc",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-012",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Masz worktree ../hotfix z wyciągniętą gałęzią main. Teraz w głównym katalogu repozytorium wpisujesz git worktree add ../review main. Co się stanie?",
+    "options": [
+      "Powstanie drugi checkout main; commity w obu katalogach będą przesuwały tę samą gałąź bez ostrzeżeń",
+      "Git odmówi, bo main jest już wyciągnięta w innym worktree; zabezpieczenie można obejść przez --force, ale zwykle tworzy się nową gałąź (-b) albo odłączony HEAD (--detach)",
+      "Git przeniesie main do ../review, a w ../hotfix zostawi odłączony HEAD",
+      "Git skopiuje cały katalog .git do ../review, tworząc niezależne repozytorium"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja git worktree: add odmawia utworzenia nowego worktree, gdy podana nazwa gałęzi jest już wyciągnięta w innym worktree. Opcja -f/--force pomija to zabezpieczenie. Worktree współdzielą jedno repozytorium, więc dwa checkouty tej samej gałęzi łatwo prowadzą do nieoczekiwanych zmian.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-worktree.adoc",
+    "added_on": "2026-10-25"
   }
 ]

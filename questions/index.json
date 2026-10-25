@@ -1000,6 +1000,54 @@
     "added_on": "2026-10-24"
   },
   {
+    "id": "git-senior-007",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-008",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-009",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-010",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-011",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-012",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
     "id": "html-junior-001",
     "technology": "html",
     "level": "junior",
@@ -1502,6 +1550,38 @@
     "topic": "memory-and-concurrency",
     "kind": "single_choice",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-008",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-009",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-010",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-011",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-25"
   },
   {
     "id": "nextjs-junior-001",

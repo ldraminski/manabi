@@ -111,5 +111,73 @@
     "explanation": "scheduler.yield() oddaje sterowanie głównemu wątkowi, a kontynuację planuje jako zadanie z priorytetem domyślnie \"user-visible\" (albo odziedziczonym z postTask). Trafia ono do kolejki z podwyższonym priorytetem: przed zadaniami postTask tego samego poziomu, ale po zadaniach wyższego poziomu \"user-blocking\". Dzięki temu przerwana praca nie ląduje na końcu kolejki.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/scheduler/yield/index.md",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "javascript-senior-008",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Główny wątek przekazuje duży bufor do workera, podając go na liście transferu. Co wypisze console.log?",
+    "code": "const buf = new ArrayBuffer(1024 * 1024);\nconst view = new Uint8Array(buf);\nworker.postMessage(buf, [buf]);\nconsole.log(buf.byteLength, view.byteLength);",
+    "options": [
+      "1048576 1048576 — postMessage zawsze kopiuje dane",
+      "0 0 — własność bufora przeszła na workera bez kopiowania, a oryginał w nadawcy jest odłączony (detached) i nie da się z niego korzystać",
+      "1048576 0 — odłączany jest tylko widok, sam bufor zostaje",
+      "Nic — postMessage rzuci TypeError, bo na bufor wskazuje jeszcze view"
+    ],
+    "correct": 1,
+    "explanation": "Transfer przenosi zasób do odbiorcy zamiast go kopiować. Oryginalny obiekt przestaje być używalny, a jego długość spada do zera — widać to też po byteLength widoku Uint8Array opartego na tym buforze. Bez listy transferu postMessage skopiowałby dane algorytmem structured clone.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_workers_api/transferable_objects/index.md",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-009",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Co zwróci structuredClone dla instancji tej klasy?",
+    "code": "class Money {\n  #cents;\n  constructor(cents) {\n    this.#cents = cents;\n    this.currency = 'PLN';\n  }\n  get cents() { return this.#cents; }\n  format() { return `${this.#cents / 100} ${this.currency}`; }\n}\n\nconst copy = structuredClone(new Money(500));",
+    "options": [
+      "Instancję Money z tym samym polem prywatnym i działającą metodą format()",
+      "Zwykły obiekt { currency: 'PLN' } — bez prototypu Money (brak format() i gettera cents) i bez pola prywatnego",
+      "Obiekt { currency: 'PLN', cents: 500 }, bo gettery są wywoływane przy klonowaniu",
+      "Nic — rzuci DataCloneError, bo klasa ma metody"
+    ],
+    "correct": 1,
+    "explanation": "Structured clone nie przechodzi ani nie kopiuje łańcucha prototypów, więc metody i gettery zdefiniowane w klasie znikają. Prywatne pola klas również nie są kopiowane. DataCloneError pojawia się przy próbie sklonowania funkcji jako wartości, a metody na prototypie nie są kopiowane, więc błędu tu nie ma.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_workers_api/structured_clone_algorithm/index.md",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-010",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Biblioteka chce używać symboli jako kluczy w WeakMap. Co się stanie?",
+    "code": "const cache = new WeakMap();\ncache.set(Symbol('a'), 1);\ncache.set(Symbol.for('b'), 2);",
+    "options": [
+      "Oba wywołania zadziałają — od ES2023 każdy symbol może być kluczem WeakMap",
+      "Oba rzucą TypeError — kluczem WeakMap może być tylko obiekt",
+      "Pierwsze zadziała, drugie rzuci TypeError — symbol z globalnego rejestru (Symbol.for) da się odtworzyć, więc nie może być trzymany słabo",
+      "Pierwsze rzuci TypeError, drugie zadziała, bo zarejestrowane symbole są trwałe"
+    ],
+    "correct": 2,
+    "explanation": "Kluczami WeakMap mogą być obiekty i niezarejestrowane symbole, bo da się je zebrać przez garbage collector: są unikalne i nie da się ich odtworzyć. Symbol.for zwraca symbol z globalnego rejestru, który można uzyskać ponownie z tego samego klucza, więc nie jest poprawnym kluczem — set rzuca wtedy TypeError.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/weakmap/index.md",
+    "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-011",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod w aktualnej przeglądarce?",
+    "code": "function* ids() {\n  let i = 0;\n  while (true) yield i++;\n}\n\nconst doubled = ids().map((id) => {\n  console.log('map', id);\n  return id * 2;\n});\nconsole.log('start');\nconsole.log(doubled.next().value);",
+    "options": [
+      "Nic — program się zawiesi, bo map() przechodzi po nieskończonym generatorze przed wypisaniem 'start'",
+      "start, map 0, 0",
+      "start, 0 — callback map nie jest wywoływany przy ręcznym next()",
+      "TypeError: ids(...).map is not a function — map istnieje tylko na tablicach"
+    ],
+    "correct": 1,
+    "explanation": "Iterator.prototype.map (iterator helpers) jest leniwy: zwraca nowy iterator i wywołuje callback dopiero wtedy, gdy ktoś poprosi o kolejną wartość przez next(). Dzięki temu działa z nieskończonymi iteratorami. Obiekty generatorów dziedziczą po Iterator.prototype, więc mają tę metodę.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/iterator/map/index.md",
+    "added_on": "2026-10-25"
   }
 ]
