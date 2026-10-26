@@ -1,0 +1,82 @@
+[
+  {
+    "id": "rest-api-senior-001",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "API wymaga, by każdy PUT /docs/{id} był warunkowy, żeby nie gubić równoległych zmian. Klient wysyła PUT bez nagłówka If-Match. Jaki status powinien zwrócić serwer?",
+    "options": [
+      "412 Precondition Failed",
+      "428 Precondition Required",
+      "409 Conflict",
+      "400 Bad Request"
+    ],
+    "correct": 1,
+    "explanation": "428 oznacza, że serwer wymaga żądania warunkowego, a nagłówka takiego jak If-Match brakuje. 412 jest na sytuację, gdy warunek był podany, ale nie zgadza się ze stanem na serwerze (np. nieaktualny ETag).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/428/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-002",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Klient HTTP po zerwaniu połączenia (zanim przyszła odpowiedź) ponawia żądanie automatycznie. Które żądanie można tak bezpiecznie ponowić bez dodatkowych zabezpieczeń po stronie serwera?",
+    "options": [
+      "POST /orders tworzący zamówienie",
+      "PATCH /accounts/7 z treścią {\"op\": \"increment\", \"field\": \"balance\", \"value\": 100}",
+      "PUT /orders/123 z pełną reprezentacją zamówienia",
+      "Każde z nich — HTTP gwarantuje, że serwer odrzuci duplikat"
+    ],
+    "correct": 2,
+    "explanation": "PUT jest idempotentny: wielokrotne wysłanie tego samego żądania ma ten sam zamierzony skutek, więc klient może je ponowić, gdy nie wie, czy dotarło. POST i PATCH nie mają gwarancji idempotentności — powtórzenie może utworzyć drugie zamówienie albo drugi raz zwiększyć saldo.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/glossary/idempotent/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-003",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "W code review ktoś twierdzi, że DELETE /items/5 w tym API nie jest idempotentny, bo pierwsze wywołanie zwraca 204, drugie 404, a serwer zapisuje oba w logu. Kto ma rację?",
+    "options": [
+      "Recenzent — idempotentność wymaga identycznej odpowiedzi przy każdym wywołaniu",
+      "Recenzent — jakikolwiek efekt uboczny, np. wpis w logu, łamie idempotentność",
+      "Autor kodu — idempotentność dotyczy zamierzonego skutku na serwerze; inny status i logowanie jej nie łamią",
+      "Nikt — DELETE z definicji nigdy nie jest idempotentny"
+    ],
+    "correct": 2,
+    "explanation": "Specyfikacja definiuje idempotentność przez zamierzony skutek żądania: po jednym i po wielu DELETE zasobu nie ma. MDN zaznacza, że odpowiedzi mogą się różnić (200, potem 404), a serwer może mieć efekty uboczne, np. logowanie czasu żądania.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/glossary/idempotent/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-004",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Endpoint GET /me/profile wymaga nagłówka Authorization i odpowiada z Cache-Control: public, max-age=600. Między klientem a API stoi CDN. Jakie jest ryzyko?",
+    "options": [
+      "Żadne — odpowiedzi na żądania z Authorization nigdy nie trafiają do cache współdzielonego",
+      "public pozwala CDN zapisać odpowiedź mimo nagłówka Authorization, więc profil jednego użytkownika może zostać podany innym; dla danych spersonalizowanych właściwe jest private",
+      "Przeglądarka odrzuci odpowiedź, bo public i max-age się wykluczają",
+      "CDN zignoruje max-age i będzie trzymał odpowiedź bez limitu"
+    ],
+    "correct": 1,
+    "explanation": "Odpowiedzi na żądania z nagłówkiem Authorization nie mogą trafić do cache współdzielonego, ale dyrektywa public znosi to ograniczenie. Dane spersonalizowane powinny mieć private, inaczej cache współdzielony może je ponownie użyć dla wielu użytkowników.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-005",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Odpowiedź ma Cache-Control: max-age=600, stale-while-revalidate=60. Żądanie przychodzi 630 s po zapisaniu odpowiedzi w cache. Jak może zachować się cache?",
+    "options": [
+      "Może od razu zwrócić nieaktualną odpowiedź i zrewalidować ją w tle",
+      "Musi wstrzymać odpowiedź, dopóki nie zrewaliduje jej u serwera",
+      "Musi zwrócić 504 Gateway Timeout",
+      "Musi usunąć wpis i przekazać żądanie dalej bez rewalidacji"
+    ],
+    "correct": 0,
+    "explanation": "Odpowiedź jest świeża przez 600 s. Przez kolejne 60 s cache może użyć nieaktualnej odpowiedzi, pod warunkiem że zrewaliduje ją w tle — klient nie czeka na rewalidację. Po upływie tego okna następne żądanie rewaliduje normalnie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-26"
+  }
+]

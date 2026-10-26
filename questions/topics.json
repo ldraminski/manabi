@@ -544,5 +544,33 @@
     "title": "Zaawansowane narzędzia",
     "description": "rerere, strategia ort, bisect run, wygasanie refloga, fsmonitor, worktree",
     "icon": "branch"
+  },
+  {
+    "technology": "css",
+    "slug": "css-at-scale",
+    "title": "CSS w dużej skali",
+    "description": "Warstwy kaskady, @scope i wydajność renderowania",
+    "icon": "layout"
+  },
+  {
+    "technology": "html",
+    "slug": "loading-and-components",
+    "title": "Ładowanie zasobów i komponenty",
+    "description": "Preload, modulepreload i deklaratywny Shadow DOM",
+    "icon": "layout"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "http-at-scale",
+    "title": "HTTP w dużej skali",
+    "description": "Cache współdzielony, warunki wstępne i ponawianie żądań",
+    "icon": "globe"
+  },
+  {
+    "technology": "testing",
+    "slug": "test-infrastructure",
+    "title": "Infrastruktura testów",
+    "description": "Sharding, workery, izolacja i ponawianie testów",
+    "icon": "list"
   }
 ]

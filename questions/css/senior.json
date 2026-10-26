@@ -1,0 +1,85 @@
+[
+  {
+    "id": "css-senior-001",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Design system trzyma style w warstwie components, a aplikacja dodaje jedną regułę poza warstwami. Jakie tło dostanie <button class=\"btn primary\"> wewnątrz .card?",
+    "code": "@layer reset, components;\n\n@layer components {\n  .card .btn.primary { background: blue; }\n}\n\n.btn { background: gray; }",
+    "options": [
+      "Niebieskie — selektor w warstwie ma wyższą specyficzność",
+      "Szare — deklaracje zwykłe (bez !important) spoza warstw wygrywają ze wszystkimi warstwami, niezależnie od specyficzności",
+      "Niebieskie — warstwa components została zadeklarowana jako ostatnia, więc ma najwyższy priorytet",
+      "Zależy od kolejności plików CSS na stronie"
+    ],
+    "correct": 1,
+    "explanation": "Warstwy są porównywane, zanim kaskada zajmie się specyficznością. Wśród stylów autora zwykłe deklaracje w warstwach mają niższy priorytet niż deklaracje spoza warstw, więc .btn wygrywa mimo niższej specyficzności.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@layer/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-002",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor będzie miał link?",
+    "code": "@layer reset, components;\n\n@layer reset {\n  a { color: black !important; }\n}\n@layer components {\n  a { color: red !important; }\n}\n\na { color: green !important; }",
+    "options": [
+      "black",
+      "red",
+      "green",
+      "Zależy od specyficzności, bo wszystkie trzy mają !important"
+    ],
+    "correct": 0,
+    "explanation": "Dla deklaracji !important kolejność warstw się odwraca: wygrywa pierwsza zadeklarowana warstwa (reset), a ważne deklaracje w warstwach mają pierwszeństwo przed ważnymi deklaracjami spoza warstw. Dlatego reset z !important wygrywa i z components, i z regułą bez warstwy.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@layer/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-003",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Długa strona z setkami sekcji dostała content-visibility: auto. Renderowanie przyspieszyło, ale suwak przewijania skacze i zmienia długość podczas przewijania. Co to naprawi?",
+    "options": [
+      "Zamiana na content-visibility: hidden",
+      "contain-intrinsic-size: auto 500px na sekcjach — przeglądarka użyje 500px jako zastępczego rozmiaru pominiętej sekcji, a po wyrenderowaniu zapamięta jej faktyczny rozmiar",
+      "will-change: contents na sekcjach",
+      "overflow-anchor: none na body"
+    ],
+    "correct": 1,
+    "explanation": "Gdy content-visibility: auto pomija zawartość sekcji poza ekranem, element ma ograniczenie rozmiaru i bez podpowiedzi zajmuje tyle, jakby był pusty. contain-intrinsic-size podaje zastępczy rozmiar, a wariant auto <length> zapamiętuje rozmiar z ostatniego pełnego renderowania. To ogranicza przesunięcia układu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/contain-intrinsic-size/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-004",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Jak będzie wyglądał tekst „B”?",
+    "code": "<div class=\"card\">\n  <p>A</p>\n  <div class=\"card-slot\"><p>B</p></div>\n</div>\n\n<style>\n  @scope (.card) to (.card-slot) {\n    :scope { color: red; }\n    p { font-weight: bold; }\n  }\n</style>",
+    "options": [
+      "Czarny i pogrubiony",
+      "Czerwony i niepogrubiony — .card-slot jest wyłączony z zakresu, ale color dziedziczy się poza granicę zakresu",
+      "Czarny i niepogrubiony — @scope izoluje style, więc nic nie przechodzi poza .card-slot",
+      "Czerwony i pogrubiony — granica „to” działa tylko na klasy, nie na elementy p"
+    ],
+    "correct": 1,
+    "explanation": "Górna granica @scope jest włączna, a dolna wyłączna, więc reguła p nie trafia w akapity wewnątrz .card-slot. @scope nie izoluje jednak dziedziczenia: właściwości dziedziczone, takie jak color, przechodzą poza granicę zakresu, więc B jest czerwony.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@scope/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-005",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Żeby animacje były płynniejsze, zespół dodał will-change: transform do wszystkich kilkuset kart w arkuszu stylów, na stałe. Czego się spodziewać?",
+    "options": [
+      "Zawsze płynniejszych animacji, bo przeglądarka przygotuje warstwy z góry, bez kosztów ubocznych",
+      "Możliwego spowolnienia i większego zużycia pamięci; will-change to ostatnia deska ratunku na istniejący problem, a do tego od razu tworzy kontekst nakładania, co może zmienić wygląd (np. z-index)",
+      "Brak jakiegokolwiek efektu, bo will-change działa tylko ustawione z JavaScriptu",
+      "Błędu walidacji CSS, bo will-change wolno ustawić na maksymalnie jednym elemencie"
+    ],
+    "correct": 1,
+    "explanation": "MDN ostrzega, żeby nie stosować will-change do wielu elementów ani zapobiegawczo: najsilniejsze optymalizacje zużywają dużo zasobów i nadużycie może spowolnić stronę. Wartości, które tworzą kontekst nakładania, tworzą go od razu, co wpływa na wygląd.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/will-change/index.md",
+    "added_on": "2026-10-26"
+  }
+]

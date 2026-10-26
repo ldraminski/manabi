@@ -1,0 +1,51 @@
+[
+  {
+    "id": "html-senior-001",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Strona preloaduje font z własnej domeny, a DevTools pokazuje, że plik pobiera się dwa razy i pojawia się ostrzeżenie o nieużytym preloadzie. Czego brakuje?",
+    "code": "<link rel=\"preload\" href=\"/fonts/inter.woff2\" as=\"font\" type=\"font/woff2\">",
+    "options": [
+      "Atrybutu crossorigin — fonty są pobierane w trybie CORS (anonymous) nawet z tej samej domeny, więc preload musi mieć pasujący tryb, inaczej nie zostanie użyty",
+      "Atrybutu fetchpriority=\"high\"",
+      "Zmiany as=\"font\" na as=\"style\"",
+      "Atrybutu defer na <link>"
+    ],
+    "correct": 0,
+    "explanation": "MDN: przy preloadzie zasobów pobieranych z CORS atrybut crossorigin musi pasować do trybu CORS i credentials zasobu, nawet gdy żądanie nie jest cross-origin. Fonty są zawsze pobierane w trybie anonymous CORS, więc preload fontu wymaga crossorigin.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/rel/preload/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-002",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "main.js statycznie importuje kilka modułów. Dodajesz <link rel=\"modulepreload\" href=\"/main.js\">. Co jest prawdą o zależnościach main.js?",
+    "options": [
+      "Każda przeglądarka pobierze je automatycznie razem z main.js",
+      "Przeglądarka może je pobrać automatycznie, ale to jej optymalizacja; jedyny sposób, żeby wszystkie przeglądarki je preloadowały, to dodać osobny modulepreload dla każdej",
+      "Nie zostaną pobrane nigdy, bo modulepreload blokuje dalsze importy",
+      "Zostaną pobrane, ale tylko gdy dodasz as=\"script\""
+    ],
+    "correct": 1,
+    "explanation": "modulepreload pobiera moduł, parsuje go i kompiluje, a potem umieszcza w mapie modułów. MDN zaznacza, że przeglądarka może dodatkowo pobrać zależności, ale to optymalizacja zależna od przeglądarki, a zależności trzeba wymienić osobno, żeby mieć pewność.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/rel/modulepreload/index.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-003",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Serwer zwraca fragment HTML z <template shadowrootmode=\"open\">, a klient wstawia go przez element.innerHTML = html. Shadow root nie powstaje. Dlaczego?",
+    "options": [
+      "innerHTML nie tworzy deklaratywnych shadow rootów — <template> zostaje zwykłym elementem template; trzeba użyć np. setHTMLUnsafe(), które je parsuje",
+      "shadowrootmode działa tylko z wartością closed",
+      "Wystarczy po wstawieniu ustawić template.shadowRootMode = 'open'",
+      "innerHTML usuwa wszystkie elementy <template> ze względów bezpieczeństwa"
+    ],
+    "correct": 0,
+    "explanation": "Deklaratywny Shadow DOM tworzy parser przy parsowaniu dokumentu. MDN przy setHTMLUnsafe(): w przeciwieństwie do innerHTML deklaratywne shadow rooty z wejścia są parsowane do DOM. Strona template dodaje, że elementu template nie da się później zamienić w shadow root przez ustawienie shadowRootMode.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/element/sethtmlunsafe/index.md",
+    "added_on": "2026-10-26"
+  }
+]

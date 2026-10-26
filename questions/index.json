@@ -760,6 +760,46 @@
     "added_on": "2026-10-18"
   },
   {
+    "id": "css-senior-001",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-002",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-003",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-004",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-005",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -1240,6 +1280,30 @@
     "added_on": "2026-10-19"
   },
   {
+    "id": "html-senior-001",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-002",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-003",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -1582,6 +1646,14 @@
     "topic": "data-and-iteration",
     "kind": "single_choice",
     "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-012",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
   },
   {
     "id": "nextjs-junior-001",
@@ -2824,6 +2896,46 @@
     "added_on": "2026-10-19"
   },
   {
+    "id": "rest-api-senior-001",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-002",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-003",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-004",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-005",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
     "id": "testing-junior-001",
     "technology": "testing",
     "level": "junior",
@@ -3014,6 +3126,46 @@
     "topic": "e2e-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-senior-001",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-002",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-003",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-004",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-005",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-26"
   },
   {
     "id": "typescript-junior-001",

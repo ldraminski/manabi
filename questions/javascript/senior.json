@@ -179,5 +179,22 @@
     "explanation": "Iterator.prototype.map (iterator helpers) jest leniwy: zwraca nowy iterator i wywołuje callback dopiero wtedy, gdy ktoś poprosi o kolejną wartość przez next(). Dzięki temu działa z nieskończonymi iteratorami. Obiekty generatorów dziedziczą po Iterator.prototype, więc mają tę metodę.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/iterator/map/index.md",
     "added_on": "2026-10-25"
+  },
+  {
+    "id": "javascript-senior-012",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Funkcja pobiera 10 adresów, a każde żądanie trwa ok. 200 ms. Ile mniej więcej potrwa ten kod?",
+    "code": "const responses = await Array.fromAsync(urls, (url) => fetch(url));",
+    "options": [
+      "Ok. 200 ms — Array.fromAsync uruchamia wszystkie wywołania mapFn naraz, tak jak Promise.all",
+      "Ok. 2 s — Array.fromAsync czeka na wynik mapFn dla każdego elementu, zanim przejdzie do następnego, więc żądania idą jedno po drugim",
+      "Ok. 200 ms, ale tylko dla tablic; dla async iterable byłoby to 2 s",
+      "Kod rzuci TypeError, bo Array.fromAsync przyjmuje tylko async iterable"
+    ],
+    "correct": 1,
+    "explanation": "Array.fromAsync iteruje leniwie i czeka na każdą wartość po kolei; jeśli podano mapFn, na jego wynik też czeka, zanim pobierze kolejny element. MDN zestawia to z Promise.all, które czeka na wszystkie wartości współbieżnie. Do równoległych żądań lepsze jest Promise.all(urls.map(u => fetch(u))).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/fromasync/index.md",
+    "added_on": "2026-10-26"
   }
 ]

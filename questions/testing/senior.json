@@ -1,0 +1,82 @@
+[
+  {
+    "id": "testing-senior-001",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Suite Playwright podzielona na 4 shardy (--shard=x/4). Jeden shard trwa 20 minut, inny 3 minuty. Plików testów jest mało, ale są bardzo nierówne. Co najpewniej wyrówna czasy?",
+    "options": [
+      "Zwiększenie liczby workerów w każdym shardzie",
+      "Włączenie fullyParallel: true — bez niego shardy dostają całe pliki, a z nim testy są dzielone na poziomie pojedynczych testów",
+      "Dodanie retries: 2",
+      "Przełączenie reportera na blob"
+    ],
+    "correct": 1,
+    "explanation": "Bez fullyParallel Playwright przydziela shardom całe pliki, więc nierówne pliki dają nierówne shardy. Z fullyParallel: true dzieli pojedyncze testy i stara się dać każdemu shardowi podobną ich liczbę — dokumentacja zaleca to do równego rozłożenia pracy.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-sharding-js.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-002",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "W pliku Playwright beforeAll tworzy dane testowe, a w środku pliku jeden test zawodzi (bez retries, tryb domyślny). Logi pokazują, że beforeAll wykonał się dwa razy. Dlaczego?",
+    "options": [
+      "To błąd — beforeAll zawsze wykonuje się raz na plik",
+      "Po nieudanym teście Playwright odrzuca cały proces workera i uruchamia nowy dla pozostałych testów, a nowy worker znów wykonuje beforeAll",
+      "beforeAll uruchamia się przed każdym testem, tak jak beforeEach",
+      "Playwright ponawia nieudany test zawsze raz, nawet bez retries"
+    ],
+    "correct": 1,
+    "explanation": "Gdy test zawodzi, Playwright odrzuca workera razem z przeglądarką i kontynuuje od następnego testu w nowym procesie, który ponownie wykonuje beforeAll (i afterAll). Dlatego hooki beforeAll nie powinny zakładać, że wykonają się tylko raz.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-retries-js.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-003",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Plik używa test.describe.configure({ mode: 'serial' }) i retries: 2. Drugi z trzech testów zawodzi przy pierwszym podejściu. Co się dzieje?",
+    "options": [
+      "Ponawiany jest tylko drugi test, trzeci wykonuje się normalnie",
+      "Trzeci test jest pomijany, a przy ponowieniu w nowym workerze cała grupa wykonuje się od nowa, łącznie z pierwszym testem",
+      "Trzeci test wykonuje się, a drugi jest ponawiany na końcu",
+      "Retries są ignorowane w trybie serial"
+    ],
+    "correct": 1,
+    "explanation": "W trybie serial porażka testu pomija wszystkie kolejne testy w grupie, a przy retries cała grupa jest ponawiana razem: nowy worker znów wykonuje beforeAll i wszystkie testy od pierwszego. Dokumentacja zaznacza, że zwykle lepiej mieć testy niezależne.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-retries-js.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-004",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Żeby przyspieszyć Vitest, zespół ustawił isolate: false. Każdy plik testu osobno przechodzi, ale w pełnym przebiegu niektóre losowo padają. Co jest najbardziej prawdopodobną przyczyną?",
+    "options": [
+      "isolate: false wyłącza równoległość, więc testy przekraczają timeout",
+      "Pliki uruchamiane w tym samym workerze dzielą środowisko i stan modułów, więc stan zostawiony przez jeden plik (np. singleton, zmodyfikowany global) wpływa na inny",
+      "isolate: false wyłącza vi.mock",
+      "Vitest przy isolate: false uruchamia testy w losowej kolejności"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie każdy plik testu dostaje osobnego workera lub proces. Przy isolate: false pliki w tym samym workerze dzielą środowisko i stan modułów, więc testy nie mogą zależeć od czystego stanu. Dokumentacja podaje to jako warunek bezpiecznego wyłączenia izolacji.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/guide/improving-performance.md",
+    "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-005",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Projekt przełączył Vitest z domyślnej puli na pool: 'threads'. Część testów zaczęła padać, m.in. te wywołujące process.chdir(), a test z bcrypt kończy się segfaultem. Jaki wniosek?",
+    "options": [
+      "To przypadkowe błędy, wystarczy dodać retry",
+      "W puli threads nie da się używać process.chdir(), a niektóre biblioteki natywne źle działają w wielu wątkach — trzeba wrócić do domyślnej puli forks (child_process)",
+      "Trzeba przełączyć na vmThreads, które ma pełny dostęp do API procesu",
+      "process.chdir() działa tylko z isolate: false"
+    ],
+    "correct": 1,
+    "explanation": "Domyślna pula Vitest to forks (child_process). Pula threads używa worker_threads: process.chdir() jest tam niedostępne, a biblioteki natywne, takie jak bcrypt, Prisma czy canvas, mogą powodować segfaulty. W takich przypadkach dokumentacja zaleca forks.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/config/pool.md",
+    "added_on": "2026-10-26"
+  }
+]
