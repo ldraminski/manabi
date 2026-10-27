@@ -78,5 +78,85 @@
     "explanation": "Odpowiedź jest świeża przez 600 s. Przez kolejne 60 s cache może użyć nieaktualnej odpowiedzi, pod warunkiem że zrewaliduje ją w tle — klient nie czeka na rewalidację. Po upływie tego okna następne żądanie rewaliduje normalnie.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "rest-api-senior-006",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "API zwraca opis produktu w języku z nagłówka Accept-Language i odpowiada Cache-Control: public, max-age=300. Po wdrożeniu CDN część użytkowników z Polski dostaje opisy po niemiecku. Co dodać do odpowiedzi?",
+    "options": [
+      "Content-Language: pl",
+      "Vary: * — CDN zachowa osobną kopię dla każdego języka",
+      "Vary: Accept-Language — nagłówek żądania wejdzie do klucza cache",
+      "ETag zawierający kod języka"
+    ],
+    "correct": 2,
+    "explanation": "Vary wymienia nagłówki żądania, które wpłynęły na treść odpowiedzi, i służy do budowania klucza cache przy negocjacji treści. Bez niego CDN trzyma jedną kopię dla URL-a. Vary: * oznacza, że odpowiedzi nie da się cache'ować. MDN dodaje, że ten sam Vary powinien być w każdej odpowiedzi dla danego URL-a, także w 304.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/vary/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-007",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Publiczny endpoint ma być trzymany przez CDN przez godzinę, ale przeglądarki mają go uznawać za świeży tylko przez 60 sekund. Jaki nagłówek ustawić?",
+    "options": [
+      "Cache-Control: public, max-age=60, s-maxage=3600",
+      "Cache-Control: private, max-age=3600",
+      "Cache-Control: public, s-maxage=60, max-age=3600",
+      "Cache-Control: public, max-age=60, must-revalidate"
+    ],
+    "correct": 0,
+    "explanation": "s-maxage określa świeżość w cache współdzielonych (CDN, proxy) i nadpisuje dla nich max-age; prywatne cache przeglądarek go ignorują i stosują max-age. private zabroniłoby CDN-owi zapisu, a odwrócenie wartości dałoby odwrotny efekt.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-008",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Pliki JS mają hash w nazwie (app.3f9c2.js) i Cache-Control: public, max-age=31536000. Mimo to po odświeżeniu strony przeglądarka wysyła żądania warunkowe i dostaje 304. Co je wyeliminuje?",
+    "options": [
+      "Dodanie no-cache",
+      "Dodanie must-revalidate",
+      "Wydłużenie max-age",
+      "Dodanie immutable"
+    ],
+    "correct": 3,
+    "explanation": "Przy odświeżeniu przeglądarka rewaliduje zasoby żądaniami warunkowymi. immutable mówi cache'owi, że odpowiedź nie zmieni się, póki jest świeża, więc takie żądania są zbędne. To pasuje do wzorca cache-busting: zmiana treści oznacza nowy hash, czyli nowy URL. no-cache i must-revalidate wymuszają więcej rewalidacji, nie mniej.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/cache-control/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-009",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "SPA na app.example.com woła api.example.com z nagłówkiem Authorization, więc przed żądaniami idzie preflight. API odpowiada Access-Control-Max-Age: 86400, a w Chrome preflight dla tego samego adresu i tak powtarza się co ok. 2 godziny. Dlaczego?",
+    "options": [
+      "Access-Control-Max-Age działa tylko dla preflightów przed GET",
+      "Chromium ogranicza cache preflightu do 2 godzin (7200 s), więc wyższa wartość jest przycinana",
+      "Nagłówek trzeba wysłać w żądaniu, a nie w odpowiedzi",
+      "Preflightów z nagłówkiem Authorization przeglądarki nigdy nie cache'ują"
+    ],
+    "correct": 1,
+    "explanation": "Access-Control-Max-Age mówi, jak długo można trzymać wynik preflightu (dozwolone metody i nagłówki). MDN: Chromium od wersji 76 przycina go do 7200 s, Firefox do 86400 s; bez nagłówka domyślnie to 5 s.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/access-control-max-age/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-010",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Serwer plików wideo generuje słabe ETagi (W/\"...\"), a odtwarzacz pobiera plik kawałkami przez nagłówek Range. Jaki to ma skutek dla cache?",
+    "options": [
+      "Żaden — słaby i silny ETag działają tak samo przy zakresach bajtów",
+      "Serwer musi odpowiadać 412 na każde żądanie z Range",
+      "Słabe ETagi uniemożliwiają cache'owanie przy żądaniach zakresów bajtów; do tego potrzebny jest silny ETag",
+      "Słabych ETagów nie wolno używać dla treści binarnych"
+    ],
+    "correct": 2,
+    "explanation": "Słaby ETag oznacza reprezentacje równoważne semantycznie, ale niekoniecznie identyczne bajt w bajt, a fragmenty pliku da się składać tylko z identycznych bajtów. MDN: słabe ETagi uniemożliwiają cache'owanie przy żądaniach zakresów bajtów, a silne na to pozwalają.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/etag/index.md",
+    "added_on": "2026-10-27"
   }
 ]

@@ -572,5 +572,33 @@
     "title": "Infrastruktura testów",
     "description": "Sharding, workery, izolacja i ponawianie testów",
     "icon": "list"
+  },
+  {
+    "technology": "html",
+    "slug": "performance-and-security",
+    "title": "Wydajność i bezpieczeństwo",
+    "description": "Reguły spekulacyjne, srcset i sizes, sandbox w iframe",
+    "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "css-production",
+    "title": "CSS w produkcji",
+    "description": "@property, @starting-style, kontenery i ładowanie fontów",
+    "icon": "layout"
+  },
+  {
+    "technology": "rest-api",
+    "slug": "caching-at-scale",
+    "title": "Cache i CDN",
+    "description": "Vary, s-maxage, immutable, cache preflightów i ETagi",
+    "icon": "globe"
+  },
+  {
+    "technology": "testing",
+    "slug": "parallel-tests",
+    "title": "Testy równoległe",
+    "description": "Locki i indeksy workerów w Playwright, test.concurrent w Vitest",
+    "icon": "list"
   }
 ]

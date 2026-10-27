@@ -81,5 +81,89 @@
     "explanation": "MDN ostrzega, żeby nie stosować will-change do wielu elementów ani zapobiegawczo: najsilniejsze optymalizacje zużywają dużo zasobów i nadużycie może spowolnić stronę. Wartości, które tworzą kontekst nakładania, tworzą go od razu, co wpływa na wygląd.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/will-change/index.md",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "css-senior-006",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor ma akapit „C”?",
+    "code": "<div class=\"light-theme\">\n  <div class=\"dark-theme\">\n    <div class=\"light-theme\">\n      <p>C</p>\n    </div>\n  </div>\n</div>\n\n<style>\n  @scope (.light-theme) {\n    p { color: black; }\n  }\n  @scope (.dark-theme) {\n    p { color: white; }\n  }\n</style>",
+    "options": [
+      "Czarny — reguła z zakresu .light-theme jest bliżej w drzewie DOM (scoping proximity), co wygrywa z kolejnością w źródle",
+      "Biały — reguła .dark-theme jest później w arkuszu",
+      "Biały — .dark-theme jest przodkiem obu elementów .light-theme, więc jego zakres ma pierwszeństwo",
+      "Dziedziczy kolor z rodzica, bo selektory w @scope nie trafiają w zagnieżdżone zakresy"
+    ],
+    "correct": 0,
+    "explanation": "@scope dodaje do kaskady kryterium bliskości zakresu: przy konflikcie wygrywa styl, którego korzeń zakresu jest najmniej kroków wyżej w drzewie DOM. Akapit „C” jest jeden poziom od wewnętrznego .light-theme i dwa od .dark-theme. Bliskość przebija kolejność w źródle, ale przegrywa z ważnością, warstwami i specyficznością.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@scope/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-007",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Na hover gradient ma się płynnie obrócić, ale przeskakuje od razu do nowego kąta. Co to naprawi?",
+    "code": ".btn {\n  --angle: 0deg;\n  background: linear-gradient(var(--angle), red, blue);\n  transition: --angle 0.5s;\n}\n.btn:hover {\n  --angle: 90deg;\n}",
+    "options": [
+      "transition: all 0.5s zamiast transition: --angle 0.5s",
+      "Zarejestrować --angle przez @property z syntax: \"<angle>\", inherits i initial-value — wtedy przeglądarka zna typ i potrafi interpolować wartości",
+      "Zapisać kąt jako calc(var(--angle)) w linear-gradient",
+      "Dodać will-change: background"
+    ],
+    "correct": 1,
+    "explanation": "Niezarejestrowana właściwość niestandardowa to dla przeglądarki ciąg tokenów podstawiany jak tekst, więc nie da się jej interpolować. Po rejestracji przez @property (albo CSS.registerProperty()) z konkretnym syntax przeglądarka może przejść między wartościami, a gradient używający var(--angle) zmienia się płynnie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/properties_and_values_api/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-008",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Po dodaniu klasy .open toast pojawia się od razu, bez przejścia opacity. Czego brakuje?",
+    "code": ".toast {\n  display: none;\n  opacity: 0;\n  transition: opacity 0.3s;\n}\n.toast.open {\n  display: block;\n  opacity: 1;\n}",
+    "options": [
+      "transition-delay: 0s",
+      "will-change: opacity",
+      "Reguły @starting-style { .toast.open { opacity: 0; } } — element wychodzący z display: none nie ma wcześniejszego stylu, od którego mógłby zacząć przejście",
+      "Zmiany funkcji czasu z domyślnego ease na linear"
+    ],
+    "correct": 2,
+    "explanation": "Przejścia startują od poprzedniego stylu elementu, a element z display: none go nie ma. @starting-style definiuje wartości, od których przejście ma ruszyć przy pierwszym renderze lub wyjściu z display: none. Żeby animować też zamykanie, trzeba dodatkowo przejść display z transition-behavior: allow-discrete.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@starting-style/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-009",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Absolutnie pozycjonowany tooltip ma reagować na własną szerokość przez container queries. Po dodaniu container-type zapadł się do zerowej szerokości. Dlaczego?",
+    "code": ".tooltip {\n  position: absolute;\n  container-type: inline-size;\n}\n@container (min-width: 300px) {\n  .tooltip p { columns: 2; }\n}",
+    "options": [
+      "container-type działa tylko na elementach z display: grid lub flex",
+      "Zapytanie @container bez nazwy kontenera nie działa",
+      "position: absolute wyłącza container queries",
+      "inline-size containment każe liczyć szerokość bez patrzenia na dzieci, a tooltip miał szerokość dopasowaną do treści — bez szerokości z kontekstu lub jawnej element się zapada"
+    ],
+    "correct": 3,
+    "explanation": "container-type: inline-size nakłada containment rozmiaru w osi inline: szerokość elementu liczona jest w izolacji od dzieci, żeby zapytania nie tworzyły pętli. MDN: rozmiar kontenera musi wynikać z kontekstu (np. blok rozciągnięty na szerokość rodzica) albo być ustawiony jawnie, inaczej element się zapada. Absolutnie pozycjonowany element z width: auto dopasowuje się do treści, więc traci szerokość.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/container-type/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-010",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Zespół nie chce, żeby font marki kiedykolwiek przesuwał układ po załadowaniu — jeśli nie zdąży, na tej wizycie może zostać font zastępczy. Którą wartość font-display wybrać?",
+    "options": [
+      "swap",
+      "optional",
+      "block",
+      "fallback"
+    ],
+    "correct": 1,
+    "explanation": "optional daje bardzo krótki okres blokady i brak okresu podmiany: jeśli font nie załaduje się niemal od razu, strona zostaje przy foncie zastępczym, więc późna zamiana nie przesunie układu. swap i block mają nieskończony okres podmiany, a fallback krótki — w obu przypadkach font może zostać podmieniony po wyrenderowaniu tekstu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@font-face/font-display/index.md",
+    "added_on": "2026-10-27"
   }
 ]

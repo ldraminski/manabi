@@ -800,6 +800,46 @@
     "added_on": "2026-10-26"
   },
   {
+    "id": "css-senior-006",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-007",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-008",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-009",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-010",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -1302,6 +1342,46 @@
     "topic": "loading-and-components",
     "kind": "single_choice",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-004",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-005",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-006",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-007",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-008",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
   },
   {
     "id": "javascript-junior-001",
@@ -2936,6 +3016,46 @@
     "added_on": "2026-10-26"
   },
   {
+    "id": "rest-api-senior-006",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-007",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-008",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-009",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-010",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
     "id": "testing-junior-001",
     "technology": "testing",
     "level": "junior",
@@ -3166,6 +3286,46 @@
     "topic": "test-infrastructure",
     "kind": "single_choice",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-006",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-007",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-008",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-009",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-010",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-10-27"
   },
   {
     "id": "typescript-junior-001",

@@ -78,5 +78,86 @@
     "explanation": "Domyślna pula Vitest to forks (child_process). Pula threads używa worker_threads: process.chdir() jest tam niedostępne, a biblioteki natywne, takie jak bcrypt, Prisma czy canvas, mogą powodować segfaulty. W takich przypadkach dokumentacja zaleca forks.",
     "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/config/pool.md",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "testing-senior-006",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Dwa testy Playwright w różnych plikach zmieniają to samo globalne ustawienie konta testowego i losowo sobie przeszkadzają. Reszta suite ma dalej biec równolegle. Co zastosować (Playwright 1.63+)?",
+    "options": [
+      "test.describe.configure({ mode: 'serial' }) w obu plikach",
+      "workers: 1 w konfiguracji",
+      "{ lock: 'exclusive' } w obu testach",
+      "Ten sam nazwany lock w obu testach, np. { lock: 'account-settings' }"
+    ],
+    "correct": 3,
+    "explanation": "Testy z tą samą nazwą locka nigdy nie biegną jednocześnie, także między plikami, workerami i projektami, a pozostałe testy działają równolegle. Tryb serial dotyczy testów w jednym pliku, workers: 1 wyłącza równoległość całej suite, a wbudowany lock exclusive wstrzymuje wszystkie inne testy na czas trwania testu.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-parallel-js.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-007",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Plik Playwright ma 10 testów w trybie domyślnym (bez fullyParallel). Tylko trzeci z nich ma { lock: 'db' }. Jak długo lock jest trzymany?",
+    "options": [
+      "Przez cały plik — w trybie domyślnym testy pliku biegną razem i po kolei, więc lock obejmuje cały plik",
+      "Tylko na czas trzeciego testu",
+      "Od początku trzeciego testu do końca całej suite",
+      "Wcale — locki działają tylko przy fullyParallel"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja Playwright: w trybie domyślnym i serial wszystkie testy pliku biegną razem w kolejności, więc lock zadeklarowany na dowolnym teście jest trzymany przez cały plik. Inne testy z lockiem db muszą czekać na koniec tego pliku.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-parallel-js.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-008",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Środowisko ma 4 konta testowe (konto-0…konto-3), a Playwright działa z workers: 4. Fixture wybiera konto po testInfo.workerIndex. Po pierwszym nieudanym teście pojawia się błąd „konto-4 nie istnieje”. Co zmienić?",
+    "options": [
+      "Wybierać konto po testInfo.parallelIndex — zawsze mieści się w 0..workers-1, a zrestartowany worker dostaje ten sam parallelIndex i nowy workerIndex",
+      "Ustawić retries: 0 — workerIndex rośnie tylko przy ponowieniach",
+      "Wybierać konto po testInfo.retry",
+      "Brać workerIndex modulo liczba plików testów"
+    ],
+    "correct": 0,
+    "explanation": "Każdy worker ma unikalny workerIndex (od 0) i parallelIndex z zakresu 0..workers-1. Po porażce Playwright restartuje worker: nowy proces ma ten sam parallelIndex i nowy workerIndex. Do puli zasobów o rozmiarze równym workers pasuje więc parallelIndex.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-parallel-js.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-009",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Testy z test.concurrent używają snapshotów, które czasem trafiają do niewłaściwego testu. Co poprawić?",
+    "code": "import { expect, test } from 'vitest'\n\ntest.concurrent('profil', async () => {\n  expect(await getProfile()).toMatchSnapshot()\n})\ntest.concurrent('posty', async () => {\n  expect(await getPosts()).toMatchSnapshot()\n})",
+    "options": [
+      "Dodać await przed expect",
+      "Używać expect z kontekstu testu: test.concurrent('…', async ({ expect }) => { … })",
+      "Ustawić sequence.shuffle: false",
+      "Przenieść snapshoty do describe.concurrent"
+    ],
+    "correct": 1,
+    "explanation": "Przy testach współbieżnych globalny expect nie wie, który test go wywołuje. Dokumentacja Vitest: przy testach concurrent snapshoty i asercje muszą używać expect z lokalnego kontekstu testu, żeby wykryć właściwy test.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/test.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-010",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Plik Vitest ma 50 testów czysto obliczeniowych, bez I/O. Oznaczenie ich jako test.concurrent nic nie przyspieszyło. Dlaczego?",
+    "options": [
+      "test.concurrent działa tylko z pool: 'threads'",
+      "Trzeba jeszcze ustawić fileParallelism: false",
+      "test.concurrent jest ignorowany, jeśli plik nie ma describe.concurrent",
+      "Testy concurrent biegną przez Promise.all w tym samym workerze, bez dodatkowych wątków — pomagają tylko testom, które czekają (sieć, timery, I/O)"
+    ],
+    "correct": 3,
+    "explanation": "Vitest grupuje testy concurrent i uruchamia je przez Promise.all, a ich liczbę ogranicza maxConcurrency. Nie tworzy dla nich nowych workerów, więc synchroniczne obliczenia nadal blokują jeden wątek JavaScriptu. Przyspieszenie dla CPU daje równoległość plików, nie concurrent.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/guide/parallelism.md",
+    "added_on": "2026-10-27"
   }
 ]

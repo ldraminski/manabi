@@ -47,5 +47,88 @@
     "explanation": "Deklaratywny Shadow DOM tworzy parser przy parsowaniu dokumentu. MDN przy setHTMLUnsafe(): w przeciwieństwie do innerHTML deklaratywne shadow rooty z wejścia są parsowane do DOM. Strona template dodaje, że elementu template nie da się później zamienić w shadow root przez ustawienie shadowRootMode.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/element/sethtmlunsafe/index.md",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "html-senior-004",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Aplikacja pokazuje podgląd treści użytkowników w ramce z tej samej domeny. Audyt bezpieczeństwa oznacza tę konfigurację jako błąd. Dlaczego?",
+    "code": "<iframe src=\"/preview/123\" sandbox=\"allow-scripts allow-same-origin\"></iframe>",
+    "options": [
+      "allow-scripts i allow-same-origin blokują się nawzajem, więc przeglądarka ignoruje cały atrybut sandbox",
+      "Przy tej samej origin skrypt w ramce może usunąć atrybut sandbox, więc taka ramka nie jest bezpieczniejsza niż ramka bez sandbox",
+      "Atrybut sandbox działa tylko dla dokumentów z innej domeny",
+      "allow-scripts pozwala ramce otwierać okna i nawigować stroną nadrzędną bez ograniczeń"
+    ],
+    "correct": 1,
+    "explanation": "MDN odradza łączenie allow-scripts i allow-same-origin, gdy osadzony dokument ma tę samą origin co strona: pozwala to dokumentowi w ramce usunąć atrybut sandbox, co czyni go nie bezpieczniejszym niż brak sandbox. Wyskakujące okna i nawigacja strony nadrzędnej wymagają osobnych tokenów (allow-popups, allow-top-navigation).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/iframe/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-005",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Miniatura w siatce ma ok. 300 px szerokości, a na laptopie z ekranem 1440 px przeglądarka pobiera photo-1600.jpg. Dlaczego?",
+    "code": "<img\n  src=\"photo-800.jpg\"\n  srcset=\"photo-400.jpg 400w, photo-800.jpg 800w, photo-1600.jpg 1600w\"\n  alt=\"Zdjęcie produktu\">",
+    "options": [
+      "Brakuje atrybutu sizes, a jego domyślna wartość to 100vw — przeglądarka dobiera plik do szerokości całego viewportu, nie kolumny",
+      "Deskryptory w ignorują gęstość pikseli, więc przeglądarka zawsze bierze największy plik",
+      "Atrybut src ma pierwszeństwo przed srcset, a przeglądarka i tak pobiera największy wariant",
+      "Brakuje loading=\"lazy\", bez którego srcset nie jest brany pod uwagę"
+    ],
+    "correct": 0,
+    "explanation": "Przy deskryptorach szerokości (w) przeglądarka wybiera plik na podstawie sizes. MDN: jeśli sizes nie podano, przyjmuje się 100vw. Dla miniatury w kolumnie trzeba opisać jej faktyczną szerokość, np. sizes=\"(max-width: 600px) 100vw, 300px\", albo przy obrazkach leniwych użyć sizes=\"auto\".",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/img/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-006",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Po dodaniu tych reguł spekulacyjnych użytkownicy zaczęli być losowo wylogowywani. Co jest przyczyną i jak to naprawić?",
+    "code": "<script type=\"speculationrules\">\n{\n  \"prefetch\": [{\n    \"where\": { \"href_matches\": \"/*\" },\n    \"eagerness\": \"moderate\"\n  }]\n}\n</script>",
+    "options": [
+      "Prefetch to zwykły GET, więc serwer wykonuje wylogowanie już przy pobraniu /logout; trzeba wykluczyć takie adresy z reguł albo odraczać efekt uboczny, gdy żądanie ma nagłówek Sec-Purpose: prefetch",
+      "Prefetch uruchamia JavaScript strony /logout w tle, a jej skrypt czyści sesję; wystarczy przenieść logikę wylogowania do onload",
+      "Przeglądarka wysyła prefetch metodą POST, więc trzeba zmienić wylogowanie na DELETE",
+      "Odpowiedź z prefetchu nadpisuje ciasteczka sesji w cache HTTP; trzeba dodać Cache-Control: no-store"
+    ],
+    "correct": 0,
+    "explanation": "MDN: prefetch pobiera stronę jednym żądaniem GET; problem powstaje, gdy pobranie adresu wywołuje efekt uboczny po stronie serwera. Rozwiązania to wykluczenie takich URL-i (przykład z /logout w dokumentacji) albo rozpoznanie Sec-Purpose: prefetch na serwerze. JavaScript prefetchowanej strony nie wykonuje się przed aktywacją.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/speculation_rules_api/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-007",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Po włączeniu prerenderu dla linków do produktów liczba odsłon w analityce wzrosła, choć ruch się nie zmienił. Jak to poprawić w kodzie strony produktu?",
+    "options": [
+      "Wysyłać odsłonę w DOMContentLoaded zamiast w load",
+      "Wysyłać odsłonę przez navigator.sendBeacon zamiast fetch",
+      "Gdy document.prerendering jest true, wysłać odsłonę dopiero w zdarzeniu prerenderingchange; w przeciwnym razie od razu",
+      "Nic — prerenderowane strony nie wykonują JavaScriptu przed aktywacją"
+    ],
+    "correct": 2,
+    "explanation": "Prerender w pełni renderuje stronę, łącznie z wykonaniem skryptów, więc analityka liczy odsłony stron, których użytkownik nie zobaczył. MDN zaleca sprawdzić document.prerendering i odłożyć takie działania do zdarzenia prerenderingchange, które przychodzi przy aktywacji strony.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/speculation_rules_api/index.md",
+    "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-008",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Strona ma regułę prerender z listą adresów (\"urls\") i drugą z warunkiem (\"where\"). Żadna nie ustawia eagerness. Kiedy przeglądarka zacznie prerenderować?",
+    "options": [
+      "Obie od razu po sparsowaniu reguł",
+      "Lista od razu po sparsowaniu reguł; reguła z where dopiero gdy użytkownik zaczyna klikać link (np. pointerdown)",
+      "Obie po najechaniu kursorem na link",
+      "Lista przy kliknięciu, reguła z where od razu dla wszystkich pasujących linków"
+    ],
+    "correct": 1,
+    "explanation": "MDN: bez eagerness reguły listowe (urls) mają domyślnie immediate, a reguły dokumentowe (where) conservative, czyli start dopiero przy rozpoczęciu kliknięcia, np. na mousedown lub pointerdown. To i tak tylko wskazówka — przeglądarka uwzględnia też własne heurystyki.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/script/type/speculationrules/index.md",
+    "added_on": "2026-10-27"
   }
 ]
