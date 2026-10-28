@@ -158,5 +158,37 @@
     "explanation": "Słaby ETag oznacza reprezentacje równoważne semantycznie, ale niekoniecznie identyczne bajt w bajt, a fragmenty pliku da się składać tylko z identycznych bajtów. MDN: słabe ETagi uniemożliwiają cache'owanie przy żądaniach zakresów bajtów, a silne na to pozwalają.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/etag/index.md",
     "added_on": "2026-10-27"
+  },
+  {
+    "id": "rest-api-senior-011",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Serwer wysyła 103 Early Hints z Link: rel=preload dla CSS, a potem przekierowuje żądanie na inną domenę (cross-origin), która też wysyła swoje 103. Co zrobi przeglądarka?",
+    "options": [
+      "Użyje obu odpowiedzi 103 i pobierze wszystkie zasoby",
+      "Przetwarza tylko pierwszą odpowiedź 103, a przy przekierowaniu cross-origin musi ją odrzucić",
+      "Zignoruje 103 i poczeka na 200, bo wskazówki działają tylko w HTTP/1.1",
+      "Potraktuje 103 jako odpowiedź końcową i nie pójdzie za przekierowaniem"
+    ],
+    "correct": 1,
+    "explanation": "MDN: serwer może wysłać kilka odpowiedzi 103 (np. po przekierowaniu), ale przeglądarki przetwarzają tylko pierwszą i muszą ją odrzucić, gdy żądanie kończy się przekierowaniem na inny origin. Zalecane jest wysyłanie 103 przez HTTP/2 lub nowszy.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/103/index.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "rest-api-senior-012",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Po przejściu na HTTP/2 zespół zostawił domain sharding: obrazki są serwowane z img1–img4.example.com. Co mówi o tym MDN?",
+    "options": [
+      "To nadal najlepszy sposób na zwiększenie równoległości",
+      "W HTTP/2 domain sharding nie pomaga, a nawet szkodzi — jedno połączenie obsługuje równoległe żądania przez multipleksowanie",
+      "Sharding jest wymagany, bo HTTP/2 pozwala na jedno żądanie na połączenie",
+      "Sharding ma sens tylko przy HTTPS"
+    ],
+    "correct": 1,
+    "explanation": "MDN opisuje domain sharding jako przestarzałą technikę z HTTP/1.x. W HTTP/2 jedno połączenie dobrze obsługuje wiele równoległych żądań, sharding nie jest już przydatny i może pogarszać wydajność; implementacje często łączą takie połączenia (connection coalescing).",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/connection_management_in_http_1.x/index.md",
+    "added_on": "2026-10-28"
   }
 ]

@@ -600,5 +600,19 @@
     "title": "Testy równoległe",
     "description": "Locki i indeksy workerów w Playwright, test.concurrent w Vitest",
     "icon": "list"
+  },
+  {
+    "technology": "nextjs",
+    "slug": "cache-components",
+    "title": "Cache Components i bezpieczeństwo",
+    "description": "'use cache', klucze cache, revalidateTag, Server Actions jako publiczne endpointy",
+    "icon": "list"
+  },
+  {
+    "technology": "vue",
+    "slug": "performance-and-ssr",
+    "title": "Wydajność i SSR",
+    "description": "Stabilne propsy i computed, shallowRef, hydracja i stan na serwerze",
+    "icon": "braces"
   }
 ]

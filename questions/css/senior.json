@@ -165,5 +165,39 @@
     "explanation": "optional daje bardzo krótki okres blokady i brak okresu podmiany: jeśli font nie załaduje się niemal od razu, strona zostaje przy foncie zastępczym, więc późna zamiana nie przesunie układu. swap i block mają nieskończony okres podmiany, a fallback krótki — w obu przypadkach font może zostać podmieniony po wyrenderowaniu tekstu.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@font-face/font-display/index.md",
     "added_on": "2026-10-27"
+  },
+  {
+    "id": "css-senior-011",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Po załadowaniu fontu marki tekst zmienia szerokość i układ się przesuwa, bo font zapasowy ma inne proporcje. Które rozwiązanie zmniejsza ten przeskok bez rezygnacji z fontu?",
+    "code": "@font-face {\n  font-family: \"brand-fallback\";\n  src: local(\"Arial\");\n  size-adjust: 92%;\n}",
+    "options": [
+      "Dodać size-adjust (i ewentualnie nadpisania metryk) w @font-face, który definiuje lokalny font zapasowy, żeby jego glify miały rozmiar zbliżony do fontu marki",
+      "Ustawić font-display: block",
+      "Dodać will-change: font-size na body",
+      "Zmniejszyć font-size w rem tylko dla fontu zapasowego przez @media"
+    ],
+    "correct": 0,
+    "explanation": "Deskryptor size-adjust w @font-face skaluje glify i metryki danego fontu o podany procent. MDN pokazuje go właśnie do dopasowania fontu zapasowego (src: local(...)) do głównego fontu webowego, co zmniejsza przesunięcie przy podmianie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@font-face/size-adjust/index.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "css-senior-012",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Tooltip jest poprawnie powiązany z kotwicą przez position-anchor. Jaką wartość obliczoną dostanie top?",
+    "code": ".tooltip {\n  position: absolute;\n  position-anchor: --btn;\n  top: anchor(left, 50px);\n}",
+    "options": [
+      "Pozycję lewej krawędzi kotwicy",
+      "50px — strona left nie pasuje do osi właściwości top, więc używana jest wartość zapasowa",
+      "auto, bo anchor() nie działa w top",
+      "Pozycję górnej krawędzi kotwicy, bo przeglądarka poprawia stronę na zgodną z osią"
+    ],
+    "correct": 1,
+    "explanation": "Strona w anchor() musi być zgodna z osią właściwości inset: w top i bottom można użyć top, bottom lub wartości logicznych, a nie left. Przy niezgodnej stronie używana jest wartość zapasowa (tu 50px); bez niej właściwość zachowuje się jak auto.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/anchor/index.md",
+    "added_on": "2026-10-28"
   }
 ]

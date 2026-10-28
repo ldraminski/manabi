@@ -130,5 +130,70 @@
     "explanation": "MDN: bez eagerness reguły listowe (urls) mają domyślnie immediate, a reguły dokumentowe (where) conservative, czyli start dopiero przy rozpoczęciu kliknięcia, np. na mousedown lub pointerdown. To i tak tylko wskazówka — przeglądarka uwzględnia też własne heurystyki.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/script/type/speculationrules/index.md",
     "added_on": "2026-10-27"
+  },
+  {
+    "id": "html-senior-009",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Strona ładuje bibliotekę z CDN z atrybutem integrity, ale bez crossorigin. CDN wysyła Access-Control-Allow-Origin: *. Co się stanie?",
+    "code": "<script src=\"https://cdn.example.com/lib.js\"\n  integrity=\"sha384-...\"></script>",
+    "options": [
+      "Skrypt się załaduje, bo CDN i tak zezwala na CORS",
+      "Skrypt zawsze się nie załaduje — bez crossorigin żądanie idzie w trybie no-cors, a przeglądarki nie pozwalają łączyć no-cors z SRI",
+      "Skrypt się załaduje, ale przeglądarka pominie sprawdzenie hasha",
+      "Skrypt się załaduje tylko w Firefoksie"
+    ],
+    "correct": 1,
+    "explanation": "MDN: zasoby z innej domeny z integrity muszą być pobierane przez CORS, więc potrzebny jest atrybut crossorigin. Bez niego element HTML pobiera zasób w trybie no-cors, a przeglądarki blokują SRI w tym trybie (żeby nie dało się zgadywać treści po hashu), więc takie żądanie zawsze kończy się błędem.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/security/defenses/subresource_integrity/index.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-010",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "W code review ktoś każe dopisać rel=\"noopener\" do wszystkich linków z target=\"_blank\", bo inaczej otwarta strona może zmienić window.opener.location. Co jest prawdą w aktualnych przeglądarkach?",
+    "options": [
+      "Ma rację — bez rel=\"noopener\" nowa karta zawsze dostaje dostęp do window.opener",
+      "target=\"_blank\" domyślnie działa jak rel=\"noopener\", więc window.opener w nowej karcie jest null",
+      "rel=\"noopener\" wyłącza też nagłówek Referer, więc lepiej go nie dodawać",
+      "noopener działa tylko na <form>, nie na <a>"
+    ],
+    "correct": 1,
+    "explanation": "MDN: ustawienie target=\"_blank\" na <a>, <area> i <form> domyślnie daje to samo zachowanie co rel=\"noopener\" — window.opener nie jest ustawiany. noopener nie usuwa Referer; robi to dopiero noreferrer.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/rel/noopener/index.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-011",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "Strona https://shop.example/cart?user=42 nie ustawia żadnej polityki referrera i ładuje obrazek z https://cdn.other.com. Jaką wartość Referer wyśle przeglądarka?",
+    "options": [
+      "https://shop.example/cart?user=42",
+      "https://shop.example/",
+      "Żadnej — domyślnie Referer nie jest wysyłany do innych domen",
+      "https://shop.example/cart"
+    ],
+    "correct": 1,
+    "explanation": "Domyślna polityka to strict-origin-when-cross-origin: przy żądaniu do tej samej domeny wysyłany jest pełny URL, do innej domeny (HTTPS→HTTPS) tylko origin, a przy przejściu z HTTPS na HTTP nic. Wcześniejszym domyślnym było no-referrer-when-downgrade.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-012",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Strona korzysta z kilkunastu zewnętrznych domen (analityka, fonty, widgety). Ktoś proponuje <link rel=\"preconnect\"> dla wszystkich. Co zaleca MDN?",
+    "options": [
+      "Dodać preconnect wszędzie — każde wcześniejsze połączenie to zysk",
+      "Preconnect tylko dla kilku najważniejszych domen, a dla reszty dns-prefetch, bo preconnect do wielu domen może zaszkodzić",
+      "Preconnect przyda się głównie dla własnej domeny strony",
+      "Zamiast preconnect dodać preload dla każdej domeny"
+    ],
+    "correct": 1,
+    "explanation": "MDN: preconnect wykonuje z wyprzedzeniem DNS, TCP i TLS, ale przy wielu zewnętrznych domenach może być nieopłacalny — warto go użyć tylko dla najważniejszych połączeń, a dla pozostałych dns-prefetch. Dla własnej domeny nic nie daje, bo połączenie już istnieje.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/rel/preconnect/index.md",
+    "added_on": "2026-10-28"
   }
 ]

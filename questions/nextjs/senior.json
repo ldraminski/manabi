@@ -1,0 +1,83 @@
+[
+  {
+    "id": "nextjs-senior-001",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Funkcja z \"use cache\" wywołuje helper getLocale(), który czyta cookies(). Lokalnie next build przechodzi. Co się stanie na trasie renderowanej dynamicznie?",
+    "options": [
+      "Zadziała — cookie stanie się częścią klucza cache",
+      "Pod next start pojawi się błąd next-request-in-use-cache; cookie trzeba odczytać poza zakresem cache i przekazać jako argument",
+      "Next.js pominie cache dla tej funkcji i wyrenderuje ją dynamicznie bez błędu",
+      "cookies() zwróci pusty obiekt w zakresie cache"
+    ],
+    "correct": 1,
+    "explanation": "Funkcje i komponenty z \"use cache\" nie mogą używać cookies(), headers() ani searchParams, także pośrednio przez wywoływane helpery. Na trasie dynamicznej błąd wychodzi dopiero przy uruchomieniu, więc build może przejść. Zalecane: odczytać wartość na zewnątrz i przekazać jako argument.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache.mdx",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-002",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Czy wynik getData jest współdzielony między wszystkimi użytkownikami?",
+    "code": "async function Page({ userId }: { userId: string }) {\n  const getData = async (filter: string) => {\n    'use cache'\n    const res = await fetch(`https://api.example.com/users/${userId}/data?filter=${filter}`)\n    return res.json()\n  }\n  return <List items={await getData('active')} />\n}",
+    "options": [
+      "Tak — klucz cache tworzą tylko argumenty, więc wszyscy dostaną dane pierwszego użytkownika",
+      "Nie — zmienne z zewnętrznego zakresu (userId) są przechwytywane jako argumenty i trafiają do klucza, więc każda para userId + filter ma osobny wpis",
+      "Nie — \"use cache\" w funkcji zagnieżdżonej jest ignorowane",
+      "Tak, dopóki nie wywołasz cacheTag(userId)"
+    ],
+    "correct": 1,
+    "explanation": "Klucz wpisu \"use cache\" zawiera m.in. build ID, ID funkcji i serializowane argumenty. Zmienne z zewnętrznego zakresu używane w funkcji są automatycznie przechwytywane i dołączane jako argumenty, więc stają się częścią klucza.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache.mdx",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-003",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Aplikacja na serverless używa \"use cache\" z domyślnym handlerem w pamięci do drogiego zapytania w trakcie działania (runtime). Baza i tak dostaje to zapytanie przy prawie każdym żądaniu. Co jest prawdopodobną przyczyną i rozwiązaniem?",
+    "options": [
+      "cacheLife jest za krótkie; wystarczy ustawić \"max\"",
+      "Instancje serverless są efemeryczne, więc wpisy w pamięci zwykle nie przetrwają między żądaniami; trzeba użyć \"use cache: remote\" z dedykowanym handlerem (np. Redis/KV)",
+      "\"use cache\" działa tylko w czasie buildu, w runtime trzeba wrócić do fetch",
+      "Trzeba dodać cacheTag, bez którego wpis nie jest zapisywany"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja: z domyślnym handlerem w pamięci na serverless wpisy zwykle nie są zachowywane między żądaniami (każde może trafić do innej instancji); na self-hostingu przetrwają. Gdy to za mało, \"use cache: remote\" pozwala platformie dostarczyć dedykowany handler, kosztem opóźnienia sieciowego i opłat.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache.mdx",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-004",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Server Action po zapisie wywołuje revalidateTag(\"posts\", \"max\"). Co zobaczy pierwszy użytkownik, który potem wejdzie na stronę z listą postów?",
+    "options": [
+      "Świeże dane — revalidateTag od razu przebudowuje wszystkie strony z tym tagiem",
+      "Jeszcze stare dane; jego żądanie uruchomi rewalidację w tle (stale-while-revalidate), a świeże dane zobaczą kolejne żądania",
+      "Błąd, bo profil \"max\" wymaga cacheLife w next.config",
+      "Pustą stronę do czasu zakończenia rewalidacji"
+    ],
+    "correct": 1,
+    "explanation": "revalidateTag oznacza dane jako nieaktualne. Rewalidację uruchamia następne żądanie, które przy profilu \"max\" dostaje stare dane, a odświeżenie dzieje się w tle. Gdy autor akcji musi od razu zobaczyć swoją zmianę, w Server Action używa się updateTag.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/revalidateTag.mdx",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-005",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Plik actions.ts z \"use server\" eksportuje deleteUser(id). Funkcja jest używana tylko na stronie /admin, której layout sprawdza, czy użytkownik jest adminem. Co jest prawdą?",
+    "options": [
+      "To bezpieczne, bo akcję może wywołać tylko kod renderowany w /admin",
+      "Wyeksportowana Server Action jest osiągalna bezpośrednim żądaniem POST, niezależnie od UI, więc sprawdzenie uprawnień musi być w samej akcji (lub w warstwie dostępu do danych)",
+      "Akcja jest bezpieczna, bo jej ID jest zaszyfrowane i nie da się go poznać",
+      "Wystarczy, że proxy.ts sprawdza ścieżkę /admin"
+    ],
+    "correct": 1,
+    "explanation": "Next.js: utworzona i wyeksportowana Server Action jest dostępna przez bezpośrednie żądanie POST, nie tylko przez UI aplikacji. Zaszyfrowane ID akcji to dodatkowa ochrona, nie autoryzacja. Uwierzytelnianie i autoryzację trzeba sprawdzać w każdej akcji.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/data-security.mdx",
+    "added_on": "2026-10-28"
+  }
+]

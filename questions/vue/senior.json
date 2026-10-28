@@ -1,0 +1,85 @@
+[
+  {
+    "id": "vue-senior-001",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Lista ma 1000 elementów ListItem. Po zmianie activeId przerysowują się wszystkie, choć zmienia się stan tylko dwóch. Co zaleca dokumentacja Vue?",
+    "code": "<ListItem\n  v-for=\"item in list\"\n  :id=\"item.id\"\n  :active-id=\"activeId\" />",
+    "options": [
+      "Owinąć ListItem w KeepAlive",
+      "Liczyć aktywność w rodzicu i przekazywać :active=\"item.id === activeId\", żeby propsy większości elementów się nie zmieniały",
+      "Zamienić v-for na v-show",
+      "Przekazywać activeId przez provide/inject zamiast propsa"
+    ],
+    "correct": 1,
+    "explanation": "Komponent potomny aktualizuje się tylko wtedy, gdy zmienił się któryś z jego propsów. Gdy każdy element dostaje activeId, jego zmiana aktualizuje wszystkie elementy. Przy propsie active zmienia się on tylko dla dwóch elementów, więc tylko one się aktualizują.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/best-practices/performance.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-002",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Vue 3.4+. Watcher zależny od computedObj uruchamia się przy każdej zmianie count, nawet gdy isEven się nie zmienia. Dlaczego?",
+    "code": "const computedObj = computed(() => {\n  return { isEven: count.value % 2 === 0 }\n})",
+    "options": [
+      "Computed w Vue 3.4 zawsze wyzwala efekty po każdej zmianie zależności",
+      "Computed tworzy za każdym razem nowy obiekt, więc nowa wartość zawsze różni się od starej; można przyjąć oldValue i zwrócić go, gdy isEven się nie zmieniło",
+      "Brakuje { deep: true } w watcherze",
+      "computed nie może zwracać obiektów, tylko wartości proste"
+    ],
+    "correct": 1,
+    "explanation": "Od Vue 3.4 computed wyzwala efekty tylko wtedy, gdy jego wartość się zmieniła. Nowy obiekt przy każdym przeliczeniu jest zawsze inny, a Vue nie porównuje głęboko. Rozwiązanie z dokumentacji: computed((oldValue) => ...) i zwrócenie oldValue, gdy nic się nie zmieniło (po wykonaniu pełnego obliczenia).",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/best-practices/performance.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-003",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Dla dużej listy obiektów użyto shallowRef, żeby zmniejszyć narzut reaktywności. Które z tych wywołań odświeży widok?",
+    "code": "const list = shallowRef(bigArrayOfObjects)",
+    "options": [
+      "list.value.push(item)",
+      "list.value[0].done = true",
+      "list.value = [...list.value, item]",
+      "list.value.sort()"
+    ],
+    "correct": 2,
+    "explanation": "shallowRef jest reaktywny tylko na poziomie .value; zagnieżdżone obiekty nie są śledzone. Mutacje tablicy ani jej elementów nie wyzwalają aktualizacji — trzeba traktować dane jako niemutowalne i podmieniać całą wartość.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/best-practices/performance.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-004",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Aplikacja Vue z SSR ma w module stores/user.js eksport const user = reactive({ name: null }), ustawiany przy każdym żądaniu. Użytkownicy czasem widzą cudze imię w HTML z serwera. Co zaleca dokumentacja?",
+    "options": [
+      "Zamienić reactive na ref",
+      "Tworzyć nową instancję całej aplikacji (z routerem i store’ami) dla każdego żądania i przekazywać stan przez provide na poziomie aplikacji",
+      "Wyczyścić user.name w onUnmounted",
+      "Dodać data-allow-mismatch do elementu z imieniem"
+    ],
+    "correct": 1,
+    "explanation": "Na serwerze moduły są inicjalizowane raz, przy starcie, więc singleton stanu w zakresie modułu jest współdzielony między żądaniami (cross-request state pollution). Zalecane rozwiązanie: nowa instancja aplikacji, routera i store’ów na każde żądanie, a stan udostępniany przez app-level provide.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/scaling-up/ssr.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-005",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Komponent renderowany przez SSR ma szablon <p class=\"note\"><div>{{ text }}</div></p>. W konsoli pojawia się ostrzeżenie o hydration mismatch. Dlaczego?",
+    "options": [
+      "Vue nie wspiera interpolacji w <p> podczas SSR",
+      "<div> nie może być wewnątrz <p>, więc przeglądarka parsując HTML z serwera zamyka <p> i buduje inny DOM, niż oczekuje aplikacja po stronie klienta",
+      "Brakuje atrybutu key na <div>",
+      "Klasy CSS nie są renderowane przez serwer"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja Vue podaje nieprawidłowe zagnieżdżenie HTML jako częstą przyczynę mismatchu: przeglądarka „poprawia” <p><div></div></p>, kończąc <p> przed <div>, więc DOM nie zgadza się z wirtualnym drzewem. Vue próbuje to naprawić, kosztem wydajności.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/scaling-up/ssr.md",
+    "added_on": "2026-10-28"
+  }
+]

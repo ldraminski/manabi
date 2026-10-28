@@ -840,6 +840,22 @@
     "added_on": "2026-10-27"
   },
   {
+    "id": "css-senior-011",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "css-senior-012",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
     "id": "git-junior-001",
     "technology": "git",
     "level": "junior",
@@ -1384,6 +1400,38 @@
     "added_on": "2026-10-27"
   },
   {
+    "id": "html-senior-009",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-010",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-011",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-012",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -1926,6 +1974,46 @@
     "topic": "server-runtime",
     "kind": "single_choice",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-senior-001",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-002",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-003",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-004",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-005",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
   },
   {
     "id": "nodejs-junior-001",
@@ -3056,6 +3144,22 @@
     "added_on": "2026-10-27"
   },
   {
+    "id": "rest-api-senior-011",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "rest-api-senior-012",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
     "id": "testing-junior-001",
     "technology": "testing",
     "level": "junior",
@@ -3326,6 +3430,22 @@
     "topic": "parallel-tests",
     "kind": "single_choice",
     "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-011",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "testing-senior-012",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
   },
   {
     "id": "typescript-junior-001",
@@ -3822,5 +3942,45 @@
     "topic": "components-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-senior-001",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-002",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-003",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-004",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-005",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-28"
   }
 ]

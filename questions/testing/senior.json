@@ -159,5 +159,37 @@
     "explanation": "Vitest grupuje testy concurrent i uruchamia je przez Promise.all, a ich liczbę ogranicza maxConcurrency. Nie tworzy dla nich nowych workerów, więc synchroniczne obliczenia nadal blokują jeden wątek JavaScriptu. Przyspieszenie dla CPU daje równoległość plików, nie concurrent.",
     "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/guide/parallelism.md",
     "added_on": "2026-10-27"
+  },
+  {
+    "id": "testing-senior-011",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "CI Playwright ma retries: 2. Testy, które padają za pierwszym razem i przechodzą przy ponowieniu, są oznaczane jako flaky, ale build jest zielony i nikt ich nie naprawia. Jak sprawić, żeby CI kończył się błędem przy flaky testach, bez wyłączania ponowień?",
+    "options": [
+      "Ustawić retries: 0",
+      "Włączyć failOnFlakyTests (np. failOnFlakyTests: !!process.env.CI) lub flagę --fail-on-flaky-tests",
+      "Dodać forbidOnly: true",
+      "Ustawić fullyParallel: true"
+    ],
+    "correct": 1,
+    "explanation": "Playwright kategoryzuje testy jako passed, flaky (padły, ale przeszły przy ponowieniu) i failed. Opcja failOnFlakyTests (od v1.52, też --fail-on-flaky-tests) sprawia, że runner kończy się błędem, gdy jakiś test jest flaky. forbidOnly dotyczy test.only.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-api/class-testconfig.md",
+    "added_on": "2026-10-28"
+  },
+  {
+    "id": "testing-senior-012",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Test Playwright czasem pada, bo po nieudanej próbie na serwerze zostaje cache, który psuje kolejną. Chcesz go czyścić tylko przed ponowieniem. Z czego skorzystać?",
+    "options": [
+      "testInfo.retry — w teście, hooku lub fixturze sprawdzasz, czy to ponowienie (wartość > 0), i wtedy czyścisz stan",
+      "test.describe.configure({ mode: \"serial\" })",
+      "process.env.PLAYWRIGHT_RETRY, które runner ustawia w workerze",
+      "Hook test.afterAll, bo uruchamia się tylko po błędzie"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja Playwright pokazuje testInfo.retry, dostępne w każdym teście, hooku i fixturze; przy pierwszym uruchomieniu wynosi 0. Przykład w dokumentacji czyści właśnie cache na serwerze przed ponowieniem.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-retries-js.md",
+    "added_on": "2026-10-28"
   }
 ]
