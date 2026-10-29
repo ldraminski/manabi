@@ -79,5 +79,70 @@
     "explanation": "Next.js: utworzona i wyeksportowana Server Action jest dostępna przez bezpośrednie żądanie POST, nie tylko przez UI aplikacji. Zaszyfrowane ID akcji to dodatkowa ochrona, nie autoryzacja. Uwierzytelnianie i autoryzację trzeba sprawdzać w każdej akcji.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/data-security.mdx",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-006",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Layout (Server Component) loguje odwiedziny w after(). Wewnątrz callbacku wywołuje await cookies(), żeby dodać identyfikator sesji. Co zaleca dokumentacja?",
+    "options": [
+      "Nic nie trzeba zmieniać — after ma dostęp do cookies() wszędzie",
+      "Odczytać cookies() przed after() i przekazać wartość do callbacku, bo w Server Components nie można wywołać request API wewnątrz after",
+      "Przenieść after() do komponentu klienckiego",
+      "Dodać export const dynamic = \"force-dynamic\", żeby cookies() zadziałało w after"
+    ],
+    "correct": 1,
+    "explanation": "W Server Components (strony, layouty, generateMetadata) nie można używać cookies(), headers() ani innych request API wewnątrz after, bo callback działa już po cyklu renderowania Reacta, a Next.js musi wiedzieć, która część drzewa czyta dane żądania. Wartość trzeba odczytać wcześniej i przekazać. W Route Handlers i Server Functions takie wywołania wewnątrz after są dozwolone.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/after.mdx",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-007",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Dashboard z \"use cache\" nie wywołuje cacheLife. Renderuje Widget, który ma własne \"use cache\" z cacheLife(\"hours\"). Jak długo żyje cache Dashboardu?",
+    "code": "export default async function Dashboard() {\n  'use cache'\n  return <Widget />\n}",
+    "options": [
+      "Godzinę — zewnętrzny cache dziedziczy dłuższy czas z wewnętrznego",
+      "Według profilu default (revalidate 15 minut) — dłuższy czas wewnętrznego cache go nie wydłuża",
+      "Bez końca, bo brak cacheLife oznacza cache na zawsze",
+      "Wcale — brak cacheLife w zewnętrznym zakresie wyłącza cache"
+    ],
+    "correct": 1,
+    "explanation": "Bez cacheLife zewnętrzny zakres używa profilu default (revalidate 15 minut). Krótszy czas wewnętrznego cache może go skrócić, dłuższy nie może go wydłużyć. Dokumentacja zaleca jawne cacheLife w każdym zakresie \"use cache\"; z jawnym cacheLife zewnętrzny cache zawsze używa własnego czasu.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/cacheLife.mdx",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-008",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Funkcja z \"use cache: private\" czyta cookies() i zwraca rekomendacje dla użytkownika. Jak działa ten cache w produkcji?",
+    "options": [
+      "Wynik jest zapisywany w cache serwera z kluczem z cookies i współdzielony między żądaniami tego użytkownika",
+      "Wynik może być ponownie użyty w obrębie jednego żądania (i w pamięci routera w przeglądarce przez czas stale), ale nie trafia do cache serwera między żądaniami",
+      "Wynik trafia do statycznej powłoki strony przy next build",
+      "Można go zapisać w Redisie, podając własny cache handler"
+    ],
+    "correct": 1,
+    "explanation": "\"use cache: private\" pozwala używać cookies(), headers() i searchParams w zakresie cache. W produkcji pasujące wywołania w ramach jednego żądania mogą współdzielić wynik, ale Next.js nie zapisuje go w cache serwera między żądaniami. Router po stronie klienta może trzymać wynik w pamięci przez czas stale. Takie funkcje działają w czasie żądania, są wyłączone ze statycznej powłoki i nie da się dla nich ustawić własnego cache handlera.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache-private.mdx",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-009",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Projekt włącza cacheComponents. Trasa app/blog/[slug]/page.tsx ma generateStaticParams, które zwraca [], żeby wszystkie wpisy renderowały się przy pierwszym wejściu. Co się stanie?",
+    "options": [
+      "Działa jak dotąd — wszystkie ścieżki zostaną wyrenderowane w runtime",
+      "next build zgłosi błąd: z Cache Components generateStaticParams musi zwrócić co najmniej jeden zestaw parametrów",
+      "Trasa stanie się w pełni dynamiczna bez żadnego cache",
+      "Next.js zignoruje generateStaticParams i użyje dynamicParams = false"
+    ],
+    "correct": 1,
+    "explanation": "Z Cache Components generateStaticParams dla dynamicznej trasy musi zwrócić co najmniej jeden parametr; pusta tablica powoduje błąd buildu. Dzięki temu Next.js może przy buildzie sprawdzić, czy trasa nie czyta cookies(), headers() ani searchParams. Bez Cache Components pusta tablica oznacza renderowanie wszystkich ścieżek przy pierwszym wejściu.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/generate-static-params.mdx",
+    "added_on": "2026-10-29"
   }
 ]

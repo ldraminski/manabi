@@ -568,6 +568,94 @@
     "added_on": "2026-10-17"
   },
   {
+    "id": "angular-senior-001",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-002",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-003",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-004",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-005",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-006",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-007",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-008",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-009",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-010",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-011",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -2014,6 +2102,38 @@
     "topic": "cache-components",
     "kind": "single_choice",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "nextjs-senior-006",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-007",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-008",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-009",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
   },
   {
     "id": "nodejs-junior-001",
@@ -3982,5 +4102,45 @@
     "topic": "performance-and-ssr",
     "kind": "single_choice",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-006",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-007",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-008",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-009",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-010",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-29"
   }
 ]

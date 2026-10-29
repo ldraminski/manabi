@@ -1,0 +1,179 @@
+[
+  {
+    "id": "angular-senior-001",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "prompt": "Biblioteka czeka na NgZone.onStable, żeby zmierzyć element po renderze. W aplikacji bez ZoneJS (domyślnie od Angulara 21) pomiar nigdy się nie wykonuje. Dlaczego i co zrobić?",
+    "options": [
+      "onStable emituje tylko w trybie produkcyjnym; trzeba zbudować aplikację z --configuration production",
+      "Bez ZoneJS onStable nigdy nie emituje; do jednego renderu użyć afterNextRender, do wielu — afterEveryRender",
+      "Wystarczy opakować kod w NgZone.run()",
+      "Zastąpić onStable przez NgZone.isStable w pętli setTimeout"
+    ],
+    "correct": 1,
+    "explanation": "W trybie zoneless NgZone.onMicrotaskEmpty, onUnstable i onStable nigdy nie emitują, a NgZone.isStable zawsze ma wartość true. Gdy trzeba poczekać na zakończenie wykrywania zmian, dokumentacja zaleca afterNextRender (jeden raz) albo afterEveryRender (warunek przez kilka rund); przy czekaniu na stan DOM — np. MutationObserver.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/zoneless.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-002",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "prompt": "Aplikacja bez ZoneJS z SSR pobiera dane przez własnego klienta WebSocket (nie HttpClient). Serwer wysyła HTML, zanim dane dotrą. Co zaleca dokumentacja?",
+    "options": [
+      "Dodać zone.js z powrotem do polyfills na serwerze",
+      "Zarejestrować pracę w PendingTasks (np. taskService.run(async () => ...)), żeby serializacja poczekała na jej koniec",
+      "Wywołać ChangeDetectorRef.detectChanges() po otrzymaniu danych",
+      "Ustawić ChangeDetectionStrategy.OnPush w komponencie"
+    ],
+    "correct": 1,
+    "explanation": "Bez ZoneJS Angular nie wie sam, kiedy aplikacja jest stabilna i gotowa do serializacji. Asynchroniczną pracę, która ma zablokować serializację, zgłasza się przez serwis PendingTasks (run albo add i wywołanie funkcji sprzątającej). Dla Observable jest pendingUntilEvent z rxjs-interop. Framework robi to sam m.in. dla nawigacji routera i niezakończonych żądań HttpClient.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/zoneless.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-003",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "prompt": "Aplikacja zoneless. Komponent w setTimeout wykonuje this.status = \"gotowe\" na zwykłym polu klasy użytym w szablonie. Widok się nie odświeża. Która zmiana sama w sobie powiadomi Angulara o potrzebie odświeżenia?",
+    "options": [
+      "Zamiana pola na signal i wywołanie status.set(\"gotowe\")",
+      "Przeniesienie przypisania do konstruktora",
+      "Zamiana setTimeout na Promise.resolve().then(...)",
+      "Dodanie providedIn: \"root\" do komponentu"
+    ],
+    "correct": 0,
+    "explanation": "Bez ZoneJS Angular uruchamia wykrywanie zmian na podstawie powiadomień: aktualizacji sygnału czytanego w szablonie, markForCheck (wywoływanego m.in. przez AsyncPipe), ComponentRef.setInput, callbacków nasłuchiwaczy z szablonu lub hosta oraz dołączenia widoku oznaczonego jako brudny. Przypisanie do zwykłego pola w setTimeout żadnego z nich nie wysyła.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/zoneless.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-004",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "prompt": "Aktualizujesz projekt do Angulara 21 i chcesz działać bez ZoneJS. Co trzeba sprawdzić w konfiguracji?",
+    "options": [
+      "Dodać provideZonelessChangeDetection() — bez tego Angular 21 nadal używa ZoneJS",
+      "Upewnić się, że nigdzie nie ma provideZoneChangeDetection, które nadpisuje domyślny tryb zoneless, i usunąć zone.js z polyfills w build i test",
+      "Ustawić \"zoneless\": true w angular.json",
+      "Zamienić wszystkie komponenty na ChangeDetectionStrategy.OnPush, bo inaczej zoneless się nie włączy"
+    ],
+    "correct": 1,
+    "explanation": "Od Angulara 21 zoneless jest domyślny; trzeba tylko sprawdzić, że provideZoneChangeDetection go nie nadpisuje. W v20 włączało się go przez provideZonelessChangeDetection(). Aby zmniejszyć bundle, usuwa się zone.js i zone.js/testing z polyfills w targetach build i test oraz sam pakiet. OnPush jest zalecany, ale niewymagany.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/zoneless.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-005",
+    "topic": "zoneless",
+    "kind": "single_choice",
+    "prompt": "Komponent biblioteki tworzy komponenty użytkowników przez ViewContainerRef.createComponent. Część z nich polega na ZoneJS i nie jest zgodna z OnPush. Czy komponent biblioteki powinien mieć OnPush?",
+    "options": [
+      "Tak, OnPush jest wymagany do działania w trybie zoneless",
+      "Nie — jako host takich komponentów OnPush zablokowałby ich odświeżanie; może zostać przy strategii domyślnej, o ile sam powiadamia Angulara (signals, markForCheck, AsyncPipe)",
+      "Tak, ale tylko jeśli dzieci też są tworzone przez createComponent",
+      "Nie ma to znaczenia, bo dzieci tworzone dynamicznie zawsze mają własny cykl wykrywania zmian"
+    ],
+    "correct": 1,
+    "explanation": "OnPush jest zalecanym krokiem w stronę zoneless, ale niewymaganym. Komponent biblioteki, który hostuje komponenty użytkownika (np. przez createComponent), nie może używać OnPush, bo uniemożliwiłoby to odświeżanie dzieci polegających na ZoneJS. Strategia domyślna jest w porządku, jeśli komponent powiadamia Angulara o zmianach.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/zoneless.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-006",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Aplikacja z SSR i provideClientHydration(). Blok nad linią zgięcia ma @defer (on viewport; hydrate on viewport). Co znajdzie się w HTML z serwera?",
+    "options": [
+      "Zawartość @placeholder, podmieniana na kliencie po wejściu w viewport",
+      "Główna zawartość bloku @defer; na kliencie pozostaje ona niezhydratowana, aż zadziała trigger hydrate",
+      "Pusty element, bo @defer nie jest renderowany na serwerze",
+      "Zawartość @loading"
+    ],
+    "correct": 1,
+    "explanation": "Trigger hydrate mówi Angularowi, żeby podczas SSR załadował zależności bloku i wyrenderował główny szablon zamiast @placeholder. Na kliencie zależności dalej są odroczone, a treść czeka niezhydratowana na trigger; wcześniejsze zdarzenia użytkownika są kolejkowane i odtwarzane. Dzięki temu @defer nad linią zgięcia nie powoduje przesunięcia układu. Incremental hydration jest domyślnie włączone przez provideClientHydration().",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/incremental-hydration.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-007",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Blok ma @defer (on idle; hydrate on interaction). Użytkownik przechodzi na tę stronę przez routerLink, już po pierwszym załadowaniu aplikacji. Który trigger zadziała?",
+    "options": [
+      "hydrate on interaction — zawsze ma pierwszeństwo",
+      "on idle — triggery hydrate dotyczą tylko pierwszego załadowania treści z SSR",
+      "Oba naraz — blok załaduje się przy idle i ponownie po interakcji",
+      "Żaden — blok pokaże tylko @placeholder"
+    ],
+    "correct": 1,
+    "explanation": "Hydracja to optymalizacja pierwszego ładowania, więc triggery hydrate obowiązują tylko dla treści wyrenderowanej przez serwer przy wejściu na stronę. Przy kolejnych renderach po stronie klienta (np. nawigacja routerLink) działa zwykły trigger, tu on idle. Dlatego @placeholder wciąż jest potrzebny.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/incremental-hydration.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-008",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Dwa zagnieżdżone, niezhydratowane bloki: zewnętrzny @defer (hydrate on interaction), w nim wewnętrzny @defer (hydrate on hover). Użytkownik najeżdża myszą na wewnętrzny blok. Co się stanie?",
+    "options": [
+      "Zhydratuje się tylko wewnętrzny blok",
+      "Nic, dopóki użytkownik nie wejdzie w interakcję z zewnętrznym blokiem",
+      "Najpierw zhydratuje się zewnętrzny blok, potem wewnętrzny",
+      "Angular zgłosi błąd, bo bloki z hydrate nie mogą być zagnieżdżone"
+    ],
+    "correct": 2,
+    "explanation": "System komponentów i DI jest hierarchiczny, więc hydracja komponentu wymaga wcześniejszej hydracji jego rodziców. Gdy trigger zadziała w zagnieżdżonym bloku, hydracja idzie od najwyższego niezhydratowanego bloku @defer w dół do tego, który wywołał trigger.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/incremental-hydration.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-009",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Stopka ma @defer (on viewport; hydrate never). Co to oznacza?",
+    "options": [
+      "Blok nigdy nie załaduje swoich zależności, także po nawigacji po stronie klienta",
+      "Przy pierwszym załadowaniu treść z SSR zostaje statyczna i niezhydratowana; przy późniejszym renderze po stronie klienta zależności załadują się normalnie on viewport",
+      "Treść bloku nie jest renderowana na serwerze",
+      "Zagnieżdżone bloki z własnymi triggerami hydrate nadal mogą się zhydratować"
+    ],
+    "correct": 1,
+    "explanation": "hydrate never zostawia treść bloku niezhydratowaną na stałe, ale tylko przy pierwszym renderze z serwera. Przy późniejszym renderze po stronie klienta blok pobiera zależności według zwykłego triggera. hydrate never blokuje hydrację całego zagnieżdżonego poddrzewa — triggery hydrate w środku nie zadziałają.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/incremental-hydration.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-010",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Komponent wykresu z zewnętrznej biblioteki dodaje węzły przez appendChild i powoduje błędy hydracji. Do czasu refaktoryzacji dodano mu atrybut ngSkipHydration. Jak teraz zachowa się ten komponent?",
+    "options": [
+      "Zhydratuje się normalnie, a Angular tylko wyciszy błędy",
+      "Angular pominie hydrację całego komponentu i jego dzieci — zniszczy go i wyrenderuje od nowa, jakby hydracja była wyłączona",
+      "Komponent nie zostanie wyrenderowany na serwerze, tylko na kliencie",
+      "Pominięte zostaną tylko węzły dodane przez appendChild"
+    ],
+    "correct": 1,
+    "explanation": "ngSkipHydration (na tagu komponentu albo jako host binding) wymusza pominięcie hydracji całego komponentu i jego dzieci; komponent zachowuje się tak, jakby hydracja była wyłączona, czyli niszczy się i renderuje ponownie. To obejście na czas refaktoryzacji bezpośredniej manipulacji DOM (appendChild, innerHTML, przenoszenie węzłów), która psuje dopasowanie DOM z serwera.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/hydration.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-011",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Lista opcji wysyłki się zmienia, a ostatnio wybrana opcja (id 2) nadal jest na nowej liście. Co wypisze console.log?",
+    "code": "const options = signal([\n  {id: 0, name: 'Ground'}, {id: 1, name: 'Air'}, {id: 2, name: 'Sea'},\n]);\nconst selected = linkedSignal<Option[], Option>({\n  source: options,\n  computation: (next, previous) =>\n    next.find((o) => o.id === previous?.value.id) ?? next[0],\n});\n\nselected.set(options()[2]);\noptions.set([\n  {id: 0, name: 'Email'}, {id: 1, name: 'Sea'}, {id: 2, name: 'Postal Service'},\n]);\nconsole.log(selected());",
+    "options": [
+      "Pierwszą opcję z nowej listy: {id: 0, name: \"Email\"}",
+      "Opcję z id 2 z nowej listy: {id: 2, name: \"Postal Service\"}",
+      "Starą opcję {id: 2, name: \"Sea\"}, bo set() odłącza linkedSignal od źródła",
+      "undefined"
+    ],
+    "correct": 1,
+    "explanation": "Gdy zmienia się source, linkedSignal przelicza wartość przez computation, która dostaje nową wartość źródła i obiekt previous (previous.source i previous.value). Tu computation szuka poprzednio wybranego id na nowej liście, więc wybór zostaje zachowany. Ręczne set() zmienia wartość do czasu następnej zmiany źródła — nie odłącza sygnału na stałe.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/linked-signal.md",
+    "added_on": "2026-10-29"
+  }
+]

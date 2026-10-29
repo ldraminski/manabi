@@ -614,5 +614,26 @@
     "title": "Wydajność i SSR",
     "description": "Stabilne propsy i computed, shallowRef, hydracja i stan na serwerze",
     "icon": "braces"
+  },
+  {
+    "technology": "vue",
+    "slug": "hydration",
+    "title": "Hydracja w praktyce",
+    "description": "Hooki na serwerze, useId, data-allow-mismatch, leniwa hydracja",
+    "icon": "braces"
+  },
+  {
+    "technology": "angular",
+    "slug": "zoneless",
+    "title": "Angular bez ZoneJS",
+    "description": "Powiadomienia o zmianach, afterNextRender, PendingTasks, OnPush",
+    "icon": "clock"
+  },
+  {
+    "technology": "angular",
+    "slug": "ssr-and-hydration",
+    "title": "SSR i hydracja",
+    "description": "Incremental hydration, triggery hydrate, ngSkipHydration",
+    "icon": "layout"
   }
 ]

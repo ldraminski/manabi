@@ -81,5 +81,85 @@
     "explanation": "Dokumentacja Vue podaje nieprawidłowe zagnieżdżenie HTML jako częstą przyczynę mismatchu: przeglądarka „poprawia” <p><div></div></p>, kończąc <p> przed <div>, więc DOM nie zgadza się z wirtualnym drzewem. Vue próbuje to naprawić, kosztem wydajności.",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/scaling-up/ssr.md",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "vue-senior-006",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Lista ma kilka tysięcy elementów. Chcesz, żeby po zmianie selected aktualizowały się tylko elementy, którym zmienił się stan zaznaczenia. Który zapis działa zgodnie z dokumentacją?",
+    "options": [
+      "<div v-for=\"item in list\" :key=\"item.id\" v-memo=\"[item.id === selected]\">",
+      "<div v-for=\"item in list\" :key=\"item.id\"><div v-memo=\"[item.id === selected]\">…</div></div>",
+      "<div v-for=\"item in list\" :key=\"item.id\" v-memo=\"[]\">",
+      "<div v-for=\"item in list\" :key=\"item.id\" v-once>"
+    ],
+    "correct": 0,
+    "explanation": "v-memo pomija aktualizację (i tworzenie VNode) poddrzewa, gdy wszystkie wartości z tablicy się nie zmieniły. Przy listach musi być na tym samym elemencie co v-for — v-memo nie działa wewnątrz v-for. item.id nie trzeba dodawać, bo Vue bierze go z :key. v-memo=\"[]\" działa jak v-once, więc element nigdy by się nie zaktualizował.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/built-in-directives.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-007",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "prompt": "Komponent renderowany przez SSR ustawia w <script setup> setInterval, a czyści go w onUnmounted. Co się dzieje na serwerze i jak to poprawić?",
+    "options": [
+      "Nic złego — onUnmounted wywoła się po wyrenderowaniu HTML",
+      "Na serwerze onUnmounted się nie wywołuje, więc timer zostaje na zawsze; setInterval trzeba przenieść do onMounted",
+      "Vue na serwerze automatycznie blokuje setInterval",
+      "Trzeba przenieść setInterval do onBeforeMount, który działa tylko na serwerze"
+    ],
+    "correct": 1,
+    "explanation": "Podczas SSR nie ma aktualizacji ani odmontowania: onMounted, onUpdated i hooki odmontowania nie są wywoływane. Kod w setup() i w głównym zakresie <script setup> wykonuje się na serwerze, więc timer nigdy nie zostanie wyczyszczony. Dokumentacja zaleca przeniesienie efektów wymagających sprzątania do onMounted, który działa tylko na kliencie.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/scaling-up/ssr.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-008",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5+, SSR. Komponent pola formularza potrzebuje id do powiązania <label for> z <input>. Generowanie go przez Math.random() daje hydration mismatch. Co zastosować?",
+    "options": [
+      "useId() — daje unikalne w aplikacji id, stabilne między renderem serwera i klienta",
+      "crypto.randomUUID() w setup()",
+      "Date.now() zapisane w ref",
+      "Owinąć <label> w data-allow-mismatch i zostawić Math.random()"
+    ],
+    "correct": 0,
+    "explanation": "useId() (Vue 3.5+) generuje id unikalne w obrębie aplikacji, różne dla każdego wywołania i każdej instancji komponentu, a przy tym takie samo na serwerze i kliencie, więc nie powoduje hydration mismatch. Przy kilku aplikacjach Vue na jednej stronie można ustawić app.config.idPrefix. Każda losowa wartość będzie inna po obu stronach.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/composition-api-helpers.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-009",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5+, SSR. Element wyświetla {{ date.toLocaleString() }}, a strefa czasowa serwera i przeglądarki się różni. Tekst ma się po prostu podmienić na kliencie, bez ostrzeżenia. Co dodać?",
+    "options": [
+      "data-allow-mismatch=\"text\" na tym elemencie",
+      "v-once na tym elemencie",
+      "ngSkipHydration na tym elemencie",
+      "data-allow-mismatch=\"children\" na elemencie <html>"
+    ],
+    "correct": 0,
+    "explanation": "Atrybut data-allow-mismatch (Vue 3.5+) wycisza ostrzeżenia o hydration mismatch. Wartość ogranicza dozwolony typ niezgodności: text, children (tylko bezpośrednie dzieci), class, style, attribute; bez wartości dozwolone są wszystkie typy. ngSkipHydration to atrybut Angulara.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/ssr.md",
+    "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-010",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5+, SSR. Komponent jest zdefiniowany przez defineAsyncComponent z hydrate: hydrateOnInteraction(\"click\"). Użytkownik klika przycisk w komponencie przed hydracją. Co się stanie z tym kliknięciem?",
+    "options": [
+      "Przepadnie — nasłuchiwacze nie istnieją przed hydracją",
+      "Kliknięcie uruchomi hydrację, a po jej zakończeniu zostanie odtworzone",
+      "Vue zrenderuje komponent od nowa na kliencie i zignoruje kliknięcie",
+      "Kliknięcie zostanie obsłużone przez serwer"
+    ],
+    "correct": 1,
+    "explanation": "hydrateOnInteraction hydruje komponent, gdy na jego elementach wystąpi podane zdarzenie (lub jedno z listy). Zdarzenie, które wywołało hydrację, jest odtwarzane po jej zakończeniu. Strategie hydracji trzeba importować osobno, żeby nieużywane można było usunąć przy tree-shakingu.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
+    "added_on": "2026-10-29"
   }
 ]
