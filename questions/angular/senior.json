@@ -175,5 +175,21 @@
     "explanation": "Gdy zmienia się source, linkedSignal przelicza wartość przez computation, która dostaje nową wartość źródła i obiekt previous (previous.source i previous.value). Tu computation szuka poprzednio wybranego id na nowej liście, więc wybór zostaje zachowany. Ręczne set() zmienia wartość do czasu następnej zmiany źródła — nie odłącza sygnału na stałe.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/linked-signal.md",
     "added_on": "2026-10-29"
+  },
+  {
+    "id": "angular-senior-012",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "prompt": "Angular 22, SSR. Komponent pobiera rekomendacje dla zalogowanego użytkownika przez resource({ params, loader, id: \"recs\" }), żeby przeglądarka nie powtarzała zapytania przy hydracji. Wyrenderowany HTML jest cache’owany na CDN. Jaki jest problem?",
+    "options": [
+      "Opcja id nie działa z SSR, więc loader i tak wykona się dwa razy",
+      "Wartość z serwera jest zapisywana w TransferState i serializowana do HTML, więc rekomendacje jednego użytkownika mogą z cache CDN trafić do innych; dokumentacja odradza id dla danych zależnych od użytkownika",
+      "id musi być inne na serwerze i w przeglądarce, inaczej Angular nie dopasuje wpisu",
+      "Zasób z id po hydracji ma status \"local\" i przestaje reagować na zmiany params"
+    ],
+    "correct": 1,
+    "explanation": "Z opcją id Angular zapisuje rozwiązaną wartość zasobu w TransferState na serwerze, a w przeglądarce startuje z nią w stanie \"resolved\", bez ponownego wywołania loadera. Ta wartość jest częścią HTML strony. Dokumentacja ostrzega, żeby nie ustawiać id dla zasobów z danymi konkretnego użytkownika, zwłaszcza gdy HTML może być cache’owany albo współdzielony. id musi być unikalne w aplikacji i takie samo na serwerze i w przeglądarce.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
+    "added_on": "2026-10-31"
   }
 ]

@@ -196,5 +196,22 @@
     "explanation": "Array.fromAsync iteruje leniwie i czeka na każdą wartość po kolei; jeśli podano mapFn, na jego wynik też czeka, zanim pobierze kolejny element. MDN zestawia to z Promise.all, które czeka na wszystkie wartości współbieżnie. Do równoległych żądań lepsze jest Promise.all(urls.map(u => fetch(u))).",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/array/fromasync/index.md",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "javascript-senior-013",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "counter ma tylko metodę next(), bez [Symbol.iterator](). Co się stanie i dlaczego?",
+    "code": "const counter = {\n  i: 0,\n  next() {\n    return this.i < 3\n      ? { value: this.i++, done: false }\n      : { value: undefined, done: true };\n  },\n};\n\nconst all = Iterator.concat([10, 20], counter);",
+    "options": [
+      "Zadziała i zwróci kolejno 10, 20, 0, 1, 2",
+      "Iterator.concat odrzuci counter, bo przyjmuje tylko obiekty iterowalne; trzeba go owinąć: Iterator.concat([10, 20], Iterator.from(counter))",
+      "Zwróci 10 i 20, a counter pominie",
+      "Zadziała, ale counter trzeba będzie zamknąć ręcznie przez return()"
+    ],
+    "correct": 1,
+    "explanation": "Iterator.concat, tak jak yield*, nie obsługuje argumentów bez [Symbol.iterator](). Powód: concat przejmuje iteratory i zamyka je, gdy iteracja się kończy. Przy gołych iteratorach nie byłoby jasne, kto ma zamknąć te jeszcze nieosiągnięte, więc metoda ich nie przyjmuje. Iterator.from() zamienia taki obiekt w iterowalny iterator.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/concat",
+    "added_on": "2026-10-31"
   }
 ]

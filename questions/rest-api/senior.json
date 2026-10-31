@@ -190,5 +190,21 @@
     "explanation": "MDN opisuje domain sharding jako przestarzałą technikę z HTTP/1.x. W HTTP/2 jedno połączenie dobrze obsługuje wiele równoległych żądań, sharding nie jest już przydatny i może pogarszać wydajność; implementacje często łączą takie połączenia (connection coalescing).",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/connection_management_in_http_1.x/index.md",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "rest-api-senior-013",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Strona /products/42 jest otwierana z różnymi parametrami utm_source i utm_campaign, których serwer nie używa. Parametr lang zmienia treść. Przeglądarka ma używać zapisanej odpowiedzi niezależnie od parametrów UTM. Który nagłówek odpowiedzi to opisuje?",
+    "options": [
+      "No-Vary-Search: params, except=(\"lang\")",
+      "No-Vary-Search: key-order",
+      "Vary: utm_source, utm_campaign",
+      "No-Vary-Search: params=(\"lang\")"
+    ],
+    "correct": 0,
+    "explanation": "No-Vary-Search mówi przeglądarce, jak parametry zapytania wpływają na dopasowanie w cache. params w formie logicznej ignoruje wszystkie parametry, a except wymienia te, których inna wartość nadal wymaga osobnego wpisu. key-order ignoruje tylko kolejność parametrów, a params=(\"lang\") ignorowałby właśnie lang. Vary dotyczy nagłówków żądania, nie parametrów adresu. Nagłówek działa tylko w przeglądarkach, które go obsługują (Firefox od wersji 154).",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/No-Vary-Search",
+    "added_on": "2026-10-31"
   }
 ]

@@ -656,6 +656,14 @@
     "added_on": "2026-10-29"
   },
   {
+    "id": "angular-senior-012",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "ssr-and-hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -942,6 +950,14 @@
     "topic": "css-production",
     "kind": "single_choice",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "css-senior-013",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "git-junior-001",
@@ -1776,6 +1792,46 @@
     "added_on": "2026-10-13"
   },
   {
+    "id": "javascript-mid-013",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-014",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-015",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-016",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-017",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
     "id": "javascript-senior-001",
     "technology": "javascript",
     "level": "senior",
@@ -1870,6 +1926,14 @@
     "topic": "data-and-iteration",
     "kind": "single_choice",
     "added_on": "2026-10-26"
+  },
+  {
+    "id": "javascript-senior-013",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "nextjs-junior-001",
@@ -2134,6 +2198,30 @@
     "topic": "cache-components",
     "kind": "single_choice",
     "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-010",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-011",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-012",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "nodejs-junior-001",
@@ -2470,6 +2558,14 @@
     "topic": "builtin-modules",
     "kind": "single_choice",
     "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-031",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "nodejs-senior-001",
@@ -2896,6 +2992,14 @@
     "added_on": "2026-10-15"
   },
   {
+    "id": "react-mid-013",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -2990,6 +3094,14 @@
     "topic": "concurrent-ui",
     "kind": "single_choice",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-013",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "rest-api-junior-001",
@@ -3278,6 +3390,14 @@
     "topic": "http-at-scale",
     "kind": "single_choice",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "rest-api-senior-013",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "testing-junior-001",
@@ -3680,6 +3800,14 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "typescript-junior-015",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
     "id": "typescript-mid-001",
     "technology": "typescript",
     "level": "mid",
@@ -3774,6 +3902,22 @@
     "topic": "type-transformations",
     "kind": "single_choice",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-013",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "typescript-mid-014",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   },
   {
     "id": "typescript-senior-001",
@@ -4142,5 +4286,21 @@
     "topic": "hydration",
     "kind": "single_choice",
     "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-011",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "vue-senior-012",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-10-31"
   }
 ]

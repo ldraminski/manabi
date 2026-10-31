@@ -217,5 +217,21 @@
     "explanation": "keyof zwraca unię nazw właściwości typu. Często łączy się go z generykami, np. function get<T, K extends keyof T>(obj: T, key: K): T[K].",
     "source_url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "typescript-junior-015",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "Nowy projekt na TypeScripcie 6.0. W tsconfig.json nie ma opcji strict. Czy sprawdzanie w trybie strict jest włączone?",
+    "options": [
+      "Tak, od TypeScriptu 6.0 strict domyślnie ma wartość true; żeby go wyłączyć, trzeba wpisać \"strict\": false",
+      "Nie, strict zawsze trzeba włączyć ręcznie",
+      "Tylko strictNullChecks jest włączone domyślnie",
+      "Tak, ale tylko dla plików .tsx"
+    ],
+    "correct": 0,
+    "explanation": "TypeScript 6.0 zmienił kilka domyślnych wartości, m.in. strict na true. Jeśli projekt polegał na starym domyślnym false, trzeba to ustawić jawnie. Przy okazji zmieniły się też domyślne module (esnext) i target (najnowsza wersja ECMAScript, dziś es2025).",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-10-31"
   }
 ]

@@ -202,5 +202,37 @@
     "explanation": "Dzięki as const tablica dostaje typ readonly [\"admin\", \"editor\", \"viewer\"] z typami literalnymi. Typ indeksowany [number] wyciąga typ dowolnego elementu, więc powstaje unia literałów. Bez as const elementy miałyby typ string i Role byłby po prostu string.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/handbook-v2/Type%20Manipulation/Indexed%20Access%20Types.md",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "typescript-mid-013",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "Po aktualizacji do TypeScriptu 6.0 projekt zgłasza setki błędów typu „Cannot find name 'process'” i „Cannot find name 'describe'”, choć @types/node i @types/jest są zainstalowane. tsconfig nie ma opcji types. Co się zmieniło?",
+    "options": [
+      "types domyślnie ma teraz wartość [], więc pakiety z node_modules/@types nie są już dołączane automatycznie; trzeba wpisać np. \"types\": [\"node\", \"jest\"]",
+      "TypeScript 6.0 nie obsługuje już pakietów @types",
+      "Trzeba zmienić moduleResolution na node10",
+      "Nowy domyślny target es2025 usuwa globalne typy Node.js"
+    ],
+    "correct": 0,
+    "explanation": "Do wersji 5.9 TypeScript dołączał wszystkie pakiety z node_modules/@types. W 6.0 domyślne types to [], bo wczytywanie setek zbędnych deklaracji spowalniało build; według zespołu TypeScriptu jawne types przyspieszało budowanie wielu projektów o 20–50%. \"types\": [\"*\"] przywraca stare zachowanie, ale zalecana jest jawna lista.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "typescript-mid-014",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "Po aktualizacji do TypeScriptu 6.0 tsc zapisuje pliki do dist/src/index.js zamiast do dist/index.js. tsconfig.json leży w katalogu głównym projektu i ma outDir: \"dist\" oraz include: [\"src\"], bez rootDir. Co się zmieniło?",
+    "options": [
+      "rootDir domyślnie jest teraz katalogiem z tsconfig.json, a nie wspólnym katalogiem plików źródłowych; trzeba ustawić \"rootDir\": \"./src\"",
+      "outDir musi być teraz ścieżką bezwzględną",
+      "include nie przyjmuje już katalogów, tylko wzorce typu src/**/*.ts",
+      "TypeScript 6.0 odtwarza w outDir ścieżki względem package.json"
+    ],
+    "correct": 0,
+    "explanation": "Wcześniej rootDir był wyliczany jako wspólny katalog wszystkich plików wejściowych (tu src), więc src/index.ts trafiał do dist/index.js. W 6.0 domyślny rootDir to katalog z tsconfig.json, a wyliczanie zostało tylko dla tsc bez pliku tsconfig. Projekty z kodem głębiej niż tsconfig muszą ustawić rootDir jawnie.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-10-31"
   }
 ]

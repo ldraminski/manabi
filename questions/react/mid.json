@@ -199,5 +199,22 @@
     "explanation": "Wartość kontekstu jest porównywana referencyjnie. Literał obiektu i funkcja zdefiniowane w ciele komponentu są przy każdym renderze nowe, więc React musi przerysować wszystkich konsumentów. memo na konsumentach nie pomoże — zmiana kontekstu przechodzi przez memo. Stabilna wartość z useMemo i useCallback sprawia, że konsumenci renderują się tylko po zmianie currentUser.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useContext.md",
     "added_on": "2026-10-15"
+  },
+  {
+    "id": "react-mid-013",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Panel jest owinięty w <ViewTransition>, ale po kliknięciu pojawia się bez animacji. Dlaczego?",
+    "code": "function App() {\n  const [show, setShow] = useState(false);\n  return (\n    <>\n      <button onClick={() => setShow(true)}>Pokaż</button>\n      {show && (\n        <ViewTransition>\n          <Panel />\n        </ViewTransition>\n      )}\n    </>\n  );\n}",
+    "options": [
+      "Zwykłe setState nie aktywuje ViewTransition; aktualizację trzeba owinąć w startTransition (animację uruchamiają też Suspense i useDeferredValue)",
+      "ViewTransition bez propsa name nie animuje niczego",
+      "ViewTransition działa tylko przy nawigacji między stronami",
+      "Panel musi być dodatkowo owinięty w <Activity>"
+    ],
+    "correct": 0,
+    "explanation": "Domyślnie setState aktualizuje UI od razu i nie aktywuje <ViewTransition>. Animację uruchamiają tylko aktualizacje w Transition, <Suspense> albo useDeferredValue, więc wystarczy startTransition(() => setShow(true)). Prop name służy tylko do przejść współdzielonego elementu; w pozostałych przypadkach React sam generuje unikalną nazwę.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/ViewTransition.md",
+    "added_on": "2026-10-31"
   }
 ]

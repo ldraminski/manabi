@@ -488,5 +488,21 @@
     "explanation": "Moduły tekstowe (Node.js 26.5+, za flagą --experimental-import-text) mają tylko eksport domyślny: treść pliku jako napis. Atrybut with { type: 'text' } jest obowiązkowy, tak jak type: 'json' przy plikach JSON.",
     "source_url": "https://nodejs.org/api/esm.html#text-modules",
     "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-mid-031",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Node.js 26 wszedł w LTS („Lithium”) 28 października 2026. Aktualizujesz obraz kontenera na minimalnej dystrybucji Linuksa z Node.js 24 na oficjalne binarki 26, a proces nie startuje, bo brakuje biblioteki libatomic. Co jest przyczyną?",
+    "options": [
+      "Od Node.js 25 oficjalne binarki dla Linuksa są linkowane z libatomic, którą na niektórych dystrybucjach trzeba doinstalować osobno",
+      "Node.js 26 nie wspiera już Linuksa x64",
+      "Binarki LTS wymagają flagi --experimental-atomics",
+      "To błąd użycia SharedArrayBuffer i Atomics w kodzie aplikacji"
+    ],
+    "correct": 0,
+    "explanation": "Notatki do wydania 26.13.0, które przeniosło linię 26 do LTS, przypominają: przy przejściu z wcześniejszej LTS (24, 22) trzeba wiedzieć, że od Node.js 25 oficjalne binarki dla Linuksa są linkowane z libatomic, a w części dystrybucji ta biblioteka nie jest instalowana domyślnie. Node.js 26 będzie wspierany do końca kwietnia 2029.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V26.md",
+    "added_on": "2026-10-31"
   }
 ]

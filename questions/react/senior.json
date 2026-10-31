@@ -194,5 +194,22 @@
     "explanation": "Aktualizacji w Transition nie da się użyć do sterowania polem tekstowym: Transition jest nieblokująca, a zmiana wartości inputu w odpowiedzi na zdarzenie change musi nastąpić synchronicznie. Dokumentacja proponuje dwa stany (synchroniczny dla inputu i drugi aktualizowany w Transition) albo jeden stan i useDeferredValue, która „zostaje w tyle” i dogania wartość nieblokującymi renderami.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/useTransition.md",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "react-senior-013",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Nowy element listy jest dodawany w startTransition, ale animacja wejścia się nie uruchamia. Co jest przyczyną?",
+    "code": "function Item({ video }) {\n  return (\n    <div className=\"item\">\n      <ViewTransition enter=\"auto\" exit=\"auto\" default=\"none\">\n        <Video video={video} />\n      </ViewTransition>\n    </div>\n  );\n}",
+    "options": [
+      "Nad <ViewTransition> jest <div>: enter i exit aktywują się tylko, gdy ViewTransition stoi przed jakimkolwiek węzłem DOM dodawanego poddrzewa; trzeba przenieść go nad div",
+      "default=\"none\" wyłącza także enter i exit",
+      "Brakuje propsa name, bez którego React nie nadaje view-transition-name",
+      "startTransition obniża priorytet aktualizacji, więc React pomija animację"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja opisuje to jako pułapkę: <ViewTransition> aktywuje enter/exit tylko wtedy, gdy jest umieszczony przed węzłami DOM. Jeśli nad nim jest <div>, animacje wejścia i wyjścia się nie uruchamiają. To ograniczenie chroni przed sytuacjami, w których animuje się za dużo albo za mało. default=\"none\" wyłącza tylko te triggery, których nie podano jawnie, więc enter i exit zostają włączone.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/ViewTransition.md",
+    "added_on": "2026-10-31"
   }
 ]

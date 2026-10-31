@@ -199,5 +199,22 @@
     "explanation": "Strona w anchor() musi być zgodna z osią właściwości inset: w top i bottom można użyć top, bottom lub wartości logicznych, a nie left. Przy niezgodnej stronie używana jest wartość zapasowa (tu 50px); bez niej właściwość zachowuje się jak auto.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/anchor/index.md",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "css-senior-013",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Przeglądarka obsługuje nowe attr() we wszystkich właściwościach. Chcesz ustawiać ikonę przycisku z atrybutu: <button data-icon=\"/icons/save.svg\">. Co się stanie z tą deklaracją?",
+    "code": "button {\n  background-image: url(attr(data-icon));\n}",
+    "options": [
+      "Nie zadziała: wartości z attr() są oznaczane jako „attr()-tainted” i nie mogą tworzyć <url>, więc deklaracja jest nieprawidłowa w czasie obliczania wartości (IACVT); to celowe ograniczenie bezpieczeństwa",
+      "Zadziała, bo attr() bez typu zwraca napis, a url() przyjmuje napisy",
+      "Zadziała po zmianie na attr(data-icon type(<url>))",
+      "Zadziała, ale tylko dla adresów z tej samej domeny"
+    ],
+    "correct": 0,
+    "explanation": "attr() może czytać atrybuty, które nie służą do stylowania i mogą zawierać wrażliwe dane, np. token używany przez skrypty. Budowanie z nich adresów pozwalałoby wysłać te dane na zewnątrz, dlatego wartości z attr() nie mogą trafić do <url> (dotyczy to też np. image-set()). <url> nie jest też dozwolonym typem w type().",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/attr",
+    "added_on": "2026-10-31"
   }
 ]

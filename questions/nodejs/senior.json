@@ -163,7 +163,7 @@
     "id": "nodejs-senior-011",
     "topic": "production-operations",
     "kind": "single_choice",
-    "prompt": "Jest październik 2026. Node.js 26 ma status Current, a 24 i 22 są w LTS. Zespół chce od razu przenieść produkcję na 26, „bo to najnowsza wersja”. Co mówią zalecenia projektu Node.js?",
+    "prompt": "Jest wrzesień 2026. Node.js 26 ma status Current, a 24 i 22 są w LTS. Zespół chce od razu przenieść produkcję na 26, „bo to najnowsza wersja”. Co mówią zalecenia projektu Node.js?",
     "options": [
       "Na produkcji należy używać tylko wydań Active LTS lub Maintenance LTS, więc do czasu wejścia 26 w LTS zostajecie na wersji LTS, np. 24",
       "Na produkcję zalecana jest gałąź Current, bo najszybciej dostaje poprawki bezpieczeństwa",

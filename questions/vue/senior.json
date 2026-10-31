@@ -161,5 +161,38 @@
     "explanation": "hydrateOnInteraction hydruje komponent, gdy na jego elementach wystąpi podane zdarzenie (lub jedno z listy). Zdarzenie, które wywołało hydrację, jest odtwarzane po jej zakończeniu. Strategie hydracji trzeba importować osobno, żeby nieużywane można było usunąć przy tree-shakingu.",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
     "added_on": "2026-10-29"
+  },
+  {
+    "id": "vue-senior-011",
+    "topic": "hydration",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5+, SSR. Pasek filtrów jest renderowany na serwerze. Na desktopie to statyczna lista, a rozwijany i interaktywny jest tylko na wąskich ekranach. Chcesz, żeby na desktopie nie tracić czasu na jego hydrację. Co wpisać w hydrate?",
+    "code": "const Filters = defineAsyncComponent({\n  loader: () => import('./Filters.vue'),\n  hydrate: /* ? */\n})",
+    "options": [
+      "hydrateOnMediaQuery('(max-width: 768px)')",
+      "hydrateOnIdle()",
+      "hydrateOnVisible({ rootMargin: '100px' })",
+      "Nic: komponent asynchroniczny bez hydrate hydratuje się dopiero przy pierwszej interakcji"
+    ],
+    "correct": 0,
+    "explanation": "hydrateOnMediaQuery hydratuje komponent dopiero wtedy, gdy podane zapytanie media pasuje. hydrateOnIdle hydratuje w requestIdleCallback na każdym urządzeniu, a hydrateOnVisible, gdy element pojawi się w viewporcie, czyli także na desktopie. Leniwa hydracja działa tylko z jawnie podaną strategią, którą trzeba zaimportować z \"vue\" (dzięki temu nieużywane strategie mogą zostać usunięte przez tree-shaking).",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "vue-senior-012",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Lista 100 elementów renderuje się wolno. Każdy wiersz składa się z kilku komponentów-opakowań (renderless i HOC), które tylko przekazują propsy dalej. Co mówi o tym dokumentacja wydajności Vue?",
+    "options": [
+      "Instancje komponentów są dużo droższe od zwykłych węzłów DOM; usunięcie zbędnej abstrakcji w wierszu dużej listy może oszczędzić setki instancji",
+      "Komponenty renderless nic nie kosztują, bo nie renderują własnego DOM",
+      "Trzeba usunąć abstrakcje komponentów w całej aplikacji, także w miejscach renderowanych kilka razy",
+      "Wystarczy owinąć każdy wiersz w KeepAlive"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja przypomina, że instancja komponentu kosztuje dużo więcej niż węzeł DOM, a wzorce abstrakcji (renderless, HOC) mnożą instancje. Usunięcie kilku instancji nie da odczuwalnego efektu, więc nie ma sensu robić tego wszędzie. Największy zysk jest w dużych listach: przy 100 wierszach usunięcie jednej zbędnej warstwy to setki instancji mniej.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/best-practices/performance.md",
+    "added_on": "2026-10-31"
   }
 ]

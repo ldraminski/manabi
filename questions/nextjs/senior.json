@@ -144,5 +144,54 @@
     "explanation": "Z Cache Components generateStaticParams dla dynamicznej trasy musi zwrócić co najmniej jeden parametr; pusta tablica powoduje błąd buildu. Dzięki temu Next.js może przy buildzie sprawdzić, czy trasa nie czyta cookies(), headers() ani searchParams. Bez Cache Components pusta tablica oznacza renderowanie wszystkich ścieżek przy pierwszym wejściu.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/generate-static-params.mdx",
     "added_on": "2026-10-29"
+  },
+  {
+    "id": "nextjs-senior-010",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Self-hosted Next.js używa \"use cache: remote\" z handlerem na Redisie, żeby chronić CMS z limitem zapytań. Po każdym wdrożeniu CMS dostaje falę zapytań, choć stare wpisy nadal są w Redisie. Dlaczego?",
+    "options": [
+      "Klucz cache zawiera buildId (albo deploymentId), więc nowy build tworzy nowe klucze, a wpisy poprzedniego są nieosiągalne; to zamierzone zachowanie",
+      "next build zawsze czyści cały Redis przez handler",
+      "\"use cache: remote\" na produkcji przełącza się na cache w pamięci",
+      "Po wdrożeniu wpisy wygasają, bo domyślny profil cacheLife to \"seconds\""
+    ],
+    "correct": 0,
+    "explanation": "Wpisy \"use cache: remote\" nie przetrwają wdrożenia: klucz zawiera deploymentId (gdy jest skonfigurowany) albo buildId. Dokumentacja tłumaczy, że między buildami może się zmienić funkcja albo kształt zwracanych danych, więc ponowne użycie starych wpisów groziłoby nieaktualnymi lub błędnymi danymi. Gdy wpisy muszą przetrwać wdrożenia, dokumentacja wskazuje unstable_cache (dla funkcji innych niż fetch) albo cache fetch.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache-remote.mdx",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-011",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Strona kategorii renderuje się przy żądaniu, bo czyta searchParams. Funkcja z \"use cache: remote\" dostaje kategorię i minimalną cenę z adresu. Trafienia w cache są prawie zerowe. Co zaleca dokumentacja?",
+    "code": "async function getProducts(category: string, minPrice: string) {\n  'use cache: remote'\n  return db.products.find({ category, minPrice })\n}",
+    "options": [
+      "Cache’ować tylko po category (mało unikalnych wartości), a filtr ceny nakładać w pamięci na wyniku",
+      "Zamienić dyrektywę na \"use cache: private\", bo dane zależą od adresu",
+      "Dodać cacheLife(\"max\"), żeby wpisy żyły dłużej",
+      "Przekazywać cały obiekt searchParams jako argument, żeby klucz był stabilny"
+    ],
+    "correct": 0,
+    "explanation": "Każda unikalna wartość argumentu tworzy osobny wpis. minPrice ma wiele wartości, więc prawie każde żądanie trafia w nowy klucz. Dokumentacja pokazuje wzorzec: cache’ować getProductsByCategory(category) i filtrować cenę w komponencie. Większe wpisy kosztują więcej miejsca, ale opłaca się to, gdy chybienie (zapytanie do bazy) jest droższe. Dłuższy czas życia nie pomoże, jeśli klucze się nie powtarzają.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/01-directives/use-cache-remote.mdx",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-012",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Strona pokazuje licznik odwiedzin czytany przez better-sqlite3 (sterownik synchroniczny) i nie używa cookies(), headers() ani searchParams. Na produkcji licznik ciągle pokazuje wartość z czasu budowania. Co zrobić?",
+    "options": [
+      "Wywołać await connection() z next/server przed zapytaniem, żeby wykluczyć je z prerenderingu",
+      "Przekazać do zapytania opcję { cache: \"no-store\" }, tak jak w fetch",
+      "Przenieść zapytanie do komponentu z \"use client\"",
+      "Dodać export const runtime = \"edge\""
+    ],
+    "correct": 0,
+    "explanation": "Zapytania sterowników synchronicznych, takich jak better-sqlite3, kończą się w trakcie prerenderingu, więc bez Request-time API wynik trafia do statycznego HTML z next build. connection() mówi Next.js, że renderowanie ma poczekać na prawdziwe żądanie; dokumentacja zaleca wywołanie go przed takim zapytaniem. cache: \"no-store\" to opcja fetch, a sterownik SQLite nie zadziała w przeglądarce.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/connection.mdx",
+    "added_on": "2026-10-31"
   }
 ]

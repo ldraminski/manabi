@@ -200,5 +200,89 @@
     "explanation": "forEach() oczekuje funkcji synchronicznej: wywołuje callback i ignoruje zwrócony Promise, więc saveAll idzie dalej od razu. Odrzucenia z save() nie trafią też do try/catch wokół forEach. Zapisy po kolei: for...of z await; równolegle: await Promise.all(items.map(save)).",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach",
     "added_on": "2026-10-13"
+  },
+  {
+    "id": "javascript-mid-013",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Środowisko obsługuje metody „upsert” na Map (np. Node.js 26). loadDefaults jest kosztowne i loguje każde wywołanie. Ile razy zostanie wywołane?",
+    "code": "const cache = new Map([[\"pl\", { lang: \"pl\" }]]);\n\ncache.getOrInsert(\"pl\", loadDefaults(\"pl\"));\ncache.getOrInsertComputed(\"pl\", loadDefaults);",
+    "options": [
+      "Ani razu, bo klucz \"pl\" już istnieje",
+      "Raz: argument getOrInsert jest obliczany przed wywołaniem metody, a getOrInsertComputed woła callback tylko przy braku klucza",
+      "Dwa razy",
+      "Raz, w getOrInsertComputed"
+    ],
+    "correct": 1,
+    "explanation": "getOrInsert dostaje gotową wartość domyślną, więc loadDefaults(\"pl\") wykona się zawsze, nawet gdy klucz istnieje. getOrInsertComputed przyjmuje funkcję i wywołuje ją z kluczem tylko wtedy, gdy klucza brakuje. Dlatego przy kosztownej wartości domyślnej MDN zaleca getOrInsertComputed.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/getOrInsertComputed",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-014",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod? Temporal jest dostępny domyślnie (np. w Node.js 26).",
+    "code": "const start = Temporal.PlainDate.from(\"2021-01-31\");\nconsole.log(start.add({ months: 1 }).toString());",
+    "options": [
+      "2021-02-28",
+      "2021-03-03",
+      "2021-03-01",
+      "Rzuci RangeError, bo 31 lutego nie istnieje"
+    ],
+    "correct": 0,
+    "explanation": "add() najpierw przesuwa miesiąc, zachowując dzień. Gdy taki dzień nie istnieje, domyślna opcja overflow: \"constrain\" wybiera najbliższy poprawny dzień, czyli 28 lutego (2021 nie jest przestępny). RangeError byłby przy { overflow: \"reject\" }. 2021-03-03 dałby stary Date, który przelewa nadmiarowe dni na następny miesiąc.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal/PlainDate/add",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-015",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Co wypisze console.log?",
+    "code": "const a = new Map([[\"x\", 1], [\"y\", 2]]);\nconst b = new Map([[\"x\", 5], [\"z\", 6]]);\n\nconst merged = new Map(Iterator.concat(a, b));\nconsole.log(merged.get(\"x\"), merged.size);",
+    "options": [
+      "5 3",
+      "1 3",
+      "5 4",
+      "Rzuci błąd, bo Iterator.concat przyjmuje tylko tablice"
+    ],
+    "correct": 0,
+    "explanation": "Iterator.concat zwraca iterator, który po kolei zwraca wartości z każdego obiektu iterowalnego, tu pary [klucz, wartość] najpierw z a, potem z b. Konstruktor Map przy powtórzonym kluczu zostawia ostatnią wartość, więc x ma 5, a unikalne klucze to x, y i z. concat działa z dowolnymi obiektami iterowalnymi, nie tylko z tablicami.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/concat",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-016",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Środowisko obsługuje Promise.allKeyed (np. Firefox 155+). Funkcje fetchUser i fetchPosts zwracają obietnice. Czym jest result.extra.posts?",
+    "code": "const result = await Promise.allKeyed({\n  user: fetchUser(),\n  extra: { posts: fetchPosts() },\n});",
+    "options": [
+      "Tablicą postów, bo allKeyed rozwiązuje obietnice rekurencyjnie",
+      "Nadal obiektem Promise: allKeyed czeka tylko na wartości własnych właściwości przekazanego obiektu, a zagnieżdżony obiekt zwraca bez zmian",
+      "undefined, bo zagnieżdżone obiekty są pomijane",
+      "allKeyed odrzuci wynik z TypeError, bo extra nie jest obietnicą"
+    ],
+    "correct": 1,
+    "explanation": "Promise.allKeyed działa jak Promise.all, ale na obiekcie: czeka na wartości jego własnych przeliczalnych właściwości (także o kluczach symbolicznych) i zwraca obiekt z tymi samymi kluczami. Nie wchodzi głębiej, więc extra trafia do wyniku jako zwykła wartość, a extra.posts nadal jest obietnicą.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allKeyed",
+    "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-017",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Kod jest wewnątrz funkcji. Która z tych deklaracji rzuci TypeError już przy deklaracji?",
+    "options": [
+      "using a = null;",
+      "using b = undefined;",
+      "using c = { close() {} };",
+      "using d = { [Symbol.dispose]() {} };"
+    ],
+    "correct": 2,
+    "explanation": "Wartość zmiennej z using musi być null, undefined albo obiektem z metodą [Symbol.dispose](). Przy deklaracji z wartością inną niż null i undefined silnik pobiera disposer; jeśli [Symbol.dispose] nie jest funkcją, rzuca TypeError. null i undefined są dozwolone, żeby zasób mógł być opcjonalny.",
+    "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using",
+    "added_on": "2026-10-31"
   }
 ]
