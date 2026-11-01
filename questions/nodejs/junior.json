@@ -186,5 +186,119 @@
     "explanation": "Zdarzenie 'error' jest traktowane specjalnie: bez listenera błąd jest rzucany i zamyka proces. Dlatego dla emiterów, które mogą zgłaszać błędy (np. strumieni), zawsze dodaje się emitter.on('error', ...).",
     "source_url": "https://nodejs.org/api/events.html",
     "added_on": "2026-10-05"
+  },
+  {
+    "id": "nodejs-junior-013",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "Plik logger.js na początku wypisuje 'ładuję logger'. Ile razy ten napis pojawi się po uruchomieniu node app.js?",
+    "code": "// app.js\nconst a = require('./logger');\nconst b = require('./logger');\nconsole.log(a === b);",
+    "options": [
+      "Raz, a potem wypisze się true",
+      "Dwa razy, a potem wypisze się false",
+      "Dwa razy, a potem wypisze się true",
+      "Ani razu, bo require() tylko zwraca eksporty"
+    ],
+    "correct": 0,
+    "explanation": "Moduły CommonJS są cache'owane po pierwszym wczytaniu: kod modułu wykonuje się raz, a każde kolejne require() tej samej ścieżki zwraca dokładnie ten sam obiekt. Jeśli kod ma się wykonać wiele razy, wyeksportuj funkcję i ją wywołuj.",
+    "source_url": "https://nodejs.org/api/modules.html#caching",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-014",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?",
+    "code": "// math.js\nexports = { add: (a, b) => a + b };\n\n// app.js\nconst math = require('./math');\nconsole.log(math.add);",
+    "options": [
+      "[Function: add]",
+      "undefined",
+      "TypeError już przy require('./math')",
+      "ReferenceError: exports is not defined"
+    ],
+    "correct": 1,
+    "explanation": "exports to zwykła zmienna, która na starcie wskazuje na module.exports. Przypisanie do niej nowego obiektu zrywa to powiązanie, więc require() nadal zwraca pusty module.exports ({}), a math.add to undefined. Użyj module.exports = { add } albo exports.add = ....",
+    "source_url": "https://nodejs.org/api/modules.html#exports-shortcut",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-015",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "Który moduł wbudowany trzeba wczytać przez require() z prefiksem node:, bo bez niego Node.js szuka paczki w node_modules?",
+    "options": [
+      "fs",
+      "path",
+      "test",
+      "http"
+    ],
+    "correct": 2,
+    "explanation": "Niektóre nowsze moduły wbudowane, m.in. node:test, node:sqlite i node:sea, działają w require() tylko z prefiksem node:. Dzięki temu nie kolidują z paczkami z npm, które zajęły te nazwy wcześniej. fs, path i http działają z prefiksem i bez niego.",
+    "source_url": "https://nodejs.org/api/modules.html#built-in-modules-with-mandatory-node-prefix",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-016",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "W handlerze serwera z node:http ustawiasz nagłówki i wywołujesz res.write('ok'), ale zapominasz o res.end(). Co zobaczy klient?",
+    "options": [
+      "Odpowiedź 200 z treścią ok, bo Node.js kończy odpowiedź, gdy handler się zakończy",
+      "Odpowiedź 500, bo Node.js wykrywa niezakończoną odpowiedź",
+      "Odpowiedź nigdy się nie kończy: klient czeka, aż któraś strona zamknie połączenie, np. po timeoucie",
+      "Błąd przy starcie serwera"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja mówi, że response.end() trzeba wywołać przy każdej odpowiedzi: to ono sygnalizuje, że nagłówki i treść zostały wysłane w całości. Node.js nie kończy odpowiedzi sam po powrocie z handlera, więc żądanie wisi.",
+    "source_url": "https://nodejs.org/api/http.html#responseenddata-encoding-callback",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-017",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "Chcesz w skrypcie na Node.js 24 pobrać JSON z zewnętrznego API. Czego potrzebujesz, żeby użyć fetch()?",
+    "options": [
+      "Niczego: fetch() jest globalny i stabilny od Node.js 21",
+      "Paczki node-fetch, bo Node.js nie ma fetch()",
+      "Flagi --experimental-fetch",
+      "Importu fetch z 'node:http'"
+    ],
+    "correct": 0,
+    "explanation": "fetch() jest dostępny globalnie, tak jak w przeglądarce. Od Node.js 18 nie wymaga flagi --experimental-fetch, a od Node.js 21 nie jest już eksperymentalny.",
+    "source_url": "https://nodejs.org/api/globals.html#fetch",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-018",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Co zwróci path.extname('backup.tar.gz')?",
+    "options": [
+      "'.tar.gz'",
+      "'.gz'",
+      "'gz'",
+      "'tar.gz'"
+    ],
+    "correct": 1,
+    "explanation": "path.extname() zwraca fragment od ostatniej kropki w ostatnim członie ścieżki do końca, razem z kropką. Dlatego dla backup.tar.gz dostajesz '.gz', a dla pliku bez kropki pusty napis.",
+    "source_url": "https://nodejs.org/api/path.html#pathextnamepath",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-019",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "W module ES (plik .mjs) chcesz wczytać config.json. Który zapis zadziała w aktualnym Node.js?",
+    "options": [
+      "import config from './config.json';",
+      "import config from './config.json' with { type: 'json' };",
+      "import { port } from './config.json' with { type: 'json' };",
+      "const config = import './config.json';"
+    ],
+    "correct": 1,
+    "explanation": "Przy imporcie JSON w modułach ES atrybut with { type: 'json' } jest obowiązkowy. Moduł JSON ma tylko eksport domyślny, więc nazwane importy, takie jak { port }, nie działają.",
+    "source_url": "https://nodejs.org/api/esm.html#json-modules",
+    "added_on": "2026-11-01"
   }
 ]

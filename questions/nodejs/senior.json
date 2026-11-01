@@ -434,5 +434,54 @@
     "explanation": "node:bench celowo nie wyznacza baseline'u ani nie zwraca wyniku pass/fail. Udostępnia dane, a wybór metody (np. Welch, test rangowy, analiza par), progu i korekty dla wielu porównań zostawia narzędziom wyżej. Histogramy z node:perf_hooks mogą w tym pomóc.",
     "source_url": "https://nodejs.org/api/bench.html#comparing-benchmark-results",
     "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-028",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Serwis pozwala pobierać dane tylko z hostów w domenie trusted.example. Na Node.js sprzed poprawek z 21 października 2026 atakujący podaje host 'attacker.example\\0.trusted.example'. Co się stanie?",
+    "code": "if (!host.endsWith('.trusted.example')) throw new Error('blocked');\nconst addresses = await dns.promises.resolve4(host);",
+    "options": [
+      "resolve4 rzuca błąd, bo nazwa zawiera znak NUL",
+      "Walidacja przechodzi, a dns.resolve4 po cichu ucina nazwę na bajcie NUL i zwraca rekordy attacker.example bez błędu",
+      "Zapytanie idzie o pełną nazwę i kończy się NXDOMAIN",
+      "endsWith() zwraca false, bo NUL kończy napis w JavaScripcie"
+    ],
+    "correct": 1,
+    "explanation": "CVE-2026-105482: dns.resolve*() i dns.reverse() przekazywały nazwę do c-ares jako napis w stylu C, więc ucinały ją na bajcie NUL. Wcześniejsza poprawka objęła tylko dns.lookup() i opcje host w net/tls. Poprawione wersje to 26.12.1, 24.22.1 i 22.23.4, a niezależnie od wersji warto odrzucać nazwy z NUL przed walidacją.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-029",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-106069: klient TLS łączy się z hostem '0127.0.0.1'. tls.checkServerIdentity() normalizuje go według reguł WHATWG URL do 87.0.0.1, a połączenie przez resolver systemu (np. na macOS) idzie do 127.0.0.1. Jaka ogólna lekcja projektowa z tego płynie?",
+    "options": [
+      "Adresów IP nie należy weryfikować w certyfikatach TLS",
+      "Gdy dwa komponenty parsują ten sam adres inaczej, weryfikacja dotyczy innego celu niż połączenie; adres trzeba raz kanonizować i tej samej wartości użyć do łączenia i do sprawdzania",
+      "Wystarczy wymusić IPv6, bo zapisu ósemkowego używa tylko IPv4",
+      "Problem dotyczy tylko certyfikatów self-signed"
+    ],
+    "correct": 1,
+    "explanation": "Podatność bierze się z różnicy parserów: kod oparty na regułach WHATWG czyta oktet z zerem wiodącym jako liczbę ósemkową, a resolver systemu jako dziesiętną. Serwer pod faktycznie połączonym adresem mógł się więc uwierzytelnić certyfikatem wydanym dla innego IP. Poprawki trafiły do 26.12.1, 24.22.1 i 22.23.4.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-030",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Aplikację budujesz przez node --build-snapshot, a kod wykonywany przy budowie snapshotu wywołuje crypto.randomUUID(). Na wersjach sprzed poprawki CVE-2026-106074 uruchamiasz z tego snapshotu wiele procesów. Co jest ryzykiem?",
+    "options": [
+      "Start procesów jest wolniejszy, bo snapshot trzeba odszyfrować",
+      "Każdy proces zwraca te same wartości z zapisanego w snapshocie bufora entropii, dopóki ten się nie odnowi, więc UUID-y mogą się powtarzać między procesami i dać się przewidzieć",
+      "crypto.randomUUID() rzuca błąd w procesach uruchomionych ze snapshotu",
+      "Snapshot nie zbuduje się, bo crypto jest niedostępne w trakcie budowy"
+    ],
+    "correct": 1,
+    "explanation": "Wewnętrzne bufory entropii crypto.randomUUID(), randomUUIDv7() i randomInt() trafiały do snapshotów użytkownika (i do SEA z useSnapshot). Jeśli te funkcje wywołano podczas budowy, każdy proces ze snapshotu zwracał te same wartości: do 127 UUID-ów i ok. 1000 wartości randomInt(). Poprawki trafiły do 26.12.1, 24.22.1 i 22.23.4.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-01"
   }
 ]

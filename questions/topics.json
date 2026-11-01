@@ -490,6 +490,20 @@
     "icon": "clock"
   },
   {
+    "technology": "nodejs",
+    "slug": "modules-and-http",
+    "title": "Moduły i serwer HTTP",
+    "description": "require, exports, import JSON, fetch i node:http",
+    "icon": "braces"
+  },
+  {
+    "technology": "nodejs",
+    "slug": "upgrades-and-security",
+    "title": "Aktualizacje i bezpieczeństwo",
+    "description": "Zmiany w nowych wersjach i poprawki CVE",
+    "icon": "spark"
+  },
+  {
     "technology": "react",
     "slug": "server-and-client",
     "title": "Serwer i klient",

@@ -2320,6 +2320,62 @@
     "added_on": "2026-10-05"
   },
   {
+    "id": "nodejs-junior-013",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-014",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-015",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-016",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-017",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-018",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-019",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
     "id": "nodejs-mid-001",
     "technology": "nodejs",
     "level": "mid",
@@ -2568,6 +2624,30 @@
     "added_on": "2026-10-31"
   },
   {
+    "id": "nodejs-mid-032",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-mid-033",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-mid-034",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "flashcard",
+    "added_on": "2026-11-01"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -2782,6 +2862,30 @@
     "topic": "benchmarking",
     "kind": "single_choice",
     "added_on": "2026-10-21"
+  },
+  {
+    "id": "nodejs-senior-028",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-029",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-030",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-01"
   },
   {
     "id": "react-junior-001",

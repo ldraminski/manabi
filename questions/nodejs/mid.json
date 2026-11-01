@@ -504,5 +504,48 @@
     "explanation": "Notatki do wydania 26.13.0, które przeniosło linię 26 do LTS, przypominają: przy przejściu z wcześniejszej LTS (24, 22) trzeba wiedzieć, że od Node.js 25 oficjalne binarki dla Linuksa są linkowane z libatomic, a w części dystrybucji ta biblioteka nie jest instalowana domyślnie. Node.js 26 będzie wspierany do końca kwietnia 2029.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V26.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "nodejs-mid-032",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Testujesz na pierwszej wersji alfa Node.js 27 serwis, który trzyma w pamięci duże Buffery i nie ustawia --max-old-space-size. Co zmienia się w limicie pamięci względem Node.js 26?",
+    "options": [
+      "Limit sterty znika i proces może zająć całą pamięć maszyny",
+      "Domyślny limit to połowa pamięci fizycznej (między 256 MB a 4 GB), a pamięć Bufferów i ArrayBufferów wlicza się do niego, więc warto ustawić flagę jawnie",
+      "Buffery trafiają poza stertę, więc nie wpływają już na żaden limit",
+      "Domyślny limit jest stały i wynosi 2 GB niezależnie od maszyny"
+    ],
+    "correct": 1,
+    "explanation": "Notatki do Node.js 27.0.0-alpha mówią, że bez --max-old-space-size limit sterty to połowa pamięci fizycznej, ograniczona do zakresu 256 MB–4 GB, a pamięć Bufferów i ArrayBufferów liczy się do tego limitu. Aplikacje, które polegały na starych ustawieniach, powinny ustawić flagę jawnie. To wydanie alfa, więc szczegóły mogą się jeszcze zmienić.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-mid-033",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "W Node.js 27 (alfa) req.headers w serwerze HTTP ma prototyp null. Co stanie się z tą linijką middleware'u?",
+    "code": "if (req.headers.hasOwnProperty('authorization')) {\n  // ...\n}",
+    "options": [
+      "Działa jak dotąd",
+      "Zawsze zwraca false",
+      "Rzuca TypeError, bo obiekt bez prototypu nie ma metody hasOwnProperty; użyj Object.hasOwn(req.headers, 'authorization')",
+      "Zwraca undefined zamiast true"
+    ],
+    "correct": 2,
+    "explanation": "Obiekt z prototypem null nie dziedziczy metod z Object.prototype, więc req.headers.hasOwnProperty to undefined, a jego wywołanie rzuca TypeError. Object.hasOwn() albo operator in działają niezależnie od prototypu. Tę zmianę (http: make req.headers have a null prototype) wprowadza wydanie 27.0.0-alpha jako semver-major.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-mid-034",
+    "topic": "upgrades-and-security",
+    "kind": "flashcard",
+    "prompt": "Jak zmienia się domyślny server.keepAliveTimeout w wydaniu alfa Node.js 27 i co to daje serwisowi za load balancerem z 60-sekundowym idle timeoutem?",
+    "answer": "Domyślna wartość rośnie z 5 s do 65 s. Serwer trzyma więc bezczynne połączenia keep-alive dłużej niż load balancer, więc ten nie trafia już na gniazdo, które Node.js właśnie zamyka. Na Node.js 26 i starszych trzeba to ustawić ręcznie.",
+    "explanation": "keepAliveTimeout to czas bezczynności po ostatniej odpowiedzi, po którym serwer niszczy gniazdo. Gdy backend zamyka połączenie wcześniej niż proxy przed nim, proxy czasem wysyła żądanie w zamykane gniazdo i zwraca 502. Zmianę (http: increase keepAliveTimeout default to 65 seconds) wymieniają notatki do 27.0.0-alpha.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-01"
   }
 ]
