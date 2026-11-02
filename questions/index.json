@@ -2648,6 +2648,62 @@
     "added_on": "2026-11-01"
   },
   {
+    "id": "nodejs-mid-035",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-036",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-037",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-038",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-039",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-040",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-041",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -2886,6 +2942,94 @@
     "topic": "upgrades-and-security",
     "kind": "single_choice",
     "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-031",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-032",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-033",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-034",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-035",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-036",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-037",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-038",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-039",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-040",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-041",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-02"
   },
   {
     "id": "react-junior-001",

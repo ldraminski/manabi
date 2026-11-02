@@ -483,5 +483,182 @@
     "explanation": "Wewnętrzne bufory entropii crypto.randomUUID(), randomUUIDv7() i randomInt() trafiały do snapshotów użytkownika (i do SEA z useSnapshot). Jeśli te funkcje wywołano podczas budowy, każdy proces ze snapshotu zwracał te same wartości: do 127 UUID-ów i ok. 1000 wartości randomInt(). Poprawki trafiły do 26.12.1, 24.22.1 i 22.23.4.",
     "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
     "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-senior-031",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-106072: certyfikat serwera ma tylko SAN DNS:127.0.0.1, bez SAN typu IP. Na Node.js sprzed poprawek klient TLS odrzuca go dla hosta '127.0.0.1', ale akceptuje dla '127.1'. Dlaczego?",
+    "options": [
+      "'127.1' jest rozwiązywany przez DNS, więc Node.js pomija weryfikację certyfikatu",
+      "tls.checkServerIdentity() nie uznawał '127.1' za adres IP, ale normalizował go do 127.0.0.1 i porównywał z nazwami DNS z certyfikatu",
+      "System operacyjny podmieniał certyfikat dla adresów w skróconym zapisie",
+      "Node.js akceptował każdy certyfikat dla adresów z sieci loopback"
+    ],
+    "correct": 1,
+    "explanation": "Niekanoniczne zapisy IPv4 (0177.0.0.1, 0x7f.0.0.1, 2130706433, 127.1) nie były traktowane jak adresy IP, a po normalizacji pasowały do SAN typu DNS. Adres IP powinien pasować tylko do SAN typu IP Address, dlatego ten sam certyfikat był słusznie odrzucany dla '127.0.0.1'. Atak wymaga certyfikatu z liczbowym SAN DNS od zaufanego CA i resolvera, który przyjmuje takie zapisy (np. glibc).",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-032",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-105481 to niepełna poprawka wcześniejszej luki w ponownym użyciu gniazd keep-alive przez http.Agent. Dlaczego pierwsza ochrona nie wystarczyła?",
+    "options": [
+      "Działała tylko dla HTTPS, a nie dla zwykłego HTTP",
+      "Strażnik niszczący bezczynne gniazdo przy nieoczekiwanych danych działał tylko wtedy, gdy pętla zdarzeń odpytywała I/O; jeśli była zajęta synchronicznym kodem, dane czekały w gnieździe i zostały odczytane jako odpowiedź na nowe żądanie",
+      "Domyślnie keepAlive był wyłączony, więc ochrona nigdy się nie włączała",
+      "Ochrona sprawdzała tylko nagłówki odpowiedzi, a nie jej ciało"
+    ],
+    "correct": 1,
+    "explanation": "Jeśli niezamówiona odpowiedź dotarła do gniazda, ale nie została jeszcze odczytana, zanim gniazdo przekazano nowemu żądaniu (np. bo pętla zdarzeń była zajęta), strażnik był usuwany, nie widząc tych danych. Klient przyjmował wtedy odpowiedź wysłaną, zanim w ogóle wysłał żądanie.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-033",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Skaner oparty na zlib.ZipFile z Node.js 26 zatwierdza archiwa i sprawdza CRC-32 każdego wpisu. CVE-2026-106070 pozwalało mimo to zatwierdzić inną treść, niż wypakuje inny program. Dlaczego CRC-32 nie pomogło?",
+    "options": [
+      "CRC-32 jest liczone dopiero po zapisie pliku na dysk",
+      "Po nieudanej walidacji nagłówka lokalnego API zwracało bajty z początku pliku, a CRC z centralnego katalogu też kontroluje atakujący, więc suma się zgadzała",
+      "zlib.ZipFile w ogóle nie sprawdza CRC-32",
+      "CRC-32 obejmuje tylko nazwy plików, nie ich treść"
+    ],
+    "correct": 1,
+    "explanation": "Gdy nagłówek lokalny nie zgadzał się z centralnym katalogiem, błąd walidacji był łapany, ale nagłówek zostawał w pamięci podręcznej bez przesunięcia treści. Kolejny odczyt zwracał bajty od początku pliku zamiast odrzucić archiwum. Atakujący kontroluje też CRC zapisane w centralnym katalogu, więc może dopasować je do podstawionych bajtów. Suma kontrolna nie chroni przed kimś, kto ją sam wpisuje.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-034",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Proces uruchomiony przez node --permission --allow-fs-read=/etc/passwd.* app.js (to jedyna reguła odczytu) na Node.js 26 sprzed poprawek z października 2026 czyta /etc/passwd. Co się dzieje?",
+    "options": [
+      "Odczyt jest odrzucony, bo /etc/passwd nie pasuje do wzorca /etc/passwd.*",
+      "Odczyt przechodzi, bo przez błąd w wyszukiwaniu w drzewie uprawnień ścieżka krótsza od prefiksu reguły z * była uznawana za pasującą",
+      "Odczyt przechodzi, bo /etc jest zawsze dostępny do odczytu",
+      "Node.js nie startuje, bo wzorce z * są niedozwolone w --allow-fs-read"
+    ],
+    "correct": 1,
+    "explanation": "CVE-2026-106071: gdy żądana ścieżka była krótsza od prefiksu reguły z *, wyszukiwanie w drzewie przerywało porównanie i uznawało ścieżkę za pasującą. Dotyczyło to reguły leżącej bezpośrednio pod korzeniem drzewa, np. gdy była jedyną regułą w danym zakresie. Luka dotyczyła tylko linii 26.x.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-035",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Na Node.js 27 (alfa) uruchamiasz produkcję przez node --permission --allow-fs-read=/srv/app --allow-env=PORT --allow-env=APP_* server.js, a orkiestrator ustawia NODE_ENV=production. Aplikacja nagle zachowuje się jak w trybie deweloperskim. Dlaczego?",
+    "options": [
+      "--permission wymusza NODE_ENV=development",
+      "NODE_ENV nie należy do zmiennych zawsze zachowywanych, więc został usunięty ze środowiska przy starcie i biblioteki widzą go jako nieustawiony",
+      "Zmienne pasujące do APP_* nadpisują NODE_ENV",
+      "process.env jest pod modelem uprawnień tylko do zapisu"
+    ],
+    "correct": 1,
+    "explanation": "Pod modelem uprawnień w Node.js 27 proces widzi tylko zmienne dopuszczone przez --allow-env. Resztę Node.js usuwa przy starcie. Zachowuje tylko zmienne, które sam czyta (np. NODE_OPTIONS, PATH, TZ). Node.js nie czyta NODE_ENV, więc dokumentacja każe dodać --allow-env=NODE_ENV, bo wiele bibliotek traktuje brak tej zmiennej jak środowisko deweloperskie.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/permissions.html#environment-variable-permissions",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-036",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Serwis działa na Node.js 27 (alfa) z --permission --allow-env=APP_*. Po inicjalizacji chcesz usunąć ze środowiska wszystkie sekrety APP_* i wywołujesz kod poniżej. Co się stanie?",
+    "code": "const config = loadConfig(process.env);\nprocess.permission.drop('env', 'APP_*');",
+    "options": [
+      "Wszystkie zmienne APP_* znikną z process.env i ze środowiska procesów potomnych",
+      "drop() rzuci ERR_INVALID_ARG_VALUE, bo wzorców z * nie da się odebrać; trzeba usuwać zmienne po nazwie albo odebrać cały zakres env",
+      "Zmienne znikną tylko z process.env, ale zostaną w /proc/<pid>/environ",
+      "Nic się nie stanie, bo drop() działa tylko dla uprawnień do plików"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja Node.js 27 mówi, że wzorców nie da się odebrać: drop('env', 'APP_*') i drop('env', '*') rzucają ERR_INVALID_ARG_VALUE. Działa odebranie konkretnej zmiennej, np. drop('env', 'DATABASE_URL'), albo całego zakresu env, który usuwa wszystko poza zmiennymi czytanymi przez sam Node.js. Usunięte zmienne są też nadpisywane w początkowym bloku środowiska widocznym w /proc/<pid>/environ.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/permissions.html#environment-variable-permissions",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-037",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Proces na Node.js 27 (alfa) działa z --permission --allow-child-process --allow-env=PORT i uruchamia przez child_process.spawn() inny skrypt Node.js. Jakie zmienne środowiskowe zobaczy proces potomny?",
+    "options": [
+      "Pełne środowisko, z jakim wystartował rodzic, bo dziecko uruchamia się z --allow-env=*",
+      "Tylko te zmienne, do których rodzic miał dostęp (PORT i zmienne zachowywane przez Node.js), bo pozostałe usunięto ze środowiska rodzica przy starcie",
+      "Żadnych, bo dziecko dziedziczy --allow-env bez wartości",
+      "Tylko zmienne przekazane jawnie w options.env, bo dziedziczenie środowiska jest wyłączone"
+    ],
+    "correct": 1,
+    "explanation": "Dziecko rzeczywiście startuje z --allow-env=*, ale dziedziczy już okrojone środowisko rodzica. Usunięte zmienne znikają przy starcie ze wszystkiego, co pokazuje środowisko procesu, łącznie ze środowiskiem dziedziczonym przez procesy potomne. Dziecko widzi więc tylko to, do czego miał dostęp rodzic.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/permissions.html#environment-variable-permissions",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-038",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Serwisy zapisują w Redisie obiekty zserializowane przez v8.serialize() i czytają je przez v8.deserialize(). Planujesz rolling deploy z Node.js 26 na 27, w którym obie wersje przez chwilę działają obok siebie. Na co uważać?",
+    "options": [
+      "Na nic, format v8.serialize() jest stabilny między wersjami Node.js",
+      "Node.js 27 zapisuje w nowym formacie, którego starsze wydania nie przeczytają, więc instancje na 26 nie odczytają wpisów zapisanych przez 27",
+      "Node.js 27 nie przeczyta danych zapisanych przez 26, ale 26 przeczyta dane z 27",
+      "v8.serialize() usunięto w Node.js 27 na rzecz structuredClone()"
+    ],
+    "correct": 1,
+    "explanation": "W Node.js 27 v8.serialize(), structuredClone() i postMessage() używają nowego formatu (V8 15.6), którego starsze wydania nie potrafią odczytać. Przy mieszanym wdrożeniu dane zapisane przez nowe instancje rozsypią się na starych. Pomaga przejściowo stabilny format (np. JSON), wersjonowanie kluczy albo wdrożenie bez mieszania wersji.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-039",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "CI cache'uje katalog NODE_COMPILE_CACHE z kluczem zawierającym tylko główny numer Node.js i wersję V8. Co zmienia się w Node.js 27 i jak ustawić klucz?",
+    "options": [
+      "Nic, cache kompilacji jest od 27 przenośny między wszystkimi wersjami",
+      "Cache kompilacji i v8.cachedDataVersionTag() zmieniają się przy każdej łatce V8 w Node.js, nie tylko przy zmianie wersji V8, więc klucz powinien zawierać pełną wersję Node.js (process.version)",
+      "Cache kompilacji usunięto w Node.js 27",
+      "Klucz powinien zawierać tylko hash package-lock.json"
+    ],
+    "correct": 1,
+    "explanation": "Notatki do wydania Node.js 27 mówią, że v8.cachedDataVersionTag() i cache kompilacji zmieniają się przy każdej łatce V8 w Node.js. Dokumentacja node:module już wcześniej zastrzegała, że cache zwykle działa tylko w tej samej wersji Node.js. Klucz z samym numerem głównym będzie więc trafiał w bezużyteczny cache. Moduły się nie zepsują, ale zysk z cache zniknie.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-040",
+    "topic": "production-operations",
+    "kind": "single_choice",
+    "prompt": "Serwis zrzuca heap snapshoty przez --heapsnapshot-near-heap-limit i wysyła je do wspólnego zasobnika, do którego ma dostęp kilka zespołów. Co trzeba uwzględnić po przejściu na Node.js 27?",
+    "options": [
+      "Snapshoty są teraz kompresowane, więc zajmą mniej miejsca",
+      "Snapshot powstaje mniej więcej dwa razy dłużej i jest około dwa razy większy, a do tego zawiera wartości liczbowe i pełne źródła skryptów, więc trzeba zaplanować miejsce i przemyśleć dostęp",
+      "Node.js 27 nie obsługuje już --heapsnapshot-near-heap-limit",
+      "Snapshoty nie zawierają już obiektów wewnętrznych, więc są mniej przydatne do diagnozy"
+    ],
+    "correct": 1,
+    "explanation": "Według notatek do wydania heap snapshoty w Node.js 27 obejmują obiekty wewnętrzne, wartości liczbowe i pełne źródła skryptów, a ich wykonanie trwa około dwa razy dłużej i plik jest około dwa razy większy. To ważne przy limitach dysku w kontenerze i przy udostępnianiu plików, bo snapshot i tak zawiera dane z pamięci procesu, a teraz także kod.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-041",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Serwis łączy się z partnerem przez mTLS, a klucz prywatny leży w HSM i jest podawany przez opcję clientCertEngine w https.request(). Co stanie się na Node.js 27?",
+    "options": [
+      "Działa jak dawniej, opcja jest tylko oznaczona jako przestarzała",
+      "Opcja rzuca ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED; Node.js nie ma bezpośredniego zamiennika, a w OpenSSL engine'y zastąpił model providerów, więc integrację z HSM trzeba przeprojektować",
+      "Node.js automatycznie przełączy się na provider OpenSSL o tej samej nazwie",
+      "Opcja jest ignorowana i połączenie idzie bez certyfikatu klienta"
+    ],
+    "correct": 1,
+    "explanation": "DEP0183 jest w Node.js 27 End-of-Life: crypto.setEngine() i stałe ENGINE_METHOD_* usunięto, a clientCertEngine, privateKeyEngine i privateKeyIdentifier rzucają ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED. Dokumentacja mówi, że nie ma bezpośredniego zamiennika w Node.js, a upstream engine'y zastąpił model providerów OpenSSL. Taką migrację trzeba zaplanować przed aktualizacją.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/deprecations.html#dep0183-openssl-engine-based-apis",
+    "added_on": "2026-11-02"
   }
 ]

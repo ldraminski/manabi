@@ -547,5 +547,117 @@
     "explanation": "keepAliveTimeout to czas bezczynności po ostatniej odpowiedzi, po którym serwer niszczy gniazdo. Gdy backend zamyka połączenie wcześniej niż proxy przed nim, proxy czasem wysyła żądanie w zamykane gniazdo i zwraca 502. Zmianę (http: increase keepAliveTimeout default to 65 seconds) wymieniają notatki do 27.0.0-alpha.",
     "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
     "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-mid-035",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Poprawki bezpieczeństwa Node.js z 21 października 2026 łatają CVE-2026-111497 w dekoderze Brotli. Który z tych serwisów musi się zaktualizować najpilniej?",
+    "options": [
+      "Serwis, który tylko kompresuje swoje odpowiedzi przez zlib.brotliCompress()",
+      "API, które przyjmuje od klientów ciała żądań z Content-Encoding: br i rozpakowuje je przez node:zlib",
+      "Serwis, który wysyła odpowiedzi skompresowane wyłącznie gzipem",
+      "Aplikacja, która serwuje pliki .br przygotowane wcześniej w czasie builda, bez ich rozpakowywania"
+    ],
+    "correct": 1,
+    "explanation": "Błąd siedzi w dekoderze: spreparowane dane Brotli rozpakowywane przez node:zlib mogą pisać poza wewnętrzny bufor, co grozi awarią, wyciekiem pamięci procesu albo zdalnym wykonaniem kodu. Najbardziej narażony jest kod, który dekompresuje dane od atakującego. Poprawka trafiła do 26.x, 24.x i 22.x.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-036",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Kod uruchomiony z --permission i --allow-fs-read=/srv/app wywołuje fs.realpathSync('/etc/ssl/private/key.pem'). Co mógł z tego wyczytać na Node.js sprzed poprawek z października 2026 (CVE-2026-106073)?",
+    "options": [
+      "Nic, bo fs.realpathSync() od zawsze rzucał ERR_ACCESS_DENIED poza dozwolonymi katalogami",
+      "Pełną zawartość pliku key.pem",
+      "Czy plik istnieje i dokąd prowadzą dowiązania symboliczne, także poza dozwolonym katalogiem",
+      "Tylko to, czy proces ma prawo zapisu do tego pliku"
+    ],
+    "correct": 2,
+    "explanation": "fs.realpathSync() nie sprawdzał uprawnień do odczytu, więc kod pod modelem uprawnień mógł sprawdzać istnienie plików, rozwiązywać cele dowiązań i wyliczać ścieżki poza dozwolonymi katalogami. Wcześniejsza poprawka (CVE-2026-21715) objęła tylko fs.realpathSync.native(). Zawartości pliku ta luka nie ujawniała.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-037",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Sprawdzasz stary kod na Node.js 27 (alfa). Która z tych linijek rzuci wyjątek, zamiast tylko wypisać ostrzeżenie albo zadziałać?",
+    "options": [
+      "const gunzip = zlib.Gunzip();",
+      "const agent = http.Agent({ keepAlive: true });",
+      "const domain = require('node:domain');",
+      "const gzip = zlib.createGzip();"
+    ],
+    "correct": 0,
+    "explanation": "W Node.js 27 tworzenie klas z node:zlib bez new (DEP0184) jest End-of-Life, a same klasy przepisano na składnię class, więc wywołanie bez new rzuca błąd. Tworzenie klas z node:http bez new (DEP0195) i wczytanie node:domain (DEP0032) dostały w tej wersji dopiero ostrzeżenie w czasie działania. zlib.createGzip() to zwykła funkcja fabrykująca.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/deprecations.html#dep0184-instantiating-nodezlib-classes-without-new",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-038",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Środowisko testowe ma w /etc/hosts wpis 10.0.0.5 db.test, a serwer DNS nie ma dla tego adresu rekordu PTR. Kod wywołuje dns.reverse('10.0.0.5'). Co zmienia się w Node.js 27 (alfa)?",
+    "options": [
+      "Nic, dns.reverse() nigdy nie czytał pliku hosts",
+      "dns.reverse() przestaje zaglądać do pliku hosts, więc nazwa db.test nie zostanie już zwrócona i dostaniesz błąd DNS",
+      "dns.reverse() czyta już tylko plik hosts i nie pyta serwerów DNS",
+      "dns.reverse() został usunięty na rzecz dns.lookup()"
+    ],
+    "correct": 1,
+    "explanation": "Historia zmian dns.reverse() w dokumentacji Node.js 27 mówi wprost: odwrotne zapytania nie korzystają już z plików hosts. Wynik pochodzi więc tylko z DNS (rekord PTR), a bez niego zapytanie kończy się błędem z kodem DNS.",
+    "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/dns.html#dnsreverseip-callback",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-039",
+    "topic": "event-loop-internals",
+    "kind": "single_choice",
+    "prompt": "Test sprawdza dokładną kolejność logów z funkcji async (po await) i z niezależnego łańcucha .then(). Na Node.js 27 (alfa) kolejność się zmieniła i test pada. Jaki wniosek jest właściwy?",
+    "options": [
+      "To błąd w Node.js 27, trzeba go zgłosić i zostać przy wersji 26",
+      "V8 15.6 zużywa mniej mikrozadań na await, więc względna kolejność niezależnych łańcuchów obietnic może się przesunąć; test nie powinien od niej zależeć",
+      "Node.js 27 wykonuje mikrozadania dopiero po timerach, więc trzeba zamienić await na setTimeout",
+      "Kolejność zmienia się losowo przy każdym uruchomieniu, więc test trzeba powtarzać do skutku"
+    ],
+    "correct": 1,
+    "explanation": "Notatki do wydania Node.js 27 wymieniają wśród zauważalnych zmian V8 15.6, że await zużywa mniej mikrozadań. Kod, który opiera się na przeplocie niezależnych obietnic, może więc zachowywać się inaczej. Kolejność, która ma znaczenie, trzeba wymusić jawnie (await, wspólny łańcuch), a nie liczyć na liczbę ticków.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-040",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Testy snapshotowe porównują wyniki Math.sin() i Math.exp() co do ostatniej cyfry. Na Node.js 27 (alfa) kilka z nich pada na ostatnim bicie. Co zrobić?",
+    "options": [
+      "Porównywać wyniki z tolerancją, bo Math w V8 15.6 korzysta z libm z LLVM i może różnić się na ostatnim bicie",
+      "Uruchamiać testy z --random-seed, żeby wyniki Math były powtarzalne",
+      "Zgłosić błąd, bo specyfikacja wymaga identycznych wyników Math.sin() w każdym silniku",
+      "Zaokrąglać wyniki przez Math.round() przed zapisem do snapshotu"
+    ],
+    "correct": 0,
+    "explanation": "W Node.js 27 metody Math używają libm z LLVM i mogą dać inny ostatni bit niż wcześniej. Specyfikacja ECMAScript zostawia dokładność większości tych funkcji implementacji, więc porównanie z tolerancją jest poprawne. --random-seed dotyczy Math.random(), a Math.round() zgubiłby prawie całą precyzję.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-041",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Tabela sortuje wiersze najpierw po nazwisku, a potem po dacie, licząc, że przy równych datach zostanie kolejność nazwisk. W V8 15.6 (Node.js 27) Array.prototype.sort() dla dużych tablic używa PowerSort. Co z tym kodem?",
+    "options": [
+      "Przestanie działać, bo PowerSort nie jest stabilny",
+      "Działa dalej: sortowanie zostaje stabilne, zmienił się tylko algorytm dla dużych tablic",
+      "Działa tylko z flagą --stable-sort",
+      "Działa tylko dla tablic krótszych niż 10 000 elementów"
+    ],
+    "correct": 1,
+    "explanation": "Notatki do wydania mówią wprost, że sort() używa PowerSort dla dużych tablic i pozostaje stabilny. Stabilność sort() gwarantuje też specyfikacja ECMAScript od ES2019, więc kod opierający się na niej jest poprawny.",
+    "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
+    "added_on": "2026-11-02"
   }
 ]
