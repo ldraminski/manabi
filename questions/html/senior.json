@@ -195,5 +195,21 @@
     "explanation": "MDN: preconnect wykonuje z wyprzedzeniem DNS, TCP i TLS, ale przy wielu zewnętrznych domenach może być nieopłacalny — warto go użyć tylko dla najważniejszych połączeń, a dla pozostałych dns-prefetch. Dla własnej domeny nic nie daje, bo połączenie już istnieje.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/rel/preconnect/index.md",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "html-senior-013",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Na jednej stronie dwie biblioteki komponentów definiują element <my-button>. Jak uniknąć kolizji nazw w shadow DOM swojego komponentu?",
+    "options": [
+      "Utworzyć new CustomElementRegistry(), zdefiniować w nim element i przekazać go do attachShadow({ mode: 'open', customElementRegistry })",
+      "Wywołać customElements.define drugi raz — nowsza definicja nadpisze starszą",
+      "Zdefiniować element w osobnym rejestrze z opcją { extends: 'button' }, żeby powstał customized built-in element",
+      "Nie da się — nazwy custom elements muszą być unikalne na całej stronie"
+    ],
+    "correct": 0,
+    "explanation": "Scoped custom element registries pozwalają utworzyć niezależny rejestr, którego definicje obowiązują tylko w danym poddrzewie, np. w shadow root. Druga próba zdefiniowania tej samej nazwy w globalnym rejestrze się nie powiedzie, a opcja extends w rejestrze scoped rzuca NotSupportedError. Dla deklaratywnego Shadow DOM służy atrybut shadowrootcustomelementregistry i późniejsze registry.initialize(shadowRoot). Firefox obsługuje to od wersji 159.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_components/using_custom_elements/index.md",
+    "added_on": "2026-11-03"
   }
 ]

@@ -216,5 +216,38 @@
     "explanation": "Domyślnie setState aktualizuje UI od razu i nie aktywuje <ViewTransition>. Animację uruchamiają tylko aktualizacje w Transition, <Suspense> albo useDeferredValue, więc wystarczy startTransition(() => setShow(true)). Prop name służy tylko do przejść współdzielonego elementu; w pozostałych przypadkach React sam generuje unikalną nazwę.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/ViewTransition.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "react-mid-014",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Chcesz dodać jeden nasłuchiwacz click do kilku elementów zwracanych przez komponent, bez dodatkowego elementu-opakowania w DOM. Jak przekazać ref?",
+    "options": [
+      "<ref={ref}>…</> — skrócona składnia fragmentu przyjmuje ref",
+      "<Fragment ref={ref}>…</Fragment> z Fragment zaimportowanym z 'react'",
+      "Nie da się — fragment nie przyjmuje ref, trzeba dodać <div ref={ref}>",
+      "<Fragment forwardRef={ref}>…</Fragment>"
+    ],
+    "correct": 1,
+    "explanation": "Od React 19.3 Fragment przyjmuje ref. React wstawia do niego FragmentInstance z metodami takimi jak addEventListener, focus czy observeUsing, które działają na elementach DOM wewnątrz fragmentu. Skrócona składnia <>…</> nie przyjmuje żadnych propsów, więc trzeba jawnie użyć <Fragment ref={ref}>.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-mid-015",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "prompt": "Do których elementów DOM ref.current.addEventListener(\"click\", handler) doda nasłuchiwacz? Wrapper to komponent React, który renderuje swoje children.",
+    "code": "<Fragment ref={ref}>\n  <div id=\"A\" />\n  <Wrapper>\n    <div id=\"B\">\n      <div id=\"C\" />\n    </div>\n  </Wrapper>\n  <div id=\"D\" />\n</Fragment>",
+    "options": [
+      "A, B, C i D",
+      "A, B i D",
+      "A i D — zawartość komponentu Wrapper jest pomijana",
+      "Tylko A — pierwszy element fragmentu"
+    ],
+    "correct": 1,
+    "explanation": "FragmentInstance działa na bezpośrednich dzieciach DOM fragmentu. Przez komponenty (tu Wrapper) przechodzi, więc B też się liczy. C jest zagnieżdżony w elemencie DOM B, więc nasłuchiwacza nie dostaje. Gdy dzieci dochodzą albo znikają, React sam dodaje lub usuwa nasłuchiwacz.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-03"
   }
 ]

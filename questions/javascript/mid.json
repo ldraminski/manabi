@@ -284,5 +284,38 @@
     "explanation": "Wartość zmiennej z using musi być null, undefined albo obiektem z metodą [Symbol.dispose](). Przy deklaracji z wartością inną niż null i undefined silnik pobiera disposer; jeśli [Symbol.dispose] nie jest funkcją, rzuca TypeError. null i undefined są dozwolone, żeby zasób mógł być opcjonalny.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-018",
+    "topic": "browser",
+    "kind": "single_choice",
+    "prompt": "Powiadomienie utworzono z opcją navigate, a do obiektu dodano nasłuchiwacz click. Co się stanie, gdy użytkownik kliknie powiadomienie w przeglądarce, która obsługuje tę opcję?",
+    "code": "const n = new Notification(\"Zamówienie wysłane\", {\n  navigate: \"/orders/1234\",\n});\nn.addEventListener(\"click\", () => console.log(\"click\"));",
+    "options": [
+      "Przeglądarka przejdzie pod /orders/1234, a zdarzenie click nie zostanie wywołane",
+      "Najpierw wywoła się click, potem nastąpi przejście pod /orders/1234",
+      "Wywoła się tylko click; navigate działa wyłącznie w service workerze",
+      "navigate tylko ustawia właściwość notification.navigate, przejście trzeba zrobić samemu w click"
+    ],
+    "correct": 0,
+    "explanation": "Gdy powiadomienie ma ustawiony adres navigate, przeglądarka po aktywacji przechodzi pod ten adres zamiast wywoływać click (albo notificationclick w service workerze). Adres jest rozwiązywany względem bazowego URL strony i dostępny we właściwości notification.navigate. Opcja jest eksperymentalna; Firefox obsługuje ją od wersji 158.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/notification/navigate/index.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "javascript-mid-019",
+    "topic": "browser",
+    "kind": "single_choice",
+    "prompt": "Obrazek z innej domeny, która nie wysyła nagłówka Timing-Allow-Origin, został pobrany z cache przeglądarki. Jaką wartość ma deliveryType w jego wpisie PerformanceResourceTiming?",
+    "options": [
+      "\"cache\"",
+      "\"\" (pusty string)",
+      "\"navigational-prefetch\"",
+      "undefined"
+    ],
+    "correct": 1,
+    "explanation": "deliveryType ma wartość \"cache\" dla zasobów z cache, ale dla zasobów z innego originu, które nie przechodzą kontroli Timing-Allow-Origin, zawsze zwraca pusty string — nawet gdy przyszły z cache. Żeby mierzyć trafienia w cache dla zasobów z CDN, serwer musi wysyłać ten nagłówek.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/performanceresourcetiming/deliverytype/index.md",
+    "added_on": "2026-11-03"
   }
 ]

@@ -211,5 +211,38 @@
     "explanation": "Dokumentacja opisuje to jako pułapkę: <ViewTransition> aktywuje enter/exit tylko wtedy, gdy jest umieszczony przed węzłami DOM. Jeśli nad nim jest <div>, animacje wejścia i wyjścia się nie uruchamiają. To ograniczenie chroni przed sytuacjami, w których animuje się za dużo albo za mało. default=\"none\" wyłącza tylko te triggery, których nie podano jawnie, więc enter i exit zostają włączone.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/ViewTransition.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "react-senior-014",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "React 19.3, renderowanie na serwerze. Co trafi do HTML wysłanego z serwera dla tego fragmentu drzewa?",
+    "code": "'use client';\nimport { Suspense, use } from 'react';\nimport { browser } from 'react-dom';\n\nfunction SavedDraft() {\n  use(browser('Szkic jest w localStorage.'));\n  return <textarea defaultValue={localStorage.getItem('draft') ?? ''} />;\n}\n\nexport default function Editor() {\n  return (\n    <Suspense fallback={<p>Ładowanie szkicu…</p>}>\n      <SavedDraft />\n    </Suspense>\n  );\n}",
+    "options": [
+      "Fallback najbliższego <Suspense> („Ładowanie szkicu…”); w przeglądarce komponent wyrenderuje się normalnie",
+      "Puste <textarea>, bo localStorage na serwerze zwraca null",
+      "Nic — serwer przerwie renderowanie błędem ReferenceError: localStorage is not defined",
+      "Pełny komponent; use(browser()) działa dopiero po hydracji i usuwa go z DOM"
+    ],
+    "correct": 0,
+    "explanation": "use(browser()) z react-dom zatrzymuje renderowanie komponentu na serwerze i zostawia w jego miejscu fallback najbliższej granicy <Suspense>. W przeglądarce zwraca undefined, więc komponent renderuje się zwyczajnie. To zamiennik dla sprawdzania typeof window albo flagi mounted ustawianej w efekcie. Wywołanie musi być w Client Component.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/browser.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-senior-015",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Komponent kliencki wywołuje use(browser()), ale nad nim w drzewie nie ma żadnej granicy <Suspense>. Co się stanie przy renderowaniu na serwerze?",
+    "options": [
+      "Renderowanie na serwerze się nie powiedzie",
+      "React wyrenderuje komponent na serwerze, ignorując browser()",
+      "React pominie komponent i wstawi w jego miejsce pusty komentarz HTML",
+      "React sam owinie komponent w <Suspense> z pustym fallbackiem"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja wymienia to jako ograniczenie: podczas renderowania na serwerze use(browser()) musi być wewnątrz <Suspense>, inaczej render się nie powiedzie. Do tego browser() trzeba przekazać do use() — samo wywołanie browser() nic nie robi i nie należy rzucać zwróconej wartości.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/browser.md",
+    "added_on": "2026-11-03"
   }
 ]

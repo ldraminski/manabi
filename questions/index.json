@@ -568,6 +568,30 @@
     "added_on": "2026-10-17"
   },
   {
+    "id": "angular-mid-013",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "angular-mid-014",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "angular-mid-015",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -854,6 +878,38 @@
     "topic": "cascade-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-013",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-014",
+    "technology": "css",
+    "level": "mid",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-015",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-016",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
   },
   {
     "id": "css-senior-001",
@@ -1536,6 +1592,14 @@
     "added_on": "2026-10-28"
   },
   {
+    "id": "html-senior-013",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -1830,6 +1894,22 @@
     "topic": "memory-and-concurrency",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-mid-018",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "browser",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "javascript-mid-019",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "browser",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
   },
   {
     "id": "javascript-senior-001",
@@ -3248,6 +3328,22 @@
     "added_on": "2026-10-31"
   },
   {
+    "id": "react-mid-014",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-mid-015",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -3350,6 +3446,22 @@
     "topic": "concurrent-ui",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "react-senior-014",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-senior-015",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-11-03"
   },
   {
     "id": "rest-api-junior-001",

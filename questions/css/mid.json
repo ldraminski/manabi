@@ -199,5 +199,70 @@
     "explanation": ":is() przyjmuje specyficzność najbardziej specyficznego argumentu z listy, niezależnie od tego, który z nich faktycznie pasuje. Pierwsza reguła ma więc specyficzność (1,0,1) i wygrywa z .card p (0,1,1), mimo że stoi wcześniej. Z :where() byłoby odwrotnie, bo ma ono zerową specyficzność.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/selectors/_colon_is/index.md",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "css-mid-013",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Modal ma własny obszar przewijania. Po dojściu do końca przewijanie ma przechodzić na stronę pod spodem, ale bez efektu „odbicia” (bounce). Którą wartość overscroll-behavior ustawisz?",
+    "options": [
+      "auto",
+      "chain",
+      "contain",
+      "none"
+    ],
+    "correct": 1,
+    "explanation": "chain pozwala przewijaniu przejść do kolejnego kontenera, ale blokuje efekt odbicia na krawędzi. auto pozwala na jedno i drugie. contain zatrzymuje przewijanie w kontenerze, ale odbicie może zostać. none blokuje oba. Wartość chain jest nowa (m.in. Firefox 157), więc sprawdź wsparcie przeglądarek.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/overscroll-behavior/index.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-014",
+    "topic": "layout-in-depth",
+    "kind": "single_choice",
+    "prompt": "Jak według CSS Grid Level 3 włączyć układ typu masonry, w którym kolumny tworzą siatkę, a elementy w pionie są upychane tam, gdzie jest najwięcej miejsca?",
+    "options": [
+      "display: grid-lanes razem z grid-template-columns",
+      "display: grid z grid-template-rows: masonry",
+      "display: masonry",
+      "display: grid z masonry-auto-flow: next"
+    ],
+    "correct": 0,
+    "explanation": "Specyfikacja nazywa ten układ grid lanes i włącza go wartościami display: grid-lanes lub inline-grid-lanes. Starsza składnia z grid-template-rows: masonry i właściwością masonry-auto-flow została porzucona — Firefox 159 ją usunął. Układ jest wciąż eksperymentalny, więc sprawdź wsparcie przeglądarek.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/grid_layout/grid_lanes/index.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-015",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Chcesz użyć stylów z @scope tylko w przeglądarkach, które tę regułę obsługują. Jak to sprawdzić w CSS?",
+    "options": [
+      "@supports at-rule(@scope) { … }",
+      "@supports (@scope) { … }",
+      "@supports selector(@scope) { … }",
+      "@media (scope) { … }"
+    ],
+    "correct": 0,
+    "explanation": "Funkcja at-rule() w @supports sprawdza, czy przeglądarka obsługuje daną regułę @. selector() sprawdza składnię selektorów, a nawias bez funkcji — pary właściwość: wartość. at-rule() działa też w supports() przy @import. Firefox obsługuje ją od wersji 157.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/at-rules/@supports/index.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-016",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Przeglądarka obsługuje CSS typed arithmetic. Viewport ma 1000px szerokości, a 1em to 16px. Jaki wynik da to wyrażenie?",
+    "code": "calc(100vw / 1em)",
+    "options": [
+      "62.5 — liczbę bez jednostki",
+      "62.5px",
+      "1000px",
+      "16em"
+    ],
+    "correct": 0,
+    "explanation": "Przy dzieleniu wartości tego samego typu (tu dwóch długości) jednostki się skracają i zostaje sama liczba: 1000px / 16px = 62.5. Taką liczbę można wstawić do właściwości bez jednostki, np. opacity, albo zamienić na inny typ, mnożąc przez 1deg czy 1rem. Starsze przeglądarki uznają dzielenie przez wartość z jednostką za błąd; Firefox obsługuje typed arithmetic od wersji 158.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/values_and_units/using_typed_arithmetic/index.md",
+    "added_on": "2026-11-03"
   }
 ]

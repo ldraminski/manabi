@@ -195,5 +195,54 @@
     "explanation": "Dokumentacja zaleca zawsze używać właściwości host zamiast @HostBinding i @HostListener — dekoratory istnieją tylko dla zgodności wstecznej. Ręczne addEventListener omija mechanizmy Angulara, a dodatkowy <div> nie zmienia samego elementu hosta.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/components/host-elements.md",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "angular-mid-013",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Szablon AppWrapper owija <ng-content /> w @boundary z blokiem @error. Rodzic renderuje <app-wrapper><app-risky /></app-wrapper>, a app-risky rzuca błąd przy inicjalizacji. Co się stanie?",
+    "options": [
+      "AppWrapper pokaże swój blok @error",
+      "@boundary w AppWrapper nie złapie błędu — projektowana treść należy do widoku rodzica, więc @boundary trzeba dodać w szablonie rodzica wokół <app-wrapper>",
+      "Błąd zostanie złapany, ale $error w bloku @error będzie undefined",
+      "Angular po cichu pominie app-risky i wyrenderuje resztę wrappera"
+    ],
+    "correct": 1,
+    "explanation": "Treść projektowana przez <ng-content> należy do widoku, który ją deklaruje (rodzica), a nie do widoku komponentu, który ją przyjmuje. Dlatego @boundary wokół <ng-content> nie łapie jej błędów. Żeby je złapać, owiń w @boundary sam <app-wrapper> razem z treścią w szablonie rodzica. @boundary jest w Angularze 22.2 w developer preview.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/error-boundaries.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "angular-mid-014",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Blok @boundary ma kilka bloków @error, część z warunkiem when. Jak Angular wybiera, który pokazać po złapaniu błędu?",
+    "options": [
+      "Sprawdza je po kolei i używa pierwszego, którego when daje true; @error bez when na końcu łapie resztę",
+      "Wybiera najbardziej szczegółowy blok, niezależnie od kolejności w szablonie",
+      "Renderuje wszystkie bloki, których when daje true",
+      "Używa ostatniego pasującego bloku"
+    ],
+    "correct": 0,
+    "explanation": "Klauzule when są sprawdzane w kolejności zapisu, więc bloki @error układa się od najbardziej do najmniej szczegółowego. Ostatni @error bez when służy jako ogólny fallback. W bloku @error dostępne są $error (złapany błąd) i $reset() (ponowna próba wyrenderowania treści).",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/error-boundaries.md",
+    "added_on": "2026-11-03"
+  },
+  {
+    "id": "angular-mid-015",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Projekt na Angularze 22.2 ma strictTemplates: true. EditorComponent ma output saved, a w szablonie jest literówka. Kompilator nie zgłasza błędu. Dlaczego?",
+    "code": "<app-editor (savd)=\"persist()\" />",
+    "options": [
+      "strictUnclaimedEventNames, która wykrywa takie literówki, jest domyślnie wyłączona, także przy strictTemplates: true",
+      "strictTemplates sprawdza tylko inputy, wiązań zdarzeń nie sprawdza wcale",
+      "Angular traktuje każde nieznane zdarzenie jako custom element, więc nie da się tego sprawdzić",
+      "Trzeba dodać CUSTOM_ELEMENTS_SCHEMA, żeby kompilator sprawdzał nazwy zdarzeń"
+    ],
+    "correct": 0,
+    "explanation": "Opcja strictUnclaimedEventNames (Angular 22.2) zgłasza wiązania zdarzeń, których nazwa nie pasuje ani do outputu dyrektywy na elemencie, ani do znanego zdarzenia DOM. Jest domyślnie false nawet przy strictTemplates. Sprawdza tylko nazwy w camelCase z jednego słowa; nazwy z myślnikiem, np. my-event, są pomijane, podobnie elementy bez komponentu przy CUSTOM_ELEMENTS_SCHEMA.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/tools/cli/template-typecheck.md",
+    "added_on": "2026-11-03"
   }
 ]
