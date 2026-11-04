@@ -234,5 +234,38 @@
     "explanation": "Wcześniej rootDir był wyliczany jako wspólny katalog wszystkich plików wejściowych (tu src), więc src/index.ts trafiał do dist/index.js. W 6.0 domyślny rootDir to katalog z tsconfig.json, a wyliczanie zostało tylko dla tsc bez pliku tsconfig. Projekty z kodem głębiej niż tsconfig muszą ustawić rootDir jawnie.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "typescript-mid-015",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "TypeScript 6.0 zgłasza, że baseUrl jest przestarzały. baseUrl służył tu tylko jako prefiks dla paths. Jak to poprawić?",
+    "code": "{\n  \"compilerOptions\": {\n    \"baseUrl\": \"./src\",\n    \"paths\": { \"@app/*\": [\"app/*\"] }\n  }\n}",
+    "options": [
+      "Usunąć baseUrl i dopisać prefiks w paths: \"@app/*\": [\"./src/app/*\"]",
+      "Zmienić baseUrl na rootDir: \"./src\"",
+      "Nic nie zmieniać: paths bez baseUrl nie działa, więc ostrzeżenie trzeba wyciszyć",
+      "Przenieść baseUrl do sekcji \"imports\" w package.json"
+    ],
+    "correct": 0,
+    "explanation": "paths od dawna nie wymaga baseUrl; ścieżki w paths są wtedy liczone względem tsconfig.json. baseUrl był też korzeniem wyszukiwania modułów, więc importy w stylu \"someModule.js\" mogły się rozwiązywać do src/someModule.js, choć w runtime by nie działały. W 6.0 baseUrl jest przestarzały i przestaje być takim korzeniem. Kto naprawdę tego potrzebował, może dodać mapowanie \"*\": [\"./src/*\"].",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "typescript-mid-016",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "TypeScript 6.0, \"moduleResolution\": \"nodenext\". Chcesz importować wewnętrzne moduły pakietu przez import { x } from \"#/utils.js\". Co trzeba dodać do package.json?",
+    "options": [
+      "\"imports\": { \"#/*\": \"./dist/*\" }",
+      "\"exports\": { \"#/*\": \"./dist/*\" }",
+      "\"paths\": { \"#/*\": [\"./dist/*\"] }",
+      "Nic: TypeScript nie obsługuje subpath imports zaczynających się od #/"
+    ],
+    "correct": 0,
+    "explanation": "Subpath imports to pole \"imports\" w package.json, które definiuje wewnętrzne aliasy pakietu (exports dotyczy tego, co pakiet udostępnia na zewnątrz, a paths to opcja tsconfig). Wcześniej po # trzeba było dopisać nazwę, np. #root/*. Node.js dodał obsługę samego #/, a TypeScript 6.0 obsługuje ją przy moduleResolution nodenext i bundler.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-11-04"
   }
 ]

@@ -191,5 +191,38 @@
     "explanation": "Import 'server-only' oznacza moduł jako wyłącznie serwerowy. Próba zaimportowania go w komponencie klienckim kończy się błędem w czasie budowania, więc np. kod z sekretami czy dostępem do bazy nie wycieknie do paczki dla przeglądarki.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/05-server-and-client-components.mdx",
     "added_on": "2026-10-17"
+  },
+  {
+    "id": "nextjs-mid-013",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Next.js 16. Chcesz po zapisie posta odświeżyć router klienta przez refresh() z next/cache. W którym miejscu możesz go wywołać?",
+    "options": [
+      "Tylko w Server Action",
+      "W Server Action i w Route Handlerze (route.ts)",
+      "W dowolnym Server Component podczas renderowania",
+      "W Client Component, zamiast router.refresh()"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja mówi, że refresh można wywołać wyłącznie w Server Action. Wywołanie w Route Handlerze, Client Componencie ani w innym kontekście rzuca błąd. W Client Componencie do odświeżenia służy router.refresh() z useRouter.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/refresh.mdx",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "nextjs-mid-014",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "prompt": "Projekt ma włączone experimental.authInterrupts i plik forbidden.tsx. Użytkownik bez roli admin widzi jednak komunikat „Coś poszło nie tak” zamiast ekranu z forbidden.tsx. Dlaczego?",
+    "code": "export default async function AdminPage() {\n  try {\n    const session = await verifySession()\n    if (session.role !== 'admin') forbidden()\n    return <Dashboard />\n  } catch (e) {\n    return <p>Coś poszło nie tak</p>\n  }\n}",
+    "options": [
+      "forbidden() działa przez rzucenie wyjątku, a try/catch go przechwytuje; trzeba go przepuścić, np. przez unstable_rethrow(e)",
+      "forbidden() trzeba zwrócić: return forbidden()",
+      "forbidden() działa tylko w Route Handlerach",
+      "forbidden.tsx musi leżeć w katalogu głównym, obok root layoutu"
+    ],
+    "correct": 0,
+    "explanation": "forbidden() rzuca specjalny błąd (NEXT_HTTP_ERROR_FALLBACK;403) i ma typ never, więc nie trzeba pisać return. Otaczający try/catch tłumi ten wyjątek i UI dla 403 się nie wyrenderuje. Dokumentacja zaleca unstable_rethrow, które przepuszcza wewnętrzne błędy Next.js. forbidden() można wywoływać w Server Components, Server Functions i Route Handlerach.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/forbidden.mdx",
+    "added_on": "2026-11-04"
   }
 ]

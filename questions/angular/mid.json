@@ -244,5 +244,22 @@
     "explanation": "Opcja strictUnclaimedEventNames (Angular 22.2) zgłasza wiązania zdarzeń, których nazwa nie pasuje ani do outputu dyrektywy na elemencie, ani do znanego zdarzenia DOM. Jest domyślnie false nawet przy strictTemplates. Sprawdza tylko nazwy w camelCase z jednego słowa; nazwy z myślnikiem, np. my-event, są pomijane, podobnie elementy bez komponentu przy CUSTOM_ELEMENTS_SCHEMA.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/tools/cli/template-typecheck.md",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "angular-mid-016",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "Angular 22.2.4+. routeParams to signal z obiektem { id, tab }. Użytkownik przełącza tylko tab, a id zostaje to samo. Ile razy uruchomi się loader?",
+    "code": "user = resource({\n  params: () => this.routeParams().id,\n  loader: ({ params }) => fetchUser(params),\n});",
+    "options": [
+      "Nie uruchomi się ponownie: params zwraca tę samą wartość, więc resource nie ładuje danych od nowa",
+      "Uruchomi się przy każdej zmianie routeParams, bo params czyta ten signal",
+      "Uruchomi się ponownie tylko wtedy, gdy loader zwraca Promise",
+      "Nie uruchomi się już nigdy, nawet po zmianie id, dopóki nie wywołasz reload()"
+    ],
+    "correct": 0,
+    "explanation": "Przed poprawką signale czytane w funkcji params były bezpośrednimi zależnościami wewnętrznego stanu resource, więc każda ich zmiana tworzyła nowy obiekt żądania i ponownie uruchamiała loader, nawet przy tej samej wartości. W 22.2.4 params jest owijane w computed, które zmienia się tylko wtedy, gdy wynik jest inny według Object.is. Zmiana id albo reload() nadal ładują dane.",
+    "source_url": "https://github.com/angular/angular/commit/fe02c34c3ce22784e1eb2afb2b8d842df6ffbeb4",
+    "added_on": "2026-11-04"
   }
 ]

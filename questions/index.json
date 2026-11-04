@@ -592,6 +592,14 @@
     "added_on": "2026-11-03"
   },
   {
+    "id": "angular-mid-016",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -2208,6 +2216,22 @@
     "added_on": "2026-10-17"
   },
   {
+    "id": "nextjs-mid-013",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "nextjs-mid-014",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "loading-and-errors",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
     "id": "nextjs-senior-001",
     "technology": "nextjs",
     "level": "senior",
@@ -2302,6 +2326,14 @@
     "topic": "server-runtime",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-013",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
   },
   {
     "id": "nodejs-junior-001",
@@ -3344,6 +3376,22 @@
     "added_on": "2026-11-03"
   },
   {
+    "id": "react-mid-016",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "react-mid-017",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -3462,6 +3510,14 @@
     "topic": "server-and-client",
     "kind": "single_choice",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-senior-016",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
   },
   {
     "id": "rest-api-junior-001",
@@ -4168,6 +4224,22 @@
     "added_on": "2026-10-31"
   },
   {
+    "id": "typescript-junior-016",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "typescript-junior-017",
+    "technology": "typescript",
+    "level": "junior",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
     "id": "typescript-mid-001",
     "technology": "typescript",
     "level": "mid",
@@ -4278,6 +4350,22 @@
     "topic": "tooling",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "typescript-mid-015",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "typescript-mid-016",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
   },
   {
     "id": "typescript-senior-001",
@@ -4472,6 +4560,14 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "vue-junior-013",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
+  },
+  {
     "id": "vue-mid-001",
     "technology": "vue",
     "level": "mid",
@@ -4566,6 +4662,14 @@
     "topic": "components-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-14"
+  },
+  {
+    "id": "vue-mid-013",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-04"
   },
   {
     "id": "vue-senior-001",

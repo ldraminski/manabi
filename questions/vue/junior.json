@@ -188,5 +188,22 @@
     "explanation": "defineProps i defineEmits są makrami kompilatora: działają tylko w <script setup>, nie importuje się ich i znikają po kompilacji.",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/api/sfc-script-setup.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "vue-junior-013",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.44+. Co wyrenderuje się w DOM dla tego elementu?",
+    "code": "<video src=\"intro.mp4\" :playsinline=\"false\"></video>",
+    "options": [
+      "<video src=\"intro.mp4\"></video> – atrybut playsinline zostanie pominięty",
+      "<video src=\"intro.mp4\" playsinline=\"false\"></video>",
+      "<video src=\"intro.mp4\" playsinline=\"\"></video>",
+      "Vue zgłosi ostrzeżenie, bo do atrybutów można bindować tylko stringi"
+    ],
+    "correct": 0,
+    "explanation": "playsinline to atrybut logiczny HTML: liczy się sama jego obecność, więc playsinline=\"false\" nadal włącza odtwarzanie w miejscu (np. na iOS). Vue przy false usuwa atrybuty logiczne, ale playsinline brakowało na tej liście i do 3.5.43 renderował się jako playsinline=\"false\". Od 3.5.44 false pomija atrybut zarówno w przeglądarce, jak i w SSR.",
+    "source_url": "https://github.com/vuejs/core/pull/15627",
+    "added_on": "2026-11-04"
   }
 ]

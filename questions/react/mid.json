@@ -249,5 +249,37 @@
     "explanation": "FragmentInstance działa na bezpośrednich dzieciach DOM fragmentu. Przez komponenty (tu Wrapper) przechodzi, więc B też się liczy. C jest zagnieżdżony w elemencie DOM B, więc nasłuchiwacza nie dostaje. Gdy dzieci dochodzą albo znikają, React sam dodaje lub usuwa nasłuchiwacz.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "react-mid-016",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Kliknięcie zakładki „Raporty” uruchamia startTransition, a jej render trwa kilka sekund. W tym czasie użytkownik zmienia filtr w innym panelu, co też idzie przez startTransition. Co zmieniło się w 19.3 w takiej sytuacji?",
+    "options": [
+      "Transitions renderują się niezależnie, więc wolna transition nie wstrzymuje już niepowiązanej z nią zmiany filtra",
+      "Obie transitions są łączone w jeden render, więc filtr pojawi się dopiero razem z zakładką",
+      "Druga transition anuluje pierwszą i zakładka „Raporty” nie zostanie pokazana",
+      "Zmiany wewnątrz startTransition są teraz renderowane synchronicznie, jak zwykłe aktualizacje"
+    ],
+    "correct": 0,
+    "explanation": "Do 19.2 równoległe transitions były splątane (entangled) w jeden render, więc wolna transition potrafiła zatrzymać niepowiązaną. Notatki do wydania 19.3 mówią, że transitions renderują się teraz niezależnie i wolna nie blokuje innych. Transitions dalej są przerywalne i nie stają się synchroniczne.",
+    "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "react-mid-017",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Komponent w ukrytym <Activity mode=\"hidden\"> czyta store przez useSyncExternalStore. Gdy drzewo jest ukryte, wartość w store się zmienia. Co pokaże komponent po odsłonięciu Activity?",
+    "options": [
+      "Aktualną wartość ze store: przy odsłonięciu React sprawdza snapshot i w razie potrzeby renderuje komponent ponownie",
+      "Wartość sprzed ukrycia, dopóki store nie zmieni się jeszcze raz po odsłonięciu",
+      "Nic, bo ukrycie Activity odmontowuje komponent i traci jego stan",
+      "Błąd, bo useSyncExternalStore nie działa wewnątrz Activity"
+    ],
+    "correct": 0,
+    "explanation": "Ukryte Activity odłącza efekty, więc komponent przestaje subskrybować store. Przed poprawką w 19.3 zmiana store w tym czasie mogła zostać przegapiona i po odsłonięciu komponent pokazywał nieaktualną wartość. Teraz przy ponownym podłączeniu efektów React zawsze porównuje snapshot i renderuje komponent, jeśli ten jest nieaktualny. Activity zachowuje stan ukrytego drzewa, a nie odmontowuje go.",
+    "source_url": "https://github.com/facebook/react/pull/36947",
+    "added_on": "2026-11-04"
   }
 ]

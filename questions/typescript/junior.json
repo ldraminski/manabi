@@ -233,5 +233,38 @@
     "explanation": "TypeScript 6.0 zmienił kilka domyślnych wartości, m.in. strict na true. Jeśli projekt polegał na starym domyślnym false, trzeba to ustawić jawnie. Przy okazji zmieniły się też domyślne module (esnext) i target (najnowsza wersja ECMAScript, dziś es2025).",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "typescript-junior-016",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "TypeScript 6.0. W katalogu z plikiem tsconfig.json uruchamiasz tsc foo.ts. Co się stanie?",
+    "options": [
+      "tsc zgłosi błąd TS5112, bo podanie plików w wierszu poleceń sprawia, że tsconfig.json nie zostałby wczytany",
+      "tsc skompiluje foo.ts z opcjami z tsconfig.json",
+      "tsc skompiluje cały projekt z tsconfig.json i pominie foo.ts",
+      "tsc po cichu zignoruje tsconfig.json i skompiluje foo.ts z domyślnymi opcjami"
+    ],
+    "correct": 0,
+    "explanation": "Do wersji 5.9 tsc z plikami w argumentach po cichu ignorował tsconfig.json, co myliło wiele osób. W 6.0 taka sytuacja kończy się błędem TS5112. Jeśli naprawdę chcesz skompilować plik z domyślnymi opcjami, użyj nowej flagi: tsc --ignoreConfig foo.ts.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-11-04"
+  },
+  {
+    "id": "typescript-junior-017",
+    "topic": "tooling",
+    "kind": "single_choice",
+    "prompt": "TypeScript 6.0, w tsconfig.json jest \"lib\": [\"es2025\", \"dom\"]. Czy ten kod się skompiluje?",
+    "code": "for (const div of document.querySelectorAll(\"div\")) {\n  console.log(div.textContent)\n}",
+    "options": [
+      "Tak: od 6.0 lib dom zawiera też deklaracje z dom.iterable i dom.asynciterable",
+      "Nie: trzeba dodać \"dom.iterable\" do lib",
+      "Nie: NodeList nie da się iterować przez for...of, trzeba użyć forEach",
+      "Tak, ale tylko z flagą --downlevelIteration"
+    ],
+    "correct": 0,
+    "explanation": "Wcześniej iterowanie kolekcji DOM (NodeList, HTMLCollection) wymagało dodania \"dom.iterable\". W TypeScript 6.0 zawartość dom.iterable i dom.asynciterable trafiła do lib.dom.d.ts, a te dwie nazwy w lib to teraz puste pliki. --downlevelIteration jest w 6.0 przestarzałe.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
+    "added_on": "2026-11-04"
   }
 ]

@@ -193,5 +193,21 @@
     "explanation": "Zapytania sterowników synchronicznych, takich jak better-sqlite3, kończą się w trakcie prerenderingu, więc bez Request-time API wynik trafia do statycznego HTML z next build. connection() mówi Next.js, że renderowanie ma poczekać na prawdziwe żądanie; dokumentacja zaleca wywołanie go przed takim zapytaniem. cache: \"no-store\" to opcja fetch, a sterownik SQLite nie zadziała w przeglądarce.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/connection.mdx",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "nextjs-senior-013",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Next.js z włączonym experimental.authInterrupts i plikiem unauthorized.tsx obok strony. Strona konta renderuje nagłówek od razu, a dane konta w <Suspense>. Komponent wewnątrz Suspense wywołuje unauthorized(), gdy sesji nie ma. Co dostanie niezalogowany użytkownik?",
+    "options": [
+      "Odpowiedź ze statusem 200 z tagiem noindex; w miejscu streamowanej treści wyrenderuje się UI z unauthorized.tsx",
+      "Odpowiedź ze statusem 401, bo Next.js cofa już wysłany nagłówek strony",
+      "Przekierowanie 307 na stronę logowania",
+      "Status 500, bo unauthorized() nie wolno wywoływać wewnątrz Suspense"
+    ],
+    "correct": 0,
+    "explanation": "Gdy unauthorized() rzuca po rozpoczęciu streamowania, nagłówki odpowiedzi zostały już wysłane, więc status zostaje 200. Wyjątek trafia do najbliższej granicy unauthorized, która renderuje się zamiast streamowanej treści, a Next.js dodaje <meta name=\"robots\" content=\"noindex\">. Status 401 jest zwracany tylko wtedy, gdy unauthorized() zadziała przed startem odpowiedzi, także przy prerenderowaniu.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/unauthorized.mdx",
+    "added_on": "2026-11-04"
   }
 ]
