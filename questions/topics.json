@@ -649,5 +649,33 @@
     "title": "SSR i hydracja",
     "description": "Incremental hydration, triggery hydrate, ngSkipHydration",
     "icon": "layout"
+  },
+  {
+    "technology": "aws",
+    "slug": "iam",
+    "title": "Uprawnienia IAM",
+    "description": "Polityki, role, użytkownik root, ARN",
+    "icon": "layout"
+  },
+  {
+    "technology": "aws",
+    "slug": "s3",
+    "title": "Amazon S3",
+    "description": "Prywatność obiektów, presigned URL, klasy przechowywania",
+    "icon": "list"
+  },
+  {
+    "technology": "aws",
+    "slug": "infrastructure",
+    "title": "EC2 i sieć",
+    "description": "Regiony, strefy dostępności, security groups, NAT",
+    "icon": "globe"
+  },
+  {
+    "technology": "aws",
+    "slug": "sqs",
+    "title": "Kolejki SQS",
+    "description": "Visibility timeout, kolejki standardowe i FIFO",
+    "icon": "clock"
   }
 ]

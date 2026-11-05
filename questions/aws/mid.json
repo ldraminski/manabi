@@ -1,0 +1,98 @@
+[
+  {
+    "id": "aws-mid-001",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Proces A nadpisuje obiekt w S3 (PUT) i dostaje odpowiedź 200. Zaraz potem proces B wykonuje GET tego samego klucza. Co dostanie B?",
+    "options": [
+      "Nową wersję obiektu — S3 daje silną spójność read-after-write",
+      "Może dostać starą wersję przez kilka sekund — S3 jest ostatecznie spójne",
+      "Błąd 409, dopóki replikacja się nie zakończy",
+      "Nową wersję tylko wtedy, gdy włączone jest wersjonowanie"
+    ],
+    "correct": 0,
+    "explanation": "S3 zapewnia silną spójność read-after-write dla PUT i DELETE obiektów we wszystkich regionach, także przy nadpisywaniu istniejących obiektów. Ostatecznie spójne są natomiast konfiguracje bucketu, np. zmiany polityki.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/Welcome.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-002",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Wygenerowałeś presigned URL do obiektu S3, a potem odebrano Ci uprawnienie s3:GetObject do tego bucketu. Co się stanie, gdy klient otworzy link przed upływem jego ważności?",
+    "options": [
+      "Pobierze plik — uprawnienia są sprawdzane tylko przy generowaniu linku",
+      "Pobierze plik, bo presigned URL omija polityki IAM",
+      "Dostanie odmowę dostępu — żądanie wykonuje się z uprawnieniami twórcy linku",
+      "Link automatycznie przełączy się na uprawnienia właściciela bucketu"
+    ],
+    "correct": 2,
+    "explanation": "Presigned URL używa poświadczeń osoby, która go wygenerowała. Gdy klient z niego korzysta, S3 sprawdza uprawnienia twórcy w momencie żądania, więc link działa tylko wtedy, gdy twórca nadal ma dostęp do obiektu.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/ShareObjectPreSignedURL.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-003",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Użytkownik w koncie członkowskim (member account) AWS Organizations ma politykę AdministratorAccess. SCP przypięta do konta nie zezwala na usługę DynamoDB. Czy użytkownik może tworzyć tabele DynamoDB?",
+    "options": [
+      "Tak — AdministratorAccess ma pierwszeństwo przed SCP",
+      "Nie — akcja musi być dozwolona zarówno przez politykę tożsamości, jak i przez SCP",
+      "Tak, ale tylko w regionie domyślnym konta",
+      "Tak — SCP dotyczy wyłącznie użytkownika root"
+    ],
+    "correct": 1,
+    "explanation": "Efektywne uprawnienia to część wspólna polityk użytkownika i SCP. Jeśli SCP nie ma pasującego Allow, żądanie jest odrzucane, nawet gdy polityka tożsamości na nie pozwala. SCP same niczego nie przyznają, tylko ograniczają.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-004",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Rola ma politykę tożsamości z s3:* oraz permissions boundary, która pozwala tylko na s3:GetObject. Buckety nie mają polityk, które przyznawałyby jej dostęp. Jakie akcje S3 może wykonać rola?",
+    "options": [
+      "Wszystkie akcje S3 — boundary jest tylko informacyjna",
+      "Wszystkie akcje S3 oprócz GetObject",
+      "Tylko s3:GetObject — działa część wspólna obu polityk",
+      "Żadnych — boundary i polityka są sprzeczne"
+    ],
+    "correct": 2,
+    "explanation": "Permissions boundary wyznacza maksymalne uprawnienia, jakie może dać polityka tożsamości. Efektywne uprawnienia to część wspólna obu polityk, więc dodanie boundary może ograniczyć to, co encja może zrobić.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-005",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Konsument pobrał wiadomość z kolejki SQS i padł, zanim ją usunął. Co dalej dzieje się z wiadomością?",
+    "options": [
+      "Zostaje usunięta w chwili pobrania, więc przepada",
+      "Od razu trafia do kolejki DLQ",
+      "Pozostaje niewidoczna na zawsze, dopóki ktoś jej nie usunie ręcznie",
+      "Po upływie visibility timeout znów staje się widoczna dla innych konsumentów"
+    ],
+    "correct": 3,
+    "explanation": "SQS nie usuwa wiadomości automatycznie po odebraniu — konsument musi ją usunąć sam po przetworzeniu. Na czas visibility timeout (domyślnie 30 sekund) wiadomość jest ukryta przed innymi konsumentami, a potem wraca do obiegu.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-visibility-timeout.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-006",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Używasz standardowej kolejki SQS do naliczania płatności. Na co musi być przygotowany konsument?",
+    "options": [
+      "Na to, że ta sama wiadomość może przyjść więcej niż raz i nie w kolejności wysłania",
+      "Na nic — standardowa kolejka gwarantuje dostarczenie dokładnie raz",
+      "Na to, że wiadomości przychodzą zawsze w kolejności, ale mogą zginąć",
+      "Na limit 300 wiadomości na sekundę"
+    ],
+    "correct": 0,
+    "explanation": "Standardowe kolejki gwarantują dostarczenie co najmniej raz (at-least-once) i tylko starają się zachować kolejność. Konsument powinien przetwarzać wiadomości idempotentnie, a jeśli kolejność jest wymagana, lepiej użyć kolejki FIFO.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/standard-queues.md",
+    "added_on": "2026-11-05"
+  }
+]

@@ -1,0 +1,220 @@
+[
+  {
+    "id": "aws-junior-001",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Tworzysz nowego użytkownika IAM i nie przypisujesz mu żadnej polityki. Co może zrobić w koncie AWS?",
+    "options": [
+      "Wszystko, dopóki ktoś nie doda polityki z Deny",
+      "Tylko odczytywać zasoby (akcje Get i List)",
+      "Nic — każde żądanie jest domyślnie odrzucane (implicit deny)",
+      "To samo co użytkownik root"
+    ],
+    "correct": 2,
+    "explanation": "W IAM domyślnie wszystkie żądania są odrzucane (tzw. implicit deny). Wyjątkiem jest użytkownik root, który ma pełny dostęp. Użytkownik IAM może coś zrobić dopiero wtedy, gdy jakaś polityka jawnie na to pozwoli (Allow).",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-002",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Jedna polityka użytkownika daje Allow na s3:DeleteObject, a druga, przypisana do jego grupy, ma Deny na tę samą akcję. Jaki jest wynik?",
+    "options": [
+      "Żądanie jest odrzucone — jawny Deny wygrywa z każdym Allow",
+      "Żądanie przechodzi — polityka użytkownika ma pierwszeństwo przed polityką grupy",
+      "Wygrywa polityka dodana później",
+      "AWS zwraca błąd konfiguracji, bo polityki są sprzeczne"
+    ],
+    "correct": 0,
+    "explanation": "Podczas oceny uprawnień AWS najpierw szuka jawnego Deny we wszystkich politykach, które dotyczą żądania. Jeśli znajdzie choć jeden, decyzja to Deny, bez względu na liczbę i kolejność Allow.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-003",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Jak AWS zaleca korzystać z użytkownika root konta?",
+    "options": [
+      "Do codziennej pracy administracyjnej, bo ma wszystkie uprawnienia",
+      "Do codziennej pracy, ale tylko z kluczami dostępu zamiast hasła",
+      "Wcale — konta root nie da się zabezpieczyć MFA",
+      "Tylko do nielicznych zadań, które go wymagają; włączyć MFA i nie używać go na co dzień"
+    ],
+    "correct": 3,
+    "explanation": "Root ma nieograniczony dostęp do wszystkich zasobów konta, łącznie z rozliczeniami. AWS zaleca, by nie używać go do codziennych zadań, nawet administracyjnych, i zabezpieczyć go MFA.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/id_root-user.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-004",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Na czym polega zasada najmniejszych uprawnień (least privilege) w IAM?",
+    "options": [
+      "Każdy użytkownik dostaje uprawnienia administratora, ale tylko na jeden dzień",
+      "Przyznajesz tylko te akcje na tych zasobach, które są potrzebne do zadania",
+      "Uprawnienia nadaje się wyłącznie grupom, nigdy rolom",
+      "Polityki mogą zawierać najwyżej jedną instrukcję Allow"
+    ],
+    "correct": 1,
+    "explanation": "Least privilege to przyznawanie tylko uprawnień wymaganych do wykonania zadania: konkretnych akcji na konkretnych zasobach, czasem z warunkami. Można zacząć od szerszych uprawnień i stopniowo je zawężać.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/best-practices.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-005",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Aplikacja na instancji EC2 ma czytać pliki z bucketu S3. Jak najlepiej dać jej uprawnienia?",
+    "options": [
+      "Wpisać klucze dostępu użytkownika IAM do pliku konfiguracyjnego na instancji",
+      "Użyć kluczy dostępu użytkownika root",
+      "Przypisać instancji rolę IAM (przez instance profile) z uprawnieniem do odczytu bucketu",
+      "Ustawić bucket jako publiczny"
+    ],
+    "correct": 2,
+    "explanation": "Rola IAM przypisana do instancji dostarcza aplikacji tymczasowe poświadczenia, które są automatycznie rotowane. Nie trzeba przechowywać na maszynie długoterminowych kluczy dostępu, a SDK AWS pobiera poświadczenia z metadanych instancji samo.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/id_roles_use_switch-role-ec2.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-006",
+    "topic": "iam",
+    "kind": "flashcard",
+    "prompt": "Czym jest ARN i z jakich części się składa?",
+    "answer": "ARN (Amazon Resource Name) to unikalny identyfikator zasobu AWS, używany np. w politykach IAM w polu Resource. Format: arn:partition:service:region:account:resource — partycja (zwykle aws), usługa (np. s3, iam), region, ID konta i identyfikator zasobu. Dla niektórych usług region lub konto są puste, np. arn:aws:s3:::moj-bucket.",
+    "explanation": "Na rozmowie wystarczy umieć rozpoznać części ARN i wiedzieć, gdzie się go używa. Puste pola widać w ARN-ach bucketów S3, które nie zawierają regionu ani ID konta.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_identifiers.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-007",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Wgrywasz plik do bucketu S3 z domyślnymi ustawieniami. Chcesz, żeby klient mógł go pobrać przez godzinę, bez udostępniania bucketu publicznie. Co robisz?",
+    "options": [
+      "Nic — obiekty S3 są domyślnie publiczne",
+      "Generujesz presigned URL z czasem ważności",
+      "Wysyłasz klientowi swoje klucze dostępu",
+      "Wyłączasz Block Public Access dla całego konta"
+    ],
+    "correct": 1,
+    "explanation": "Obiekty S3 są domyślnie prywatne, a nowe buckety nie pozwalają na publiczny dostęp. Presigned URL zawiera podpis z poświadczeniami osoby, która go wygenerowała, i daje ograniczony w czasie dostęp do jednego obiektu.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/ShareObjectPreSignedURL.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-008",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Musisz przechowywać kopie zapasowe przez lata. Odczytujesz je prawie nigdy i możesz czekać na nie wiele godzin. Która klasa S3 będzie najtańsza?",
+    "options": [
+      "S3 Standard",
+      "S3 Standard-IA",
+      "S3 Glacier Instant Retrieval",
+      "S3 Glacier Deep Archive"
+    ],
+    "correct": 3,
+    "explanation": "S3 Glacier Deep Archive to najtańsza opcja przechowywania w AWS, przeznaczona dla danych, które rzadko trzeba odczytać. Obiekty trzeba najpierw przywrócić (domyślnie trwa to do 12 godzin), a minimalny czas przechowywania to 180 dni.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/storage-class-intro.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-009",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Czym jest strefa dostępności (Availability Zone)?",
+    "options": [
+      "Inną nazwą regionu AWS",
+      "Jedną z kilku odizolowanych lokalizacji wewnątrz regionu",
+      "Grupą regionów na jednym kontynencie",
+      "Strefą, w której działa tylko CloudFront"
+    ],
+    "correct": 1,
+    "explanation": "Każdy region ma kilka odizolowanych lokalizacji zwanych strefami dostępności, np. us-east-1a. Rozkładając instancje na kilka stref, aplikacja może działać dalej, gdy jedna z nich ma awarię.",
+    "source_url": "https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/using-regions-availability-zones.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-010",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Uruchomiłeś instancję EC2, ale po ponownym zalogowaniu nie widzisz jej w konsoli. Jaka jest najczęstsza przyczyna?",
+    "options": [
+      "W konsoli wybrany jest inny region niż ten, w którym ją uruchomiłeś",
+      "Instancje EC2 są widoczne tylko dla użytkownika root",
+      "Konsola pokazuje instancje dopiero po 24 godzinach",
+      "Instancja została automatycznie przeniesiona do innej strefy dostępności"
+    ],
+    "correct": 0,
+    "explanation": "Regiony są od siebie odizolowane, a konsola pokazuje tylko zasoby z wybranego regionu. AWS nie kopiuje zasobów między regionami automatycznie.",
+    "source_url": "https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/using-regions-availability-zones.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-011",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Tworzysz nową security group i nie dodajesz reguł. Jaki ruch jest dozwolony?",
+    "options": [
+      "Cały ruch przychodzący i wychodzący",
+      "Tylko ruch przychodzący na porty 22 i 80",
+      "Żaden — ani przychodzący, ani wychodzący",
+      "Cały ruch wychodzący, żadnego przychodzącego"
+    ],
+    "correct": 3,
+    "explanation": "Nowa security group ma domyślnie tylko regułę wychodzącą, która przepuszcza cały ruch. Aby przyjmować ruch przychodzący (np. HTTP albo SSH), trzeba dodać regułę inbound.",
+    "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/security-groups.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-012",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Security group pozwala na ruch przychodzący na port 443, a nie ma żadnej reguły wychodzącej. Czy odpowiedź serwera dotrze do klienta?",
+    "options": [
+      "Nie — trzeba dodać regułę wychodzącą dla portów efemerycznych",
+      "Tak — security groups są stateful, więc odpowiedzi na dozwolony ruch przechodzą automatycznie",
+      "Tylko jeśli klient jest w tej samej sieci VPC",
+      "Tylko dla ruchu IPv6"
+    ],
+    "correct": 1,
+    "explanation": "Security groups śledzą stan połączeń. Odpowiedź na dozwolony ruch przychodzący może wyjść z instancji bez względu na reguły wychodzące, i analogicznie odpowiedź na żądanie wysłane z instancji wraca bez reguły przychodzącej.",
+    "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/security-groups.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-013",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Instancja EC2 zapisuje dane na dysku instance store. Kiedy te dane przetrwają?",
+    "options": [
+      "Przy restarcie (reboot) instancji",
+      "Przy zatrzymaniu (stop) instancji",
+      "Przy hibernacji instancji",
+      "Przy usunięciu (terminate) instancji"
+    ],
+    "correct": 0,
+    "explanation": "Dane na instance store istnieją tylko przez czas życia instancji. Przetrwają restart, ale znikają przy zatrzymaniu, hibernacji i usunięciu instancji. Dane, które mają przetrwać, trzymaj np. na wolumenie EBS albo w S3.",
+    "source_url": "https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/InstanceStorage.md",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-014",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Instancja w prywatnej podsieci ma pobierać aktualizacje z internetu, ale nie może przyjmować połączeń z zewnątrz. Czego użyjesz?",
+    "options": [
+      "Publicznego adresu IP przypisanego do instancji",
+      "Security group z regułą inbound 0.0.0.0/0",
+      "NAT gateway w publicznej podsieci",
+      "Drugiej instancji w tej samej prywatnej podsieci"
+    ],
+    "correct": 2,
+    "explanation": "Publiczny NAT gateway tworzy się w publicznej podsieci, z adresem Elastic IP i trasą do internet gateway. Instancje z prywatnych podsieci łączą się przez niego z internetem, ale z zewnątrz nie da się otworzyć połączenia do nich.",
+    "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/vpc-nat-gateway.md",
+    "added_on": "2026-11-05"
+  }
+]

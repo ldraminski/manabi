@@ -696,6 +696,166 @@
     "added_on": "2026-10-31"
   },
   {
+    "id": "aws-junior-001",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-002",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-003",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-004",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-005",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-006",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "flashcard",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-007",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-008",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-009",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-010",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-011",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-012",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-013",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-014",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-001",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-002",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-003",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-004",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-005",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-006",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "added_on": "2026-11-05"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
