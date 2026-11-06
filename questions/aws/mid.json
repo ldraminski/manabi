@@ -94,5 +94,117 @@
     "explanation": "Standardowe kolejki gwarantują dostarczenie co najmniej raz (at-least-once) i tylko starają się zachować kolejność. Konsument powinien przetwarzać wiadomości idempotentnie, a jeśli kolejność jest wymagana, lepiej użyć kolejki FIFO.",
     "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/standard-queues.md",
     "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-mid-007",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Producent wysyła wiadomość do kolejki FIFO z MessageDeduplicationId „order-42”. Nie dostał odpowiedzi przez timeout sieci, więc po minucie ponawia SendMessage z tym samym identyfikatorem. Ile kopii wiadomości trafi do kolejki?",
+    "options": [
+      "Jedna — powtórzenie w ciągu 5-minutowego okna deduplikacji nie tworzy duplikatu",
+      "Dwie — deduplikacja działa tylko dla wiadomości wysłanych w jednym SendMessageBatch",
+      "Dwie, ale druga trafi od razu do DLQ",
+      "Zero — SQS odrzuca obie wiadomości jako konflikt"
+    ],
+    "correct": 0,
+    "explanation": "Kolejki FIFO pamiętają identyfikator deduplikacji przez 5 minut. Ponowienie SendMessage z tym samym identyfikatorem w tym oknie zostaje przyjęte, ale nie dodaje drugiej kopii. Identyfikator można podać sam albo włączyć content-based deduplication (hash SHA-256 treści wiadomości).",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/FIFO-queues-exactly-once-processing.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-008",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Kolejka źródłowa ma DLQ z okresem retencji 4 dni. Wiadomość spędziła w kolejce źródłowej 1 dzień, zanim przekroczyła maxReceiveCount i trafiła do DLQ. Po jakim czasie od przeniesienia zostanie usunięta z DLQ?",
+    "options": [
+      "Po 4 dniach — przeniesienie zeruje licznik retencji",
+      "Po 3 dniach — wygaśnięcie liczy się od pierwotnego czasu wysłania",
+      "Po 5 dniach — retencje obu kolejek się sumują",
+      "Nigdy — wiadomości w DLQ nie wygasają"
+    ],
+    "correct": 1,
+    "explanation": "Wygaśnięcie wiadomości zawsze liczy się od jej pierwotnego znacznika czasu dodania do kolejki, który nie zmienia się przy przeniesieniu do DLQ. Dlatego DLQ powinna mieć dłuższą retencję niż kolejka źródłowa.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-dead-letter-queues.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-009",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Konsument woła ReceiveMessage w pętli bez ustawiania WaitTimeSeconds, a kolejka ma domyślne ustawienia. Rachunek rośnie przez tysiące pustych odpowiedzi, a czasem odpowiedź jest pusta, choć w kolejce są wiadomości. Co zmienić?",
+    "options": [
+      "Zwiększyć visibility timeout do 12 godzin",
+      "Przejść na kolejkę FIFO",
+      "Ustawić MaxNumberOfMessages na 1",
+      "Włączyć long polling, np. WaitTimeSeconds = 20"
+    ],
+    "correct": 3,
+    "explanation": "Domyślnie SQS używa short pollingu: odpytuje tylko część serwerów i odpowiada od razu, nawet pusto. Long polling (czas oczekiwania większy od 0, maksymalnie 20 sekund) odpytuje wszystkie serwery i czeka na wiadomość, więc ogranicza puste i fałszywie puste odpowiedzi.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-short-and-long-polling.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-010",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Bucket ma włączone wersjonowanie. Wykonujesz zwykłe DELETE obiektu raport.pdf, bez podawania version ID. Co się dzieje?",
+    "options": [
+      "Obiekt i wszystkie jego wersje są trwale usuwane",
+      "S3 dodaje delete marker jako bieżącą wersję; GET zwraca 404, ale poprzednie wersje zostają",
+      "S3 odrzuca żądanie — w wersjonowanym buckecie trzeba zawsze podać version ID",
+      "Usuwana jest najstarsza wersja obiektu"
+    ],
+    "correct": 1,
+    "explanation": "W buckecie z wersjonowaniem zwykłe DELETE nie kasuje danych. S3 wstawia delete marker, który staje się bieżącą wersją, więc GET zwraca 404. Żeby trwale usunąć wersję, trzeba wykonać DELETE z jej version ID, a usunięcie delete markera przywraca poprzednią wersję jako bieżącą.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/DeletingObjectVersions.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-011",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Bucket ma politykę dającą s3:GetObject dla \"Principal\": \"*\", ale na poziomie konta włączone są wszystkie ustawienia S3 Block Public Access. Czy anonimowy użytkownik pobierze obiekt?",
+    "options": [
+      "Tak — polityka bucketu ma pierwszeństwo przed ustawieniami konta",
+      "Tak, jeśli bucket ma też włączone ACL",
+      "Nie — Block Public Access nadpisuje polityki i uprawnienia, które dają publiczny dostęp",
+      "Tak, jeśli obiekt został wgrany przed włączeniem Block Public Access"
+    ],
+    "correct": 2,
+    "explanation": "Ustawienia Block Public Access nadpisują polityki bucketu, polityki access pointów i uprawnienia obiektów, które pozwalają na publiczny dostęp. Gdy ustawienia konta, bucketu i access pointu się różnią, S3 stosuje najbardziej restrykcyjną kombinację.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/access-control-block-public-access.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-012",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Własna network ACL podsieci ma regułę przychodzącą Allow TCP 443 z 0.0.0.0/0, a w regułach wychodzących tylko domyślne Deny all. Security group instancji pozwala na 443. Czy klient dostanie odpowiedź HTTPS?",
+    "options": [
+      "Tak — odpowiedzi na dozwolony ruch są przepuszczane automatycznie",
+      "Tak, bo security group ma pierwszeństwo przed network ACL",
+      "Nie — network ACL jest bezstanowa, więc trzeba też zezwolić na ruch wychodzący na porty efemeryczne",
+      "Nie — network ACL w ogóle nie obsługuje ruchu TCP"
+    ],
+    "correct": 2,
+    "explanation": "Network ACL jest bezstanowa: odpowiedzi na dozwolony ruch przychodzący podlegają regułom wychodzącym (i odwrotnie). W przykładach AWS dodaje się wychodzącą regułę na porty efemeryczne, np. 32768–65535. Security group jest stanowa, ale ruch musi przejść przez obie warstwy.",
+    "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/vpc-network-acls.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-013",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Rola w koncie A ma politykę tożsamości z s3:GetObject na bucket w koncie B. Polityka bucketu w koncie B nie wymienia konta A ani tej roli, a ACL bucketu są wyłączone. Czy rola odczyta obiekt?",
+    "options": [
+      "Tak — wystarczy uprawnienie w polityce tożsamości",
+      "Tak, jeśli oba konta są w tej samej organizacji",
+      "Nie — przy dostępie między kontami musi zezwolić zarówno konto A, jak i polityka zasobu w koncie B",
+      "Nie — dostęp między kontami jest możliwy tylko przez użytkownika root"
+    ],
+    "correct": 2,
+    "explanation": "Przy żądaniu między kontami AWS ocenia je dwa razy: w koncie zaufanym (polityka tożsamości) i w koncie ufającym (polityka zasobu). Żądanie przechodzi tylko wtedy, gdy obie oceny dają Allow.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic-cross-account.md",
+    "added_on": "2026-11-06"
   }
 ]

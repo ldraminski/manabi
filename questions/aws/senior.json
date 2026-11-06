@@ -1,0 +1,66 @@
+[
+  {
+    "id": "aws-senior-001",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "VPC ma prywatne podsieci w trzech strefach dostępności. Wszystkie korzystają z jednego NAT gateway w strefie a. Co się stanie przy awarii strefy a i jak to zaprojektować lepiej?",
+    "options": [
+      "Nic — NAT gateway jest usługą regionalną i automatycznie przeniesie się do innej strefy",
+      "Podsieci w strefach b i c stracą dostęp do internetu; lepiej postawić NAT gateway w każdej strefie i kierować ruch do NAT w tej samej strefie",
+      "Stracą dostęp tylko instancje w strefie a, bo NAT gateway jest redundantny w całym regionie",
+      "Trzeba zastąpić NAT gateway internet gatewayem w każdej prywatnej podsieci"
+    ],
+    "correct": 1,
+    "explanation": "NAT gateway powstaje w konkretnej strefie i jest redundantny tylko w jej obrębie. Gdy zasoby z kilku stref współdzielą jeden NAT, awaria jego strefy odcina od internetu pozostałe. AWS zaleca NAT gateway w każdej strefie i trasy do NAT w tej samej strefie, co zmniejsza też ruch między strefami.",
+    "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/vpc-nat-gateway.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-senior-002",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Usługa zapisuje wszystkie obiekty pod jednym prefiksem uploads/ i po skoku ruchu do ok. 10 000 PUT/s dostaje błędy 503 Slow Down. Co jest najlepszą zmianą w projekcie?",
+    "options": [
+      "Rozłożyć klucze na wiele prefiksów i zapisywać równolegle — limit żądań dotyczy jednego prefiksu",
+      "Przejść na S3 Express One Zone, bo zwykłe S3 ma stały limit 3500 PUT/s na bucket",
+      "Włączyć Transfer Acceleration",
+      "Włączyć wersjonowanie, żeby rozłożyć zapisy na wersje"
+    ],
+    "correct": 0,
+    "explanation": "S3 obsługuje co najmniej 3500 żądań PUT/COPY/POST/DELETE i 5500 GET/HEAD na sekundę na prefiks, bez limitu liczby prefiksów. Skalowanie następuje stopniowo, a w tym czasie mogą pojawiać się 503 Slow Down. Rozłożenie zapisów na wiele prefiksów zwiększa łączną przepustowość. Transfer Acceleration przyspiesza transfer na duże odległości, a nie limit żądań.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/optimizing-performance.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-senior-003",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Zespół platformy przypina do roota organizacji SCP z Deny na wyłączenie CloudTrail i uznaje, że zabezpieczył w ten sposób wszystkie konta. Czego ta SCP nie obejmuje?",
+    "options": [
+      "Kont dodanych do organizacji po przypięciu polityki",
+      "Użytkowników IAM — SCP dotyczy tylko ról",
+      "Kont w regionach innych niż region domyślny organizacji",
+      "Użytkowników i ról w koncie zarządzającym (management account) oraz ról powiązanych z usługami (service-linked roles)"
+    ],
+    "correct": 3,
+    "explanation": "SCP działają tylko na konta członkowskie — nie mają wpływu na użytkowników i role w koncie zarządzającym. Nie ograniczają też ról powiązanych z usługami. Dlatego konto zarządzające trzeba chronić innymi środkami.",
+    "source_url": "https://github.com/awsdocs/aws-organizations-docs/blob/main/doc_source/orgs_manage_policies_scps.md",
+    "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-senior-004",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Zamówienia każdego klienta muszą być przetwarzane po kolei, ale kolejka FIFO z jednym MessageGroupId dla wszystkich wiadomości stała się wąskim gardłem. Jak zwiększyć przepustowość, zachowując kolejność per klient?",
+    "options": [
+      "Przejść na kolejkę standardową i sortować wiadomości po stronie konsumenta",
+      "Zostawić jeden MessageGroupId i dodać więcej konsumentów",
+      "Użyć ID klienta jako MessageGroupId i włączyć high throughput dla FIFO",
+      "Zwiększyć visibility timeout, żeby konsumenci nie konkurowali o wiadomości"
+    ],
+    "correct": 2,
+    "explanation": "Kolejność w FIFO jest gwarantowana w obrębie grupy wiadomości. Przy jednej grupie wiadomości przetwarza się jedna po drugiej, więc dodanie konsumentów nie pomaga. W trybie high throughput przepustowość rośnie wraz z liczbą grup, a każda grupa obsługuje do 300 żądań na sekundę.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/high-throughput-fifo.md",
+    "added_on": "2026-11-06"
+  }
+]
