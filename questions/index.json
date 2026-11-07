@@ -944,6 +944,70 @@
     "added_on": "2026-11-06"
   },
   {
+    "id": "aws-senior-005",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-006",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-007",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-008",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-009",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-010",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-011",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-012",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -3062,6 +3126,38 @@
     "topic": "upgrades-and-security",
     "kind": "single_choice",
     "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-042",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-043",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-044",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-045",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "added_on": "2026-11-07"
   },
   {
     "id": "nodejs-senior-001",

@@ -659,5 +659,72 @@
     "explanation": "Notatki do wydania mówią wprost, że sort() używa PowerSort dla dużych tablic i pozostaje stabilny. Stabilność sort() gwarantuje też specyfikacja ECMAScript od ES2019, więc kod opierający się na niej jest poprawny.",
     "source_url": "https://nodejs.org/en/blog/release/v27.0.0-alpha.0.0.0",
     "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-mid-042",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "prompt": "W Node.js 27 (V8 15.6) dostępne jest Math.sumPrecise. Co zwróci poniższy kod?",
+    "code": "[0.1, 0.2, 0.3].reduce((a, b) => a + b); // 0.6000000000000001\nMath.sumPrecise([0.1, 0.2, 0.3]);",
+    "options": [
+      "0.6",
+      "0.6000000000000001",
+      "TypeError — przyjmuje liczby jako osobne argumenty, a nie tablicę",
+      "\"0.6\" jako string"
+    ],
+    "correct": 0,
+    "explanation": "Math.sumPrecise przyjmuje obiekt iterowalny i sumuje liczby bez kumulowania błędów zaokrągleń, które powstają przy dodawaniu w pętli. Dla [0.1, 0.2, 0.3] zwraca 0.6. Jest dostępne domyślnie od V8 15.6 w Node.js 27.",
+    "source_url": "https://nodejs.org/en/blog/announcements/notable-v8-changes-from-node-js-26-to-27-alpha",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-043",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "prompt": "Biblioteka tworzy błędy przez Object.create(baseError) i loguje ich stack. Co wypisze ten kod w Node.js 27?",
+    "code": "const err = new Error('boom');\nconsole.log(typeof Object.create(err).stack);",
+    "options": [
+      "'string' — stack dziedziczy się z prototypu",
+      "'undefined' — getter stack nie szuka już śladu stosu w łańcuchu prototypów",
+      "Rzuci TypeError",
+      "'object'"
+    ],
+    "correct": 1,
+    "explanation": "Zgodnie z propozycją error stack accessor getter error.stack w V8 15.6 nie szuka przechwyconego śladu stosu w łańcuchu prototypów. W Node.js 26 wynik to 'string', w 27 — 'undefined'. Nie dotyczy to błędów tworzonych przez new, podklas Error ani obiektów przekazanych do Error.captureStackTrace.",
+    "source_url": "https://nodejs.org/en/blog/announcements/notable-v8-changes-from-node-js-26-to-27-alpha",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-044",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod w Node.js 27?",
+    "code": "const promise = Promise.resolve(1);\nconsole.log(Promise.try(() => promise) === promise);",
+    "options": [
+      "false — Promise.try zawsze tworzy nowy promise",
+      "true — gdy callback zwraca promise z konstruktorem Promise z tego samego realmu, Promise.try zwraca go bezpośrednio",
+      "Rzuci TypeError, bo callback musi zwracać wartość, a nie promise",
+      "undefined"
+    ],
+    "correct": 1,
+    "explanation": "Po zmianie w specyfikacji (ecma262#3883) Promise.try zwraca bezpośrednio promise zwrócony przez callback, jeśli jego constructor to Promise z tego samego realmu. W Node.js 26 porównanie dawało false, w 27 daje true. Kod nie powinien polegać na tym, że dostaje nowy obiekt.",
+    "source_url": "https://nodejs.org/en/blog/announcements/notable-v8-changes-from-node-js-26-to-27-alpha",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-045",
+    "topic": "v8-in-node-27",
+    "kind": "single_choice",
+    "prompt": "Kod zakłada, że Date.prototype.getTimezoneOffset() zwraca całkowitą liczbę minut i używa wyniku jako klucza w mapie. Co może go zaskoczyć w Node.js 27 dla dat historycznych, np. 1675 roku w strefie America/Los_Angeles?",
+    "options": [
+      "Metoda zwróci NaN dla dat sprzed 1970 roku",
+      "Wynik jest teraz w sekundach, a nie w minutach",
+      "Wynik może być ułamkiem minut (np. 472.966…), bo V8 przestał obcinać go do pełnych minut",
+      "Metoda rzuci RangeError dla dat sprzed wprowadzenia stref czasowych"
+    ],
+    "correct": 2,
+    "explanation": "W V8 15.6 getTimezoneOffset() nie jest już obcinane do pełnych minut. Dla dat, gdy strefa używała lokalnego czasu słonecznego o przesunięciu niebędącym pełną liczbą minut, wynik ma część ułamkową: w Node.js 26 było 472, w 27 jest 472.96666666666664. Kod oczekujący liczby całkowitej powinien to obsłużyć jawnie.",
+    "source_url": "https://nodejs.org/en/blog/announcements/notable-v8-changes-from-node-js-26-to-27-alpha",
+    "added_on": "2026-11-07"
   }
 ]

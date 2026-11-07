@@ -62,5 +62,133 @@
     "explanation": "Kolejność w FIFO jest gwarantowana w obrębie grupy wiadomości. Przy jednej grupie wiadomości przetwarza się jedna po drugiej, więc dodanie konsumentów nie pomaga. W trybie high throughput przepustowość rośnie wraz z liczbą grup, a każda grupa obsługuje do 300 żądań na sekundę.",
     "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/high-throughput-fifo.md",
     "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-senior-005",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Data lake ma miliardy obiektów zaszyfrowanych SSE-KMS. Rachunek za żądania do AWS KMS rośnie razem z ruchem, a zespół zbliża się do limitów żądań KMS. Co najprościej to ograniczy bez zmian w aplikacjach klienckich?",
+    "options": [
+      "Użyć jednego klucza KMS dla wszystkich bucketów, bo KMS liczy żądania osobno dla każdego klucza",
+      "Włączyć S3 Bucket Key — S3 dostaje z KMS krótkotrwały klucz na poziomie bucketu i nim tworzy klucze danych, więc rzadziej woła KMS",
+      "Włączyć wersjonowanie bucketu, żeby S3 szyfrował tylko nowe wersje",
+      "Włączyć S3 Transfer Acceleration"
+    ],
+    "correct": 1,
+    "explanation": "Bez Bucket Key S3 używa osobnego klucza danych dla każdego obiektu i woła KMS przy każdym żądaniu do obiektu zaszyfrowanego SSE-KMS. Bucket Key to krótkotrwały klucz na poziomie bucketu trzymany w S3, który tworzy klucze danych dla nowych obiektów, co według AWS zmniejsza koszt żądań do KMS nawet o 99%. Działa dla nowych obiektów i nie wymaga zmian w klientach. Każdy requester (rola, sesja) dostaje własny klucz, więc oszczędność zależy od wzorca ruchu.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/bucket-key.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-006",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Regulator wymaga, żeby logi audytowe w S3 nie mogły zostać nadpisane ani usunięte przez 7 lat — także przez administratora i użytkownika root konta. Co spełnia ten wymóg?",
+    "options": [
+      "Object Lock w trybie governance i odebranie wszystkim uprawnienia s3:BypassGovernanceRetention",
+      "Legal hold na każdym obiekcie",
+      "Object Lock w trybie compliance z okresem retencji 7 lat",
+      "Wersjonowanie bucketu z polityką Deny na s3:DeleteObject"
+    ],
+    "correct": 2,
+    "explanation": "W trybie compliance chronionej wersji obiektu nie może nadpisać ani usunąć nikt, także root, a okresu retencji nie da się skrócić ani zmienić trybu. Governance można obejść uprawnieniem s3:BypassGovernanceRetention, które administrator może sobie nadać. Legal hold zdejmie każdy, kto ma s3:PutObjectLegalHold. Politykę bucketu z Deny administrator może zmienić.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/object-lock-overview.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-007",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Twoja firma SaaS monitoruje konta klientów: każdy klient tworzy rolę z zaufaniem do Waszego konta i podaje jej ARN w panelu. Jak zapobiec temu, żeby jeden klient podał ARN roli innego klienta i przez Waszą usługę dostał dostęp do cudzych danych?",
+    "options": [
+      "Wymagać w polityce zaufania roli warunku sts:ExternalId z wartością, którą generuje Wasza firma, unikalną dla każdego klienta, i podawać ją w każdym AssumeRole",
+      "Poprosić klienta, żeby wygenerował tajny external ID i przekazał go Wam razem z ARN",
+      "Ograniczyć Principal w polityce zaufania do konta Waszej firmy — to wystarczy",
+      "Przechowywać ARN ról zaszyfrowane w KMS"
+    ],
+    "correct": 0,
+    "explanation": "To problem confused deputy: Wasze konto jest zaufane przez role wszystkich klientów, więc sam Principal niczego nie rozróżnia. External ID w warunku sts:ExternalId wiąże rolę z konkretnym klientem Waszej usługi. AWS zaleca, żeby generowała go strona trzecia (Wasza firma), unikalnie dla klienta — gdyby wybierał go klient, mógłby podać cudzą wartość. External ID nie jest sekretem. Warto też sprawdzić, że roli nie da się przejąć bez poprawnego ID.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/id_roles_create_for-user_externalid.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-008",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Bucket ze wspólnymi artefaktami ma politykę, która wymienia ID ponad 200 kont z organizacji. Przy każdym nowym koncie ktoś musi ją ręcznie aktualizować. Jak to rozwiązać lepiej?",
+    "options": [
+      "Przypiąć do roota organizacji SCP z Allow s3:GetObject na ten bucket",
+      "W polityce bucketu ustawić \"Principal\": \"*\" i warunek StringEquals na aws:PrincipalOrgID z ID organizacji",
+      "Ustawić \"Principal\": \"*\" bez warunków, bo Block Public Access i tak zablokuje dostęp spoza organizacji",
+      "Dodać wszystkie konta do jednej grupy IAM i wskazać ją jako Principal"
+    ],
+    "correct": 1,
+    "explanation": "aws:PrincipalOrgID porównuje organizację, do której należy wywołujący, z ID w polityce — konta dodane lub usunięte z organizacji są uwzględniane automatycznie. SCP nigdy nie nadaje uprawnień, tylko je ogranicza. Grupa IAM nie może być principalem i istnieje w jednym koncie. Principal \"*\" bez warunku czyni bucket publicznym. Konta członkowskie nadal potrzebują własnych polityk tożsamości, bo to dostęp między kontami.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_condition-keys.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-009",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Trzy węzły kworum (np. etcd) działają na EC2 w jednej strefie dostępności. Awaria jednego racka nie może zabrać więcej niż jednego węzła. Co wybrać?",
+    "options": [
+      "Cluster placement group",
+      "Brak placement group — EC2 zawsze umieszcza instancje na różnych rackach",
+      "Wszystkie trzy węzły na jednym Dedicated Host",
+      "Spread placement group (poziom racka)"
+    ],
+    "correct": 3,
+    "explanation": "Spread placement group umieszcza każdą instancję na osobnym racku z własnym zasilaniem i siecią, co AWS poleca dla małej liczby krytycznych instancji. Limit to 7 działających instancji na strefę na grupę. Cluster robi odwrotnie — skupia instancje blisko siebie dla niskich opóźnień. Bez grupy nie ma gwarancji rozdzielenia sprzętu, a jeden Dedicated Host to jeden punkt awarii.",
+    "source_url": "https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/placement-groups.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-010",
+    "topic": "infrastructure",
+    "kind": "single_choice",
+    "prompt": "Obliczenia HPC mocno komunikują się między węzłami. Zespół chce uruchomić je w cluster placement group. Jaki kompromis przyjmuje?",
+    "options": [
+      "Niższe opóźnienia i wyższą przepustowość między instancjami kosztem tego, że cała grupa leży w jednej strefie dostępności",
+      "Wyższą odporność na awarię racka kosztem większych opóźnień",
+      "Limit 7 instancji na strefę dostępności",
+      "Brak możliwości użycia enhanced networking"
+    ],
+    "correct": 0,
+    "explanation": "Cluster placement group to grupa instancji w jednej strefie dostępności, w tym samym segmencie sieci o wysokiej przepustowości, z wyższym limitem przepustowości na przepływ TCP. Jest polecana, gdy większość ruchu idzie między instancjami grupy. Ceną jest skupienie w jednej strefie i bliskość sprzętu. Limit 7 instancji na strefę dotyczy spread placement group, a enhanced networking jest wręcz zalecany.",
+    "source_url": "https://github.com/awsdocs/amazon-ec2-user-guide/blob/master/doc_source/placement-groups.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-011",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Kolejka FIFO nie ma DLQ. Konsument pada przy każdej próbie przetworzenia jednej wiadomości z grupy klient-17. Co dzieje się z resztą kolejki?",
+    "options": [
+      "Po visibility timeout SQS pomija tę wiadomość i wydaje następną z grupy klient-17",
+      "Stoi cała kolejka, wszystkie grupy czekają",
+      "Grupa klient-17 stoi, dopóki ta wiadomość nie zniknie z kolejki; wiadomości z innych grup są przetwarzane normalnie",
+      "Po trzech próbach SQS sam przenosi wiadomość do domyślnej DLQ"
+    ],
+    "correct": 2,
+    "explanation": "Gdy konsument odbierze wiadomość z danej grupy, SQS nie wyda kolejnych wiadomości z tej grupy, dopóki tej nie usunięto albo nie stała się z powrotem widoczna — a wtedy wraca ta sama wiadomość. Inne grupy idą dalej. Bez DLQ zablokowana wiadomość zostaje do końca okresu retencji, więc w praktyce trzeba albo obsłużyć błąd, albo skonfigurować DLQ.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-dead-letter-queues.md",
+    "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-012",
+    "topic": "sqs",
+    "kind": "single_choice",
+    "prompt": "Kolejka FIFO przenosi polecenia edycji dokumentu; każda operacja zależy od poprzedniej w tej samej grupie. Ktoś proponuje DLQ z maxReceiveCount = 5. Jaki jest główny problem?",
+    "options": [
+      "FIFO nie obsługuje DLQ",
+      "Po przeniesieniu wiadomości do DLQ kolejne operacje z tej grupy zostaną przetworzone bez niej, co łamie ścisłą kolejność",
+      "DLQ kolejki FIFO musi być kolejką standardową, więc traci kolejność",
+      "DLQ odrzuci wiadomość, jeśli wcześniej trafiła tam inna z tym samym MessageDeduplicationId"
+    ],
+    "correct": 1,
+    "explanation": "DLQ odblokowuje grupę, bo zabiera z niej problematyczną wiadomość — a następne w grupie idą dalej bez niej. AWS wprost odradza DLQ przy FIFO, gdy nie można złamać kolejności operacji (przykład z listą edycji wideo). DLQ kolejki FIFO musi być FIFO, a przy przeniesieniu deduplication ID jest zastępowany ID wiadomości, więc deduplikacja nie odrzuci jej.",
+    "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-dead-letter-queues.md",
+    "added_on": "2026-11-07"
   }
 ]

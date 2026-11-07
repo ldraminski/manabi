@@ -504,6 +504,13 @@
     "icon": "spark"
   },
   {
+    "technology": "nodejs",
+    "slug": "v8-in-node-27",
+    "title": "V8 w Node.js 27",
+    "description": "Math.sumPrecise, error.stack, Promise.try i inne zmiany po aktualizacji V8 do 15.6",
+    "icon": "spark"
+  },
+  {
     "technology": "react",
     "slug": "server-and-client",
     "title": "Serwer i klient",
