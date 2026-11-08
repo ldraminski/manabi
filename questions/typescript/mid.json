@@ -267,5 +267,73 @@
     "explanation": "Subpath imports to pole \"imports\" w package.json, które definiuje wewnętrzne aliasy pakietu (exports dotyczy tego, co pakiet udostępnia na zewnątrz, a paths to opcja tsconfig). Wcześniej po # trzeba było dopisać nazwę, np. #root/*. Node.js dodał obsługę samego #/, a TypeScript 6.0 obsługuje ją przy moduleResolution nodenext i bundler.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%206.0.md",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "typescript-mid-017",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Projekt w JavaScripcie z checkJs przechodzi na TypeScript 7. Jak TS 7 potraktuje ten kod?",
+    "code": "function C() {\n  this.property = 1;\n}\nC.prototype.method = function () {};",
+    "options": [
+      "Tak samo jak TS 6 — C jest rozpoznawane jako klasa",
+      "Funkcje-konstruktory nie są już obsługiwane; trzeba przepisać kod na class",
+      "Wymaga dodania /** @class */ nad funkcją",
+      "Wymaga włączenia allowJs w trybie legacy"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7 (CHANGES.md): funkcje-konstruktory w JavaScripcie — przypisywanie this.x w funkcji i metod do C.prototype — nie są już obsługiwane. Zamiast nich należy używać deklaracji class. Tag @class/@constructor również nie robi już z funkcji konstruktora.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-018",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs w TypeScripcie 7. Typ Direction przestał działać. Jak go poprawić?",
+    "code": "/** @typedef {FORWARD | BACKWARD} Direction */\nconst FORWARD = 1,\n  BACKWARD = 2;",
+    "options": [
+      "/** @typedef {FORWARD | BACKWARD} Direction */ — wystarczy zamienić const na let",
+      "/** @typedef {typeof FORWARD | typeof BACKWARD} Direction */",
+      "/** @enum {number} */ nad stałymi",
+      "/** @typedef {keyof FORWARD} Direction */"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7: wartości nie są już rozwiązywane jako typy w pozycjach typów JSDoc. Trzeba użyć typeof, tak jak w TypeScripcie. Tag @enum (funkcja Closure) też nie jest już obsługiwany.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-019",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs. TypeScript 6 akceptował wywołanie f(\"something\"), TypeScript 7 zgłasza błąd. Dlaczego?",
+    "code": "function f() {\n  return arguments[0];\n}\nf(\"something\");",
+    "options": [
+      "W TS 7 obiekt arguments jest zabroniony w trybie strict",
+      "Użycie arguments w ciele funkcji nie oznacza już niejawnego parametru ...args: any[]; trzeba jawnie napisać function f(...args)",
+      "TS 7 wymaga adnotacji @returns przy każdej funkcji",
+      "TS 7 nie sprawdza już wywołań w plikach .js"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7: użycie arguments w ciele funkcji JS nie implikuje już parametru ...args: any[]. Funkcja bez parametrów wywołana z argumentem daje błąd. Rozwiązaniem jest jawny parametr rest.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-020",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Moduł CommonJS sprawdzany przez TypeScript 7 (checkJs). Co jest nie tak?",
+    "code": "module.exports = createClient;\nmodule.exports.version = '1.0.0';",
+    "options": [
+      "Nic — TS 7 łączy oba przypisania w jeden typ eksportu",
+      "TS 7 nie pozwala mieszać przypisania całego module.exports z przypisaniami do module.exports.xxx w jednym module",
+      "module.exports nie jest obsługiwane w TS 7, trzeba przejść na ESM",
+      "Brakuje 'use strict' na początku pliku"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7: moduł CommonJS musi zawierać albo przypisanie do module.exports, albo serię przypisań do module.exports.xxx, ale nie oba naraz.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
   }
 ]

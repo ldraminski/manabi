@@ -4352,6 +4352,70 @@
     "added_on": "2026-10-18"
   },
   {
+    "id": "testing-mid-013",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-014",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-015",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-016",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-017",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-018",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-019",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-020",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
     "id": "testing-senior-001",
     "technology": "testing",
     "level": "senior",
@@ -4446,6 +4510,30 @@
     "topic": "test-infrastructure",
     "kind": "single_choice",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "testing-senior-013",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-senior-014",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-senior-015",
+    "technology": "testing",
+    "level": "senior",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
   },
   {
     "id": "typescript-junior-001",
@@ -4712,6 +4800,38 @@
     "added_on": "2026-11-04"
   },
   {
+    "id": "typescript-mid-017",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-018",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-019",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-020",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
     "id": "typescript-senior-001",
     "technology": "typescript",
     "level": "senior",
@@ -4806,6 +4926,22 @@
     "topic": "emit-and-interop",
     "kind": "single_choice",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "typescript-senior-013",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-senior-014",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-08"
   },
   {
     "id": "vue-junior-001",

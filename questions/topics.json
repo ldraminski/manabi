@@ -684,5 +684,19 @@
     "title": "Kolejki SQS",
     "description": "Visibility timeout, kolejki standardowe i FIFO",
     "icon": "clock"
+  },
+  {
+    "technology": "testing",
+    "slug": "test-runner-upgrades",
+    "title": "Aktualizacje Vitest i Playwright",
+    "description": "Nowe flagi i zmiany łamiące w Vitest 5.1 i Playwright 1.65",
+    "icon": "list"
+  },
+  {
+    "technology": "typescript",
+    "slug": "typescript-7",
+    "title": "Migracja na TypeScript 7",
+    "description": "Natywny kompilator: zmiany w sprawdzaniu JavaScriptu, JSDoc i CommonJS",
+    "icon": "type"
   }
 ]

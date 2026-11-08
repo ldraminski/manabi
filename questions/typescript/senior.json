@@ -187,5 +187,38 @@
     "explanation": "rewriteRelativeImportExtensions (TypeScript 5.7) przepisuje tylko ścieżki względne (zaczynające się od ./ lub ../) kończące się rozszerzeniem TypeScript: .ts → .js, .tsx → .jsx, .mts → .mjs, .cts → .cjs. Specyfikatory pakietów, importy z # i ścieżki bez rozszerzenia pozostają bez zmian. Dynamicznych ścieżek wyliczanych w runtime też nie da się przepisać.",
     "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/documentation/copy/en/release-notes/TypeScript%205.7.md",
     "added_on": "2026-10-24"
+  },
+  {
+    "id": "typescript-senior-013",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Monorepo ma skipLibCheck: true i po przejściu z TypeScriptu 6 na 7 pojawiły się błędy konfliktu deklaracji w zwykłych plikach .ts, choć kod się nie zmienił. Co jest najbardziej prawdopodobną przyczyną?",
+    "options": [
+      "TS 7 ignoruje skipLibCheck",
+      "TS 7 zgłasza konflikt deklaracji konsekwentnie we wszystkich miejscach, które go tworzą; TS 6 czasem zgłaszał go tylko w jednym — np. w .d.ts, gdzie skipLibCheck go wyciszał",
+      "TS 7 inaczej rozwiązuje moduły i ładuje inne pliki niż TS 6",
+      "To błąd TS 7; trzeba wrócić do TS 6"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7: w TS 6 sprzeczne deklaracje czasem dawały błąd tylko w jednej z deklaracji. W TS 7 błąd pojawia się we wszystkich miejscach, które się na konflikt składają, więc projekty, w których skipLibCheck wyciszał całość, zobaczą błędy w plikach innych niż .d.ts. Według README typescript-go rozwiązywanie modułów i zbiór plików są takie same jak w TS 6.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-senior-014",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Jaki typ ma H w TypeScripcie 7?",
+    "code": "type Head<S> = S extends `${infer H}${string}` ? H : never;\n\ntype H = Head<\"😀abc\">;",
+    "options": [
+      "\"\\uD83D\" — pierwsza połówka pary zastępczej, tak jak w TS 6",
+      "\"😀\" — cały punkt kodowy",
+      "string",
+      "never"
+    ],
+    "correct": 1,
+    "explanation": "Lista zmian TypeScript 7: przy inferencji przez typ szablonowy z pustym ogranicznikiem TS 7 pobiera cały punkt kodowy Unicode, a nie jedną jednostkę UTF-16 jak TS 6. Emoji spoza BMP nie jest już dzielone na połówki pary zastępczej: Head<\"😀abc\"> to \"😀\", a Rest<\"😀abc\"> to \"abc\".",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-08"
   }
 ]

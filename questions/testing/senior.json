@@ -191,5 +191,53 @@
     "explanation": "Dokumentacja Playwright pokazuje testInfo.retry, dostępne w każdym teście, hooku i fixturze; przy pierwszym uruchomieniu wynosi 0. Przykład w dokumentacji czyści właśnie cache na serwerze przed ponowieniem.",
     "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-retries-js.md",
     "added_on": "2026-10-28"
+  },
+  {
+    "id": "testing-senior-013",
+    "topic": "parallel-tests",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65, testy biegną równolegle na 4 workerach. Jeden test restartuje współdzielony serwer i nie może biec obok żadnego innego testu. Co jest najprostsze?",
+    "options": [
+      "Przenieść go do osobnego projektu z workers: 1",
+      "Dodać { lock: '-exclusive-' } — test ruszy dopiero, gdy żaden inny test nie biegnie, a pozostałe dalej biegną równolegle między sobą",
+      "Dodać { lock: 'server' } tylko do tego testu",
+      "Oznaczyć plik test.describe.configure({ mode: 'serial' })"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: nowy wbudowany lock -exclusive- uruchamia test tylko wtedy, gdy nie biegną żadne inne testy; wszystkie pozostałe testy dalej biegną równolegle względem siebie. Zwykły lock o własnej nazwie wyklucza tylko testy z tym samym lockiem, a tryb serial dotyczy kolejności w jednym pliku, nie innych workerów.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-senior-014",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Vitest 5.1 Browser Mode z włączonym importMapMocks. Plik testu, który wcześniej przechodził, kończy się teraz błędem, że moduł został zaimportowany, zanim vi.mock go zarejestrował. Skąd ta zmiana?",
+    "options": [
+      "vi.mock w Browser Mode jest teraz asynchroniczne i trzeba je awaitować",
+      "Mocki są serwowane przez import mapę, a import mapa nie może podmienić modułu, który strona już zaimportowała — dlatego Vitest zgłasza błąd zamiast po cichu użyć oryginału",
+      "Vitest 5.1 zabrania mockowania modułów w Browser Mode",
+      "Przeglądarka zablokowała przechwytywanie żądań przez page.route"
+    ],
+    "correct": 1,
+    "explanation": "Ogłoszenie Vitest 5.1: w Browser Mode mocki są serwowane przez import mapę zamiast przechwytywania żądań, co znacząco przyspiesza suite z mockami. Import mapa nie może zmienić modułu, który strona już zaimportowała, więc Vitest zgłasza błąd, gdy moduł załadowano przed rejestracją vi.mock, zamiast po cichu używać oryginału. Fabryka mocka może też dostarczyć tylko eksporty zadeklarowane przez oryginalny moduł. Obejście: browser.importMapMocks: false.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/blog/vitest-5-1.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-senior-015",
+    "topic": "test-infrastructure",
+    "kind": "single_choice",
+    "prompt": "Test API w Playwright podpisuje HMAC-em ciało żądania jako string i wysyła je przez request.post z nagłówkiem Content-Type: application/json; charset=utf-8. Po aktualizacji do 1.65 serwer odrzuca podpis dla celowo zniekształconego JSON-a. Jak wysłać dokładnie te bajty?",
+    "options": [
+      "Usunąć charset z Content-Type",
+      "Przekazać data: Buffer.from(body, 'utf8')",
+      "Przekazać body przez opcję form",
+      "Ustawić ignoreHTTPSErrors: true"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: APIRequestContext rozpoznaje application/json bez względu na wielkość liter i z parametrami (np. charset=UTF-8). Przy takim typie string, który nie parsuje się jako JSON, jest teraz kodowany jako JSON (z cudzysłowami i escapowaniem), co może unieważnić podpis. Żeby wysłać dokładne bajty, trzeba przekazać Buffer. Usunięcie charset nic nie da — samo application/json też włącza to kodowanie.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
   }
 ]

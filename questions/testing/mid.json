@@ -195,5 +195,136 @@
     "explanation": "Domyślna nazwa wzorca zawiera nazwę przeglądarki (lub projektu) i platformę, bo renderowanie różni się między systemami. Wzorce należy generować w tym samym środowisku, w którym działają testy, np. na CI albo w tym samym obrazie Dockera. Przy pierwszym uruchomieniu bez wzorca test zapisuje bieżący zrzut i kończy się błędem.",
     "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-snapshots-js.md",
     "added_on": "2026-10-18"
+  },
+  {
+    "id": "testing-mid-013",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Vitest 5.1. Agent AI uruchamia testy po każdej edycji w świeżym kontenerze bez repozytorium Git. Którą flagą uruchomi tylko testy dotknięte zmianami od poprzedniego uruchomienia?",
+    "options": [
+      "vitest run --changed",
+      "vitest run --since-last-run",
+      "vitest run --last-failed",
+      "vitest run --related HEAD"
+    ],
+    "correct": 1,
+    "explanation": "Ogłoszenie Vitest 5.1: --changed porównuje pliki z referencją Gita, więc wymaga repozytorium, a zmiana przestaje być „zmieniona” po commicie. Eksperymentalna flaga --since-last-run przy pierwszym uruchomieniu odpala wszystko i zapisuje pliki, które załadował każdy test; potem porównuje czasy modyfikacji tych plików i uruchamia tylko testy, których zależności się zmieniły (oraz testy, które ostatnio padły). Git nie jest potrzebny. --last-failed uruchamia tylko ostatnio nieudane testy.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/blog/vitest-5-1.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-014",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Vitest 5.1. Kod importuje setTimeout z node:timers/promises. Test woła vi.useFakeTimers() i vi.advanceTimersByTimeAsync(1000), ale obietnica się nie rozwiązuje. Co poprawi test?",
+    "code": "import { setTimeout as sleep } from 'node:timers/promises'\n\ntest('resolves after the delay', async () => {\n  vi.useFakeTimers()\n  const resolved = vi.fn()\n  sleep(1000).then(resolved)\n  await vi.advanceTimersByTimeAsync(1000)\n  expect(resolved).toHaveBeenCalled() // nie przechodzi\n})",
+    "options": [
+      "Zamienić advanceTimersByTimeAsync na advanceTimersByTime",
+      "Włączyć fakeNodeBuiltins: vi.useFakeTimers({ fakeNodeBuiltins: true }) albo fakeTimers.fakeNodeBuiltins w konfiguracji",
+      "Wywołać vi.runAllTicks() przed przesunięciem czasu",
+      "Nic — fałszywe timery w Vitest zawsze obejmują node:timers, problem jest gdzie indziej"
+    ],
+    "correct": 1,
+    "explanation": "Ogłoszenie Vitest 5.1: fałszywe timery podmieniają globalne setTimeout i podobne funkcje, ale kod importujący je z node:timers lub node:timers/promises używał prawdziwych timerów. Nowa opcja fakeNodeBuiltins fałszuje także te moduły, łącznie z importami nazwanymi i require. W 5.1 jest domyślnie wyłączona; zespół planuje włączyć ją domyślnie w kolejnej wersji głównej.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/blog/vitest-5-1.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-015",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Vitest 5.1, vitest run --last-failed. W poprzednim uruchomieniu w pliku auth.test.ts zawiódł hook beforeAll. Co zostanie uruchomione z tego pliku?",
+    "options": [
+      "Nic — hooki nie są testami, więc nie trafiają do listy nieudanych",
+      "Tylko pierwszy test pliku",
+      "Cały plik",
+      "Tylko testy, które w poprzednim uruchomieniu miały status failed"
+    ],
+    "correct": 2,
+    "explanation": "Ogłoszenie Vitest 5.1: --last-failed czyta nieudane testy z cache wyników i wybiera je po pełnych nazwach. Jeśli plik zawiódł poza testem, np. w hooku beforeAll albo podczas zbierania testów, uruchamiany jest cały plik.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/blog/vitest-5-1.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-016",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Po aktualizacji do Playwright 1.65 page object zaczął rzucać TypeError: Cannot read properties of undefined (reading 'getByRole'). tsconfig ma target ES2022. Co się zmieniło?",
+    "code": "class LoginPage {\n  readonly submit = this.page.getByRole('button', { name: 'Submit' });\n\n  constructor(private readonly page: Page) {}\n}",
+    "options": [
+      "Playwright 1.65 usunął metodę page.getByRole",
+      "Pola klas są teraz zgodne z useDefineForClassFields z tsconfig, więc inicjalizator pola submit działa przed przypisaniem parametru konstruktora page",
+      "Fixture page jest teraz tworzona leniwie i trzeba ją awaitować",
+      "Playwright 1.65 nie obsługuje już parameter properties w TypeScripcie"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: pola klas w TypeScripcie respektują useDefineForClassFields z tsconfig, tak jak tsc. Jest ono włączone dla targetu ES2022 i nowszych oraz gdy target nie jest podany. Inicjalizator pola, który czyta parameter property konstruktora, działa wtedy wcześniej niż przypisanie this.page. Rozwiązanie: przenieść inicjalizację do konstruktora albo ustawić useDefineForClassFields: false.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-017",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65. Na czas otwartego modala reszta strony dostaje atrybut inert. Test klika przycisk w tle, zanim modal się zamknie. Co się stanie?",
+    "options": [
+      "Kliknięcie od razu się wykona, bo przycisk jest widoczny i aktywny",
+      "Akcja czeka, aż element przestanie być inert, a jeśli pozostanie inert — kończy się timeoutem",
+      "Playwright od razu rzuca błąd „element is inert” bez czekania",
+      "Playwright automatycznie usuwa atrybut inert i klika"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: akcje takie jak click, check, tap, fill, clear i selectOption czekają teraz, aż element będzie „not inert”. Akcja na elemencie z atrybutem inert albo wewnątrz takiego elementu kończy się timeoutem, jeśli element pozostaje inert. To zwykłe auto-waiting, więc po zamknięciu modala kliknięcie się wykona.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-018",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65. Co wyśle to żądanie?",
+    "code": "await request.get('/items?sort=name', {\n  params: 'page=2',\n});",
+    "options": [
+      "GET /items?page=2",
+      "GET /items?sort=name&page=2",
+      "GET /items?sort=name",
+      "Błąd — URL z query nie może być łączony z opcją params"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: wartości opcji params typu string i URLSearchParams w żądaniach APIRequestContext są teraz dopisywane do query, które URL już ma, zamiast je zastępować.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-019",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65, CI uruchamia --shard=1/3, --shard=2/3 i --shard=3/3 z filtrem --grep @smoke. Żaden test nie ma tagu @smoke. Jaki będzie wynik?",
+    "options": [
+      "Wszystkie shardy przejdą, bo nie było nic do uruchomienia",
+      "Uruchomienie zakończy się błędem „No tests found”; żeby na to pozwolić, trzeba dodać --pass-with-no-tests",
+      "Playwright zignoruje filtr i uruchomi wszystkie testy",
+      "Zawiedzie tylko shard 1/3"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: uruchomienie z shardingiem kończy się teraz błędem „No tests found”, gdy żaden test nie pasuje we wszystkich shardach łącznie. Opcja --pass-with-no-tests na to pozwala. Pusty shard nadal przechodzi, jeśli inne shardy mają testy.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-020",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65. Testy łączą się przez korporacyjne proxy podane w opcji proxy (z username i password) przy browserType.launch(). Testowana strona wymaga też HTTP Basic Auth z tymi samymi danymi. Co trzeba zrobić?",
+    "options": [
+      "Nic — dane z proxy są wysyłane także do strony",
+      "Podać dane w opcji httpCredentials przy browser.newContext(), bo dane z proxy odpowiadają teraz tylko na wyzwania proxy",
+      "Dodać nagłówek Proxy-Authorization w extraHTTPHeaders",
+      "Wyłączyć proxy dla tej domeny"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: dane uwierzytelniające z opcji proxy przy browserType.launch nie są już wysyłane do stron — odpowiadają tylko na wyzwania proxy. Do uwierzytelnienia na stronie służy opcja httpCredentials przy browser.newContext().",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-08"
   }
 ]
