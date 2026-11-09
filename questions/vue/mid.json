@@ -211,5 +211,22 @@
     "explanation": "Wcześniej watcher z once zatrzymywał się dopiero po normalnym powrocie z callbacku, więc wyjątek zostawiał go aktywnego i callback mógł uruchomić się znowu. W 3.5.44 zatrzymanie przeniesiono do bloku finally: watcher kończy działanie po pierwszym wywołaniu niezależnie od wyniku, a sam wyjątek nadal jest zgłaszany. To jest zgodne z modyfikatorem zdarzeń .once.",
     "source_url": "https://github.com/vuejs/core/pull/15755",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "vue-mid-014",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod w Vue 3.5.45?",
+    "code": "import { effectScope, onScopeDispose } from 'vue'\n\nconst scope = effectScope()\nscope.run(() => {\n  scope.stop()\n  onScopeDispose(() => console.log('cleanup'))\n  console.log('after')\n})",
+    "options": [
+      "cleanup, potem after — sprzątanie zarejestrowane w zatrzymanym scope wykonuje się od razu",
+      "Tylko after — funkcja sprzątająca nigdy się nie wykona",
+      "after, a cleanup dopiero w następnym ticku",
+      "Błąd: nie można rejestrować sprzątania w zatrzymanym scope"
+    ],
+    "correct": 0,
+    "explanation": "Od Vue 3.5.45 onScopeDispose w zatrzymanym scope od razu wywołuje przekazaną funkcję. Wcześniej (np. w 3.5.44) funkcja trafiała do listy sprzątania scope’u, który już się nie zatrzyma, więc nigdy się nie wykonała. Composable rejestrujący nasłuchiwacz lub timer po zatrzymaniu scope’u zostawiał wtedy wyciek.",
+    "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-09"
   }
 ]

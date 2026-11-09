@@ -1528,6 +1528,54 @@
     "added_on": "2026-10-16"
   },
   {
+    "id": "git-mid-013",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-014",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-015",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-016",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-017",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-018",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
     "id": "git-senior-001",
     "technology": "git",
     "level": "senior",
@@ -1622,6 +1670,30 @@
     "topic": "advanced-tools",
     "kind": "single_choice",
     "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-013",
+    "technology": "git",
+    "level": "senior",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-senior-014",
+    "technology": "git",
+    "level": "senior",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-senior-015",
+    "technology": "git",
+    "level": "senior",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
   },
   {
     "id": "html-junior-001",
@@ -2544,6 +2616,14 @@
     "added_on": "2026-11-04"
   },
   {
+    "id": "nextjs-mid-015",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
     "id": "nextjs-senior-001",
     "technology": "nextjs",
     "level": "senior",
@@ -2646,6 +2726,30 @@
     "topic": "server-runtime",
     "kind": "single_choice",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "nextjs-senior-014",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-015",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-016",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
   },
   {
     "id": "nodejs-junior-001",
@@ -3734,6 +3838,14 @@
     "topic": "concurrent-ui",
     "kind": "single_choice",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "react-mid-018",
+    "technology": "react",
+    "level": "mid",
+    "topic": "rendering-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
   },
   {
     "id": "react-senior-001",
@@ -5150,6 +5262,14 @@
     "topic": "reactivity-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "vue-mid-014",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-09"
   },
   {
     "id": "vue-senior-001",

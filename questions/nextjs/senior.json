@@ -209,5 +209,54 @@
     "explanation": "Gdy unauthorized() rzuca po rozpoczęciu streamowania, nagłówki odpowiedzi zostały już wysłane, więc status zostaje 200. Wyjątek trafia do najbliższej granicy unauthorized, która renderuje się zamiast streamowanej treści, a Next.js dodaje <meta name=\"robots\" content=\"noindex\">. Status 401 jest zwracany tylko wtedy, gdy unauthorized() zadziała przed startem odpowiedzi, także przy prerenderowaniu.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/unauthorized.mdx",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "nextjs-senior-014",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "prompt": "W Next.js 16.4 z cacheComponents layout bloga i strona wpisu ustawiają ensureStatic jak poniżej. Co się stanie?",
+    "code": "// app/blog/layout.tsx\nexport const ensureStatic = 'prefetch'\n\n// app/blog/[slug]/page.tsx\nexport const ensureStatic = 'shell'",
+    "options": [
+      "Build się nie powiedzie — segment potomny nie może ustawić słabszego poziomu niż rodzic",
+      "Strona użyje 'shell', bo ustawienie bliżej strony wygrywa",
+      "Obowiązuje 'prefetch', a ustawienie strony jest po cichu ignorowane",
+      "ensureStatic działa tylko w layoutach, więc eksport ze strony nie ma znaczenia"
+    ],
+    "correct": 0,
+    "explanation": "Poziomy są uporządkowane: 'auto' < 'shell' < 'prefetch' < 'navigation'. Poziom z layoutu obejmuje wszystkie trasy pod nim. Potomek może go zaostrzyć, ale nie osłabić — wtedy build kończy się błędem „A child segment cannot override a parent segment with a less-constrained ensureStatic”. Brak eksportu albo 'auto' zachowuje ustawienie rodzica.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/02-route-segment-config/ensureStatic.mdx",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-015",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "prompt": "Root layout ma export const ensureStatic = 'navigation'. Na jednej ze stron jest <Suspense><Greeting /></Suspense>, a Greeting (Server Component) czyta cookies(). Co się stanie?",
+    "options": [
+      "Walidacja w next dev i next build zgłosi błąd — przy 'navigation' dane z żądania są niedozwolone nawet wewnątrz <Suspense>",
+      "Zadziała: statyczna jest reszta strony, a Greeting dostreamuje się w czasie żądania",
+      "Zadziała, jeśli segment ustawi instant = false",
+      "W dev pojawi się tylko ostrzeżenie, a build przejdzie"
+    ],
+    "correct": 0,
+    "explanation": "'navigation' wymaga, żeby cała wyrenderowana na serwerze trasa powstała przy prerenderze. Niedozwolone są dane runtime (cookies(), headers(), searchParams na serwerze), niecache’owane dane, connection() i krótkie cacheLife — także w <Suspense> i przy instant = false. Next.js sprawdza to w next dev i next build. Dane zależne od użytkownika można pobrać w Client Component, np. przez use(browser()) w <Suspense>.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/02-route-segment-config/ensureStatic.mdx",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-016",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "prompt": "Trasa app/products/[id]/page.tsx dostaje ensureStatic = 'navigation', ale nie eksportuje generateStaticParams(). Co się stanie?",
+    "options": [
+      "Build się nie powiedzie — przy 'navigation' dynamiczna trasa musi eksportować generateStaticParams() z co najmniej jednym pełnym zestawem parametrów",
+      "Każdy produkt wyrenderuje się przy pierwszym żądaniu i trafi do cache",
+      "Nieznane id dostaną fallback shell z <Suspense>, a strona wygeneruje się w tle",
+      "Zadziała, jeśli id czyta tylko Client Component przez useParams()"
+    ],
+    "correct": 0,
+    "explanation": "Przy 'navigation' dynamiczna trasa musi eksportować generateStaticParams() i zwracać co najmniej jeden pełny zestaw parametrów — z każdym parametrem trasy, nawet nieużywanym albo czytanym tylko w Client Component. Inaczej build kończy się błędem. Dla wartości spoza listy Next.js czeka na wygenerowanie statycznego wyniku. Fallback shell w tle dotyczy poziomów 'shell' i 'prefetch'.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/02-route-segment-config/ensureStatic.mdx",
+    "added_on": "2026-11-09"
   }
 ]

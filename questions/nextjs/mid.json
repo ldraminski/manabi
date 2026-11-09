@@ -224,5 +224,22 @@
     "explanation": "forbidden() rzuca specjalny błąd (NEXT_HTTP_ERROR_FALLBACK;403) i ma typ never, więc nie trzeba pisać return. Otaczający try/catch tłumi ten wyjątek i UI dla 403 się nie wyrenderuje. Dokumentacja zaleca unstable_rethrow, które przepuszcza wewnętrzne błędy Next.js. forbidden() można wywoływać w Server Components, Server Functions i Route Handlerach.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/forbidden.mdx",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "nextjs-mid-015",
+    "topic": "partial-prefetching",
+    "kind": "single_choice",
+    "prompt": "Aplikacja ma włączone cacheComponents i partialPrefetching. Użytkownik widzi <Link href=\"/post/a\" prefetch={true}>. Co z komponentu Comments trafi do tego prefetchu?",
+    "code": "async function Comments({ params }) {\n  await navigation()\n  const { slug } = await params\n  const sort = (await cookies()).get('comment-sort')?.value ?? 'newest'\n  const items = await getComments(slug, sort) // 'use cache' w środku\n  return <CommentList items={items} />\n}\n\n// w page.tsx:\n<Suspense fallback={<p>Ładowanie komentarzy...</p>}>\n  <Comments params={params} />\n</Suspense>",
+    "options": [
+      "Tylko fallback z najbliższego <Suspense> — kod poniżej await navigation() wykona się dopiero po kliknięciu linku",
+      "Cała lista komentarzy, bo getComments jest w use cache",
+      "Nic z tej strony — prefetch z navigation() jest wyłączony dla całej trasy",
+      "Błąd, bo po await navigation() nie wolno czytać cookies()"
+    ],
+    "correct": 0,
+    "explanation": "await navigation() wyłącza kod poniżej z App Shella i z prefetchu dla konkretnego linku. Ten kod renderuje się dopiero przy nawigacji, a w prefetchu jest fallback najbliższego <Suspense>. Odroczenie dotyczy tylko tego komponentu i jego poddrzewa, rodzeństwo działa jak wcześniej. Bez cacheComponents funkcja rzuca błąd. Żeby treść była w prefetchu dla linku, ale nie w App Shellu, służy prefetch().",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/navigation.mdx",
+    "added_on": "2026-11-09"
   }
 ]

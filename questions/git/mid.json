@@ -184,5 +184,103 @@
     "explanation": "git worktree pozwala mieć wyewidencjonowanych kilka gałęzi naraz w osobnych katalogach podpiętych do jednego repozytorium. Domyślnie add odmawia, gdy podana gałąź jest już wyewidencjonowana w innym worktree; to zabezpieczenie można obejść opcją --force. Typowo tworzy się worktree dla innej gałęzi, np. git worktree add ../hotfix main albo z -b dla nowej.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-worktree.adoc",
     "added_on": "2026-10-16"
+  },
+  {
+    "id": "git-mid-013",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Podczas merge’a są konflikty w api.js i ui.js. api.js już rozwiązałeś, ale w ui.js zostały znaczniki <<<<<<<. Masz też niezwiązane zmiany w README.md. Co zrobi poniższe polecenie (Git 2.56+)?",
+    "code": "git add --resolved .",
+    "options": [
+      "Nie doda do indeksu żadnego pliku, bo w ui.js zostały znaczniki konfliktu",
+      "Doda api.js, a ui.js i README.md zostawi bez zmian",
+      "Doda api.js i README.md, a ui.js zostawi jako nierozwiązany",
+      "Doda wszystkie trzy pliki i oznaczy konflikty jako rozwiązane"
+    ],
+    "correct": 0,
+    "explanation": "Opcja --resolved dodaje do indeksu tylko ścieżki z konfliktem (unmerged), w których nie ma już znaczników konfliktu. Jeśli w którejkolwiek z nich znaczniki zostały, polecenie nie doda żadnego pliku. README.md nie ma konfliktu, więc --resolved i tak by go nie dodało — niezwiązane zmiany zostają poza indeksem.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-add.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-014",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz git branch --delete-merged origin/main. Lokalna gałąź topic-a śledzi origin/main, ale ma commit, którego w origin/main jeszcze nie ma. Co się z nią stanie?",
+    "options": [
+      "Zostanie po cichu pominięta — usuniesz ją tylko przez git branch -D",
+      "Zostanie usunięta, bo jej upstream pasuje do wzorca",
+      "Polecenie przerwie się z błędem i nie usunie żadnej gałęzi",
+      "Git zapyta, czy mimo to ją usunąć"
+    ],
+    "correct": 0,
+    "explanation": "--delete-merged usuwa lokalne gałęzie, których upstream pasuje do wzorca, ale tylko wtedy, gdy ich czubek jest osiągalny z tego upstreamu, czyli praca już tam trafiła. Gałąź z niescalonymi commitami jest po cichu pomijana, a reszta jest usuwana normalnie. Aby ją skasować mimo to, trzeba użyć git branch -D. Najpierw warto sprawdzić wynik z --dry-run.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-branch.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-015",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz poniższą bisekcję (Git 2.56+). Gdzie będzie HEAD, gdy Git znajdzie pierwszy zły commit?",
+    "code": "git bisect start HEAD v1.2 --\ngit bisect run --reset-when-found ./test.sh",
+    "options": [
+      "Na commicie wyciągniętym przed git bisect start, a stan bisekcji zostanie wyczyszczony",
+      "Na pierwszym złym commicie, ze stanem bisekcji nadal aktywnym — jak bez tej opcji",
+      "Na pierwszym złym commicie, a stan bisekcji zostanie wyczyszczony",
+      "Na ostatnim dobrym commicie"
+    ],
+    "correct": 0,
+    "explanation": "--reset-when-found po znalezieniu pierwszego złego commita wypisuje go i sprząta stan bisekcji. Wartość original (domyślna, gdy jej nie podasz) wraca do commita wyciągniętego przed git bisect start. Wartość found zostawia wyciągnięty znaleziony commit. Opcji nie da się użyć z bisekcją uruchomioną z --no-checkout.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-bisect.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-016",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Dodajesz poprawkę do indeksu i uruchamiasz git history fixup <commit> dla commita sprzed kilku. Nałożenie tych zmian na stary commit kończy się konfliktem. Co się stanie?",
+    "options": [
+      "Polecenie przerwie się z błędem i nie zmieni historii — git history celowo nie obsługuje operacji z konfliktami",
+      "Git zatrzyma się jak rebase i poczeka na rozwiązanie konfliktu oraz git history --continue",
+      "Git zapisze commit ze znacznikami konfliktu i odtworzy kolejne commity",
+      "Git pominie zmiany powodujące konflikt i nałoży resztę"
+    ],
+    "correct": 0,
+    "explanation": "git history (eksperymentalne) z założenia nie zostawia stanu „w trakcie”, tak jak robi to rebase. Gdy nałożenie zmian dałoby konflikt, polecenie kończy się błędem. Dokumentacja wymienia to jako świadome ograniczenie. W takiej sytuacji trzeba użyć git commit --fixup i git rebase --autosquash.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-017",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Commit abc123 należy do historii gałęzi main i gałęzi feature, która odgałęzia się od main później. Będąc na main, uruchamiasz git history reword abc123. Co stanie się z feature?",
+    "options": [
+      "Też zostanie przepisana — domyślnie git history aktualizuje wszystkie lokalne gałęzie, które zawierają ten commit",
+      "Zostanie bez zmian, bo aktualizowana jest tylko bieżąca gałąź",
+      "Git odmówi, bo commit należy do więcej niż jednej gałęzi",
+      "Zostanie zrebase’owana na nowy main dopiero przy następnym git pull"
+    ],
+    "correct": 0,
+    "explanation": "Domyślna wartość --update-refs to branches. Przepisywane są wtedy wszystkie lokalne gałęzie wskazujące na potomków zmienionego commita, więc main i feature dostaną nową wersję abc123. Żeby przesunąć tylko bieżący HEAD, użyj --update-refs=head.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-018",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Na serwerze domyślną gałąź zmieniono z master na main, a u ciebie origin/HEAD po git fetch nadal wskazuje origin/master. Które ustawienie sprawi, że we wszystkich repozytoriach <remote>/HEAD będzie się sam aktualizował przy fetch?",
+    "options": [
+      "git config --global fetch.followRemoteHEAD always",
+      "git config --global fetch.followRemoteHEAD create",
+      "git config --global fetch.followRemoteHEAD never",
+      "git config --global fetch.prune true"
+    ],
+    "correct": 0,
+    "explanation": "fetch.followRemoteHEAD (Git 2.56) to domyślna wartość dla remote.<name>.followRemoteHEAD. Wartość create jest domyślna: tworzy <remote>/HEAD, jeśli go nie ma, ale nie rusza istniejącego. warn pokazuje ostrzeżenie, always po cichu aktualizuje, a never nigdy go nie tworzy ani nie zmienia. fetch.prune usuwa nieistniejące gałęzie zdalne i nie ma związku z HEAD.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/fetch.adoc",
+    "added_on": "2026-11-09"
   }
 ]

@@ -190,5 +190,53 @@
     "explanation": "Dokumentacja git worktree: add odmawia utworzenia nowego worktree, gdy podana nazwa gałęzi jest już wyciągnięta w innym worktree. Opcja -f/--force pomija to zabezpieczenie. Worktree współdzielą jedno repozytorium, więc dwa checkouty tej samej gałęzi łatwo prowadzą do nieoczekiwanych zmian.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-worktree.adoc",
     "added_on": "2026-10-25"
+  },
+  {
+    "id": "git-senior-013",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Gałąź feature-login (nigdzie niewyciągnięta) śledzi origin/feature-login (domyślne refspeki, brak remote.origin.push), a wszystkie jej commity są już w origin/feature-login. Mimo to git branch --delete-merged 'origin/*' jej nie usuwa. Dlaczego?",
+    "options": [
+      "Wypchnięcie tej gałęzi zaktualizowałoby jej własny upstream, więc Git nie odróżni jej od gałęzi, która tylko wygląda na scaloną zaraz po pull — takie gałęzie są pomijane",
+      "--delete-merged porównuje gałęzie tylko z origin/HEAD, a nie z ich upstreamem",
+      "Gałąź trzeba najpierw usunąć na serwerze — dopóki origin/feature-login istnieje, Git uznaje ją za niescaloną",
+      "Dla gałęzi utworzonych z gałęzi zdalnej branch.<name>.deleteMerged ma domyślnie wartość false"
+    ],
+    "correct": 0,
+    "explanation": "Git pomija gałąź, jeśli jej wypchnięcie na skonfigurowany remote (według refspeków push i fetch) trafiłoby właśnie w jej upstream. Zaraz po pull taka gałąź zawsze wygląda na „scaloną”, więc Git nie może bezpiecznie uznać jej za zbędną. Opcja jest pomyślana dla gałęzi tematycznych śledzących np. origin/main. Pominięte są też gałęzie, których upstream już nie istnieje — usunięcie gałęzi na serwerze nie pomogłoby.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-branch.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-senior-014",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Zespół waliduje format opisów commitów lokalnym hookiem commit-msg. Ktoś poprawił opis starego commita przez git history reword. Co jest prawdą w Git 2.56?",
+    "options": [
+      "git history obecnie nie uruchamia żadnych hooków, więc nowy opis nie przeszedł przez commit-msg — reguły trzeba egzekwować też na serwerze lub w CI",
+      "git history uruchamia te same hooki co git commit --amend",
+      "git history uruchamia tylko commit-msg, a pomija pre-commit",
+      "git history reword odmawia zmiany commitów, które mają potomków"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja git history wymienia różnice względem rebase. Polecenie obecnie nie uruchamia żadnych githooks (może się to zmienić), większość podkomend działa w repozytorium bare, a domyślnie aktualizowane są wszystkie gałęzie potomne. Lokalne hooki da się zresztą zawsze obejść, więc reguły ważne dla zespołu trzeba sprawdzać po stronie serwera lub w CI.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-senior-015",
+    "topic": "advanced-tools",
+    "kind": "single_choice",
+    "prompt": "Linked worktree tworzysz w różnych miejscach — np. repozytorium z /home/user/work/app ma worktree w /home/user/personal/tmp. Chcesz jednym wpisem w ~/.gitconfig włączać służbową konfigurację tam, gdzie pliki robocze leżą pod /home/user/work/. Który warunek dopasowuje właśnie położenie plików roboczych (Git 2.56+)?",
+    "options": [
+      "[includeIf \"worktree:/home/user/work/\"]",
+      "[includeIf \"gitdir:/home/user/work/\"]",
+      "[includeIf \"onbranch:work/\"]",
+      "[includeIf \"hasconfig:remote.*.url:/home/user/work/**\"]"
+    ],
+    "correct": 0,
+    "explanation": "Warunek worktree: (Git 2.56) dopasowuje katalog z plikami roboczymi, czyli to, co zwraca git rev-parse --show-toplevel. gitdir: dopasowuje położenie katalogu .git. Linked worktree w /home/user/personal/tmp korzysta z katalogu .git repozytorium w /home/user/work/app, więc gitdir: włączyłby tam służbową konfigurację. worktree: nigdy nie pasuje w repozytorium bare i dopasowuje tylko ścieżkę po rozwiązaniu dowiązań symbolicznych.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config.adoc",
+    "added_on": "2026-11-09"
   }
 ]

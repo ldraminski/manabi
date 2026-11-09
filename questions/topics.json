@@ -698,5 +698,19 @@
     "title": "Migracja na TypeScript 7",
     "description": "Natywny kompilator: zmiany w sprawdzaniu JavaScriptu, JSDoc i CommonJS",
     "icon": "type"
+  },
+  {
+    "technology": "git",
+    "slug": "newer-commands",
+    "title": "Nowe polecenia i opcje",
+    "description": "git history, add --resolved, branch --delete-merged, fetch.followRemoteHEAD",
+    "icon": "branch"
+  },
+  {
+    "technology": "nextjs",
+    "slug": "partial-prefetching",
+    "title": "Statyczne etapy nawigacji",
+    "description": "Partial Prefetching, navigation(), ensureStatic i generateStaticParams",
+    "icon": "layout"
   }
 ]
