@@ -472,6 +472,22 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "angular-junior-013",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "angular-junior-014",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
     "id": "angular-mid-001",
     "technology": "angular",
     "level": "mid",
@@ -3264,6 +3280,22 @@
     "added_on": "2026-11-07"
   },
   {
+    "id": "nodejs-mid-046",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-mid-047",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -3592,6 +3624,30 @@
     "added_on": "2026-11-02"
   },
   {
+    "id": "nodejs-senior-042",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-senior-043",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-senior-044",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",
@@ -3702,6 +3758,14 @@
     "topic": "effects-and-hooks",
     "kind": "single_choice",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-015",
+    "technology": "react",
+    "level": "junior",
+    "topic": "state-and-props",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
   },
   {
     "id": "react-mid-001",
@@ -3846,6 +3910,30 @@
     "topic": "rendering-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "react-mid-019",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "react-mid-020",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "react-mid-021",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
   },
   {
     "id": "react-senior-001",
@@ -5270,6 +5358,14 @@
     "topic": "reactivity-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "vue-mid-015",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-10"
   },
   {
     "id": "vue-senior-001",

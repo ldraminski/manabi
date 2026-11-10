@@ -297,5 +297,53 @@
     "explanation": "Ukryte Activity ustawia węzłom DOM display: none, ale zachowuje stan komponentów. React 19.3 rozszerzył to na portale — treść portalu jest ukrywana razem z drzewem, chociaż leży w innym miejscu DOM-u. Po powrocie do mode=\"visible\" modal wraca z poprzednim stanem.",
     "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "react-mid-019",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Formularz ma action={save} i onReset={() => setDirty(false)}. save kończy się sukcesem i React automatycznie resetuje pola. Czy onReset się wywoła?",
+    "options": [
+      "Tak — od React 19.3 automatyczny reset po akcji wywołuje też onReset",
+      "Nie — onReset reaguje tylko na kliknięcie <button type=\"reset\">",
+      "Tak, ale tylko gdy formularz ma ref",
+      "Nie — automatyczny reset dotyczy tylko komponentów serwerowych"
+    ],
+    "correct": 0,
+    "explanation": "W liście zmian React 19.3 jest „Fire onReset when automatically resetting forms”. Wcześniej automatyczny reset po udanej akcji nie uruchamiał onReset, więc logika podpięta pod reset (np. czyszczenie flagi „niezapisane zmiany”) się nie wykonywała.",
+    "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "react-mid-020",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "Formularz z action={updateProfile} po każdym udanym zapisie czyści pola, a chcesz zostawić wpisane wartości. Które rozwiązanie podaje dokumentacja React?",
+    "options": [
+      "Dodać noValidate do <form>",
+      "Przechować wysłane wartości w stanie i przekazać je polom jako defaultValue — React zastosuje nowe wartości domyślne przed resetem",
+      "Zwrócić false z funkcji akcji",
+      "Wywołać e.stopPropagation() w onChange każdego pola"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja <form> opisuje zachowanie wartości po akcji: zapisz je przez useState (lub zwróć ze stanu useActionState) i podaj jako defaultValue. React stosuje zaktualizowane wartości domyślne przed resetem, więc pola je zachowują. Inną opcją jest obsłużenie wysłania w onSubmit z e.preventDefault() i startTransition — wtedy action nie działa i resetu nie ma.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/components/form.md",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "react-mid-021",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Formularz ma dwa przyciski: <button name=\"intent\" value=\"draft\"> i <button name=\"intent\" value=\"publish\">. Jak w onSubmit sprawdzić, który kliknięto?",
+    "options": [
+      "e.target.name",
+      "e.submitter.value",
+      "e.currentTarget.value",
+      "e.relatedTarget.value"
+    ],
+    "correct": 1,
+    "explanation": "Zdarzenie submit to SubmitEvent, którego właściwość submitter wskazuje element, który wysłał formularz. React 19.3 kopiuje submitter do syntetycznego zdarzenia (wcześniej trzeba było sięgać do e.nativeEvent.submitter). e.target i e.currentTarget to sam formularz, a relatedTarget nie istnieje w tym zdarzeniu.",
+    "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-10"
   }
 ]

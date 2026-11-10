@@ -195,5 +195,37 @@
     "explanation": "inject() działa tylko w kontekście wstrzykiwania (injection context), czyli m.in. podczas tworzenia komponentu, dyrektywy lub serwisu: w inicjalizatorze pola albo w konstruktorze. Wywołanie później, np. w handlerze kliknięcia, rzuci błąd.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/di/overview.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "angular-junior-013",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Szablon zawiera <button [attr.aria-label]=\"label()\">. Co zrobi Angular, gdy label() zwróci null?",
+    "options": [
+      "Ustawi aria-label=\"null\"",
+      "Ustawi pusty atrybut aria-label=\"\"",
+      "Usunie atrybut aria-label z elementu",
+      "Zgłosi błąd w trybie deweloperskim"
+    ],
+    "correct": 2,
+    "explanation": "Przy wiązaniu atrybutu z prefiksem attr. Angular wywołuje setAttribute z wartością, a gdy wartość to null lub undefined — removeAttribute. Dzięki temu można warunkowo dodawać atrybuty bez pustych wartości.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/binding.md",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "angular-junior-014",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Sygnał nickname ma wartość null. Co wyświetli <p>Witaj, {{ nickname() }}!</p>?",
+    "options": [
+      "Witaj, null!",
+      "Witaj, !",
+      "Witaj, undefined!",
+      "Nic — Angular nie wyrenderuje elementu <p>"
+    ],
+    "correct": 1,
+    "explanation": "Interpolacja zamienia wartość wyrażenia na tekst, ale null i undefined renderuje jako pusty napis. Obiekty i tablice są zamieniane przez toString().",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/binding.md",
+    "added_on": "2026-11-10"
   }
 ]

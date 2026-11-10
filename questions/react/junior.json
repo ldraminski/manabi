@@ -210,5 +210,21 @@
     "explanation": "Brak drugiego argumentu oznacza uruchamianie po każdym renderze. Pusta tablica [] to raz po zamontowaniu, a [title] — po zamontowaniu i po każdej zmianie title.",
     "source_url": "https://react.dev/reference/react/useEffect",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "react-junior-015",
+    "topic": "state-and-props",
+    "kind": "single_choice",
+    "prompt": "Formularz <form action={saveComment}> ma niekontrolowane pole <input name=\"text\" />. Funkcja saveComment kończy się bez błędu. Co stanie się z polem?",
+    "options": [
+      "Zostanie wyczyszczone — po udanej akcji React resetuje niekontrolowane pola formularza",
+      "Zachowa wpisany tekst, bo React nie dotyka niekontrolowanych pól",
+      "Strona się przeładuje, jak przy zwykłym wysłaniu formularza",
+      "Zostanie wyłączone (disabled) do następnego renderu"
+    ],
+    "correct": 0,
+    "explanation": "Gdy do action lub formAction przekażesz funkcję, React przechwytuje wysłanie (bez przeładowania strony), a po jej udanym zakończeniu resetuje niekontrolowane pola formularza. Żeby zachować wartości, trzeba je przechować w stanie i przekazać jako defaultValue.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/components/form.md",
+    "added_on": "2026-11-10"
   }
 ]

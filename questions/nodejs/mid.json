@@ -726,5 +726,39 @@
     "explanation": "W V8 15.6 getTimezoneOffset() nie jest już obcinane do pełnych minut. Dla dat, gdy strefa używała lokalnego czasu słonecznego o przesunięciu niebędącym pełną liczbą minut, wynik ma część ułamkową: w Node.js 26 było 472, w 27 jest 472.96666666666664. Kod oczekujący liczby całkowitej powinien to obsłużyć jawnie.",
     "source_url": "https://nodejs.org/en/blog/announcements/notable-v8-changes-from-node-js-26-to-27-alpha",
     "added_on": "2026-11-07"
+  },
+  {
+    "id": "nodejs-mid-046",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.12+. Co wypisze ostatnia linia?",
+    "code": "import { Buffer } from 'node:buffer';\nimport { websocketMask, websocketUnmask } from 'node:http';\n\nconst key = Buffer.from([0x37, 0xfa, 0x21, 0x3d]);\nconst payload = Buffer.from('Hello');\nconst frame = Buffer.alloc(6 + payload.length);\nwebsocketMask(payload, key, frame, 6, payload.length);\n\nconst received = frame.subarray(6);\nwebsocketUnmask(received, key);\nconsole.log(frame.subarray(6).toString());",
+    "options": [
+      "Hello — websocketUnmask działa w miejscu, a received to widok na tę samą pamięć co frame",
+      "Zamaskowane bajty — websocketUnmask zwraca nowy bufor i nie zmienia argumentu",
+      "Pusty napis — websocketMask nie zapisuje nic, gdy offset jest różny od 0",
+      "Błąd — websocketUnmask wymaga Uint8Array, a nie Buffer"
+    ],
+    "correct": 0,
+    "explanation": "http.websocketUnmask(buffer, mask) XOR-uje każdy bajt bufora z kluczem w miejscu, tak jak websocketMask(buffer, mask, buffer, 0, buffer.byteLength). subarray() nie kopiuje danych, więc odmaskowanie received zmienia też frame. Za to websocketMask nie modyfikuje source (chyba że dzieli pamięć z output) i zapisuje wynik od podanego offsetu.",
+    "source_url": "https://nodejs.org/docs/latest-v26.x/api/http.html",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-mid-047",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.12+. Klucz maskujący przez pomyłkę ma 3 bajty. Co zrobi wywołanie?",
+    "code": "websocketMask(payload, Buffer.from([1, 2, 3]), frame, 6, payload.length);",
+    "options": [
+      "Zamaskuje dane, powtarzając 3-bajtowy klucz",
+      "Uzupełni klucz zerem do 4 bajtów i zamaskuje dane",
+      "Rzuci błąd i nic nie zapisze do frame",
+      "Zamaskuje tylko pierwsze 3 bajty, a resztę skopiuje bez zmian"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja mówi, że błąd jest rzucany, gdy mask nie ma dokładnie 4 bajtów (RFC 6455 definiuje 32-bitowy klucz), a także gdy length przekracza source.byteLength, offset + length przekracza output.byteLength albo output jest oparty na niezmiennym ArrayBuffer. W takim przypadku nic nie jest zapisywane.",
+    "source_url": "https://nodejs.org/docs/latest-v26.x/api/http.html",
+    "added_on": "2026-11-10"
   }
 ]

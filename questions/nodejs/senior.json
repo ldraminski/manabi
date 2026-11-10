@@ -660,5 +660,53 @@
     "explanation": "DEP0183 jest w Node.js 27 End-of-Life: crypto.setEngine() i stałe ENGINE_METHOD_* usunięto, a clientCertEngine, privateKeyEngine i privateKeyIdentifier rzucają ERR_CRYPTO_CUSTOM_ENGINE_NOT_SUPPORTED. Dokumentacja mówi, że nie ma bezpośredniego zamiennika w Node.js, a upstream engine'y zastąpił model providerów OpenSSL. Taką migrację trzeba zaplanować przed aktualizacją.",
     "source_url": "https://nodejs.org/docs/v27.0.0-alpha.0.0.0/api/deprecations.html#dep0183-openssl-engine-based-apis",
     "added_on": "2026-11-02"
+  },
+  {
+    "id": "nodejs-senior-042",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "Wewnętrzne narzędzie uruchamia benchmarki przez createRunner() z node:bench, czyta strumień tylko po to, żeby wypisać wyniki, i nie sprawdza błędów. Jeden benchmark rzuca wyjątek. Jaki będzie kod wyjścia procesu w CI?",
+    "options": [
+      "1 — każdy nieudany benchmark ustawia kod wyjścia",
+      "0 — runner z createRunner() nie zmienia kodu wyjścia; to wywołujący musi go ustawić na podstawie zdarzeń strumienia",
+      "1, ale tylko po dodaniu flagi --bench-fail-fast",
+      "Proces kończy się od razu nieprzechwyconym wyjątkiem z benchmarku"
+    ],
+    "correct": 1,
+    "explanation": "Gdy benchmarki ruszają automatycznie albo przez run() z modułu, nieudany benchmark ustawia process.exitCode na 1 (o ile kod nie był już ustawiony). Runnery z createRunner() zostawiają kod wyjścia wywołującemu. Błąd benchmarku nie przerywa procesu, tylko trafia do strumienia jako nieudane zdarzenie bench:complete, więc narzędzie musi je wykryć i samo ustawić process.exitCode.",
+    "source_url": "https://nodejs.org/docs/latest-v26.x/api/bench.html",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-senior-043",
+    "topic": "benchmarking",
+    "kind": "single_choice",
+    "prompt": "Chcesz w node:bench (Node.js 26.12+) zmierzyć koszt pierwszego, „zimnego” wywołania funkcji. Co trzeba ustawić?",
+    "options": [
+      "Nic — node:bench domyślnie mierzy od pierwszego wywołania",
+      "warmup: 0 — domyślnie przed pomiarami wykonuje się dziesięć wywołań rozgrzewkowych, które nie trafiają do wyników",
+      "samples: 1 — pierwsza próbka zawsze jest zimna niezależnie od rozgrzewki",
+      "yieldBetweenSamples: false — wtedy rozgrzewka jest pomijana"
+    ],
+    "correct": 1,
+    "explanation": "Od Node.js 26.12 node:bench domyślnie wykonuje dziesięć niezaraportowanych wywołań rozgrzewkowych, żeby pierwsze pomiary rzadziej trafiały na niezoptymalizowany kod. Dokumentacja mówi wprost: ustaw warmup na 0, żeby mierzyć od pierwszego wywołania. yieldBetweenSamples dotyczy tylko tury pętli zdarzeń między próbkami.",
+    "source_url": "https://nodejs.org/docs/latest-v26.x/api/bench.html",
+    "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-senior-044",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Ze względów bezpieczeństwa serwis ma działać z node --jitless. Punkt wejścia to server.ts uruchamiany bezpośrednio przez Node.js 26 (wbudowane usuwanie typów). Co się stanie?",
+    "options": [
+      "Działa normalnie, tylko wolniej",
+      "Node.js po cichu przełączy się na wolniejszy parser TypeScript napisany w JS",
+      "Parsowanie TypeScriptu rzuci ERR_WEBASSEMBLY_NOT_SUPPORTED, bo w tym trybie WebAssembly jest niedostępne; trzeba uruchamiać skompilowany JS",
+      "--jitless jest ignorowane dla plików .ts"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja --jitless mówi, że gdy WebAssembly jest w tym trybie niedostępne, parsowanie TypeScriptu i importy modułów WebAssembly rzucają ERR_WEBASSEMBLY_NOT_SUPPORTED, a Node.js nie gwarantuje alternatywnych implementacji funkcji wymagających WebAssembly lub pamięci wykonywalnej. W takim środowisku trzeba uruchamiać kod skompilowany wcześniej do JavaScriptu.",
+    "source_url": "https://nodejs.org/docs/latest-v26.x/api/cli.html",
+    "added_on": "2026-11-10"
   }
 ]

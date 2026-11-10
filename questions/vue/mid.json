@@ -228,5 +228,22 @@
     "explanation": "Od Vue 3.5.45 onScopeDispose w zatrzymanym scope od razu wywołuje przekazaną funkcję. Wcześniej (np. w 3.5.44) funkcja trafiała do listy sprzątania scope’u, który już się nie zatrzyma, więc nigdy się nie wykonała. Composable rejestrujący nasłuchiwacz lub timer po zatrzymaniu scope’u zostawiał wtedy wyciek.",
     "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "vue-mid-015",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.45+. Które opcje będą zaznaczone po zamontowaniu?",
+    "code": "<script setup>\nimport { ref } from 'vue'\nconst selected = ref(new Set([2]))\n</script>\n\n<template>\n  <select multiple v-model.number=\"selected\">\n    <option value=\"1\">Jeden</option>\n    <option value=\"2\">Dwa</option>\n  </select>\n</template>",
+    "options": [
+      "Żadna — Set.has(\"2\") nie znajdzie liczby 2",
+      "Dwa — przy modyfikatorze .number Vue sprawdza też liczbową wersję wartości opcji",
+      "Obie — Set jest traktowany jak „zaznacz wszystko”",
+      "Żadna i ostrzeżenie, bo <select multiple> obsługuje tylko tablice"
+    ],
+    "correct": 1,
+    "explanation": "v-model na <select multiple> przyjmuje tablicę albo Set. Wartość opcji z atrybutu value to napis, a Set porównuje ściśle, więc przed 3.5.45 Set z liczbami nie zaznaczał żadnej opcji, choć .number zapisywał wybrane wartości jako liczby. Od 3.5.45 przy .number Vue sprawdza też looseToNumber(wartość opcji). Model w postaci tablicy porównuje przez String(), więc tam problemu nie było.",
+    "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-10"
   }
 ]
