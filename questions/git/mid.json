@@ -282,5 +282,37 @@
     "explanation": "fetch.followRemoteHEAD (Git 2.56) to domyślna wartość dla remote.<name>.followRemoteHEAD. Wartość create jest domyślna: tworzy <remote>/HEAD, jeśli go nie ma, ale nie rusza istniejącego. warn pokazuje ostrzeżenie, always po cichu aktualizuje, a never nigdy go nie tworzy ani nie zmienia. fetch.prune usuwa nieistniejące gałęzie zdalne i nie ma związku z HEAD.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/config/fetch.adoc",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-mid-019",
+    "topic": "security-updates",
+    "kind": "single_choice",
+    "prompt": "Zespół klonuje cudze repozytoria z git clone --recurse-submodules. Opublikowano CVE-2026-111760: spreparowane repozytorium może przy rekurencyjnym klonowaniu podmienić gitfile submodułu na dowiązanie symboliczne do katalogu ze złośliwą konfiguracją lub hookami. Co realnie chroni przed tym atakiem?",
+    "options": [
+      "Aktualizacja Gita do wersji z poprawką (np. 2.56.1 albo odpowiedniego wydania z poprawkami bezpieczeństwa dla starszej gałęzi, jak 2.55.1), a do tego czasu niewykonywanie rekurencyjnych klonów niezaufanych repozytoriów",
+      "Klonowanie z --depth 1, bo płytki klon nie pobiera konfiguracji submodułów",
+      "Przejście z HTTPS na SSH, bo atak wymaga protokołu HTTP",
+      "Ustawienie core.autocrlf=input, które blokuje tworzenie dowiązań symbolicznych"
+    ],
+    "correct": 0,
+    "explanation": "Błąd siedzi w samym Gicie, więc pomaga tylko wersja z poprawką. Poprawkę wydano dla wielu gałęzi naraz: 2.50.2, 2.51.3, 2.52.1, 2.53.1, 2.54.1, 2.55.1 i 2.56.1. Ani płytki klon, ani zmiana protokołu nie zmieniają tego, jak Git zapisuje submoduły. core.autocrlf dotyczy końców linii, nie dowiązań symbolicznych.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/RelNotes/2.50.2.adoc",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-mid-020",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Chcesz usunąć ze swojej gałęzi jeden commit ze środka historii eksperymentalnym poleceniem git history drop <commit>. Jeden z późniejszych commitów zmienia te same linie co usuwany, więc przeniesienie go da konflikt. Co się stanie?",
+    "options": [
+      "Polecenie przerwie się z błędem — git history z założenia nie obsługuje operacji kończących się konfliktem; w takim przypadku trzeba użyć git rebase -i",
+      "Git zatrzyma się jak rebase i poprosi o rozwiązanie konfliktu, a potem o git history --continue",
+      "Git pominie konfliktujący commit i przeniesie pozostałe",
+      "Git zapisze konflikt w pliku ze znacznikami konfliktu i dokończy przepisywanie historii"
+    ],
+    "correct": 0,
+    "explanation": "drop usuwa commit i przenosi wszystkich jego potomków bezpośrednio na jego rodzica. Dokumentacja mówi wprost: jeśli przeniesienie któregoś potomka dałoby konflikt, polecenie kończy się błędem. To celowe ograniczenie — git history nie ma stanu „w trakcie” jak rebase. drop nie usunie też commita początkowego (root) ani merge commita.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-11"
   }
 ]

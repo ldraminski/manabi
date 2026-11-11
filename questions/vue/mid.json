@@ -245,5 +245,22 @@
     "explanation": "v-model na <select multiple> przyjmuje tablicę albo Set. Wartość opcji z atrybutu value to napis, a Set porównuje ściśle, więc przed 3.5.45 Set z liczbami nie zaznaczał żadnej opcji, choć .number zapisywał wybrane wartości jako liczby. Od 3.5.45 przy .number Vue sprawdza też looseToNumber(wartość opcji). Model w postaci tablicy porównuje przez String(), więc tam problemu nie było.",
     "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "vue-mid-016",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.45+. Komponent Comments ma async setup(), które odrzuca obietnicę (np. nieudany fetch). Rodzic przechwytuje błąd w onErrorCaptured i zwraca false. Co wyrenderuje się w miejscu Comments, gdy Suspense rozstrzygnie się?",
+    "code": "<!-- Parent.vue -->\n<script setup>\nimport { onErrorCaptured } from 'vue'\nonErrorCaptured(() => false)\n</script>\n\n<template>\n  <Suspense>\n    <div><Comments /></div>\n    <template #fallback>Ładowanie…</template>\n  </Suspense>\n</template>",
+    "options": [
+      "Nic — w miejscu Comments zostaje pusty komentarz-placeholder, a Suspense pokazuje <div> zamiast fallbacku",
+      "Fallback „Ładowanie…” zostaje na stałe",
+      "Szablon Comments z niezdefiniowanymi danymi z setup",
+      "Cała aplikacja zostaje odmontowana"
+    ],
+    "correct": 0,
+    "explanation": "Vue 3.5.45 poprawiło przypadek, w którym async setup kończy się odrzuceniem: komponent nie renderuje nic, niezależnie od tego, czy szablon jest kompilowany osobno, czy render function zwraca setup. Po obsłużeniu błędu Suspense się rozstrzyga i pokazuje domyślną zawartość, a w miejscu komponentu zostaje <!---->. Jeśli użytkownik ma zobaczyć komunikat, rodzic powinien ustawić własny stan błędu w onErrorCaptured.",
+    "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-11"
   }
 ]

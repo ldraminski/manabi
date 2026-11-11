@@ -658,6 +658,13 @@
     "icon": "layout"
   },
   {
+    "technology": "angular",
+    "slug": "signal-forms",
+    "title": "Formularze sygnałowe",
+    "description": "Własne kontrolki FormValueControl, debounce, transformedValue, walidacja w schemacie",
+    "icon": "layout"
+  },
+  {
     "technology": "aws",
     "slug": "iam",
     "title": "Uprawnienia IAM",
@@ -704,6 +711,13 @@
     "slug": "newer-commands",
     "title": "Nowe polecenia i opcje",
     "description": "git history, add --resolved, branch --delete-merged, fetch.followRemoteHEAD",
+    "icon": "branch"
+  },
+  {
+    "technology": "git",
+    "slug": "security-updates",
+    "title": "Poprawki bezpieczeństwa",
+    "description": "Luki w klonowaniu submodułów, niebezpieczne funkcje fast-import, wydania z poprawkami",
     "icon": "branch"
   },
   {

@@ -616,6 +616,30 @@
     "added_on": "2026-11-04"
   },
   {
+    "id": "angular-mid-017",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "angular-mid-018",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "angular-mid-019",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -1592,6 +1616,22 @@
     "added_on": "2026-11-09"
   },
   {
+    "id": "git-mid-019",
+    "technology": "git",
+    "level": "mid",
+    "topic": "security-updates",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-mid-020",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
     "id": "git-senior-001",
     "technology": "git",
     "level": "senior",
@@ -1710,6 +1750,22 @@
     "topic": "advanced-tools",
     "kind": "single_choice",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "git-senior-016",
+    "technology": "git",
+    "level": "senior",
+    "topic": "security-updates",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-senior-017",
+    "technology": "git",
+    "level": "senior",
+    "topic": "security-updates",
+    "kind": "flashcard",
+    "added_on": "2026-11-11"
   },
   {
     "id": "html-junior-001",
@@ -5366,6 +5422,14 @@
     "topic": "components-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "vue-mid-016",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-11"
   },
   {
     "id": "vue-senior-001",

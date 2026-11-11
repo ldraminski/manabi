@@ -261,5 +261,54 @@
     "explanation": "Przed poprawką signale czytane w funkcji params były bezpośrednimi zależnościami wewnętrznego stanu resource, więc każda ich zmiana tworzyła nowy obiekt żądania i ponownie uruchamiała loader, nawet przy tej samej wartości. W 22.2.4 params jest owijane w computed, które zmienia się tylko wtedy, gdy wynik jest inny według Object.is. Zmiana id albo reload() nadal ładują dane.",
     "source_url": "https://github.com/angular/angular/commit/fe02c34c3ce22784e1eb2afb2b8d842df6ffbeb4",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "angular-mid-017",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "prompt": "Własna kontrolka implementuje FormValueControl<string> i jest podpięta przez [formField]. W schemacie formularza dodano debounce(schemaPath.name, 'blur'), ale dla tej kontrolki nie działa. Czego brakuje?",
+    "code": "@Component({\n  selector: 'app-custom-input',\n  template: `\n    <input\n      [value]=\"value()\"\n      (input)=\"value.set($event.target.value)\"\n    />\n  `,\n})\nexport class CustomInput implements FormValueControl<string> {\n  value = model('');\n}",
+    "options": [
+      "Wyjścia touch = output<void>() i wywołania touch.emit() w obsłudze natywnego zdarzenia blur",
+      "Wywołania touch.emit() w obsłudze zdarzenia focus",
+      "Implementacji ControlValueAccessor z registerOnTouched",
+      "Niczego — FormField sam nasłuchuje blur na elemencie hosta kontrolki"
+    ],
+    "correct": 0,
+    "explanation": "Wbudowane kontrolki zgłaszają blur automatycznie, ale własna kontrolka uczestniczy w debounce('blur') tylko wtedy, gdy emituje wyjście touch po natywnym blur. Dokumentacja podkreśla: emituj touch przy utracie fokusu, nie przy jego uzyskaniu. Bez touch pole nigdy nie zostaje oznaczone jako opuszczone. ControlValueAccessor to mechanizm formularzy reaktywnych i template-driven, nie Signal Forms.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/forms/signals/custom-controls.md",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "angular-mid-018",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "prompt": "Kontrolka NumberInput używa transformedValue(this.value, {parse, format}). Funkcja parse dla tekstu, który nie jest liczbą, zwraca {error: {kind: 'parse', message: …}} zamiast {value}. Kontrolka jest podpięta przez [formField]=\"orderForm.amount\". Co się stanie, gdy użytkownik wpisze „abc”?",
+    "options": [
+      "Błąd trafi do orderForm.amount().errors() obok błędów walidacji, a pole stanie się nieprawidłowe, co blokuje wysłanie formularza",
+      "Do modelu zostanie zapisane NaN, a błąd pojawi się tylko w konsoli",
+      "transformedValue rzuci wyjątek, który trzeba złapać w kontrolce",
+      "Błąd będzie widoczny tylko wewnątrz kontrolki; formularz pozostanie prawidłowy"
+    ],
+    "correct": 0,
+    "explanation": "Przy podpięciu przez [formField] błędy parsowania są automatycznie zgłaszane do pola i widać je w jego errors(). Pole z błędem parsowania jest nieprawidłowe i blokuje wysłanie tak samo jak niespełniona reguła walidacji. Jeśli parse ma też zaktualizować model, może zwrócić jednocześnie value i error. reset() na polu czyści oczekujące błędy parsowania i ponownie formatuje wartość z modelu.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/forms/signals/custom-controls.md",
+    "added_on": "2026-11-11"
+  },
+  {
+    "id": "angular-mid-019",
+    "topic": "signal-forms",
+    "kind": "single_choice",
+    "prompt": "Piszesz własną kontrolkę hasła dla Signal Forms. Hasło musi mieć co najmniej 8 znaków. Gdzie umieścić tę regułę?",
+    "options": [
+      "W schemacie formularza, np. minLength(schemaPath.password, 8, {message: …}); kontrolka tylko wyświetla invalid() i errors(), które dostaje od FormField",
+      "W kontrolce, w metodzie isValid() sprawdzającej value().length",
+      "W kontrolce, w effect(), który ustawia własny sygnał błędu",
+      "W atrybucie minlength na wewnętrznym <input>; Signal Forms odczytają go stamtąd"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja mówi wprost: kontrolki wyświetlają stan walidacji, ale jej nie wykonują. Reguły definiuje się w schemacie formularza. FormField przekazuje kontrolce invalid() i errors() oraz wartości ograniczeń (required, min, max, minLength, maxLength, pattern), które może wykorzystać np. do atrybutów HTML lub podpowiedzi. Signal Forms nie korzystają z natywnej walidacji przeglądarki — atrybuty takie jak minlength najwyżej odzwierciedlają reguły ze schematu. Jeśli kontrolka zawsze wymaga tych samych reguł, eksportuje się obok niej gotowy schemat.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/forms/signals/custom-controls.md",
+    "added_on": "2026-11-11"
   }
 ]
