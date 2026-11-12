@@ -227,5 +227,22 @@
     "explanation": "Interpolacja zamienia wartość wyrażenia na tekst, ale null i undefined renderuje jako pusty napis. Obiekty i tablice są zamieniane przez toString().",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/binding.md",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "angular-junior-015",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Obiekt ma klucze w kolejności b, a, c. Domyślnie pipe keyvalue zwraca je posortowane po kluczu. Jak wyświetlić je w kolejności z obiektu?",
+    "code": "@for (entry of settings | keyvalue /* ? */; track entry.key) {\n  <li>{{ entry.key }}: {{ entry.value }}</li>\n}",
+    "options": [
+      "Przekazać null jako compareFn: settings | keyvalue: null",
+      "Przekazać napis 'natural' jako argument pipe'a",
+      "Nic nie trzeba przekazywać — keyvalue domyślnie zachowuje kolejność",
+      "Użyć keyvalue: false"
+    ],
+    "correct": 0,
+    "explanation": "keyvalue zamienia obiekt lub Map na tablicę par { key, value }. Domyślnie sortuje je po kluczu (porównanie po punktach kodowych Unicode). Przekazanie null jako compareFn wyłącza sortowanie i zostawia naturalną kolejność wejścia.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/common/src/pipes/keyvalue_pipe.ts",
+    "added_on": "2026-11-12"
   }
 ]

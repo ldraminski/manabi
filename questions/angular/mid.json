@@ -310,5 +310,122 @@
     "explanation": "Dokumentacja mówi wprost: kontrolki wyświetlają stan walidacji, ale jej nie wykonują. Reguły definiuje się w schemacie formularza. FormField przekazuje kontrolce invalid() i errors() oraz wartości ograniczeń (required, min, max, minLength, maxLength, pattern), które może wykorzystać np. do atrybutów HTML lub podpowiedzi. Signal Forms nie korzystają z natywnej walidacji przeglądarki — atrybuty takie jak minlength najwyżej odzwierciedlają reguły ze schematu. Jeśli kontrolka zawsze wymaga tych samych reguł, eksportuje się obok niej gotowy schemat.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/forms/signals/custom-controls.md",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "angular-mid-020",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Angular 22.2.6+. Użytkownik przełącza sorted() z true na false, a obiekt settings się nie zmienia. W jakiej kolejności pokaże się lista?",
+    "code": "@for (e of settings | keyvalue: (sorted() ? byValue : null); track e.key) {\n  <li>{{ e.key }}</li>\n}",
+    "options": [
+      "W naturalnej kolejności obiektu — pipe widzi zmianę compareFn i buduje listę od nowa z wejścia",
+      "Posortowana po kluczu, bo null oznacza domyślny komparator",
+      "Nadal posortowana przez byValue, bo dane wejściowe się nie zmieniły",
+      "Pipe rzuci błąd, bo compareFn nie może zmieniać się w trakcie działania"
+    ],
+    "correct": 0,
+    "explanation": "Pipe zapamiętuje ostatni compareFn. Gdy zmieni się tylko komparator, odbudowuje tablicę z wejścia, bo poprzedni wynik mógł być posortowany. Z null nie sortuje, więc zostaje naturalna kolejność. Wcześniej lista mogła zostać w kolejności poprzedniego komparatora — naprawiono to w 22.2.6. Domyślny komparator działa tylko wtedy, gdy argument w ogóle się pominie.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/common/src/pipes/keyvalue_pipe.ts",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-021",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Angular 22.2.6+. Co zwrócą params.toString() i params.has('tags')?",
+    "code": "const params = new HttpParams({\n  fromObject: { page: 1, tags: [] },\n});",
+    "options": [
+      "'page=1' i false",
+      "'page=1&tags=' i true",
+      "'page=1&tags=[]' i true",
+      "'page=1' i true"
+    ],
+    "correct": 0,
+    "explanation": "Od 22.2.6 HttpParams pomija w fromObject klucze z pustą tablicą, więc tags w ogóle nie trafia do parametrów i has('tags') zwraca false. toString() już wcześniej odfiltrowywał puste wpisy, więc daje 'page=1'; liczba 1 jest zamieniana na napis.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/common/http/src/params.ts",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-022",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3 (od 22.3.0-rc.0) dodaje HttpClient.query(). Jakie żądanie wyśle ten kod?",
+    "code": "this.http.query<Product[]>('/api/products/search', {\n  category: 'books',\n  maxPrice: 50,\n});",
+    "options": [
+      "Żądanie z metodą QUERY, a obiekt trafi do treści (body) żądania",
+      "GET z category i maxPrice dopisanymi do URL jako parametry",
+      "POST z nagłówkiem X-HTTP-Method-Override: QUERY",
+      "GET z obiektem w treści żądania"
+    ],
+    "correct": 0,
+    "explanation": "query() działa jak post(): drugi argument jest treścią żądania, a różni się tylko metodą — wysyła QUERY. Przeciążenia są takie same jak przy post() (observe, responseType i reszta opcji), więc http.query<T>() zwraca Observable<T> z odpowiedzią jako JSON.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/common/http/src/client.ts",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-023",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3, developer preview. Trasa ma errorComponent, ale provideRouter(routes) wywołano bez withErrorBoundaries(). Komponent ProductDetails rzuca błąd w ngOnInit. Co się stanie?",
+    "code": "{\n  path: 'products/:id',\n  component: ProductDetails,\n  errorComponent: ProductErrorFallback,\n}",
+    "options": [
+      "errorComponent nie zadziała — błąd propaguje się jak zwykle, bo obsługa granic błędów istnieje tylko po włączeniu withErrorBoundaries()",
+      "Router wyrenderuje ProductErrorFallback, bo errorComponent na trasie wystarczy",
+      "Router anuluje nawigację i wróci do poprzedniego adresu",
+      "Angular zgłosi błąd kompilacji, że errorComponent wymaga withErrorBoundaries()"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja Route.errorComponent mówi, że wymaga funkcji withErrorBoundaries. RouterOutlet wstrzykuje obsługę granic błędów opcjonalnie: bez tej funkcji jej nie ma, więc błędy propagują się jak dotąd. Dzięki temu funkcja jest opt-in i usuwalna przy tree-shakingu.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/router/src/models.ts",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-024",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Aplikacja ma withErrorBoundaries(), a trasa errorComponent. Guard canActivate tej trasy rzuca błąd. Co zobaczy użytkownik?",
+    "options": [
+      "Nie zobaczy errorComponent — błąd w guardzie przerywa nawigację (NavigationError), zanim trasa trafi do outletu; obsługuje się go przez withNavigationErrorHandler",
+      "errorComponent w miejscu komponentu trasy",
+      "errorComponent, ale dopiero po ponownej próbie nawigacji",
+      "Pustą stronę, bo router wyłącza wszystkie outlety"
+    ],
+    "correct": 0,
+    "explanation": "Granice błędów działają w warstwie widoku, w RouterOutlet: łapią błędy z konstruktora, DI, hooków cyklu życia, szablonu i loaderów resource(). Błędy guardów (canActivate, canMatch) i resolverów pojawiają się przed aktywacją trasy, więc zatrzymują nawigację jako NavigationError.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-025",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Chcesz, żeby komponent błędu trasy był ładowany leniwie, tak jak loadComponent. Co mówi o tym dokumentacja granic błędów routera?",
+    "options": [
+      "Nie da się — errorComponent musi być ładowany od razu (eager) w konfiguracji tras",
+      "Wystarczy podać errorComponent: () => import('./fallback')",
+      "Trzeba użyć loadErrorComponent",
+      "Komponent błędu jest zawsze ładowany leniwie, dopiero po wystąpieniu błędu"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja wprost zaznacza, że w przeciwieństwie do komponentów tras, które można ładować przez loadComponent, errorComponent musi być załadowany od razu. Jego typ to Type<unknown>, a nie funkcja zwracająca import.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-026",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Aplikacja ma withErrorBoundaries(), a trasa nie ma errorComponent i nie ustawiono defaultErrorComponent. Loader resource() w komponencie rzuca RedirectCommand przy odpowiedzi 401. Co się stanie?",
+    "code": "userData = resource({\n  loader: async () => {\n    const res = await fetch('/api/user');\n    if (res.status === 401) {\n      throw new RedirectCommand(this.router.parseUrl('/login'));\n    }\n    return res.json();\n  },\n});",
+    "options": [
+      "Router przejdzie na /login i celowo połknie błąd, żeby globalny ErrorHandler nie zapisał go jako awarii",
+      "Nic — RedirectCommand działa tylko, gdy zwróci go guard",
+      "Router przejdzie na /login, ale ErrorHandler i tak zapisze błąd",
+      "Aplikacja wyświetli komunikat o nieobsłużonym błędzie, bo trasa nie ma errorComponent"
+    ],
+    "correct": 0,
+    "explanation": "Przy włączonych granicach błędów RedirectCommand rzucony z komponentu trasy, hooka cyklu życia lub loadera resource() uruchamia nawigację do wskazanego adresu. Bez errorComponent router połyka ten błąd, żeby nie trafił do ErrorHandler. Przy zagnieżdżonych outletach komenda jest deduplikowana i nawigacja startuje raz.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
+    "added_on": "2026-11-12"
   }
 ]

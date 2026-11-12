@@ -726,5 +726,12 @@
     "title": "Statyczne etapy nawigacji",
     "description": "Partial Prefetching, navigation(), ensureStatic i generateStaticParams",
     "icon": "layout"
+  },
+  {
+    "technology": "angular",
+    "slug": "router-and-http",
+    "title": "Router i HttpClient",
+    "description": "Granice błędów tras, RedirectCommand, HttpParams i HttpClient.query()",
+    "icon": "layout"
   }
 ]

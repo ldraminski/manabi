@@ -264,5 +264,38 @@
     "explanation": "Przy dzieleniu wartości tego samego typu (tu dwóch długości) jednostki się skracają i zostaje sama liczba: 1000px / 16px = 62.5. Taką liczbę można wstawić do właściwości bez jednostki, np. opacity, albo zamienić na inny typ, mnożąc przez 1deg czy 1rem. Starsze przeglądarki uznają dzielenie przez wartość z jednostką za błąd; Firefox obsługuje typed arithmetic od wersji 158.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/values_and_units/using_typed_arithmetic/index.md",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-017",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Pasek postępu ma rosnąć razem z przewijaniem strony (Firefox 159 włączył animacje sterowane przewijaniem domyślnie). Animacja nie reaguje na przewijanie. Dlaczego?",
+    "code": ".progress {\n  animation-timeline: scroll();\n  animation: grow linear both;\n}",
+    "options": [
+      "Skrót animation resetuje animation-timeline do auto, więc animation-timeline trzeba zadeklarować po nim",
+      "scroll() działa tylko z nazwaną osią czasu",
+      "Brakuje animation-duration, a bez niej przewijanie nie steruje animacją",
+      "Animacji sterowanych przewijaniem nie można łączyć z animation-fill-mode: both"
+    ],
+    "correct": 0,
+    "explanation": "animation-timeline jest w skrócie animation wartością tylko do resetu: animation zawsze ustawia ją z powrotem na auto, czyli na zwykłą, czasową oś dokumentu, i nie da się jej przez skrót ustawić. Dlatego animation-timeline deklaruje się po skrócie animation.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/animation-timeline/index.md",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "css-mid-018",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Każda karta na liście ma się pojawiać (fade-in), gdy wjeżdża w widoczny obszar przewijanego kontenera. Którą wartość animation-timeline wybrać?",
+    "options": [
+      "view() — postęp zależy od widoczności elementu w obszarze przewijania najbliższego przodka",
+      "scroll() — postęp zależy od widoczności samego elementu",
+      "auto — przeglądarka sama wykryje przewijanie",
+      "none, a widoczność obsłużyć przez @starting-style"
+    ],
+    "correct": 0,
+    "explanation": "view() tworzy anonimową oś postępu widoku: domyślnie ma 0%, gdy element pojawia się przy jednej krawędzi kontenera, i 100%, gdy znika za przeciwną. scroll() śledzi pozycję przewinięcia całego kontenera, niezależnie od tego, gdzie jest element. auto to zwykła, czasowa oś dokumentu, a none wyłącza animację.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/animation-timeline/index.md",
+    "added_on": "2026-11-12"
   }
 ]

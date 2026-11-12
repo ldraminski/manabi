@@ -197,5 +197,22 @@
     "explanation": "type=\"number\" nadaje się do prawdziwych liczb, które warto zwiększać i zmniejszać (rola spinbutton). Numer karty czy kod pocztowy to tylko ciągi cyfr: nie liczy się na nich, a przypadkowe przewinięcie albo strzałka mogą zmienić wartość. Dla takich danych MDN poleca pole tekstowe z inputmode=\"numeric\" i pattern, ewentualnie z autocomplete (np. cc-number).",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/input/number/index.md",
     "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-013",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Konfiguracja sanitizera jawnie zezwala na <script>. Co setHTML() zrobi ze skryptem w treści od użytkownika?",
+    "code": "el.setHTML(userHtml, {\n  sanitizer: { elements: ['p', 'b', 'script'] },\n});",
+    "options": [
+      "Usunie go — setHTML() zawsze usuwa elementy i atrybuty niebezpieczne pod kątem XSS, nawet jeśli konfiguracja na nie pozwala",
+      "Wstawi go i wykona, bo konfiguracja na niego pozwala",
+      "Rzuci TypeError, bo konfiguracja z script jest nieprawidłowa",
+      "Wstawi go, ale skrypt się nie wykona"
+    ],
+    "correct": 0,
+    "explanation": "setHTML() jest bezpieczną wobec XSS metodą: zawsze usuwa m.in. script, iframe, embed, object i atrybuty obsługi zdarzeń, niezależnie od przekazanego sanitizera. Konfiguracja może tylko zawęzić to, co przejdzie. Niebezpieczne elementy wstawia jedynie setHTMLUnsafe().",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/element/sethtml/index.md",
+    "added_on": "2026-11-12"
   }
 ]

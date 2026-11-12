@@ -191,5 +191,39 @@
     "explanation": "Z opcją id Angular zapisuje rozwiązaną wartość zasobu w TransferState na serwerze, a w przeglądarce startuje z nią w stanie \"resolved\", bez ponownego wywołania loadera. Ta wartość jest częścią HTML strony. Dokumentacja ostrzega, żeby nie ustawiać id dla zasobów z danymi konkretnego użytkownika, zwłaszcza gdy HTML może być cache’owany albo współdzielony. id musi być unikalne w aplikacji i takie samo na serwerze i w przeglądarce.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "angular-senior-013",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Do telemetrii ustawiono withErrorBoundaries({ onError }) bez defaultErrorComponent. Trasa bez errorComponent rzuca błąd w szablonie. Czy onError zostanie wywołany?",
+    "code": "provideRouter(routes, withErrorBoundaries({\n  onError: (error, details) =>\n    inject(Monitoring).log(error, details),\n}))",
+    "options": [
+      "Nie — bez komponentu błędu (i gdy to nie RedirectCommand) router rzuca błąd dalej, zanim wywoła onError; żeby objąć telemetrią wszystkie trasy, trzeba ustawić defaultErrorComponent",
+      "Tak, onError jest wywoływany przy każdym błędzie w każdym outlecie",
+      "Tak, ale poza kontekstem wstrzykiwania, więc inject() rzuci błąd",
+      "Nie, bo onError działa tylko z withNavigationErrorHandler"
+    ],
+    "correct": 0,
+    "explanation": "Obsługa granicy najpierw szuka errorComponent trasy, a potem defaultErrorComponent. Jeśli żadnego nie ma i błąd nie jest RedirectCommand, rzuca go dalej i onError się nie wykonuje. Gdy granica przejmuje błąd, onError działa w kontekście wstrzykiwania roota, więc inject() jest w nim dozwolone.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/router/src/router_error_boundary.ts",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-senior-014",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Trasa ma errorComponent i guard canDeactivate, który wywołuje component.hasUnsavedChanges(). Po błędzie widać komponent błędu. Użytkownik przechodzi gdzie indziej i pojawia się TypeError. Dlaczego?",
+    "code": "export const unsavedGuard: CanDeactivateFn<EditorPage> =\n  (component) => !component.hasUnsavedChanges()\n    || confirm('Porzucić zmiany?');",
+    "options": [
+      "Guard dostaje jako component instancję aktywnego errorComponent, która nie ma metody hasUnsavedChanges; guard musi sprawdzić typ komponentu",
+      "Po błędzie canDeactivate jest wywoływany z component === null",
+      "Komponent trasy nadal istnieje, ale jego metody są zablokowane po błędzie",
+      "canDeactivate nie działa z granicami błędów i trzeba go usunąć"
+    ],
+    "correct": 0,
+    "explanation": "Gdy granica błędu pokazuje errorComponent, guardy canDeactivate tej trasy nadal działają przy wychodzeniu z niej. Jako parametr component dostają instancję komponentu błędu, a nie oryginalnego komponentu. Guard odwołujący się do metod konkretnego komponentu powinien sprawdzić jego typ (np. instanceof EditorPage).",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
+    "added_on": "2026-11-12"
   }
 ]

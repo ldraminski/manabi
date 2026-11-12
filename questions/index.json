@@ -488,6 +488,14 @@
     "added_on": "2026-11-10"
   },
   {
+    "id": "angular-junior-015",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
     "id": "angular-mid-001",
     "technology": "angular",
     "level": "mid",
@@ -640,6 +648,62 @@
     "added_on": "2026-11-11"
   },
   {
+    "id": "angular-mid-020",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-021",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-022",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-023",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-024",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-025",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-026",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -734,6 +798,22 @@
     "topic": "ssr-and-hydration",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "angular-senior-013",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-senior-014",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
   },
   {
     "id": "aws-junior-001",
@@ -1270,6 +1350,22 @@
     "topic": "css-production",
     "kind": "single_choice",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "css-mid-017",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
+  },
+  {
+    "id": "css-mid-018",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
   },
   {
     "id": "css-senior-001",
@@ -1958,6 +2054,14 @@
     "topic": "forms-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-19"
+  },
+  {
+    "id": "html-mid-013",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-12"
   },
   {
     "id": "html-senior-001",
