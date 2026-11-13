@@ -427,5 +427,22 @@
     "explanation": "Przy włączonych granicach błędów RedirectCommand rzucony z komponentu trasy, hooka cyklu życia lub loadera resource() uruchamia nawigację do wskazanego adresu. Bez errorComponent router połyka ten błąd, żeby nie trafił do ErrorHandler. Przy zagnieżdżonych outletach komenda jest deduplikowana i nawigacja startuje raz.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-mid-027",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3 (RC), projekt ze strictTemplates: true. W szablonie jest literówka w wiązaniu na <ng-template> i kompilator milczy. Co trzeba włączyć, żeby zgłaszał takie błędy?",
+    "code": "<ng-template [ngIff]=\"loaded\">\n  <app-list />\n</ng-template>",
+    "options": [
+      "Nic — strictTemplates już to sprawdza, więc błąd jest gdzie indziej",
+      "strictNgTemplateTypes: true w angularCompilerOptions — domyślnie false, także przy strictTemplates",
+      "CUSTOM_ELEMENTS_SCHEMA w komponencie",
+      "strictUnknownElements: true"
+    ],
+    "correct": 1,
+    "explanation": "Wcześniej type checker po cichu ignorował wiązania właściwości na <ng-template>, których nie przejęła żadna dyrektywa. Angular 22.3 dodaje opcję strictNgTemplateTypes: gdy jest true, takie nieznane właściwości są zgłaszane jako błąd. Domyślnie jest false i strictTemplates jej nie włącza. strictUnknownElements dotyczy nieznanych tagów, a CUSTOM_ELEMENTS_SCHEMA wyłącza sprawdzanie zamiast je włączać.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/compiler-cli/src/ngtsc/core/api/src/public_options.ts",
+    "added_on": "2026-11-13"
   }
 ]

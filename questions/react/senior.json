@@ -260,5 +260,39 @@
     "explanation": "W 19.3 poprawiono to, że błąd rzucony w ukrytym Activity mógł wydostać się do widocznego UI i podmienić je na fallback granicy błędu. Ukryte Activity jest koncepcyjnie traktowane jak odmontowane drzewo (z tą różnicą, że stan wraca po odsłonięciu), więc jego błędy nie psują tego, co użytkownik widzi.",
     "source_url": "https://github.com/facebook/react/pull/35074",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "react-senior-017",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Przejście uruchomiono z addTransitionType('nav-back') i addTransitionType('reduced'). Jaką klasę dostanie wchodzący element?",
+    "code": "<ViewTransition enter={{\n  'nav-back': 'slide-right',\n  'reduced': 'none',\n  default: 'fade',\n}}>\n  <Page />\n</ViewTransition>",
+    "options": [
+      "slide-right — liczy się pierwszy pasujący typ",
+      "slide-right none — pasujące wartości są łączone",
+      "fade — przy kilku pasujących typach używany jest default",
+      "Żadnej: wartość none wygrywa i ViewTransition jest wyłączony (nie dostaje nazwy)"
+    ],
+    "correct": 3,
+    "explanation": "Dokumentacja addTransitionType: jeśli pasuje kilka typów, ich klasy są łączone; jeśli nie pasuje żaden, używany jest wpis default; ale jeśli którykolwiek pasujący typ ma wartość \"none\", ta wygrywa i ViewTransition jest wyłączony — nie dostaje view-transition-name. To wygodny sposób na wyłączenie animacji dla wybranego typu przejścia.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/addTransitionType.md",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-senior-018",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "prompt": "Strona wymusza Trusted Types (CSP require-trusted-types-for 'script'). Komponent przekazuje do dangerouslySetInnerHTML obiekt TrustedHTML z polityki. Przeglądarka blokowała to w starszym Reakcie. Co zmienia React 19.3?",
+    "code": "const html = policy.createHTML(sanitized);\nreturn <div dangerouslySetInnerHTML={{ __html: html }} />;",
+    "options": [
+      "Nic — React nadal zamienia wartość na string, trzeba wyłączyć Trusted Types dla Reacta",
+      "React przekazuje wartość do DOM bez zamiany na string, więc TrustedHTML dociera do innerHTML nienaruszony; dotyczy to też atrybutów HTML/SVG i URL-i jak href",
+      "React sam sanitizuje każdy string przekazany do dangerouslySetInnerHTML",
+      "React tworzy własną politykę Trusted Types o nazwie react i opakowuje nią każdy string"
+    ],
+    "correct": 1,
+    "explanation": "Wcześniej React zawsze robił '' + value przed setAttribute i innerHTML, przez co TrustedHTML stawał się zwykłym stringiem, który przeglądarka odrzucała przy wymuszonych Trusted Types. Integracja Trusted Types włączona w 19.3 przekazuje wartości bez koercji dla dangerouslySetInnerHTML, atrybutów HTML i SVG oraz atrybutów URL. Na stronach bez Trusted Types nic się nie zmienia, bo API DOM przyjmują i stringi, i obiekty Trusted Types. React niczego nie sanitizuje.",
+    "source_url": "https://github.com/facebook/react/pull/35816",
+    "added_on": "2026-11-13"
   }
 ]

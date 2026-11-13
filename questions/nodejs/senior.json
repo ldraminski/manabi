@@ -708,5 +708,53 @@
     "explanation": "Dokumentacja --jitless mówi, że gdy WebAssembly jest w tym trybie niedostępne, parsowanie TypeScriptu i importy modułów WebAssembly rzucają ERR_WEBASSEMBLY_NOT_SUPPORTED, a Node.js nie gwarantuje alternatywnych implementacji funkcji wymagających WebAssembly lub pamięci wykonywalnej. W takim środowisku trzeba uruchamiać kod skompilowany wcześniej do JavaScriptu.",
     "source_url": "https://nodejs.org/docs/latest-v26.x/api/cli.html",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-senior-045",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.1.0) łączy identyczne równoczesne wywołania dns.lookup(). Serwis przy starcie robi naraz 200 lookup('db.internal') z tymi samymi opcjami. Co się zmienia?",
+    "options": [
+      "Wyniki są cache'owane z TTL rekordu, więc kolejne lookup() przez kilka minut nie dotykają DNS",
+      "Do puli wątków libuv trafia jedno wywołanie getaddrinfo, a 200 wywołujących dzieli jego wynik, więc nie zajmują wszystkich wątków puli",
+      "lookup() przełącza się na c-ares, jak dns.resolve4()",
+      "Wszystkie 200 wywołań dostaje ten sam obiekt z adresem, nawet jeśli część podała all: true"
+    ],
+    "correct": 1,
+    "explanation": "Zmiana (nodejs/node#62599) sprawia, że równoczesne lookup() dla tej samej krotki (hostname, family, hints, order) wysyłają do puli wątków libuv jedno getaddrinfo i dzielą wynik. Wywołania z innymi opcjami nadal idą osobno, a każde wywołanie samo przetwarza wynik (np. flagę all). To łączenie zapytań w locie, nie cache z TTL — Node.js nadal nie cache'uje DNS. Mniej zadań w puli to mniej blokowania fs, zlib czy crypto, które korzystają z tej samej puli.",
+    "source_url": "https://github.com/nodejs/node/pull/62599",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-046",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa) ma crypto.generateX509Certificate(). Wewnętrzne CA podpisuje certyfikaty z CSR przesłanych przez klientów i w selectExtensions zwraca requestedExtensions bez zmian. Co jest nie tak?",
+    "options": [
+      "Nic — selectExtensions wywoływane jest po zweryfikowaniu podpisu CSR, więc dane są zaufane",
+      "selectExtensions jest wywoływane przed weryfikacją podpisu CSR i dostaje dane od klienta bez uwierzytelnienia; to tu CA musi zastosować własną politykę, np. przepuścić tylko dozwolone OID-y",
+      "selectExtensions musi zwracać Promise, inaczej rozszerzenia są ignorowane",
+      "Rozszerzenia z CSR i tak są kopiowane automatycznie, więc callback nie ma wpływu na certyfikat"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja: po sparsowaniu żądania Node.js wywołuje selectExtensions synchronicznie przed weryfikacją podpisu CSR, więc callback dostaje nieuwierzytelnione dane i musi stosować politykę wystawcy. Rozszerzenia z żądania nigdy nie są kopiowane automatycznie, a zwracanie Promise nie jest obsługiwane. Podpis CSR jest weryfikowany przed podpisaniem certyfikatu, więc nieprawidłowy dowód posiadania klucza nie da certyfikatu — ale przepuszczenie wszystkich rozszerzeń pozwala klientowi wybrać np. dowolne SAN.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-047",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa). Które zdanie o crypto.generateX509Certificate() jest zgodne z dokumentacją?",
+    "options": [
+      "Bez issuer funkcja rzuca błąd — certyfikatów samopodpisanych nie da się tworzyć",
+      "Domyślnie dodaje Basic Constraints i Key Usage, jeśli nie podano extensions",
+      "Nie dodaje żadnych rozszerzeń domyślnie i nie sprawdza ścieżki certyfikacji ani zaufania do wyniku",
+      "Przy podanym csr można dodatkowo przekazać extensions, które zostaną dopisane do rozszerzeń z żądania"
+    ],
+    "correct": 2,
+    "explanation": "Dokumentacja mówi wprost: żadne rozszerzenia nie są dodawane domyślnie, a funkcja nie waliduje ścieżki certyfikacji ani nie ocenia, czy certyfikat jest zaufany. Bez issuer powstaje certyfikat samopodpisany. Opcji extensions nie można łączyć z csr — wtedy wymagane jest selectExtensions.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
+    "added_on": "2026-11-13"
   }
 ]

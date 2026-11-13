@@ -345,5 +345,37 @@
     "explanation": "Zdarzenie submit to SubmitEvent, którego właściwość submitter wskazuje element, który wysłał formularz. React 19.3 kopiuje submitter do syntetycznego zdarzenia (wcześniej trzeba było sięgać do e.nativeEvent.submitter). e.target i e.currentTarget to sam formularz, a relatedTarget nie istnieje w tym zdarzeniu.",
     "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "react-mid-022",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Chcesz, żeby przejście po kliknięciu „Wstecz” animowało się inaczej niż po kliknięciu „Dalej”. Jak oznaczyć przyczynę przejścia?",
+    "options": [
+      "Wywołać addTransitionType('nav-back') wewnątrz startTransition, przed aktualizacją stanu",
+      "Wywołać addTransitionType('nav-back') przed startTransition, poza jego callbackiem",
+      "Przekazać typ jako drugi argument: startTransition(fn, 'nav-back')",
+      "Ustawić prop type=\"nav-back\" na <ViewTransition>"
+    ],
+    "correct": 0,
+    "explanation": "addTransitionType trzeba wywołać w zasięgu startTransition — wtedy React wiąże podany typ z tym przejściem. Typy trafiają do przeglądarki jako view transition types (można je stylować przez :active-view-transition-type(nav-back)), można też mapować je na klasy w propsach enter/exit itp. <ViewTransition>. Typy są czyszczone po każdym commicie.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/addTransitionType.md",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-mid-023",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "React 19.3, tryb deweloperski, <StrictMode>. Edytujesz plik komponentu tak, że Fast Refresh musi go zamontować od nowa. Co dzieje się z jego efektami?",
+    "options": [
+      "Efekty uruchamiają się tylko raz — podwójne wywołanie dotyczy wyłącznie pierwszego montowania aplikacji",
+      "Efekty w ogóle się nie uruchamiają, dopóki nie przeładujesz strony",
+      "Tak jak przy zwykłym montowaniu w StrictMode: setup, cleanup, setup",
+      "Uruchamia się tylko cleanup starej wersji"
+    ],
+    "correct": 2,
+    "explanation": "React 19.3 naprawił przeoczenie w ścieżce remountu Fast Refresh: komponent nowo zamontowany przez Fast Refresh też ma efekty wywoływane podwójnie w StrictMode, tak jak przy zwykłym montowaniu. Efekt bez poprawnego cleanupu może więc ujawnić błąd także po edycji pliku.",
+    "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-13"
   }
 ]

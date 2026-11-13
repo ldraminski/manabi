@@ -241,5 +241,22 @@
     "explanation": "await navigation() wyłącza kod poniżej z App Shella i z prefetchu dla konkretnego linku. Ten kod renderuje się dopiero przy nawigacji, a w prefetchu jest fallback najbliższego <Suspense>. Odroczenie dotyczy tylko tego komponentu i jego poddrzewa, rodzeństwo działa jak wcześniej. Bez cacheComponents funkcja rzuca błąd. Żeby treść była w prefetchu dla linku, ale nie w App Shellu, służy prefetch().",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/navigation.mdx",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-mid-016",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Next.js 16.4.6 hostowany przez next start. Route handler zwraca bezpośrednio wynik fetch() z API, które odpowiada gzipem. Co robi Next.js?",
+    "code": "export async function GET() {\n  return fetch('https://api.example.com/report');\n}",
+    "options": [
+      "Przekazuje skompresowane bajty i nagłówek Content-Encoding: gzip bez zmian",
+      "Usuwa z Response nagłówki Content-Encoding i Content-Length i sam kompresuje odpowiedź na wyjściu; fetch() już rozpakował treść, więc taki proxy kosztuje CPU — do proxowania lepsza jest dedykowana biblioteka",
+      "Rzuca błąd, bo route handler nie może zwracać odpowiedzi z fetch()",
+      "Kompresuje odpowiedź drugi raz, więc klient dostaje podwójny gzip"
+    ],
+    "correct": 1,
+    "explanation": "Poprawka w 16.4.6 włączyła kompresję odpowiedzi route handlerów przy self-hostingu (wcześniej nie były kompresowane wcale). Ponieważ Response z fetch() wygląda tak samo jak utworzony ręcznie, Next.js usuwa z odpowiedzi handlera nagłówki Content-Encoding i Content-Length, a kompresją zajmuje się serwer wyjściowy (next start lub hosting). fetch() automatycznie dekompresuje treść, więc zwracanie go bez przetworzenia oznacza rozpakowanie i ponowną kompresję — PR zaleca do tego bibliotekę proxy.",
+    "source_url": "https://github.com/vercel/next.js/pull/101280",
+    "added_on": "2026-11-13"
   }
 ]

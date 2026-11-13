@@ -760,5 +760,39 @@
     "explanation": "Dokumentacja mówi, że błąd jest rzucany, gdy mask nie ma dokładnie 4 bajtów (RFC 6455 definiuje 32-bitowy klucz), a także gdy length przekracza source.byteLength, offset + length przekracza output.byteLength albo output jest oparty na niezmiennym ArrayBuffer. W takim przypadku nic nie jest zapisywane.",
     "source_url": "https://nodejs.org/docs/latest-v26.x/api/http.html",
     "added_on": "2026-11-10"
+  },
+  {
+    "id": "nodejs-mid-048",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.1.0). Proces potomny uruchamiany przez spawn() z opcją timeout. Jak w handlerze exit odróżnić zabicie przez timeout od zwykłego zakończenia sygnałem?",
+    "code": "const child = spawn('./import.sh', [], { timeout: 30_000 });\n\nchild.on('exit', (code, signal) => {\n  // ?\n});",
+    "options": [
+      "Sprawdzić child.timedOut — jest true, gdy minął timeout i procesowi wysłano killSignal",
+      "Sprawdzić, czy signal === 'SIGTIMEOUT'",
+      "Sprawdzić child.killed — przy timeoucie jest false, przy kill() true",
+      "Nie da się; trzeba samemu ustawić setTimeout i wywołać child.kill()"
+    ],
+    "correct": 0,
+    "explanation": "Node.js 27.0.0-alpha.0.1.0 dodaje subprocess.timedOut. Jest ustawiane na true, gdy opcja timeout w spawn(), exec(), execFile() lub fork() wygasła i procesowi wysłano killSignal (domyślnie SIGTERM). Tak jak subprocess.killed nie oznacza ono, że proces już się zakończył. Nie ma sygnału SIGTIMEOUT, a sam signal w exit nie mówi, kto wysłał SIGTERM.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/child_process.md",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-mid-049",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Dokumentacja Node.js oznacza jako przestarzałe (DEP0209) jedno z zastosowań AbortSignal. Które?",
+    "code": "const ac = new AbortController();\nconst server = http.createServer(handler);\nserver.listen({ port: 3000, signal: ac.signal });\n\nawait doWork();\nac.abort();",
+    "options": [
+      "Każde użycie AbortSignal w API Node.js, także timeouty i anulowanie fetch()",
+      "Używanie AbortSignal do zamykania długo żyjących zasobów, jak serwer powyżej — zamiast tego zaleca się using / await using",
+      "Tylko AbortSignal.timeout(); należy używać setTimeout i abort()",
+      "Przekazywanie signal do child_process — trzeba używać opcji timeout"
+    ],
+    "correct": 1,
+    "explanation": "DEP0209 to deprecjacja tylko w dokumentacji (v26.8.2, v24.22.0): używanie AbortSignal do niszczenia długo żyjących zasobów jest odradzane, do sprzątania zaleca się using (np. await using server = http.createServer(handler)). AbortSignal pozostaje właściwy do anulowania operacji, propagowania anulowania z zewnątrz i timeoutów.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/deprecations.md",
+    "added_on": "2026-11-13"
   }
 ]

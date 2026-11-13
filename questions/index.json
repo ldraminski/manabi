@@ -704,6 +704,14 @@
     "added_on": "2026-11-12"
   },
   {
+    "id": "angular-mid-027",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -2800,6 +2808,14 @@
     "added_on": "2026-11-09"
   },
   {
+    "id": "nextjs-mid-016",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
     "id": "nextjs-senior-001",
     "technology": "nextjs",
     "level": "senior",
@@ -3456,6 +3472,22 @@
     "added_on": "2026-11-10"
   },
   {
+    "id": "nodejs-mid-048",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-mid-049",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -3808,6 +3840,30 @@
     "added_on": "2026-11-10"
   },
   {
+    "id": "nodejs-senior-045",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-046",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-047",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",
@@ -4096,6 +4152,22 @@
     "added_on": "2026-11-10"
   },
   {
+    "id": "react-mid-022",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-mid-023",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -4222,6 +4294,22 @@
     "topic": "concurrent-ui",
     "kind": "single_choice",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "react-senior-017",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-senior-018",
+    "technology": "react",
+    "level": "senior",
+    "topic": "server-and-client",
+    "kind": "single_choice",
+    "added_on": "2026-11-13"
   },
   {
     "id": "rest-api-junior-001",
