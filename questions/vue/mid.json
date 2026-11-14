@@ -262,5 +262,39 @@
     "explanation": "Vue 3.5.45 poprawiło przypadek, w którym async setup kończy się odrzuceniem: komponent nie renderuje nic, niezależnie od tego, czy szablon jest kompilowany osobno, czy render function zwraca setup. Po obsłużeniu błędu Suspense się rozstrzyga i pokazuje domyślną zawartość, a w miejscu komponentu zostaje <!---->. Jeśli użytkownik ma zobaczyć komunikat, rodzic powinien ustawić własny stan błędu w onErrorCaptured.",
     "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "vue-mid-017",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent asynchroniczny ma loadingComponent, ale przy szybkim łączu wskaźnik ładowania w ogóle się nie pokazuje. Dlaczego?",
+    "code": "const AsyncComp = defineAsyncComponent({\n  loader: () => import('./Foo.vue'),\n  loadingComponent: LoadingComponent,\n})",
+    "options": [
+      "loadingComponent działa tylko wewnątrz <Suspense>",
+      "Domyślnie delay wynosi 200 ms: wskaźnik pokazuje się dopiero po tym czasie, żeby na szybkich łączach nie mignął; delay: 0 pokazuje go od razu",
+      "loadingComponent wymaga też ustawienia timeout",
+      "Vue pokazuje loadingComponent tylko przy SSR"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja Vue: jeśli podano komponent ładowania, jest on wyświetlany z domyślnym opóźnieniem 200 ms, bo natychmiastowy stan ładowania na szybkich łączach szybko znika i wygląda jak migotanie. Opóźnienie zmienia się opcją delay.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "vue-mid-018",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Komponent asynchroniczny ma errorComponent. Serwer z plikiem chunku nie odpowiada i żądanie wisi bez końca. Co zobaczy użytkownik?",
+    "code": "const AsyncComp = defineAsyncComponent({\n  loader: () => import('./Foo.vue'),\n  loadingComponent: LoadingComponent,\n  errorComponent: ErrorComponent,\n})",
+    "options": [
+      "ErrorComponent po 30 sekundach, bo tyle wynosi domyślny timeout",
+      "Cały czas LoadingComponent: domyślny timeout to Infinity, a ErrorComponent pokaże się dopiero po odrzuceniu Promise albo przekroczeniu jawnie ustawionego timeout",
+      "ErrorComponent od razu, bo Vue wykrywa brak odpowiedzi",
+      "Pusty element, bo bez timeout errorComponent jest ignorowany także przy odrzuceniu Promise"
+    ],
+    "correct": 1,
+    "explanation": "errorComponent jest wyświetlany, gdy Promise zwrócona przez loader zostanie odrzucona albo gdy minie timeout. Domyślnie timeout to Infinity, więc przy wiszącym żądaniu trzeba go ustawić jawnie, np. timeout: 3000.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
+    "added_on": "2026-11-14"
   }
 ]

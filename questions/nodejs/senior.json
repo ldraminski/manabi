@@ -756,5 +756,119 @@
     "explanation": "Dokumentacja mówi wprost: żadne rozszerzenia nie są dodawane domyślnie, a funkcja nie waliduje ścieżki certyfikacji ani nie ocenia, czy certyfikat jest zaufany. Bez issuer powstaje certyfikat samopodpisany. Opcji extensions nie można łączyć z csr — wtedy wymagane jest selectExtensions.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-048",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123877. Ten sam https.Agent wysyła najpierw żądanie bez opcji ca, a potem do tego samego hosta żądanie z ca: [] (zaufanie tylko do podanej, pustej listy CA). Przed poprawką drugie żądanie mogło zgłosić authorized === true dla serwera, którego nowe połączenie by nie przyjęło. Dlaczego?",
+    "options": [
+      "Pusta tablica ca jest traktowana jak wyłączenie weryfikacji certyfikatu",
+      "https.Agent.prototype.getName() dawał obu żądaniom ten sam klucz agenta i cache sesji TLS, więc sesja uwierzytelniona domyślnym magazynem CA była wznawiana (TLS 1.3) pod węższą polityką",
+      "Node.js ignoruje opcję ca, gdy serwer używa TLS 1.3",
+      "Przy ca: [] Node.js dokłada z powrotem domyślny magazyn CA, więc obie polityki są w praktyce takie same"
+    ],
+    "correct": 1,
+    "explanation": "Pominięte ca nie dodawało nic do klucza, a ca: [] zamieniało się w pusty napis, więc klucze były identyczne. Pominięcie ca oznacza domyślny magazyn zaufania, a podanie ca go zastępuje, mimo to sesja z szerszej polityki była przekazywana do nowego połączenia i wznowienie TLS 1.3 przenosiło wcześniejsze uwierzytelnienie. Poprawki: 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-049",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123867. Serwer TLS z requestCert i rejectUnauthorized dla hosta admin ustawia osobne CA klientów, ale bez certyfikatu serwera w tym kontekście. Co działo się przed poprawką?",
+    "code": "server.addContext('admin.example.com', { ca: protectedCA });",
+    "options": [
+      "Handshake do admin.example.com zawsze się nie udawał, bo kontekst SNI bez certyfikatu jest nieprawidłowy",
+      "CA z kontekstu SNI nie było instalowane i handshake wracał do domyślnego CA klientów: klient z certyfikatem od domyślnego CA wchodził na hosta admin, a klient od protectedCA był odrzucany",
+      "Serwer akceptował każdego klienta bez certyfikatu, bo rejectUnauthorized dotyczy tylko kontekstu domyślnego",
+      "protectedCA zastępowało domyślne CA dla wszystkich hostów na serwerze"
+    ],
+    "correct": 1,
+    "explanation": "CertCbDone instalował CA kontekstu SNI tylko wtedy, gdy setSniContext się powiódł, a ten zwracał false dla kontekstu bez certyfikatu serwera. Kontekst z samym ca po cichu zostawał przy domyślnym CA, czyli autoryzacja mTLS per host działała „fail open”. Poprawki: 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-050",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123872. Serwer TLS stosuje różne zasady certyfikatów klienta zależnie od hosta: ostrzejsze dla hosta administracyjnego, zwykłe dla pozostałych. Na czym polegał atak przed poprawką?",
+    "options": [
+      "Klient wysyłał w ClientHello dwie nazwy SNI naraz i serwer wybierał łagodniejszą politykę",
+      "Klient uwierzytelniał się dla dozwolonego hosta, a potem renegocjował połączenie TLS 1.2 z inną nazwą serwera i przenosił dotychczasowe uwierzytelnienie na chroniony host",
+      "Klient wymuszał downgrade do TLS 1.0, w którym certyfikaty klienta nie są sprawdzane",
+      "Klient podawał w nagłówku Host inną nazwę niż w SNI, a Node.js sprawdzał certyfikat po nagłówku Host"
+    ],
+    "correct": 1,
+    "explanation": "Podczas renegocjacji TLS 1.2 klient mógł jednostronnie zmienić servername i dotrzeć do endpointu, do którego nie był uprawniony, omijając ostrzejszą politykę. Dotyczyło to linii 22.x, 24.x i 26.x, poprawki są w 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-051",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-106071. Proces działa z --permission i jedyną regułą odczytu dla plików poniżej. Co przed poprawką mógł odczytać poza plikami pasującymi do wzorca?",
+    "code": "node --permission --allow-fs-read=/etc/passwd.* app.js",
+    "options": [
+      "Nic, reguły z * działały poprawnie",
+      "Także /etc/passwd: gdy żądana ścieżka była krótsza od prefiksu reguły z wildcardem, wyszukiwanie w drzewie radix kończyło porównywanie za wcześnie i uznawało ją za dopasowaną",
+      "Cały katalog /etc, bo * w regułach Permission Model zawsze obejmuje katalog nadrzędny",
+      "Dowolny plik, bo wildcard w --allow-fs-read jest ignorowany i oznacza brak ograniczeń"
+    ],
+    "correct": 1,
+    "explanation": "Błąd wymagał, by reguła z wildcardem leżała bezpośrednio pod korzeniem drzewa uprawnień, np. gdy jest jedyną regułą dla danego zakresu. Dotyczył też --allow-fs-write. Poprawki: 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-052",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123871. Wcześniejsza poprawka (CVE-2026-48615) usunęła login i hasło z ProxyConfig.href, a mimo to dane uwierzytelniające proxy trafiały do logów. Jaki wniosek płynie z tej podatności?",
+    "options": [
+      "Dane logowania do proxy nie powinny w ogóle trafiać do zmiennych środowiskowych, więc Node.js nie ma tu nic do poprawienia",
+      "Redakcja sekretu w jednym miejscu nie wystarcza: cztery ścieżki błędów nadal wstawiały surowy URL proxy do komunikatu ERR_PROXY_INVALID_CONFIG, który trafia na stderr, do logów kontenerów i serwisów raportowania błędów",
+      "Błąd dotyczył tylko trybu debug i logowania z NODE_DEBUG",
+      "Problemem była kolejność zmiennych HTTP_PROXY i HTTPS_PROXY"
+    ],
+    "correct": 1,
+    "explanation": "Wada leży w „ujściu”: sekret, który Node.js redaguje wszędzie indziej, był wypisywany dosłownie w komunikacie błędu (jedna z czterech ścieżek była nawet w tym samym konstruktorze). Komunikaty błędów trafiają do znacznie szerszej grupy odbiorców niż środowisko procesu. Poprawki: 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-053",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123862. Serwer kompresuje strumień przez pipeline() i w trakcie wywołuje deflate.params(), a klient się rozłącza. Który z poniższych mechanizmów obsłużył ten błąd przed poprawką?",
+    "options": [
+      "Listener zdarzenia error na strumieniu deflate",
+      "Callback przekazany do params()",
+      "Callback przekazany do pipeline()",
+      "Żaden z nich: ERR_INTERNAL_ASSERTION był rzucany z wnętrza strumieni, omijał wszystkie trzy i kończył proces"
+    ],
+    "correct": 3,
+    "explanation": "params() kolejkuje flush i kończy pracę w callbacku tego zapisu. Gdy pipeline() zniszczy strumień wcześniej, callback dostaje błąd, ale go ignoruje i sprawdza asercją, czy uchwyt natywny nadal istnieje. Uchwytu już nie ma, więc leci ERR_INTERNAL_ASSERTION. Dotyczy tylko aplikacji wywołujących params() w trakcie strumieniowania. Poprawki: 26.13.1, 24.22.3 i 22.23.5.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-054",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123868. Serwer HTTP/2 ma ustawione maxSessionMemory. Klient wypełnia okno odbioru jednego strumienia ramkami DATA po 1 bajt, a aplikacja nie czyta tego strumienia. Dlaczego przed poprawką pamięć rosła do setek MB?",
+    "options": [
+      "maxSessionMemory dotyczy tylko nagłówków (HPACK), nie danych",
+      "Dane czekające w kolejce nieczytanego strumienia nie były wliczane do licznika pamięci sesji, więc limit ani ich nie ograniczał, ani nie blokował nowych strumieni",
+      "Node.js domyślnie wyłącza kontrolę przepływu HTTP/2",
+      "Każda ramka DATA tworzyła nowy strumień, a limit liczby strumieni nie obejmuje ramek 1-bajtowych"
+    ],
+    "correct": 1,
+    "explanation": "Każda ramka tworzyła widok Buffer w kolejce strumienia, ale bufor odczytu gniazda był liczony tylko podczas parsowania i od razu zwalniany. Klient płacił ok. 10 bajtów na ramkę, serwer trzymał ok. 114. Http2Session::CanAddStream opiera się na tym samym liczniku, więc nie odrzucał nowych strumieni. Dotyczyło 24.x i 26.x, poprawki w 26.13.1 i 24.22.3.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-14"
   }
 ]

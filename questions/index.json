@@ -2072,6 +2072,22 @@
     "added_on": "2026-11-12"
   },
   {
+    "id": "html-mid-014",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "html-mid-015",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
     "id": "html-senior-001",
     "technology": "html",
     "level": "senior",
@@ -3488,6 +3504,14 @@
     "added_on": "2026-11-13"
   },
   {
+    "id": "nodejs-mid-050",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -3862,6 +3886,62 @@
     "topic": "upgrades-and-security",
     "kind": "single_choice",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-senior-048",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-049",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-050",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-051",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-052",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-053",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-054",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
   },
   {
     "id": "react-junior-001",
@@ -5622,6 +5702,22 @@
     "topic": "components-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "vue-mid-017",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "vue-mid-018",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-14"
   },
   {
     "id": "vue-senior-001",

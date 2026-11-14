@@ -214,5 +214,38 @@
     "explanation": "setHTML() jest bezpieczną wobec XSS metodą: zawsze usuwa m.in. script, iframe, embed, object i atrybuty obsługi zdarzeń, niezależnie od przekazanego sanitizera. Konfiguracja może tylko zawęzić to, co przejdzie. Niebezpieczne elementy wstawia jedynie setHTMLUnsafe().",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/element/sethtml/index.md",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "html-mid-014",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dialog jest otwierany przez showModal() i nie ma atrybutu closedby. Użytkownik klika w tło poza oknem. Co się stanie?",
+    "code": "<dialog id=\"d\">…</dialog>\n<script>d.showModal();</script>",
+    "options": [
+      "Dialog się zamknie, bo modale mają domyślnie light dismiss",
+      "Nic: bez closedby modal zachowuje się jak closedby=\"closerequest\" (Esc zamyka, klik poza nie); żeby klik w tło zamykał, trzeba dodać closedby=\"any\"",
+      "Nic: dialog można zamknąć wyłącznie metodą close(), Esc też nie działa",
+      "Dialog się zamknie, ale tylko jeśli ma też atrybut popover"
+    ],
+    "correct": 1,
+    "explanation": "closedby=\"any\" pozwala na light dismiss, Esc/gest platformy i zamknięcie przez kod. \"closerequest\" wyklucza light dismiss, \"none\" zostawia tylko zamykanie przez kod. Bez poprawnej wartości dialog otwarty przez showModal() działa jak \"closerequest\", a w innym wypadku (np. show()) jak \"none\".",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/dialog/index.md",
+    "added_on": "2026-11-14"
+  },
+  {
+    "id": "html-mid-015",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Dialog z formularzem ma handler cancel, który przy niezapisanych zmianach wywołuje preventDefault(). Przycisk „Zamknij” w dialogu ma przejść tę samą ścieżkę co Esc, czyli dać się zatrzymać temu handlerowi. Czego użyć w obsłudze kliknięcia?",
+    "options": [
+      "dialog.close()",
+      "dialog.close('cancel')",
+      "dialog.requestClose()",
+      "dialog.removeAttribute('open')"
+    ],
+    "correct": 2,
+    "explanation": "requestClose() przed zdarzeniem close wywołuje zdarzenie cancel, w którym można wywołać preventDefault() i zatrzymać zamknięcie. To samo zachowanie co wewnętrzny close watcher dialogu (np. Esc). close() zamyka od razu bez cancel, a argument to tylko nowa wartość returnValue.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/htmldialogelement/requestclose/index.md",
+    "added_on": "2026-11-14"
   }
 ]

@@ -794,5 +794,21 @@
     "explanation": "DEP0209 to deprecjacja tylko w dokumentacji (v26.8.2, v24.22.0): używanie AbortSignal do niszczenia długo żyjących zasobów jest odradzane, do sprzątania zaleca się using (np. await using server = http.createServer(handler)). AbortSignal pozostaje właściwy do anulowania operacji, propagowania anulowania z zewnątrz i timeoutów.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/deprecations.md",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "nodejs-mid-050",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alpha) przenosi moduł domain (DEP0032) z deprecation „Documentation-only” na runtime. Co według dokumentacji Node.js oznacza deprecation typu „Runtime (all code)” dla aplikacji, która używa domain, także przez paczkę z node_modules?",
+    "options": [
+      "require('node:domain') od razu rzuca błąd",
+      "Przy pierwszym użyciu proces wypisuje ostrzeżenie (domyślnie na stderr), także dla kodu z node_modules, a z flagą --throw-deprecation użycie rzuca błąd",
+      "Ostrzeżenie pojawia się tylko po uruchomieniu z --pending-deprecation",
+      "Ostrzeżenie pojawia się tylko dla kodu spoza node_modules"
+    ],
+    "correct": 1,
+    "explanation": "Deprecation „Documentation-only” nie ma skutków w czasie działania (część daje ostrzeżenie tylko z --pending-deprecation). Typ „Application” ostrzega tylko dla kodu spoza node_modules. Runtime dla całego kodu ostrzega przy pierwszym użyciu także z node_modules, a --throw-deprecation zamienia to w błąd. Usunięcie modułu to dopiero End-of-Life.",
+    "source_url": "https://nodejs.org/api/deprecations.html",
+    "added_on": "2026-11-14"
   }
 ]
