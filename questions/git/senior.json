@@ -264,5 +264,21 @@
     "explanation": "Po CVE-2026-114466 na liście znalazły się też rewrite-submodules-from, rewrite-submodules-to i opcja export-pack-edges. Poprawkę wydano w 2.50.2, 2.51.3, 2.52.1, 2.53.1, 2.54.1, 2.55.1 i 2.56.1.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-fast-import.adoc",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-senior-018",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Na main uruchamiasz git history squash HEAD~3..HEAD. Lokalna gałąź experiment ma własne commity i odgałęzia się od HEAD~1, czyli od commita ze środka zakresu. Co się stanie przy domyślnym --update-refs=branches?",
+    "options": [
+      "Polecenie odmówi; można je ponowić z --update-refs=head, żeby przepisać tylko bieżącą gałąź i zostawić experiment bez zmian",
+      "experiment zostanie przepisana i odtworzona na wynikowym commicie",
+      "experiment zostanie usunięta, bo jej baza przestaje istnieć",
+      "Polecenie się uda, a experiment trzeba będzie dokończyć jak rebase, rozwiązując konflikty"
+    ],
+    "correct": 0,
+    "explanation": "Gałęzi, która pochodzi od wybranego commita, ale nie od końca zakresu, nie da się przepisać jako potomka połączonego commita, więc przy domyślnym --update-refs=branches squash odmawia. --update-refs=head przepisuje tylko bieżącą gałąź. Tagi i gałęzie zdalne nigdy nie są zmieniane, a git history z założenia nie obsługuje operacji z konfliktami.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-15"
   }
 ]

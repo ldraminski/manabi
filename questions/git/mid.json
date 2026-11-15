@@ -314,5 +314,53 @@
     "explanation": "drop usuwa commit i przenosi wszystkich jego potomków bezpośrednio na jego rodzica. Dokumentacja mówi wprost: jeśli przeniesienie któregoś potomka dałoby konflikt, polecenie kończy się błędem. To celowe ograniczenie — git history nie ma stanu „w trakcie” jak rebase. drop nie usunie też commita początkowego (root) ani merge commita.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-mid-021",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Chcesz połączyć w jeden commit trzy commity ze środka gałęzi, a dwa najnowsze commity zostawić na górze bez zmian. Które polecenie to zrobi?",
+    "options": [
+      "git history squash HEAD~5..HEAD~2",
+      "git history squash HEAD~4..HEAD~2",
+      "git history squash HEAD~3..HEAD",
+      "git history squash HEAD~2..HEAD~5"
+    ],
+    "correct": 0,
+    "explanation": "Zakres podaje się jako <base>..<tip>, gdzie <base> to commit tuż pod najstarszym łączonym. HEAD~5..HEAD~2 obejmuje HEAD~4, HEAD~3 i HEAD~2, a HEAD~1 i HEAD są odtwarzane na wyniku. HEAD~4..HEAD~2 to tylko dwa commity, HEAD~3..HEAD łączy trzy najnowsze, a HEAD~2..HEAD~5 jest pustym zakresem. Dokumentacja podaje dokładnie ten przykład.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "git-mid-022",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz git history squash HEAD~3..HEAD z domyślnymi opcjami. Jak wygląda wynikowy commit?",
+    "options": [
+      "Ma autorstwo najstarszego z łączonych commitów i drzewo plików najnowszego; edytor otwiera się z opisami wszystkich łączonych commitów",
+      "Ma autorstwo i opis najnowszego commita, a edytor się nie otwiera",
+      "Autorem zostaje osoba uruchamiająca polecenie, a opisem jest opis najstarszego commita, bez edytora",
+      "Ma autorstwo i drzewo plików najstarszego commita, więc zmiany z dwóch nowszych przepadają"
+    ],
+    "correct": 0,
+    "explanation": "squash składa zakres w najstarszy commit: wynik zachowuje jego autorstwo i bierze drzewo najnowszego commita zakresu, więc żadne zmiany nie przepadają. Domyślnie (--edit) otwiera się edytor wypełniony opisami wszystkich łączonych commitów. Z --no-edit zostaje opis najstarszego commita (chyba że celuje w niego commit amend!).",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "git-mid-023",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Zakres HEAD~3..HEAD zawiera commit „fixup! Dodaj logowanie” i dwa zwykłe commity. Commit „Dodaj logowanie” leży poniżej zakresu. Co zrobi git history squash HEAD~3..HEAD?",
+    "options": [
+      "Odmówi: commit fixup!, squash! lub amend! jest odrzucany, jeśli commitu, którego dotyczy, nie ma w zakresie",
+      "Połączy wszystkie trzy commity i po cichu wchłonie poprawkę do wyniku",
+      "Sam rozszerzy zakres o commit „Dodaj logowanie”",
+      "Zostawi commit fixup! osobno nad wynikowym commitem"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja: commit fixup!, squash! lub amend! jest odrzucany, chyba że jego commit docelowy też należy do zakresu, żeby squash nie wchłonął po cichu poprawki przeznaczonej dla innego commita. Wyjątkiem jest zakres złożony wyłącznie z takich znaczników dla jednego celu; wtedy łączy je w jeden commit.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
+    "added_on": "2026-11-15"
   }
 ]

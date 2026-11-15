@@ -377,5 +377,22 @@
     "explanation": "React 19.3 naprawił przeoczenie w ścieżce remountu Fast Refresh: komponent nowo zamontowany przez Fast Refresh też ma efekty wywoływane podwójnie w StrictMode, tak jak przy zwykłym montowaniu. Efekt bez poprawnego cleanupu może więc ujawnić błąd także po edycji pliku.",
     "source_url": "https://github.com/facebook/react/blob/main/CHANGELOG.md",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-mid-024",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Żeby uniknąć zawieszenia, gdy dane są już w cache, komponent sprawdza stan Promise przed wywołaniem use. Co mówi o tym dokumentacja use?",
+    "code": "if (promise.status === 'fulfilled') {\n  return promise.value;\n}\nconst value = use(promise);",
+    "options": [
+      "Nie należy omijać use na podstawie stanu Promise; zawsze przekazuj Promise do use, bo obejście może zepsuć optymalizacje Suspense i funkcje DevTools",
+      "To zalecany wzorzec, bo oszczędza wywołanie use",
+      "Kod łamie zasady, bo use nigdy nie może być wywołane po instrukcji if",
+      "Taki kod działa tylko w Server Components"
+    ],
+    "correct": 0,
+    "explanation": "use, w przeciwieństwie do hooków, można wywoływać w warunkach i pętlach, ale dokumentacja ostrzega: nie omijaj go, czytając promise.status lub promise.value. Zawsze przekazuj Promise do use i pozwól Reactowi go śledzić. Gdy Promise ma status fulfilled, use i tak odczyta wartość bez zawieszania.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/use.md",
+    "added_on": "2026-11-15"
   }
 ]

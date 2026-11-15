@@ -444,5 +444,55 @@
     "explanation": "Wcześniej type checker po cichu ignorował wiązania właściwości na <ng-template>, których nie przejęła żadna dyrektywa. Angular 22.3 dodaje opcję strictNgTemplateTypes: gdy jest true, takie nieznane właściwości są zgłaszane jako błąd. Domyślnie jest false i strictTemplates jej nie włącza. strictUnknownElements dotyczy nieznanych tagów, a CUSTOM_ELEMENTS_SCHEMA wyłącza sprawdzanie zamiast je włączać.",
     "source_url": "https://github.com/angular/angular/blob/main/packages/compiler-cli/src/ngtsc/core/api/src/public_options.ts",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "angular-mid-028",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "userResource jest już w stanie resolved, ale załadowany użytkownik nie ma companyId (undefined). Co zrobi companyResource?",
+    "code": "const companyResource = resource({\n  params: ({ chain }) => ({ companyId: chain(userResource)?.companyId }),\n  loader: ({ params }) => fetchCompany(params.companyId),\n});",
+    "options": [
+      "Uruchomi loader z companyId równym undefined, bo obiekt { companyId: undefined } jest zdefiniowaną wartością params",
+      "Przejdzie w stan 'idle', bo companyId jest undefined",
+      "Przejdzie w stan 'error'",
+      "Zostanie w stanie 'loading', dopóki companyId się nie pojawi"
+    ],
+    "correct": 0,
+    "explanation": "Resource przechodzi w 'idle' tylko wtedy, gdy params zwraca undefined. Dokumentacja ostrzega: przekazuj wartość z chain bezpośrednio jako params, zamiast owijać ją w obiekt. Obiekt { companyId: undefined } jest zdefiniowany, więc loader uruchomi się z undefined. Poprawnie: params: ({ chain }) => chain(userResource)?.companyId.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "angular-mid-029",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "userResource właśnie się ładuje (status 'loading'). companyResource czyta jego wartość bezpośrednio w params. Jaki status ma companyResource i co zmieni przejście na params: ({ chain }) => chain(userResource)?.companyId?",
+    "code": "const companyResource = resource({\n  params: () => {\n    const user = userResource.value();\n    return user ? user.companyId : undefined;\n  },\n  loader: ({ params }) => fetchCompany(params),\n});",
+    "options": [
+      "'idle'; z chain companyResource będzie w stanie 'loading', bo chain przenosi stan zasobu, od którego zależy",
+      "'loading' w obu wersjach, bo Angular sam wykrywa zależność między zasobami",
+      "'error', bo value() rzuca w trakcie ładowania; chain to naprawia",
+      "'idle' w obu wersjach"
+    ],
+    "correct": 0,
+    "explanation": "Podczas 'loading' value() zwraca undefined, więc params zwraca undefined i companyResource przechodzi w 'idle', co nie oddaje faktycznego stanu. chain(userResource) przenosi stany idle, loading/reloading (jako loading) i error na zasób zależny, dlatego dokumentacja go zaleca. value() rzuca tylko w stanie 'error'.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "angular-mid-030",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "prompt": "userResource jest resolved, a companyResource ma params: ({ chain }) => chain(userResource)?.companyId. Wywołujesz userResource.reload(). Co dzieje się z companyResource w trakcie przeładowania?",
+    "options": [
+      "Przechodzi w 'loading' i jego loader nie startuje; chain nie zwraca w tym czasie poprzedniej wartości userResource",
+      "Zostaje 'resolved' i dalej używa poprzedniego companyId, bo w stanie 'reloading' chain zwraca poprzednią wartość",
+      "Przechodzi w 'reloading' i od razu uruchamia loader z poprzednim companyId",
+      "Przechodzi w 'idle'"
+    ],
+    "correct": 0,
+    "explanation": "Gdy zasób nadrzędny jest w stanie 'loading' lub 'reloading', zasób zależny przechodzi w 'loading', a jego loader się nie uruchamia. Dokumentacja podkreśla, że podczas 'reloading' chain nie zwraca wcześniej rozwiązanej wartości.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
+    "added_on": "2026-11-15"
   }
 ]

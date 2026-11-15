@@ -294,5 +294,21 @@
     "explanation": "Wcześniej React zawsze robił '' + value przed setAttribute i innerHTML, przez co TrustedHTML stawał się zwykłym stringiem, który przeglądarka odrzucała przy wymuszonych Trusted Types. Integracja Trusted Types włączona w 19.3 przekazuje wartości bez koercji dla dangerouslySetInnerHTML, atrybutów HTML i SVG oraz atrybutów URL. Na stronach bez Trusted Types nic się nie zmienia, bo API DOM przyjmują i stringi, i obiekty Trusted Types. React niczego nie sanitizuje.",
     "source_url": "https://github.com/facebook/react/pull/35816",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-senior-019",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "Piszesz bibliotekę danych zgodną z Suspense. Cache trzyma Promise i po rozwiązaniu ustawia na nim status = 'fulfilled' oraz value. Co to daje, gdy komponent wywoła use(promise) na już rozwiązanym Promise?",
+    "options": [
+      "use odczyta value synchronicznie bez zawieszania; React sam ustawia status na Promise, które go nie mają, ale wtedy potrzebny jest dodatkowy render",
+      "Nic: React ignoruje te pola i zawsze zawiesza komponent przynajmniej raz",
+      "use zwróci sam obiekt Promise zamiast wartości",
+      "React rzuci błąd, bo pola status i value są zarezerwowane"
+    ],
+    "correct": 0,
+    "explanation": "use sprawdza pola Promise: przy status 'fulfilled' czyta value synchronicznie, przy 'rejected' rzuca reason, a przy braku pola lub 'pending' zawiesza. React ustawia status sam na Promise bez tego pola, ale ustawienie go w cache oszczędza dodatkowy render, gdy dane są już dostępne.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/use.md",
+    "added_on": "2026-11-15"
   }
 ]

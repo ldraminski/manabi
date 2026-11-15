@@ -296,5 +296,22 @@
     "explanation": "errorComponent jest wyświetlany, gdy Promise zwrócona przez loader zostanie odrzucona albo gdy minie timeout. Domyślnie timeout to Infinity, więc przy wiszącym żądaniu trzeba go ustawić jawnie, np. timeout: 3000.",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/components/async.md",
     "added_on": "2026-11-14"
+  },
+  {
+    "id": "vue-mid-019",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Composable trzyma efekty w effectScope i zatrzymuje go przy sprzątaniu. Później ten sam scope jest użyty ponownie. Co zwróci scope.run?",
+    "code": "import { effectScope } from 'vue'\n\nconst scope = effectScope()\nscope.stop()\n\nconst result = scope.run(() => 42)",
+    "options": [
+      "undefined, bo zatrzymany scope jest nieaktywny",
+      "42, bo run zawsze zwraca wynik funkcji",
+      "scope.run rzuca błąd",
+      "Promise, który rozwiąże się na 42"
+    ],
+    "correct": 0,
+    "explanation": "Według typu w dokumentacji EffectScope.run zwraca undefined, gdy scope jest nieaktywny, a po stop() już nie wraca do stanu aktywnego. Żeby znowu zbierać efekty, trzeba utworzyć nowy effectScope().",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/reactivity-advanced.md",
+    "added_on": "2026-11-15"
   }
 ]

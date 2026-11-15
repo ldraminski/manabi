@@ -870,5 +870,37 @@
     "explanation": "Każda ramka tworzyła widok Buffer w kolejce strumienia, ale bufor odczytu gniazda był liczony tylko podczas parsowania i od razu zwalniany. Klient płacił ok. 10 bajtów na ramkę, serwer trzymał ok. 114. Http2Session::CanAddStream opiera się na tym samym liczniku, więc nie odrzucał nowych strumieni. Dotyczyło 24.x i 26.x, poprawki w 26.13.1 i 24.22.3.",
     "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
     "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-senior-055",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "Ktoś uruchamia serwis poleceniem node --permission . w katalogu projektu, bez żadnych flag --allow-fs-read. Do czego proces dostaje dostęp do odczytu?",
+    "options": [
+      "Do całego katalogu projektu, rekurencyjnie (także np. pliku .env), bo punkt wejścia jest nadawany dokładnie tak, jak podano go w wierszu poleceń",
+      "Tylko do pliku wskazanego w polu main w package.json",
+      "Do niczego, więc proces nie wystartuje",
+      "Tylko do plików .js w tym katalogu, bez podkatalogów"
+    ],
+    "correct": 0,
+    "explanation": "Model uprawnień domyślnie dodaje punkty wejścia do listy odczytu, ale bez rozwiązywania ścieżki przez loader modułów. Gdy punkt wejścia jest katalogiem (node --permission .), odczyt jest dozwolony rekurencyjnie dla całej jego zawartości. Z kolei node --permission index (bez rozszerzenia) nie nadaje dostępu do index.js. Dokumentacja zaleca podawać pełną ścieżkę pliku albo jawne --allow-fs-read.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/permissions.md",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-senior-056",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "prompt": "W skrypcie startowym zostały obie flagi: node --permission --permission-audit --allow-fs-read=./src src/app.js. Kod w app.js wywołuje fs.readFileSync('/etc/hosts'). Co się stanie?",
+    "options": [
+      "Zostanie rzucony ERR_ACCESS_DENIED: gdy podano obie flagi, --permission ma pierwszeństwo i model działa w trybie wymuszania",
+      "Odczyt się uda, a naruszenie trafi tylko do kanału node:permission-model:fs",
+      "Node.js nie wystartuje z powodu sprzecznych flag",
+      "Odczyt się uda bez żadnego raportu"
+    ],
+    "correct": 0,
+    "explanation": "Tryb audytu tylko raportuje naruszenia przez diagnostics_channel i nie blokuje dostępu. Dokumentacja mówi jednak, że gdy podano jednocześnie --permission i --permission-audit, pierwszeństwo ma --permission, więc model działa w trybie wymuszania i odczyt pliku spoza ./src kończy się błędem.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/permissions.md",
+    "added_on": "2026-11-15"
   }
 ]

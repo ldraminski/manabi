@@ -712,6 +712,30 @@
     "added_on": "2026-11-13"
   },
   {
+    "id": "angular-mid-028",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "angular-mid-029",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "angular-mid-030",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -1736,6 +1760,30 @@
     "added_on": "2026-11-11"
   },
   {
+    "id": "git-mid-021",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "git-mid-022",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "git-mid-023",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
     "id": "git-senior-001",
     "technology": "git",
     "level": "senior",
@@ -1870,6 +1918,14 @@
     "topic": "security-updates",
     "kind": "flashcard",
     "added_on": "2026-11-11"
+  },
+  {
+    "id": "git-senior-018",
+    "technology": "git",
+    "level": "senior",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
   },
   {
     "id": "html-junior-001",
@@ -3512,6 +3568,22 @@
     "added_on": "2026-11-14"
   },
   {
+    "id": "nodejs-mid-051",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-mid-052",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -3944,6 +4016,22 @@
     "added_on": "2026-11-14"
   },
   {
+    "id": "nodejs-senior-055",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-senior-056",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "scaling-and-isolation",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",
@@ -4248,6 +4336,14 @@
     "added_on": "2026-11-13"
   },
   {
+    "id": "react-mid-024",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -4390,6 +4486,14 @@
     "topic": "server-and-client",
     "kind": "single_choice",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "react-senior-019",
+    "technology": "react",
+    "level": "senior",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
   },
   {
     "id": "rest-api-junior-001",
@@ -5718,6 +5822,14 @@
     "topic": "components-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-14"
+  },
+  {
+    "id": "vue-mid-019",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-15"
   },
   {
     "id": "vue-senior-001",

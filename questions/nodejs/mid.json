@@ -810,5 +810,38 @@
     "explanation": "Deprecation „Documentation-only” nie ma skutków w czasie działania (część daje ostrzeżenie tylko z --pending-deprecation). Typ „Application” ostrzega tylko dla kodu spoza node_modules. Runtime dla całego kodu ostrzega przy pierwszym użyciu także z node_modules, a --throw-deprecation zamienia to w błąd. Usunięcie modułu to dopiero End-of-Life.",
     "source_url": "https://nodejs.org/api/deprecations.html",
     "added_on": "2026-11-14"
+  },
+  {
+    "id": "nodejs-mid-051",
+    "topic": "production-runtime",
+    "kind": "single_choice",
+    "prompt": "Zmienna PORT jest już ustawiona w środowisku procesu na 8080, a plik .env zawiera PORT=3000. Aplikacja na starcie wywołuje process.loadEnvFile(). Jaką wartość ma potem process.env.PORT?",
+    "options": [
+      "'8080': wartość już obecna w process.env ma pierwszeństwo i nie jest nadpisywana",
+      "'3000': plik .env nadpisuje zmienne środowiska",
+      "loadEnvFile() rzuca błąd o konflikcie zmiennych",
+      "8080 jako liczba, bo loadEnvFile() konwertuje wartości liczbowe"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja process.loadEnvFile() mówi wprost: jeśli zmienna jest już ustawiona w process.env, jej istniejąca wartość ma pierwszeństwo i nie zostaje nadpisana wartością z pliku .env. Wszystkie wartości w process.env są napisami, więc nie ma żadnej konwersji na liczby.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/process.md",
+    "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-mid-052",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "Po aktualizacji do Node.js 26 stary kod w obsłudze zdarzenia 'readable' wywołuje readable.read() bez argumentu tylko raz, zakładając, że dostanie cały bufor. Co się zmieniło w v26?",
+    "code": "readable.on('readable', () => {\n  const data = readable.read()\n  if (data) chunks.push(data)\n})",
+    "options": [
+      "read() bez size zwraca teraz jeden zbuforowany fragment na wywołanie; trzeba czytać w pętli do null albo wywołać read(readable.readableLength)",
+      "Nic: read() bez argumentu nadal opróżnia cały wewnętrzny bufor",
+      "read() bez argumentu rzuca teraz błąd, bo size jest wymagany",
+      "read() zwraca teraz Promise z całym buforem"
+    ],
+    "correct": 0,
+    "explanation": "W Node.js 26.0.0 readable.read() wywołane bez size zwraca jeden zbuforowany fragment (albo jeden obiekt w trybie obiektowym) zamiast opróżniać cały bufor. Dokumentacja zaleca pętlę while (null !== (chunk = readable.read())), a jeśli potrzebny jest cały bufor w jednym wywołaniu: readable.read(readable.readableLength).",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/stream.md",
+    "added_on": "2026-11-15"
   }
 ]
