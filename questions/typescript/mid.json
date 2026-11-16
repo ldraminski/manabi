@@ -335,5 +335,73 @@
     "explanation": "Lista zmian TypeScript 7: moduł CommonJS musi zawierać albo przypisanie do module.exports, albo serię przypisań do module.exports.xxx, ale nie oba naraz.",
     "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
     "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-021",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs. Po przejściu na TypeScript 7 wywołanie sum(1, 2, 3) zgłasza błąd liczby argumentów. Jak poprawić funkcję?",
+    "code": "/** @param {...number} ns */\nfunction sum(ns) {\n  // ...\n}\n\nsum(1, 2, 3);",
+    "options": [
+      "Napisać function sum(...ns) — typ wariadyczny w JSDoc nie robi już z parametru parametru reszty",
+      "Zmienić tag na @param {number[]} ns",
+      "Dodać @rest nad funkcją",
+      "Włączyć strict: false"
+    ],
+    "correct": 0,
+    "explanation": "W TypeScripcie 7 zapis {...number} w JSDoc jest tylko synonimem number[] i nie ma innej semantyki. Typ wariadyczny nie zamienia już zwykłego parametru w parametr reszty, więc trzeba użyć standardowej składni ...ns. Zmiana tagu na number[] niczego nie naprawia — funkcja dalej przyjmuje jedną tablicę.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-022",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs. W TypeScripcie 7 ta funkcja strzałkowa przestała zawężać typ po wywołaniu. Jak zapisać asercję, żeby działała?",
+    "code": "/**\n * @param {A} a\n * @returns { asserts a is B }\n */\nconst assertB = (a) => {\n  if (/** @type {B} */ (a).y !== 0) throw TypeError();\n};",
+    "options": [
+      "Dać typ na zmiennej: /** @type {(a: A) => asserts a is B} */ const assertB = (a) => { … }",
+      "Zamienić @returns na @return",
+      "Dodać @function nad stałą",
+      "Asercje typu nie są w TS 7 obsługiwane w plikach .js"
+    ],
+    "correct": 0,
+    "explanation": "Lista zmian TypeScript 7: adnotacja asserts dla funkcji strzałkowej musi być na deklarowanej zmiennej (tag @type z typem funkcji), a nie na samej strzałce. To ta sama zasada co w TypeScripcie, gdzie funkcja asercji wymaga jawnej adnotacji typu.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-023",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs i \"strict\": true. Po przejściu na TypeScript 7 pojawił się błąd noImplicitAny na parametrze x funkcji g. Dlaczego?",
+    "code": "/** @param {number} x */\nvar f = (x) => x,\n  g = (x) => x;",
+    "options": [
+      "Tag @param dotyczy teraz najwyżej jednej funkcji — tu tylko f, więc x w g nie ma typu",
+      "TS 7 nie pozwala deklarować kilku funkcji w jednym var",
+      "TS 7 ignoruje tagi @param przy funkcjach strzałkowych",
+      "noImplicitAny jest w TS 7 włączane osobno dla każdej deklaracji"
+    ],
+    "correct": 0,
+    "explanation": "W TypeScripcie 7 tag @param stosuje się najwyżej do jednej funkcji. Jeśli mógłby dotyczyć kilku, obowiązuje tylko dla pierwszej. Parametr g zostaje bez typu i przy strict zgłaszany jest błąd noImplicitAny. Rozwiązanie: osobny komentarz JSDoc dla g.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-024",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "prompt": "Plik .js z checkJs i \"strict\": false. TypeScript 6 akceptował wywołanie f() bez argumentu. Co zrobi TypeScript 7?",
+    "code": "/** @param {unknown} x */\nfunction f(x) {\n  return x;\n}\n\nf();",
+    "options": [
+      "Zgłosi błąd — przy strict: false nie można już pominąć argumentu dla parametru typu unknown, any ani undefined",
+      "Zaakceptuje, bo przy strict: false każdy parametr jest opcjonalny",
+      "Zaakceptuje, bo unknown zawsze zawiera undefined",
+      "Zgłosi błąd tylko dla unknown; any i undefined wciąż można pominąć"
+    ],
+    "correct": 0,
+    "explanation": "Lista zmian TypeScript 7: przy \"strict\": false nie wolno już pomijać argumentów dla parametrów typu undefined, unknown ani any. Wyjątkiem pozostaje void — parametr typu void można pominąć niezależnie od trybu strict.",
+    "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
+    "added_on": "2026-11-16"
   }
 ]

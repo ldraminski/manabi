@@ -1784,6 +1784,38 @@
     "added_on": "2026-11-15"
   },
   {
+    "id": "git-mid-024",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-025",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-026",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-027",
+    "technology": "git",
+    "level": "mid",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
     "id": "git-senior-001",
     "technology": "git",
     "level": "senior",
@@ -2248,6 +2280,14 @@
     "added_on": "2026-11-03"
   },
   {
+    "id": "html-senior-014",
+    "technology": "html",
+    "level": "senior",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -2558,6 +2598,46 @@
     "topic": "browser",
     "kind": "single_choice",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "javascript-mid-020",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-021",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-022",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-023",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-024",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
   },
   {
     "id": "javascript-senior-001",
@@ -5462,6 +5542,38 @@
     "topic": "typescript-7",
     "kind": "single_choice",
     "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-mid-021",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-022",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-023",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "typescript-mid-024",
+    "technology": "typescript",
+    "level": "mid",
+    "topic": "typescript-7",
+    "kind": "single_choice",
+    "added_on": "2026-11-16"
   },
   {
     "id": "typescript-senior-001",

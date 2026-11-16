@@ -317,5 +317,89 @@
     "explanation": "deliveryType ma wartość \"cache\" dla zasobów z cache, ale dla zasobów z innego originu, które nie przechodzą kontroli Timing-Allow-Origin, zawsze zwraca pusty string — nawet gdy przyszły z cache. Żeby mierzyć trafienia w cache dla zasobów z CDN, serwer musi wysyłać ten nagłówek.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/performanceresourcetiming/deliverytype/index.md",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "javascript-mid-020",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "ES2027 (propozycja Iterator Chunking, etap 4). Co zwróci ten kod?",
+    "code": "const digits = () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].values();\n\nArray.from(digits().chunks(3));",
+    "options": [
+      "[[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]",
+      "[[0, 1, 2], [3, 4, 5], [6, 7, 8]] — niepełna paczka jest pomijana",
+      "[[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, undefined, undefined]]",
+      "[[0, 1, 2], [1, 2, 3], …, [7, 8, 9]]"
+    ],
+    "correct": 0,
+    "explanation": "chunks(n) dzieli iterator na nienakładające się paczki po n elementów; ostatnia paczka może być krótsza, jak [9] w przykładzie z README propozycji. Nakładające się okna [0,1,2], [1,2,3]… daje osobna metoda windows(n).",
+    "source_url": "https://github.com/tc39/proposal-iterator-chunking/blob/main/README.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-021",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "ES2027 (propozycja Joint Iteration, etap 4). Co zwróci ten kod?",
+    "code": "Iterator.zip([\n  [1, 2, 3],\n  ['a', 'b'],\n]).toArray();",
+    "options": [
+      "[[1, 'a'], [2, 'b']]",
+      "[[1, 'a'], [2, 'b'], [3, undefined]]",
+      "Rzuci błąd, bo wejścia mają różną długość",
+      "[1, 'a', 2, 'b', 3]"
+    ],
+    "correct": 0,
+    "explanation": "Iterator.zip przyjmuje iterable z iterable i zwraca tablice z wartościami z tej samej pozycji. Domyślny tryb to \"shortest\": wynik kończy się razem z najkrótszym wejściem. Dopełnianie daje mode: \"longest\" (z opcjonalnym padding), a błąd przy różnych długościach — mode: \"strict\".",
+    "source_url": "https://github.com/tc39/proposal-joint-iteration/blob/main/README.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-022",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Łączysz Iterator.zipKeyed listę identyfikatorów z listą nazw. Obie powinny mieć tyle samo elementów, a różnica oznacza błąd w danych, który ma przerwać przetwarzanie. Jaką opcję podać (ES2027, Joint Iteration)?",
+    "options": [
+      "{ mode: 'strict' }",
+      "{ mode: 'longest' }",
+      "Nic — domyślnie zipKeyed rzuca błąd przy różnych długościach",
+      "{ mode: 'longest', padding: { names: null } }"
+    ],
+    "correct": 0,
+    "explanation": "Iterator.zip i Iterator.zipKeyed przyjmują w drugim argumencie mode: \"shortest\" (domyślny — po cichu ucina do najkrótszego wejścia), \"longest\" (dopełnia krótsze wejścia wartością z padding albo undefined) lub \"strict\", który rzuca błąd, gdy wejścia nie kończą się po tej samej liczbie wartości.",
+    "source_url": "https://github.com/tc39/proposal-joint-iteration/blob/main/README.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-023",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "ES2027 (propozycja Iterator Includes, etap 4). Co zwróci ten kod?",
+    "code": "function* gen() {\n  yield 1;\n  yield NaN;\n}\n\ngen().includes(NaN);",
+    "options": [
+      "true",
+      "false, bo NaN !== NaN",
+      "TypeError — iteratory nie mają metody includes",
+      "undefined"
+    ],
+    "correct": 0,
+    "explanation": "Iterator.prototype.includes używa porównania SameValueZero, tak jak Array.prototype.includes, więc znajduje NaN (w przeciwieństwie do ===). Metoda ma też drugi parametr jak w tablicach, ale nie przyjmuje ujemnych wartości.",
+    "source_url": "https://github.com/tc39/proposal-iterator-includes/blob/main/README.md",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-024",
+    "topic": "data-and-iteration",
+    "kind": "single_choice",
+    "prompt": "Masz Set z tagami i chcesz wypisać je jako jeden napis rozdzielony przecinkami. Co daje ES2027 (propozycja Iterator Join) w porównaniu z Array.from(tags).join(\", \")?",
+    "code": "const tags = new Set(['js', 'css', 'html']);\n\ntags.values().join(', '); // 'js, css, html'",
+    "options": [
+      "Iterator.prototype.join działa jak Array.prototype.join, ale na iteratorze — bez tworzenia pośredniej tablicy",
+      "join na iteratorze zwraca nowy iterator napisów, który trzeba jeszcze zebrać przez toArray()",
+      "join działa tylko na iteratorach napisów; dla liczb trzeba najpierw użyć map(String)",
+      "Nic nowego — tags.values().join był dostępny już w ES2015"
+    ],
+    "correct": 0,
+    "explanation": "Propozycja dodaje Iterator.prototype.join, które działa dokładnie jak Array.prototype.join, tylko traktuje odbiorcę jako iterator. Wcześniej trzeba było zamieniać całość na tablicę (Array.from(it).join) albo sklejać przez reduce, co tworzy pośrednie napisy i nie działa dla pustego iteratora.",
+    "source_url": "https://github.com/tc39/proposal-iterator-join/blob/main/README.md",
+    "added_on": "2026-11-16"
   }
 ]

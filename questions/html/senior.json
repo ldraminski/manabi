@@ -211,5 +211,21 @@
     "explanation": "Scoped custom element registries pozwalają utworzyć niezależny rejestr, którego definicje obowiązują tylko w danym poddrzewie, np. w shadow root. Druga próba zdefiniowania tej samej nazwy w globalnym rejestrze się nie powiedzie, a opcja extends w rejestrze scoped rzuca NotSupportedError. Dla deklaratywnego Shadow DOM służy atrybut shadowrootcustomelementregistry i późniejsze registry.initialize(shadowRoot). Firefox obsługuje to od wersji 159.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_components/using_custom_elements/index.md",
     "added_on": "2026-11-03"
+  },
+  {
+    "id": "html-senior-014",
+    "topic": "performance-and-security",
+    "kind": "single_choice",
+    "prompt": "HTML strony generuje zewnętrzny CMS i nie możesz w nim dodać <script type=\"speculationrules\">, ale kontrolujesz konfigurację serwera/CDN. Jak dodać reguły spekulacyjne?",
+    "options": [
+      "Nagłówek odpowiedzi Speculation-Rules: \"/rules/prefetch.json\", a plik z regułami JSON serwować z typem application/speculationrules+json",
+      "Nagłówek Link: </rules/prefetch.json>; rel=prefetch, a plik serwować jako application/json",
+      "<meta http-equiv=\"Speculation-Rules\"> dodany przez CDN do HTML",
+      "Nie da się — reguły spekulacyjne działają tylko jako skrypt wpisany w dokument"
+    ],
+    "correct": 0,
+    "explanation": "Nagłówek odpowiedzi Speculation-Rules zawiera listę adresów (w cudzysłowach, rozdzielonych przecinkami) plików z regułami w tym samym formacie JSON co w <script type=\"speculationrules\">. Plik jest pobierany z destination speculationrules i musi mieć typ MIME application/speculationrules+json. To rozwiązanie na sytuacje, gdy nie można zmienić samego dokumentu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/speculation-rules/index.md",
+    "added_on": "2026-11-16"
   }
 ]

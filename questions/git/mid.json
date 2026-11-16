@@ -362,5 +362,69 @@
     "explanation": "Dokumentacja: commit fixup!, squash! lub amend! jest odrzucany, chyba że jego commit docelowy też należy do zakresu, żeby squash nie wchłonął po cichu poprawki przeznaczonej dla innego commita. Wyjątkiem jest zakres złożony wyłącznie z takich znaczników dla jednego celu; wtedy łączy je w jeden commit.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-history.adoc",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "git-mid-024",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Repozytorium ma w katalogu głównym plik .git-blame-ignore-revs z hashem commita, który przeformatował cały kod. Nikt nie ustawił blame.ignoreRevsFile. Co zrobi git blame według aktualnej dokumentacji Gita (gałąź master)?",
+    "options": [
+      "Automatycznie użyje tego pliku jako domyślnej listy ignorowanych commitów",
+      "Zignoruje plik, dopóki nie podasz --ignore-revs-file .git-blame-ignore-revs",
+      "Odczyta plik tylko w repozytorium bare",
+      "Zgłosi ostrzeżenie, że plik trzeba zarejestrować w blame.ignoreRevsFile"
+    ],
+    "correct": 0,
+    "explanation": "Nowa zmiana w Gicie: git blame i git annotate same używają pliku .git-blame-ignore-revs z katalogu głównego drzewa roboczego (w repozytorium bare: HEAD:.git-blame-ignore-revs), jeśli istnieje. Ten plik jest pierwszym elementem listy, przed plikami z blame.ignoreRevsFile i z --ignore-revs-file. Wcześniej trzeba go było podać jawnie w konfiguracji albo w wierszu poleceń.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/blame-options.adoc",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-025",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "git blame automatycznie pomija commity z .git-blame-ignore-revs, a ty chcesz raz zobaczyć, kto naprawdę ostatnio zmienił linię — łącznie z commitem formatującym. Jak wyłączyć listę dla jednego wywołania?",
+    "options": [
+      "git blame --no-ignore-revs-file plik.js",
+      "git blame -w plik.js",
+      "git blame --root plik.js",
+      "git blame --ignore-rev HEAD plik.js"
+    ],
+    "correct": 0,
+    "explanation": "--no-ignore-revs-file (albo pusta nazwa --ignore-revs-file \"\") czyści listę commitów z wcześniej przetworzonych plików, w tym z domyślnego .git-blame-ignore-revs. -w ignoruje tylko zmiany białych znaków, --root nie traktuje commitów początkowych jako granicy, a --ignore-rev dodaje kolejny commit do pominięcia.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/blame-options.adoc",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-026",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "Na służbowym laptopie (hostname work-laptop-17) commity mają mieć służbowy e-mail, na prywatnym komputerze — prywatny. Oba korzystają z tego samego ~/.gitconfig z dotfiles. Który wpis zadziała według aktualnej dokumentacji Gita?",
+    "options": [
+      "[includeIf \"hostname:work-laptop-*\"] z path = ~/.gitconfig-work",
+      "[includeIf \"host:work-laptop-*\"] z path = ~/.gitconfig-work",
+      "[includeIf \"gitdir:work-laptop-*\"] z path = ~/.gitconfig-work",
+      "[hostname \"work-laptop-*\"] z user.email = …"
+    ],
+    "correct": 0,
+    "explanation": "Warunek includeIf \"hostname:<wzorzec>\" (wildcardy jak w globach) włącza plik, gdy nazwa maszyny pasuje do wzorca. Zależnie od systemu Git może widzieć nazwę krótką albo pełną z domeną — sprawdzisz to przez git var GIT_HOSTNAME. gitdir: dopasowuje położenie katalogu .git, a nie maszynę.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config.adoc",
+    "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-027",
+    "topic": "newer-commands",
+    "kind": "single_choice",
+    "prompt": "W repozytorium jest tradycyjny hook .git/hooks/pre-commit i hook skonfigurowany przez hook.lint.command i hook.lint.event = pre-commit. Ustawiasz git config hook.pre-commit.enabled false. Co się stanie przy git commit według aktualnej dokumentacji?",
+    "options": [
+      "Nie uruchomi się żaden hook pre-commit — ani skonfigurowany, ani ten z katalogu hooks",
+      "Wyłączy się tylko hook skonfigurowany; skrypt z .git/hooks/pre-commit dalej się uruchomi",
+      "Wyłączy się tylko skrypt z .git/hooks; hook.lint dalej działa",
+      "Git zgłosi błąd, bo pre-commit jest nazwą zdarzenia, a nie hooka"
+    ],
+    "correct": 0,
+    "explanation": "hook.<event>.enabled = false wyłącza wszystkie hooki danego zdarzenia: skonfigurowane i tradycyjny skrypt z katalogu hooks, niezależnie od ustawień hook.<friendly-name>.enabled. Wcześniej ta opcja nie obejmowała tradycyjnych hooków. Nazwa zdarzenia nie może być użyta jako friendly-name, więc zapis jest jednoznaczny.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/hook.adoc",
+    "added_on": "2026-11-16"
   }
 ]
