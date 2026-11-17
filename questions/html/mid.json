@@ -247,5 +247,22 @@
     "explanation": "requestClose() przed zdarzeniem close wywołuje zdarzenie cancel, w którym można wywołać preventDefault() i zatrzymać zamknięcie. To samo zachowanie co wewnętrzny close watcher dialogu (np. Esc). close() zamyka od razu bez cancel, a argument to tylko nowa wartość returnValue.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/htmldialogelement/requestclose/index.md",
     "added_on": "2026-11-14"
+  },
+  {
+    "id": "html-mid-016",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "prompt": "Handler cancel dialogu wywołuje preventDefault(), gdy formularz ma niezapisane zmiany. Użytkownik wciska Esc i dialog zostaje. Od razu wciska Esc drugi raz, bez klikania ani pisania na stronie. Co może się stać?",
+    "code": "dialog.addEventListener('cancel', (e) => {\n  if (hasUnsavedChanges()) e.preventDefault();\n});",
+    "options": [
+      "Dialog na pewno zostanie, bo zdarzenie cancel zawsze można anulować",
+      "Drugie zdarzenie cancel może mieć cancelable równe false: preventDefault() nic nie da i dialog się zamknie",
+      "Drugie Esc zostanie zignorowane, dopóki kod nie wywoła requestClose()",
+      "Przeglądarka rzuci InvalidStateError, bo dialog jest już w trakcie zamykania"
+    ],
+    "correct": 1,
+    "explanation": "Czy cancel da się anulować, zależy od źródła żądania zamknięcia. requestClose() zawsze wywołuje anulowalne zdarzenie. Żądania platformy (Esc, przycisk Wstecz) są anulowalne tylko, gdy pozwala na to aktywacja użytkownika. Po anulowanym żądaniu kolejne, bez aktywacji pomiędzy, może wywołać nieanulowalne cancel i zamknąć dialog. Dlatego warto sprawdzać event.cancelable i nie zakładać, że dialog da się zatrzymać na zawsze.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/htmldialogelement/cancel_event/index.md",
+    "added_on": "2026-11-17"
   }
 ]

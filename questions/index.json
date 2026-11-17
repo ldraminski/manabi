@@ -736,6 +736,14 @@
     "added_on": "2026-11-15"
   },
   {
+    "id": "angular-mid-031",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -2176,6 +2184,14 @@
     "added_on": "2026-11-14"
   },
   {
+    "id": "html-mid-016",
+    "technology": "html",
+    "level": "mid",
+    "topic": "html-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
     "id": "html-senior-001",
     "technology": "html",
     "level": "senior",
@@ -2448,6 +2464,30 @@
     "added_on": "2026-10-04"
   },
   {
+    "id": "javascript-junior-021",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "dates",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-junior-022",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "dates",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-junior-023",
+    "technology": "javascript",
+    "level": "junior",
+    "topic": "dates",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
     "id": "javascript-mid-001",
     "technology": "javascript",
     "level": "mid",
@@ -2638,6 +2678,30 @@
     "topic": "data-and-iteration",
     "kind": "single_choice",
     "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-025",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "dates",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-mid-026",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-mid-027",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
   },
   {
     "id": "javascript-senior-001",
@@ -2966,6 +3030,14 @@
     "topic": "server-runtime",
     "kind": "single_choice",
     "added_on": "2026-11-13"
+  },
+  {
+    "id": "nextjs-mid-017",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
   },
   {
     "id": "nextjs-senior-001",
@@ -3662,6 +3734,22 @@
     "topic": "streams-and-buffers",
     "kind": "single_choice",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-mid-053",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "nodejs-mid-054",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
   },
   {
     "id": "nodejs-senior-001",
@@ -4424,6 +4512,22 @@
     "added_on": "2026-11-15"
   },
   {
+    "id": "react-mid-025",
+    "technology": "react",
+    "level": "mid",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "react-mid-026",
+    "technology": "react",
+    "level": "mid",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
     "id": "react-senior-001",
     "technology": "react",
     "level": "senior",
@@ -4766,6 +4870,22 @@
     "topic": "api-design-in-depth",
     "kind": "single_choice",
     "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-013",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "rest-api-mid-014",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-17"
   },
   {
     "id": "rest-api-senior-001",

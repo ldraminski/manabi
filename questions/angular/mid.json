@@ -494,5 +494,22 @@
     "explanation": "Gdy zasób nadrzędny jest w stanie 'loading' lub 'reloading', zasób zależny przechodzi w 'loading', a jego loader się nie uruchamia. Dokumentacja podkreśla, że podczas 'reloading' chain nie zwraca wcześniej rozwiązanej wartości.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/signals/resource.md",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "angular-mid-031",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Profiler Angular DevTools pokazuje, że szablon listy jest wolny. Co jest przyczyną i jak to naprawić?",
+    "code": "@Component({\n  template: `\n    @for (u of sortedUsers(); track u.id) {\n      <li>{{ u.name }}</li>\n    }\n  `,\n})\nexport class UserList {\n  users = input.required<User[]>();\n\n  sortedUsers() {\n    return [...this.users()].sort((a, b) => a.name.localeCompare(b.name));\n  }\n}",
+    "options": [
+      "track u.id wymusza ponowne renderowanie; trzeba użyć track $index",
+      "Zwykła metoda w szablonie wykonuje się przy każdym sprawdzeniu szablonu i za każdym razem sortuje kopię; trzeba wyliczać wynik raz, np. w pure pipe albo computed()",
+      "Angular zapamiętuje wynik metod w szablonie, więc problem musi być w input.required()",
+      "Kompilator Angulara nie pozwala wywoływać metod w @for, więc kod działa w trybie awaryjnym"
+    ],
+    "correct": 1,
+    "explanation": "W każdym cyklu wykrywania zmian Angular synchronicznie wylicza wyrażenia szablonu, więc sortowanie powtarza się nawet wtedy, gdy users się nie zmieniło, a @for dostaje za każdym razem nową tablicę. Dokumentacja zaleca przeniesienie ciężkich obliczeń do czystego pipe’a, który przelicza się tylko po zmianie wejścia, albo memoizację. Dla wartości wyliczanych z sygnałów tę rolę pełni computed(). Samo odczytanie sygnału czy tania metoda w szablonie nie są problemem.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/best-practices/runtime-performance/slow-computations.md",
+    "added_on": "2026-11-17"
   }
 ]

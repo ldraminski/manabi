@@ -401,5 +401,56 @@
     "explanation": "Propozycja dodaje Iterator.prototype.join, które działa dokładnie jak Array.prototype.join, tylko traktuje odbiorcę jako iterator. Wcześniej trzeba było zamieniać całość na tablicę (Array.from(it).join) albo sklejać przez reduce, co tworzy pośrednie napisy i nie działa dla pustego iteratora.",
     "source_url": "https://github.com/tc39/proposal-iterator-join/blob/main/README.md",
     "added_on": "2026-11-16"
+  },
+  {
+    "id": "javascript-mid-025",
+    "topic": "dates",
+    "kind": "single_choice",
+    "prompt": "Kod działa w strefie Europe/Warsaw (15 marca 2026 to jeszcze czas zimowy, UTC+1). Co wypisze?",
+    "code": "const a = new Date('2026-03-15');\nconst b = new Date('2026-03-15T00:00:00');\nconsole.log(a.getTime() - b.getTime());",
+    "options": [
+      "0",
+      "3600000",
+      "-3600000",
+      "NaN"
+    ],
+    "correct": 1,
+    "explanation": "Bez przesunięcia strefy forma z samą datą („2026-03-15”) jest interpretowana jako UTC, a forma z datą i godziną jako czas lokalny. a to północ UTC, b to północ w Warszawie, czyli 23:00 UTC dnia poprzedniego. Różnica to godzina, 3 600 000 ms. To historyczny błąd specyfikacji, którego nie da się już zmienić. Dlatego daty bez godziny w polach typu date potrafią „przeskoczyć” o dzień przy wyświetlaniu w strefie z ujemnym przesunięciem.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/date/index.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-mid-026",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Ciało funkcji rzuca błąd A, a zwalnianie zasobu rzuca błąd B. Co wypisze catch?",
+    "code": "function run() {\n  using res = {\n    [Symbol.dispose]() { throw new Error('B'); }\n  };\n  throw new Error('A');\n}\n\ntry {\n  run();\n} catch (e) {\n  console.log(e.constructor.name, e.error?.message, e.suppressed?.message);\n}",
+    "options": [
+      "Error undefined undefined",
+      "SuppressedError A B",
+      "SuppressedError B A",
+      "AggregateError undefined undefined"
+    ],
+    "correct": 2,
+    "explanation": "Gdy przy wyjściu z zakresu pojawia się więcej niż jeden błąd, są one łączone w SuppressedError: wcześniejszy wyjątek trafia do suppressed, późniejszy do error. Tu A powstał pierwszy, a B podczas zwalniania. Jeśli rzuci tylko ciało funkcji, a dispose przejdzie, do catch trafi zwykły Error A, bez opakowania.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/statements/await_using/index.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-mid-027",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "Obiekt ma tylko [Symbol.dispose](), który zwraca obietnicę zamknięcia połączenia. Co się stanie przy wyjściu z bloku z await using?",
+    "code": "const conn = {\n  [Symbol.dispose]() {\n    return closeConnection(); // zwraca Promise\n  },\n};\n\nasync function main() {\n  {\n    await using c = conn;\n  }\n  console.log('po bloku');\n}",
+    "options": [
+      "await using poczeka na obietnicę z [Symbol.dispose](), więc „po bloku” wypisze się po zamknięciu połączenia",
+      "Zostanie rzucony TypeError, bo await using wymaga [Symbol.asyncDispose]",
+      "await using użyje [Symbol.dispose](), ale nie poczeka na zwróconą obietnicę; „po bloku” może się wypisać przed zamknięciem. Żeby czekać, trzeba zaimplementować [Symbol.asyncDispose]()",
+      "Metoda [Symbol.dispose]() w ogóle nie zostanie wywołana"
+    ],
+    "correct": 2,
+    "explanation": "await using najpierw szuka [Symbol.asyncDispose], a gdy go nie ma, używa [Symbol.dispose]. Ta metoda jest opakowana jak async () => { obj[Symbol.dispose](); }, więc zwrócona obietnica nie jest awaitowana. Sam await przy wyjściu z zakresu i tak nastąpi, ale nie czeka na zamknięcie połączenia.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/statements/await_using/index.md",
+    "added_on": "2026-11-17"
   }
 ]

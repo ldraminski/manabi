@@ -42,6 +42,13 @@
     "icon": "globe"
   },
   {
+    "technology": "javascript",
+    "slug": "dates",
+    "title": "Daty",
+    "description": "Date, miesiące od zera, getDay i getDate, parsowanie napisów",
+    "icon": "clock"
+  },
+  {
     "technology": "typescript",
     "slug": "types",
     "title": "Typy na co dzień",

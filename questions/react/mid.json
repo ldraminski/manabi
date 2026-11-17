@@ -394,5 +394,39 @@
     "explanation": "use, w przeciwieństwie do hooków, można wywoływać w warunkach i pętlach, ale dokumentacja ostrzega: nie omijaj go, czytając promise.status lub promise.value. Zawsze przekazuj Promise do use i pozwól Reactowi go śledzić. Gdy Promise ma status fulfilled, use i tak odczyta wartość bez zawieszania.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/use.md",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "react-mid-025",
+    "topic": "concurrent-ui",
+    "kind": "single_choice",
+    "prompt": "React 19. Formularz ma niekontrolowane pola (defaultValue) i własne onSubmit z preventDefault() i startTransition. Pola mają wrócić do wartości domyślnych po zakończeniu akcji, tak jak przy <form action={...}>. Co zrobić?",
+    "code": "function onSubmit(event) {\n  event.preventDefault();\n  const form = event.currentTarget;\n  const formData = new FormData(form);\n  startTransition(async () => {\n    // ?\n    await save(formData);\n  });\n}",
+    "options": [
+      "Wywołać form.reset() zaraz po preventDefault()",
+      "Wywołać requestFormReset(form) z react-dom wewnątrz startTransition",
+      "Ustawić stan z pustymi wartościami pól po await save()",
+      "Nic, React po każdym przejściu resetuje wszystkie formularze na stronie"
+    ],
+    "correct": 1,
+    "explanation": "requestFormReset(form) prosi Reacta o reset formularza po zakończeniu bieżącej akcji lub przejścia, czyli to samo, co React robi sam po udanym <form action={...}>. form.reset() wyczyściłby pola od razu, zanim zapis się skończy. Reset dotyczy pól niekontrolowanych; pola kontrolowane resetuje się przez stan. Wywołane poza akcją lub przejściem requestFormReset wykona reset synchronicznie i ostrzeże w trybie deweloperskim.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/requestFormReset.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "react-mid-026",
+    "topic": "effects-in-depth",
+    "kind": "single_choice",
+    "prompt": "React 19. Komponent re-renderuje się (bez odmontowania). Co zaloguje ref callback przekazany jako funkcja inline?",
+    "code": "<div\n  ref={(node) => {\n    console.log('attach', node);\n    return () => console.log('cleanup');\n  }}\n/>",
+    "options": [
+      "Nic, ref callback wywołuje się tylko przy montowaniu",
+      "„cleanup”, a potem „attach” z tym samym węzłem DOM",
+      "„attach null”, a potem „attach” z węzłem DOM",
+      "„attach null”, „cleanup”, a potem „attach” z węzłem DOM"
+    ],
+    "correct": 1,
+    "explanation": "Funkcja inline jest przy każdym renderze nowa, więc React traktuje ją jak inny ref callback. Wywołuje funkcję sprzątającą zwróconą przez poprzedni callback, a potem nowy callback z węzłem DOM. Wywołanie poprzedniego callbacku z null zdarza się tylko wtedy, gdy nie zwrócił on funkcji sprzątającej.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/components/common.md",
+    "added_on": "2026-11-17"
   }
 ]

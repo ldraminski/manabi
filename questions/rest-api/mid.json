@@ -193,5 +193,38 @@
     "explanation": "Odpowiedź 405 musi zawierać nagłówek Allow z metodami, które ten zasób obecnie obsługuje. Retry-After podpowiada, kiedy spróbować ponownie (np. przy 429 lub 503), Location wskazuje adres przy przekierowaniach i 201, a WWW-Authenticate należy do odpowiedzi 401.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/405/index.md",
     "added_on": "2026-10-19"
+  },
+  {
+    "id": "rest-api-mid-013",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Ciasteczko sesji ustawiono nagłówkiem poniżej. Przy którym z tych żądań wychodzących z innej witryny przeglądarka je dołączy?",
+    "code": "Set-Cookie: sid=abc123; SameSite=Lax; Secure; HttpOnly",
+    "options": [
+      "Przy kliknięciu zwykłego linku <a href> na obcej stronie, który otwiera Twoją stronę w głównym oknie",
+      "Przy wysłaniu formularza metodą POST z obcej strony na Twój adres",
+      "Przy fetch() z obcej strony z credentials: \"include\"",
+      "Przy załadowaniu Twojej strony w <iframe> na obcej stronie"
+    ],
+    "correct": 0,
+    "explanation": "SameSite=Lax wysyła ciasteczko przy żądaniach z tej samej witryny oraz przy żądaniach cross-site, które są nawigacją najwyższego poziomu (zmieniają adres w pasku) i używają bezpiecznej metody, np. GET. POST, fetch() i nawigacja w iframe tych warunków nie spełniają. Wyjątek dla POST w ciągu dwóch minut od ustawienia dotyczy tylko sytuacji, gdy przeglądarka sama przyjęła Lax jako domyślne, a nie jawnie ustawionego Lax.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/set-cookie/index.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "rest-api-mid-014",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Widżet osadzany w iframe na stronach klientów musi dostawać swoje ciasteczko w żądaniach cross-site. Który nagłówek to umożliwia?",
+    "options": [
+      "Set-Cookie: wid=1; SameSite=Strict",
+      "Set-Cookie: wid=1; SameSite=Lax",
+      "Set-Cookie: wid=1; SameSite=None; Secure",
+      "Set-Cookie: wid=1; SameSite=None"
+    ],
+    "correct": 2,
+    "explanation": "Tylko SameSite=None wysyła ciasteczko w żądaniach cross-site, a ta wartość wymaga też atrybutu Secure. Strict wysyła je tylko w obrębie tej samej witryny, a Lax dodatkowo przy nawigacji najwyższego poziomu bezpieczną metodą, czyli nie w iframe. Nie warto też polegać na domyślnym zachowaniu: bez SameSite tylko niektóre przeglądarki przyjmują Lax. Część przeglądarek domyślnie blokuje ciasteczka stron trzecich, więc nawet poprawny nagłówek może nie wystarczyć.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/set-cookie/index.md",
+    "added_on": "2026-11-17"
   }
 ]

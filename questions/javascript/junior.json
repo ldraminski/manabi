@@ -307,5 +307,56 @@
     "explanation": "localStorage przechowuje wyłącznie stringi. Obiekt zapisany wprost zamieni się na \"[object Object]\". Trzeba go zserializować przez JSON.stringify, a przy odczycie użyć JSON.parse.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage",
     "added_on": "2026-10-04"
+  },
+  {
+    "id": "javascript-junior-021",
+    "topic": "dates",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?",
+    "code": "const d = new Date('2026-03-15T10:00:00');\nconsole.log(d.getMonth());",
+    "options": [
+      "3",
+      "2",
+      "\"03\"",
+      "\"March\""
+    ],
+    "correct": 1,
+    "explanation": "getMonth() zwraca miesiąc liczony od zera: 0 to styczeń, 1 luty, 2 marzec. Dlatego do tablicy nazw miesięcy można użyć wyniku wprost jako indeksu, a do wyświetlenia numeru miesiąca trzeba dodać 1.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/date/getmonth/index.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-junior-022",
+    "topic": "dates",
+    "kind": "single_choice",
+    "prompt": "17 listopada 2026 to wtorek. Co wypisze ten kod?",
+    "code": "const d = new Date(2026, 10, 17);\nconsole.log(d.getDay());",
+    "options": [
+      "17",
+      "2",
+      "1",
+      "3"
+    ],
+    "correct": 1,
+    "explanation": "getDay() zwraca dzień tygodnia od 0 do 6, gdzie 0 to niedziela, 1 poniedziałek, 2 wtorek. Dzień miesiąca (tu 17) zwraca getDate(). Te dwie nazwy łatwo pomylić.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/date/getday/index.md",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-junior-023",
+    "topic": "dates",
+    "kind": "single_choice",
+    "prompt": "Co wypisze ten kod?",
+    "code": "console.log(new Date(2028, 2, 0).getDate());",
+    "options": [
+      "0",
+      "29",
+      "31",
+      "NaN"
+    ],
+    "correct": 1,
+    "explanation": "Miesiąc 2 to marzec (miesiące liczone od zera). Dzień 0 „pożycza” od poprzedniego miesiąca i oznacza ostatni dzień lutego. Rok 2028 jest przestępny, więc wynik to 29. To prosty sposób na liczbę dni w miesiącu: new Date(rok, miesiąc + 1, 0).getDate().",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/date/index.md",
+    "added_on": "2026-11-17"
   }
 ]

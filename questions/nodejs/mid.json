@@ -843,5 +843,39 @@
     "explanation": "W Node.js 26.0.0 readable.read() wywołane bez size zwraca jeden zbuforowany fragment (albo jeden obiekt w trybie obiektowym) zamiast opróżniać cały bufor. Dokumentacja zaleca pętlę while (null !== (chunk = readable.read())), a jeśli potrzebny jest cały bufor w jednym wywołaniu: readable.read(readable.readableLength).",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/stream.md",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-mid-053",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.11–26.13. Skrypt podmienia cały obiekt process.env i uruchamia proces potomny bez opcji env. FOO nie ma w środowisku systemu. Co wypisze?",
+    "code": "const { execFileSync } = require('node:child_process');\n\nprocess.env = { ...process.env, FOO: 'x' };\nconsole.log(execFileSync(process.execPath, ['-p', 'process.env.FOO'], { encoding: 'utf8' }));",
+    "options": [
+      "x",
+      "undefined",
+      "Rzuci TypeError, bo process.env jest tylko do odczytu",
+      "Pusty napis, bo dziecko dostaje puste środowisko"
+    ],
+    "correct": 1,
+    "explanation": "Od 26.11 domyślne środowisko dziecka jest budowane od razu z systemowego bloku środowiska zamiast kopiowania process.env. Podmieniony obiekt był więc po cichu pomijany, choć { env: process.env } go widziało. Obejście: przekazać { env: process.env } albo ustawiać process.env.FOO = 'x' zamiast podmieniać obiekt. Node.js 27.0.0-alpha.0.1.0 przywraca dziedziczenie podmienionego process.env.",
+    "source_url": "https://github.com/nodejs/node/commit/2aef805afe091f0c6e28b756cf85b97b8b6ab87f",
+    "added_on": "2026-11-17"
+  },
+  {
+    "id": "nodejs-mid-054",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 26. Callback przekazany do fs.readlink() rzuca wyjątek przez błąd w logice. Proces ma handler process.on('uncaughtException'). Co się dzieje?",
+    "code": "process.on('uncaughtException', (err) => log(err));\n\nfs.readlink('/srv/current', (err, target) => {\n  if (err) throw err;\n  config.load(target); // rzuca\n});",
+    "options": [
+      "Handler uncaughtException dostaje wyjątek, jak w każdym callbacku",
+      "Wyjątek jest po cichu połykany: handler się nie wywoła, a proces działa dalej",
+      "Wyjątek trafia jako err do kolejnego wywołania tego samego callbacku",
+      "Proces kończy się natychmiast z kodem 1, z pominięciem handlera"
+    ],
+    "correct": 1,
+    "explanation": "Od Node.js 24 w callbackach mkdtemp, realpath.native, readlink, rekurencyjnego mkdir i readdir oraz dir.read blok TryCatch po stronie C++ był wciąż aktywny, gdy wywoływał się callback JS. Wyjątki z callbacku i z kolejki nextTick obsłużonej zaraz po nim były przez niego łapane i nigdy nie zgłaszane. Node.js 27.0.0-alpha.0.1.0 zamyka TryCatch przed wywołaniem JS. W starszych wersjach warto łapać błędy w takich callbackach samodzielnie.",
+    "source_url": "https://github.com/nodejs/node/commit/c9f1d2d31976eb04c69606074127724502abb4e9",
+    "added_on": "2026-11-17"
   }
 ]
