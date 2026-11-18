@@ -326,5 +326,70 @@
     "explanation": "Release notes Playwright 1.65: dane uwierzytelniające z opcji proxy przy browserType.launch nie są już wysyłane do stron — odpowiadają tylko na wyzwania proxy. Do uwierzytelnienia na stronie służy opcja httpCredentials przy browser.newContext().",
     "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
     "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-021",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65 potrafi uruchamiać testy pod Bunem. Zespół wpisał w CI bunx playwright test. Na czym faktycznie działa runner?",
+    "options": [
+      "Na Bunie — bunx zawsze uruchamia pakiety w Bunie",
+      "Na Node.js — żeby runner działał pod Bunem, trzeba dodać flagę: bunx --bun playwright test",
+      "Na Bunie, ale tylko gdy w playwright.config.ts jest runtime: 'bun'",
+      "Na Deno, bo Playwright wybiera najszybsze dostępne środowisko"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: runner działa pod Bunem, ale trzeba przekazać --bun, bo bez niej bunx playwright test uruchamia się na Node.js. Pod Bunem część funkcji działa inaczej: nie ma watch mode, --tsconfig i opcje JSX z tsconfig.json nie mają wpływu, a stack trace nie zawiera ramek asynchronicznych.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-022",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65. Plik testowy button.spec.ts zawiera import '../src/button.css', ale ten plik CSS został usunięty z repozytorium. Co się stanie?",
+    "options": [
+      "Nic — importy .css w testach są usuwane podczas transpilacji",
+      "Plik testowy nie załaduje się: importy .css, .less i .scss w plikach testów ładują się teraz jako puste moduły, więc importowany plik musi istnieć",
+      "Playwright wstrzyknie pusty arkusz do strony testowej",
+      "Playwright pominie test i oznaczy go jako skipped"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65 (zmiany łamiące): importy .css, .less i .scss w plikach testów są ładowane jako puste moduły zamiast być usuwane, więc importowany plik musi istnieć.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-023",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65, reporter html z onlyFailures: true. Które testy NIE trafią do raportu?",
+    "options": [
+      "Test, który zawiódł przy pierwszej próbie, a przeszedł przy retry (flaky)",
+      "Test oznaczony test.fail(), który niespodziewanie przeszedł",
+      "Test przerwany (interrupted) po przekroczeniu globalnego limitu czasu",
+      "Test, który przeszedł za pierwszym razem"
+    ],
+    "correct": 3,
+    "explanation": "onlyFailures w reporterach HTML, JSON i JUnit zostawia tylko testy z nieoczekiwanym wynikiem (także nieoczekiwanym przejściem), testy flaky — nawet jeśli przeszły przy retry — oraz testy przerwane. Zwykły test, który przeszedł zgodnie z oczekiwaniem, jest pomijany. Każda próba uwzględnionego testu zostaje zachowana.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/test-reporters-js.md#report-only-failures",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-024",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "prompt": "Playwright 1.65. Serwer ustawił ciasteczko session z Path=/api. Co zwróci ten kod?",
+    "code": "const cookies = await context.cookies('https://example.com/apiv2');\nconsole.log(cookies.map(c => c.name));",
+    "options": [
+      "['session'] — /apiv2 zaczyna się od /api",
+      "[] — dopasowanie ścieżki ciasteczek działa według RFC 6265, a /apiv2 nie leży pod ścieżką /api",
+      "['session'] — BrowserContext.cookies() z URL ignoruje Path",
+      "Błąd — cookies() przyjmuje tylko domenę, nie pełny URL"
+    ],
+    "correct": 1,
+    "explanation": "Release notes Playwright 1.65: dopasowanie ciasteczek działa zgodnie z RFC 6265. Z URL-em BrowserContext.cookies() i APIRequestContext.cookies() nie zwracają ciasteczek z Path=/api dla /apiv2 ani ciasteczek host-only dla subdomen, a ciasteczko z Path=/foo/ nie pasuje do /foo. Ścieżka pasuje tylko, gdy po prefiksie jest koniec ścieżki albo ukośnik.",
+    "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/release-notes-js.md",
+    "added_on": "2026-11-18"
   }
 ]

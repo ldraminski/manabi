@@ -877,5 +877,90 @@
     "explanation": "Od Node.js 24 w callbackach mkdtemp, realpath.native, readlink, rekurencyjnego mkdir i readdir oraz dir.read blok TryCatch po stronie C++ był wciąż aktywny, gdy wywoływał się callback JS. Wyjątki z callbacku i z kolejki nextTick obsłużonej zaraz po nim były przez niego łapane i nigdy nie zgłaszane. Node.js 27.0.0-alpha.0.1.0 zamyka TryCatch przed wywołaniem JS. W starszych wersjach warto łapać błędy w takich callbackach samodzielnie.",
     "source_url": "https://github.com/nodejs/node/commit/c9f1d2d31976eb04c69606074127724502abb4e9",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "nodejs-mid-055",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Tabela users ma kolumnę id zadeklarowaną jako TEXT i wiersz z id równym '3'. Co zwróci query.get(3) w node:sqlite?",
+    "code": "const db = new Database(':memory:');\ndb.exec('CREATE TABLE users(id TEXT, name TEXT)');\ndb.exec(\"INSERT INTO users VALUES ('3', 'Alice')\");\n\nconst query = db.prepare('SELECT name FROM users WHERE id = ?');\nconsole.log(query.get(3));",
+    "options": [
+      "undefined — liczba 3 jest wiązana jako REAL i porównywana jako '3.0', więc nie pasuje do '3'",
+      "{ name: 'Alice' } — SQLite zawsze porównuje wartości tekstowo",
+      "Błąd ERR_INVALID_ARG_TYPE — do kolumny TEXT można przekazać tylko string",
+      "{ name: 'Alice' } — node:sqlite wiąże liczby całkowite jako INTEGER"
+    ],
+    "correct": 0,
+    "explanation": "node:sqlite zapisuje każdą liczbę (number) jako REAL, nawet bez części ułamkowej, bo każdy number w JavaScripcie jest typu double. Zwykle nie ma to znaczenia, bo affinity kolumny konwertuje wartość, ale tu porównywana jest wartość parametru z kolumną TEXT: 3 jest traktowane jak '3.0' i nie pasuje do '3'. Aby zapisać INTEGER, przekazuje się BigInt: query.get(3n) znajdzie wiersz.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/sqlite.md#writing-numbers-and-bigints",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-056",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Kolumna przechowuje INTEGER 9007199254740993 (większy niż Number.MAX_SAFE_INTEGER). Co się stanie przy odczycie przez node:sqlite z domyślnymi opcjami?",
+    "code": "const db = new Database(':memory:');\ndb.exec('CREATE TABLE t(v INTEGER)');\ndb.exec('INSERT INTO t VALUES (9007199254740993)');\n\nconsole.log(db.prepare('SELECT v FROM t').get());",
+    "options": [
+      "Zwróci { v: 9007199254740992 } — wartość zostanie po cichu zaokrąglona",
+      "Rzuci błąd ERR_OUT_OF_RANGE; trzeba włączyć odczyt BigIntów, np. opcją readBigInts albo statement.setReadBigInts(true)",
+      "Zwróci { v: '9007199254740993' } jako string",
+      "Zwróci { v: 9007199254740993n } — duże liczby zawsze są czytane jako BigInt"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie node:sqlite czyta INTEGER jako number. Jeśli wartość wychodzi poza bezpieczny zakres liczb całkowitych JavaScriptu, a odczyt BigIntów nie jest włączony, rzucany jest ERR_OUT_OF_RANGE zamiast cichej utraty precyzji. Z readBigInts (lub setReadBigInts(true)) wartości INTEGER wracają jako bigint.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/sqlite.md#type-conversion-between-javascript-and-sqlite",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-057",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "prompt": "Pakiet ma w package.json poniższe exports. Katalog src nie trafił do opublikowanej paczki, jest tylko dist/feature.js. Co się stanie przy import 'pkg/feature'?",
+    "code": "{\n  \"exports\": {\n    \"./feature\": [\"./src/feature.js\", \"./dist/feature.js\"]\n  }\n}",
+    "options": [
+      "Node.js nie znajdzie ./src/feature.js i użyje ./dist/feature.js",
+      "Import się nie powiedzie: pierwszy element jest poprawnym targetem, więc zostaje wybrany, a Node.js nie sprawdza, czy plik istnieje",
+      "Node.js rzuci ERR_INVALID_PACKAGE_CONFIG, bo exports nie może zawierać tablic",
+      "Node.js załaduje oba pliki i połączy ich eksporty"
+    ],
+    "correct": 1,
+    "explanation": "Tablica w exports lub imports to lista fallbacków, ale element jest pomijany tylko wtedy, gdy nie jest poprawnym targetem (np. łamie reguły ścieżek) albo jest obiektem warunków, w którym żaden warunek nie pasuje. Istnienie pliku nie jest sprawdzane: ./feature zawsze wskazuje ./src/feature.js, a ładowanie kończy się błędem. Tablicą nie da się zrobić fallbacku z brakującego pliku na inny.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/packages.md#target-fallback-arrays",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-058",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 26.8+. Kod czyta z FIFO, do którego inny proces wciąż pisze, i przerywa odczyt po 100 ms. Jak zachowuje się to w 26.8+ i co zmienia Node.js 27.0.0-alpha.0.1.0?",
+    "code": "const ac = new AbortController();\nsetTimeout(() => ac.abort(), 100);\n\nawait fs.promises.readFile('/tmp/my-fifo', { signal: ac.signal });",
+    "options": [
+      "W obu wersjach readFile od razu rzuca, bo nie obsługuje FIFO",
+      "W 26.8+ abort jest ignorowany aż do końca danych (EOF), bo plik nieregularny czytany jest w jednym zadaniu puli wątków; 27.0.0-alpha.0.1.0 czyta takie pliki porcjami i sprawdza sygnał przed każdym odczytem",
+      "W 26.8+ obietnica odrzuca się po 100 ms z AbortError, a 27.0.0-alpha.0.1.0 przestał obsługiwać signal dla FIFO",
+      "W obu wersjach abort działa tylko dla fs.readFile z callbackiem, nie dla fs.promises"
+    ],
+    "correct": 1,
+    "explanation": "Od 26.8.0 fs.readFile i fs.promises.readFile czytały plik nieregularny (FIFO, urządzenie) do EOF w jednym zadaniu puli wątków i sprawdzały sygnał dopiero na końcu. Na FIFO z otwartym piszącym abort czekał, aż piszący zamknie FIFO, a na /dev/zero odczyt nigdy się nie kończył. Poprawka w 27.0.0-alpha.0.1.0 (PR #66940) przekazuje takie pliki do czytnika porcjami, który sprawdza sygnał przed każdym odczytem.",
+    "source_url": "https://github.com/nodejs/node/pull/66940",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-059",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "prompt": "Node.js 27.0.0-alpha.0.1.0. Sink WritableStream ma close(), które zwraca jeszcze nierozwiązaną obietnicę. Co stanie się z zapisem wykonanym w tym czasie?",
+    "code": "const ws = new WritableStream({\n  close() {\n    return new Promise((r) => setTimeout(r, 100));\n  },\n});\nconst writer = ws.getWriter();\nwriter.close();\nawait new Promise((r) => setTimeout(r, 0)); // close() sinka już trwa\nawait writer.write('late');",
+    "options": [
+      "Zapis zostanie przyjęty i trafi do sinka przed zamknięciem",
+      "Obietnica write() odrzuci się z TypeError, tak samo jak przy zapisie do już zamkniętego strumienia",
+      "Proces padnie z ERR_INTERNAL_ASSERTION",
+      "write() będzie czekać, aż close() się zakończy, i wtedy zapisze dane"
+    ],
+    "correct": 1,
+    "explanation": "Wcześniej (m.in. w 26.5.1) w oknie między writer.close() a rozwiązaniem close() sinka algorytmy kontrolera były już wyczyszczone, a zapis trafiał w wewnętrzną asercję i wywracał proces z ERR_INTERNAL_ASSERTION. To samo dotyczyło zapisu do TransformStream z trwającym flush(). Po poprawce (PR #67058, zmiana „stream: reject writes during WritableStream close”) taki zapis jest odrzucany z TypeError.",
+    "source_url": "https://github.com/nodejs/node/pull/67058",
+    "added_on": "2026-11-18"
   }
 ]

@@ -3752,6 +3752,46 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "nodejs-mid-055",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-056",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-057",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "modules-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-058",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-059",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "streams-and-buffers",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -4198,6 +4238,14 @@
     "topic": "scaling-and-isolation",
     "kind": "single_choice",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-senior-057",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
   },
   {
     "id": "react-junior-001",
@@ -5246,6 +5294,38 @@
     "topic": "test-runner-upgrades",
     "kind": "single_choice",
     "added_on": "2026-11-08"
+  },
+  {
+    "id": "testing-mid-021",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-022",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "test-runner-upgrades",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-023",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
+  },
+  {
+    "id": "testing-mid-024",
+    "technology": "testing",
+    "level": "mid",
+    "topic": "e2e-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-18"
   },
   {
     "id": "testing-senior-001",

@@ -902,5 +902,21 @@
     "explanation": "Tryb audytu tylko raportuje naruszenia przez diagnostics_channel i nie blokuje dostępu. Dokumentacja mówi jednak, że gdy podano jednocześnie --permission i --permission-audit, pierwszeństwo ma --permission, więc model działa w trybie wymuszania i odczyt pliku spoza ./src kończy się błędem.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/permissions.md",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "nodejs-senior-057",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Po aktualizacji Node.js serwer strumieniuje odpowiedź HTTP wieloma res.write() z tekstem z polskimi znakami. Część odpowiedzi staje: res.writableNeedDrain === true, res.writableLength === 0, a 'drain' nigdy nie przychodzi. Co jest przyczyną według zgłoszenia naprawionego w Node.js 27.0.0-alpha.0.1.0?",
+    "options": [
+      "Klient nie czyta odpowiedzi, więc bufor gniazda jest pełny",
+      "Zapisy łączone podczas auto-corka liczą backpressure w bajtach, a net.Socket po uncork() liczy stringi w jednostkach UTF-16, więc z wielobajtowym tekstem gniazdo nie przekracza swojego highWaterMark i nie emituje 'drain'",
+      "res.write() ze stringiem zawsze wymaga ręcznego res.uncork(), inaczej dane nie są wysyłane",
+      "highWaterMark gniazda jest za niski i trzeba go zwiększyć do 64 KiB"
+    ],
+    "correct": 1,
+    "explanation": "Od zmiany łączącej zapisy chunked wykonywane w trakcie auto-corka write() decyduje o backpressure na podstawie długości w bajtach. Po uncork() net.Socket liczy fragmenty tekstowe w jednostkach UTF-16, więc przy znakach wielobajtowych może zostać poniżej własnego highWaterMark — nie potrzebuje opróżnienia i nie wyemituje 'drain'. Odpowiedź staje z writableNeedDrain === true i pustym buforem. Poprawka (PR #66782) sprawdza warunek drain ponownie po faktycznym zapisaniu połączonych danych.",
+    "source_url": "https://github.com/nodejs/node/pull/66782",
+    "added_on": "2026-11-18"
   }
 ]
