@@ -227,5 +227,38 @@
     "explanation": "Nagłówek odpowiedzi Speculation-Rules zawiera listę adresów (w cudzysłowach, rozdzielonych przecinkami) plików z regułami w tym samym formacie JSON co w <script type=\"speculationrules\">. Plik jest pobierany z destination speculationrules i musi mieć typ MIME application/speculationrules+json. To rozwiązanie na sytuacje, gdy nie można zmienić samego dokumentu.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/speculation-rules/index.md",
     "added_on": "2026-11-16"
+  },
+  {
+    "id": "html-senior-015",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Na jednej stronie działają dwa mikrofrontendy z różnymi wersjami biblioteki definiującej <ui-button>. Drugie wywołanie customElements.define('ui-button', ...) kończy się błędem. Co pozwala każdej części używać własnej definicji?",
+    "options": [
+      "Scoped custom element registry: new CustomElementRegistry(), define() na nim i przekazanie go do attachShadow({ mode: 'open', customElementRegistry }) — definicja obowiązuje tylko w tym drzewie cieni",
+      "Ponowne wywołanie customElements.define z opcją { override: true }",
+      "Samo attachShadow({ mode: 'closed' }), bo Shadow DOM izoluje nazwy elementów",
+      "Tylko osadzenie drugiego mikrofrontendu w <iframe> — strona może mieć jedną definicję każdej nazwy"
+    ],
+    "correct": 0,
+    "explanation": "Globalny rejestr (window.customElements) wymaga unikalnych nazw w całej stronie. Scoped registry tworzy się konstruktorem CustomElementRegistry(), a jego definicje dotyczą tylko poddrzewa, z którym go powiązano. Robi się to przez opcję customElementRegistry w attachShadow() albo później przez initialize(). Sam Shadow DOM nie izoluje nazw elementów. Firefox obsługuje scoped registries od wersji 159.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_components/using_custom_elements/index.md",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "html-senior-016",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "prompt": "Rejestrujesz w scoped registry customized built-in element. Co się stanie?",
+    "code": "const registry = new CustomElementRegistry();\nregistry.define('fancy-button', FancyButton, { extends: 'button' });",
+    "options": [
+      "define() rzuci DOMException NotSupportedError — scoped registry nie obsługuje opcji extends",
+      "Element zostanie zarejestrowany w globalnym rejestrze zamiast w scoped",
+      "Zadziała tak samo jak w globalnym rejestrze",
+      "Opcja extends zostanie zignorowana i powstanie element autonomiczny"
+    ],
+    "correct": 0,
+    "explanation": "Scoped registries obsługują tylko elementy autonomiczne. Próba użycia extends w define() na takim rejestrze rzuca DOMException NotSupportedError. Customized built-in elements można definiować tylko w rejestrze globalnym.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_components/using_custom_elements/index.md",
+    "added_on": "2026-11-19"
   }
 ]

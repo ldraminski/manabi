@@ -258,5 +258,21 @@
     "explanation": "Przy 'navigation' dynamiczna trasa musi eksportować generateStaticParams() i zwracać co najmniej jeden pełny zestaw parametrów — z każdym parametrem trasy, nawet nieużywanym albo czytanym tylko w Client Component. Inaczej build kończy się błędem. Dla wartości spoza listy Next.js czeka na wygenerowanie statycznego wyniku. Fallback shell w tle dotyczy poziomów 'shell' i 'prefetch'.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/02-route-segment-config/ensureStatic.mdx",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-017",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "prompt": "Aplikacja ma output: 'standalone' i trafia do obrazu Dockera. DATABASE_PASSWORD zapisano w .env.production. Co mówi o tym dokumentacja?",
+    "options": [
+      "next build kopiuje .env.production do .next/standalone, więc hasło trafia do obrazu. server.js traktuje kopię jako wartości domyślne, a zmienne ustawione przy starcie mają pierwszeństwo — sekrety należy podawać przy starcie serwera",
+      "Plik nie trafia do .next/standalone, więc serwer w kontenerze nie zna hasła, dopóki nie skopiujesz go ręcznie",
+      "Wystarczy dodać plik do outputFileTracingExcludes, żeby nie trafił do .next/standalone",
+      "Wartości z .env.production są wkompilowywane w kod serwera, więc zmienna ustawiona przy starcie kontenera zostanie zignorowana"
+    ],
+    "correct": 0,
+    "explanation": "Jeśli next build wczyta .env lub .env.production, standalone output zawiera ich kopię, a server.js używa jej jako wartości domyślnych. Zmienne ustawione przy starcie serwera mają pierwszeństwo. Ta kopia nie należy do file tracingu, więc outputFileTracingExcludes jej nie usuwa. Dokumentacja zaleca trzymać w tych plikach tylko niesekretne wartości domyślne, a sekrety podawać jako zmienne środowiskowe przy starcie. Plików .env.local i .env.production.local next build nie kopiuje.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/05-config/01-next-config-js/output.mdx",
+    "added_on": "2026-11-19"
   }
 ]

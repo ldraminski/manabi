@@ -313,5 +313,22 @@
     "explanation": "Według typu w dokumentacji EffectScope.run zwraca undefined, gdy scope jest nieaktywny, a po stop() już nie wraca do stanu aktywnego. Żeby znowu zbierać efekty, trzeba utworzyć nowy effectScope().",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/api/reactivity-advanced.md",
     "added_on": "2026-11-15"
+  },
+  {
+    "id": "vue-mid-020",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.45+. Co wypisze ten kod?",
+    "code": "const scope = effectScope()\nscope.run(() => {\n  onScopeDispose(() => console.log('A'))\n  scope.stop()\n  onScopeDispose(() => console.log('B'))\n})\nconsole.log('koniec')",
+    "options": [
+      "A, B, koniec",
+      "A, koniec — B nigdy się nie wywoła",
+      "koniec, A, B",
+      "B, A, koniec"
+    ],
+    "correct": 0,
+    "explanation": "scope.stop() od razu uruchamia zarejestrowane sprzątania, więc najpierw pojawia się A. Od Vue 3.5.45 onScopeDispose wywołane w zatrzymanym już zakresie uruchamia funkcję natychmiast, bo zakres nie będzie już niczego sprzątał, więc B pojawia się przed „koniec”. Wcześniej B trafiało do listy, której nikt już nie uruchamiał. Tak wyciekały zasoby z async setup wznowionego po odmontowaniu komponentu.",
+    "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-19"
   }
 ]

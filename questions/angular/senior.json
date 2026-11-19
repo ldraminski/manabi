@@ -225,5 +225,22 @@
     "explanation": "Gdy granica błędu pokazuje errorComponent, guardy canDeactivate tej trasy nadal działają przy wychodzeniu z niej. Jako parametr component dostają instancję komponentu błędu, a nie oryginalnego komponentu. Guard odwołujący się do metod konkretnego komponentu powinien sprawdzić jego typ (np. instanceof EditorPage).",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/error-boundaries.md",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-senior-015",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3. Pole wyszukiwania przy każdym znaku wywołuje router.navigate z focusReset: 'manual'. Router jest skonfigurowany zwykłym provideRouter(routes), bez withExperimentalPlatformNavigation(). Co daje ta opcja?",
+    "code": "this.router.navigate([], {\n  queryParams: { q: this.query() },\n  focusReset: 'manual',\n});",
+    "options": [
+      "Nic — focusReset działa tylko wtedy, gdy router korzysta z Navigation API przeglądarki (withExperimentalPlatformNavigation)",
+      "Zapobiega przeniesieniu fokusu na <body>, które bez tej opcji następuje po każdej nawigacji routera",
+      "Wyłącza przewijanie strony na górę po nawigacji",
+      "Przenosi fokus na pierwszy element z atrybutem autofocus"
+    ],
+    "correct": 0,
+    "explanation": "focusReset (eksperymentalne od 22.3) jest przekazywane do NavigateEvent.intercept() z Navigation API i ma znaczenie tylko wtedy, gdy router używa tego API (withExperimentalPlatformNavigation). Wtedy domyślne 'after-transition' przenosi fokus na element z autofocus albo na <body>, a 'manual' zostawia go np. w polu wyszukiwania. Za przewijanie odpowiada osobna opcja scroll.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/router/src/models.ts",
+    "added_on": "2026-11-19"
   }
 ]

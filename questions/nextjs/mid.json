@@ -274,5 +274,21 @@
     "explanation": "Przyciski Wstecz i Dalej, gesty historii, router.back() i router.forward() nie uruchamiają animacji view transition, także morphów. Next.js obsługuje je przez popstate, a React pomija wtedy animacje, żeby zachować przywracanie przewijania i formularzy. Pasujące name tego nie zmienia. <Link href=\"/\"> rozpoczyna nową nawigację, więc morph zadziała.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/view-transitions.mdx",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "nextjs-mid-018",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "prompt": "Next.js 16 z włączonym cacheComponents. GET Route Handler miał export const revalidate = 3600, żeby odpowiedź była cache’owana przez godzinę. Jak to zapisać według dokumentacji?",
+    "options": [
+      "Usunąć export revalidate, przenieść pobieranie danych do osobnej funkcji z 'use cache' i ustawić w niej czas przez cacheLife",
+      "Zostawić revalidate i dodać export const dynamic = 'force-static'",
+      "Dodać 'use cache' na początku pliku route.ts i zostawić export revalidate",
+      "Ustawić w odpowiedzi nagłówek Cache-Control: max-age=3600 — Next.js odczyta z niego czas rewalidacji"
+    ],
+    "correct": 0,
+    "explanation": "Przy Cache Components Route Handlery nie obsługują eksportów dynamic, dynamicParams, revalidate, fetchCache ani runtime. GET handler działa jak strona: jest prerenderowany, jeśli nie sięga po niecache’owane dane ani dane z żądania. Dane, które mają być cache’owane, przenosi się do osobnej funkcji z 'use cache', a czas rewalidacji ustawia przez cacheLife.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/route.mdx",
+    "added_on": "2026-11-19"
   }
 ]

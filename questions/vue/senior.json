@@ -194,5 +194,22 @@
     "explanation": "Dokumentacja przypomina, że instancja komponentu kosztuje dużo więcej niż węzeł DOM, a wzorce abstrakcji (renderless, HOC) mnożą instancje. Usunięcie kilku instancji nie da odczuwalnego efektu, więc nie ma sensu robić tego wszędzie. Największy zysk jest w dużych listach: przy 100 wierszach usunięcie jednej zbędnej warstwy to setki instancji mniej.",
     "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/best-practices/performance.md",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "vue-senior-013",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.45+, SSR. Async setup komponentu Bad rzuca błąd. Co zwróci renderToString i ile razy wywoła się errorHandler?",
+    "code": "const Bad = {\n  async setup() {\n    throw new Error('setup failed')\n  },\n  template: '<div>should not render</div>',\n}\nconst app = createSSRApp({ components: { Bad }, template: '<div><Bad /></div>' })\napp.config.errorHandler = err => log(err)\nconst html = await renderToString(app)",
+    "options": [
+      "<div><!----></div>, errorHandler raz",
+      "<div><div>should not render</div></div>, errorHandler raz",
+      "renderToString odrzuci obietnicę z błędem „setup failed”",
+      "<div></div>, errorHandler dwa razy: za setup i za render bez danych"
+    ],
+    "correct": 0,
+    "explanation": "Od Vue 3.5.45 komponent, którego async setup zakończył się błędem, nie renderuje swojego szablonu. W HTML zostaje sam komentarz <!---->, a błąd trafia raz do obsługi błędów. Wcześniej szablon renderował się mimo braku danych z setup, co dawało kolejne błędy albo ostrzeżenia. Przy hydracji na kliencie ten sam komponent też renderuje komentarz, więc HTML się zgadza.",
+    "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
+    "added_on": "2026-11-19"
   }
 ]

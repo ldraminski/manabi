@@ -744,6 +744,38 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "angular-mid-032",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-033",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-034",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-035",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -854,6 +886,14 @@
     "topic": "router-and-http",
     "kind": "single_choice",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-senior-015",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
   },
   {
     "id": "aws-junior-001",
@@ -2304,6 +2344,22 @@
     "added_on": "2026-11-16"
   },
   {
+    "id": "html-senior-015",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "html-senior-016",
+    "technology": "html",
+    "level": "senior",
+    "topic": "loading-and-components",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
     "id": "javascript-junior-001",
     "technology": "javascript",
     "level": "junior",
@@ -3040,6 +3096,14 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "nextjs-mid-018",
+    "technology": "nextjs",
+    "level": "mid",
+    "topic": "cache-components",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
     "id": "nextjs-senior-001",
     "technology": "nextjs",
     "level": "senior",
@@ -3166,6 +3230,14 @@
     "topic": "partial-prefetching",
     "kind": "single_choice",
     "added_on": "2026-11-09"
+  },
+  {
+    "id": "nextjs-senior-017",
+    "technology": "nextjs",
+    "level": "senior",
+    "topic": "server-runtime",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
   },
   {
     "id": "nodejs-junior-001",
@@ -6144,6 +6216,14 @@
     "added_on": "2026-11-15"
   },
   {
+    "id": "vue-mid-020",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "reactivity-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
+  },
+  {
     "id": "vue-senior-001",
     "technology": "vue",
     "level": "senior",
@@ -6238,5 +6318,13 @@
     "topic": "performance-and-ssr",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "vue-senior-013",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-11-19"
   }
 ]

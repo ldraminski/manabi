@@ -511,5 +511,70 @@
     "explanation": "W każdym cyklu wykrywania zmian Angular synchronicznie wylicza wyrażenia szablonu, więc sortowanie powtarza się nawet wtedy, gdy users się nie zmieniło, a @for dostaje za każdym razem nową tablicę. Dokumentacja zaleca przeniesienie ciężkich obliczeń do czystego pipe’a, który przelicza się tylko po zmianie wejścia, albo memoizację. Dla wartości wyliczanych z sygnałów tę rolę pełni computed(). Samo odczytanie sygnału czy tania metoda w szablonie nie są problemem.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/best-practices/runtime-performance/slow-computations.md",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "angular-mid-032",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3. Komponent ma zwykłe pole clicks = 0. Który zapis w szablonie się skompiluje?",
+    "options": [
+      "<button (click)=\"clicks++\">+1</button>",
+      "<p>{{ clicks++ }}</p>",
+      "<input [value]=\"clicks += 1\">",
+      "Żaden — Angular nie obsługuje w szablonach operatorów ++ ani +="
+    ],
+    "correct": 0,
+    "explanation": "Od Angulara 22.3 wyrażenia w szablonach obsługują operatory a++, ++a, a-- i --a, a wcześniej obsługiwały już przypisania typu +=. Dokumentacja zastrzega jednak, że przypisania i inkrementacje są dozwolone tylko w instrukcjach obsługi zdarzeń. Użyte w wiązaniu albo interpolacji dają błąd kompilacji, chyba że są wewnątrz funkcji strzałkowej.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/expression-syntax.md",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-033",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3. Do triggera viewport w bloku @defer przekazujesz obiekt z opcjami IntersectionObserver, np. on viewport({ trigger: greeting, ... }). Której opcji nie można w nim ustawić?",
+    "options": [
+      "root",
+      "rootMargin",
+      "threshold",
+      "scrollMargin"
+    ],
+    "correct": 0,
+    "explanation": "Obiekt przekazany do viewport obsługuje wszystkie właściwości drugiego argumentu IntersectionObserver z wyjątkiem root. Opcję scrollMargin dodano w Angularze 22.3. Gdy używasz zapisu obiektowego, obserwowany element podajesz we właściwości trigger. Bez niej obserwowany jest placeholder.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/defer.md",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-034",
+    "topic": "router-and-http",
+    "kind": "single_choice",
+    "prompt": "Angular 22.3. Aplikacja ma withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }). Zakładki w połowie strony produktu zmieniają tylko parametr tab w query, a każde kliknięcie przewija stronę na górę. Jak wyłączyć to tylko dla tych linków?",
+    "code": "<a routerLink=\"/products/42\" [queryParams]=\"{ tab: 'reviews' }\">Opinie</a>",
+    "options": [
+      "Dodać do linków scroll=\"manual\" — router nie przewinie strony po tej nawigacji",
+      "Ustawić queryParamsHandling=\"merge\", bo przewijanie wywołuje utrata pozostałych parametrów",
+      "Zamienić routerLink na zwykły href=\"?tab=reviews\"",
+      "Nie da się tego zrobić bez wyłączenia withInMemoryScrolling w całej aplikacji"
+    ],
+    "correct": 0,
+    "explanation": "Przy włączonym withInMemoryScrolling przewija każda nawigacja, także taka, która zmienia tylko parametr query. Od 22.3 RouterLink ma input scroll przekazywany do NavigationBehaviorOptions. Wartość 'manual' sprawia, że router nie przewija po tej nawigacji, a 'after-transition' przewija zgodnie z globalną konfiguracją. Zwykły href przeładowałby całą stronę.",
+    "source_url": "https://github.com/angular/angular/blob/main/packages/router/src/directives/router_link.ts",
+    "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-035",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Angular 22. Sygnał user() ma wartość null. Jaką wartość ma wyrażenie user()?.name w szablonie?",
+    "options": [
+      "undefined",
+      "null",
+      "Pusty napis",
+      "Szablon rzuci TypeError"
+    ],
+    "correct": 0,
+    "explanation": "Przed Angularem 22 operator ?. w wyrażeniach szablonu zwracał null, gdy lewa strona była null lub undefined. Od v22 działa jak w JavaScripcie i zwraca undefined. Przy migracji ng update otacza istniejące wyrażenia w $safeNavigationMigration(...), żeby zachować dawne zachowanie. To tymczasowa pomoc dla kompilatora, a nie prawdziwa funkcja, i dokumentacja zaleca jej usunięcie.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/expression-syntax.md",
+    "added_on": "2026-11-19"
   }
 ]
