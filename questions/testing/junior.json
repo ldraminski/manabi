@@ -190,5 +190,54 @@
     "explanation": "Dokumentacja zaleca lokatory oparte na tym, co widzi użytkownik i technologie asystujące, przede wszystkim getByRole. Selektory CSS i XPath są powiązane ze strukturą DOM i łatwo się psują po zmianach w markupie.",
     "source_url": "https://github.com/microsoft/playwright/blob/main/docs/src/locators.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-013",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Który test w Vitest przejdzie?",
+    "code": "expect(0.1 + 0.2).toBe(0.3)        // A\nexpect(0.1 + 0.2).toBeCloseTo(0.3) // B",
+    "options": [
+      "Tylko A",
+      "Tylko B",
+      "Oba",
+      "Żaden"
+    ],
+    "correct": 1,
+    "explanation": "W JavaScripcie 0.1 + 0.2 daje 0.30000000000000004, więc toBe(0.3) nie przejdzie. Do liczb zmiennoprzecinkowych służy toBeCloseTo, które domyślnie porównuje 2 cyfry po przecinku.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/expect.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "testing-junior-014",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Każdy test w pliku ma zaczynać od świeżo wyczyszczonych mocków. Którego hooka Vitest użyjesz?",
+    "options": [
+      "beforeAll",
+      "beforeEach",
+      "afterAll",
+      "Żadnego — Vitest zawsze uruchamia każdy test w osobnym procesie"
+    ],
+    "correct": 1,
+    "explanation": "beforeEach uruchamia się przed każdym testem w bieżącym bloku. beforeAll uruchamia się tylko raz, przed wszystkimi testami, więc stan z jednego testu mógłby przejść na kolejny.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/hooks.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "testing-junior-015",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "prompt": "Test włącza vi.useFakeTimers(), a potem kod uruchamia setInterval co 50 ms. Ile razy wywoła się callback po vi.advanceTimersByTime(150)?",
+    "options": [
+      "0 — fałszywe zegary nie uruchamiają callbacków",
+      "1",
+      "3",
+      "Tyle razy, ile zdąży w prawdziwych 150 ms"
+    ],
+    "correct": 2,
+    "explanation": "advanceTimersByTime przesuwa fałszywy czas o podaną liczbę milisekund i od razu wywołuje timery, które w tym czasie by się odpaliły: przy 50 ms i 150 ms to 3 wywołania. Test nie czeka na prawdziwy czas.",
+    "source_url": "https://github.com/vitest-dev/vitest/blob/main/docs/api/vi.md",
+    "added_on": "2026-11-21"
   }
 ]

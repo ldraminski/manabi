@@ -184,5 +184,53 @@
     "explanation": "git cherry-pick nakłada zmiany wprowadzone przez wskazany commit na bieżącą gałąź i zapisuje je jako nowy commit. revert robi odwrotność — dodaje commit cofający zmiany.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/git-cherry-pick.adoc",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "git-junior-013",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Zmieniłeś plik app.js (już śledzony przez Git) i utworzyłeś nowy plik utils.js. Uruchamiasz git commit -a -m \"zmiany\". Co trafi do commita?",
+    "options": [
+      "Oba pliki",
+      "Tylko zmiany w app.js",
+      "Tylko utils.js",
+      "Nic, bo żaden plik nie był dodany przez git add"
+    ],
+    "correct": 1,
+    "explanation": "Opcja -a sama dodaje zmienione i usunięte pliki, które Git już śledzi. Nowych plików, o których Git jeszcze nie wie, nie dotyczy — utils.js trzeba dodać przez git add.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-commit.adoc",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "git-junior-014",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Zmieniłeś plik config.js, nie dodałeś go do indeksu i chcesz porzucić te zmiany. Które polecenie przywróci plik do wersji z indeksu?",
+    "options": [
+      "git restore config.js",
+      "git restore --staged config.js",
+      "git commit --amend",
+      "git stash drop"
+    ],
+    "correct": 0,
+    "explanation": "git restore bez --staged przywraca plik w katalogu roboczym z indeksu, więc niezapisane w indeksie zmiany przepadają. Wersja z --staged zmienia tylko indeks i zostawia pliki robocze bez zmian.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-restore.adoc",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "git-junior-015",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Sklonowałeś repozytorium przez git clone <url>. Pod jaką nazwą Git zapisze to zdalne repozytorium, jeśli nie podasz innej?",
+    "options": [
+      "main",
+      "upstream",
+      "origin",
+      "remote"
+    ],
+    "correct": 2,
+    "explanation": "git clone domyślnie nazywa źródłowe repozytorium origin i zapisuje jego gałęzie jako refs/remotes/origin/*. Inną nazwę można podać opcją --origin.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-clone.adoc",
+    "added_on": "2026-11-21"
   }
 ]

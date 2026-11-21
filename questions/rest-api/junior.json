@@ -185,5 +185,53 @@
     "explanation": "Content-Type opisuje format body wysyłanego żądania. Accept mówi, jaki format odpowiedzi klient chce dostać.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/fetch_api/using_fetch/index.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "rest-api-junior-013",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Która z tych metod HTTP jest bezpieczna (safe), czyli z definicji nie zmienia stanu serwera?",
+    "options": [
+      "PUT",
+      "DELETE",
+      "POST",
+      "HEAD"
+    ],
+    "correct": 3,
+    "explanation": "Bezpieczne metody to m.in. GET, HEAD i OPTIONS. Każda bezpieczna metoda jest idempotentna, ale nie odwrotnie: PUT i DELETE są idempotentne, a mimo to nie są bezpieczne.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/glossary/safe/http/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "rest-api-junior-014",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Chcesz sprawdzić rozmiar dużego pliku (nagłówek Content-Length), zanim zaczniesz go pobierać. Którego żądania użyjesz?",
+    "options": [
+      "OPTIONS",
+      "HEAD",
+      "GET z pustym body",
+      "PATCH"
+    ],
+    "correct": 1,
+    "explanation": "HEAD zwraca te same nagłówki, które serwer wysłałby przy GET, ale bez treści odpowiedzi. To typowy sposób na odczytanie Content-Length przed pobraniem pliku.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/methods/head/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "rest-api-junior-015",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "prompt": "Strona na stałe zmieniła adres z /o-nas na /about. Jaki status powinien zwracać stary adres?",
+    "options": [
+      "301 Moved Permanently z nagłówkiem Location: /about",
+      "302 Found z nagłówkiem Location: /about",
+      "404 Not Found",
+      "200 OK z treścią nowej strony"
+    ],
+    "correct": 0,
+    "explanation": "301 oznacza trwałe przeniesienie zasobu pod adres z nagłówka Location. Wyszukiwarki przenoszą wtedy pozycję starego adresu na nowy. 302 oznacza przekierowanie tymczasowe.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/301/index.md",
+    "added_on": "2026-11-21"
   }
 ]

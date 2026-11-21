@@ -184,5 +184,53 @@
     "explanation": "Niezaznaczony checkbox nie wysyła ani nazwy, ani wartości. Serwer musi traktować brak pola jako „nie zaznaczono”.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/input/checkbox/index.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "html-junior-013",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Formularz ma dwa pola: jedno z atrybutem readonly, drugie z disabled. Użytkownik wysyła formularz. Które wartości trafią na serwer?",
+    "options": [
+      "Obie",
+      "Tylko wartość pola readonly",
+      "Tylko wartość pola disabled",
+      "Żadna"
+    ],
+    "correct": 1,
+    "explanation": "Pole readonly nadal działa jak kontrolka formularza: można na nim ustawić fokus i jego wartość jest wysyłana. Pole disabled nie dostaje fokusu i nie jest wysyłane z formularzem.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/attributes/readonly/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "html-junior-014",
+    "topic": "loading",
+    "kind": "single_choice",
+    "prompt": "Po co podawać atrybuty width i height na <img>, skoro rozmiar obrazka i tak ustawiasz w CSS?",
+    "options": [
+      "Żeby przeglądarka pobrała mniejszy plik",
+      "Żeby przeglądarka znała proporcje obrazka przed jego pobraniem, zarezerwowała miejsce i nie przesuwała układu strony",
+      "Żeby obrazek był ładowany leniwie",
+      "Bez nich obrazek się nie wyświetli"
+    ],
+    "correct": 1,
+    "explanation": "Z width i height przeglądarka oblicza proporcje obrazka, zanim go pobierze, i rezerwuje na niego miejsce. Dzięki temu treść nie „skacze” po załadowaniu obrazka (mniejszy layout shift). Rozmiar wyświetlania nadal może ustawiać CSS.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/img/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "html-junior-015",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "prompt": "Link ma target=\"_blank\", ale nie ma atrybutu rel. Jak zachowa się nowa karta w aktualnych przeglądarkach?",
+    "options": [
+      "Dostanie dostęp do strony, z której ją otwarto, przez window.opener",
+      "Przeglądarka nie otworzy linku bez rel",
+      "Zachowa się tak, jakby link miał rel=\"noopener\" — window.opener nie zostanie ustawione",
+      "Otworzy się w tej samej karcie"
+    ],
+    "correct": 2,
+    "explanation": "W nowszych przeglądarkach target=\"_blank\" na <a> domyślnie działa jak rel=\"noopener\", więc otwarta strona nie dostaje window.opener. rel=\"noopener\" dopisuje się dziś głównie dla starszych przeglądarek.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/a/index.md",
+    "added_on": "2026-11-21"
   }
 ]

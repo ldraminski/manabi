@@ -191,5 +191,37 @@
     "explanation": "Metadane muszą być wyliczone na serwerze, zanim strona się wyrenderuje, żeby trafiły do początkowego HTML. Logikę kliencką przenosi się do osobnego komponentu, a page.tsx zostaje komponentem serwerowym.",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/generate-metadata.mdx",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "nextjs-junior-013",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "Plik leży w public/avatars/me.png. Jaką ścieżkę wpiszesz w src obrazka?",
+    "options": [
+      "/public/avatars/me.png",
+      "/avatars/me.png",
+      "./public/avatars/me.png",
+      "Trzeba go najpierw zaimportować, ścieżka nie zadziała"
+    ],
+    "correct": 1,
+    "explanation": "Pliki z folderu public są serwowane od głównego adresu (/), bez „public” w ścieżce: public/avatars/me.png jest pod /avatars/me.png.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/03-file-conventions/public-folder.mdx",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "nextjs-junior-014",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "W folderze app/products masz już page.tsx. Dodajesz tam route.ts z funkcją GET, żeby ten sam adres zwracał JSON. Co mówi dokumentacja?",
+    "options": [
+      "To działa: przeglądarka dostanie stronę, a fetch dostanie JSON",
+      "route.ts nadpisze page.tsx bez ostrzeżenia",
+      "Nie może być route.js i page.js na tym samym poziomie segmentu — Route Handler trzeba przenieść, np. do app/api/products/route.ts",
+      "Route Handlery działają tylko w folderze pages"
+    ],
+    "correct": 2,
+    "explanation": "Route Handlery można zagnieżdżać w app jak strony, ale route.js nie może leżeć na tym samym poziomie segmentu co page.js. Typowo trafiają do osobnej ścieżki, np. app/api/....",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/15-route-handlers.mdx",
+    "added_on": "2026-11-21"
   }
 ]

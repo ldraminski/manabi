@@ -185,5 +185,53 @@
     "explanation": "Element sticky potrzebuje co najmniej jednej właściwości inset (np. top) różnej od auto na osi przyklejania. Bez niej zachowuje się jak position: relative.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/position/index.md",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "css-junior-013",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Element ma margin: 10px 20px. Jak rozłożą się marginesy?",
+    "options": [
+      "Góra i dół po 10px, lewo i prawo po 20px",
+      "Góra i lewo po 10px, dół i prawo po 20px",
+      "Góra 10px, dół 20px, lewo i prawo 0",
+      "Lewo i prawo po 10px, góra i dół po 20px"
+    ],
+    "correct": 0,
+    "explanation": "Przy dwóch wartościach pierwsza dotyczy góry i dołu, druga — lewej i prawej strony. Stąd popularne margin: 0 auto do wyśrodkowania bloku w poziomie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/margin/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "css-junior-014",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Dwa zwykłe akapity (display: block) stoją jeden pod drugim. Pierwszy ma margin-bottom: 30px, drugi margin-top: 20px. Jaki będzie odstęp między nimi?",
+    "options": [
+      "50px",
+      "30px",
+      "20px",
+      "25px"
+    ],
+    "correct": 1,
+    "explanation": "Pionowe marginesy sąsiednich bloków się zapadają (margin collapsing): zostaje jeden margines o rozmiarze większego z nich, czyli 30px.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/box_model/margin_collapsing/index.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "css-junior-015",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "prompt": "Te same dwa elementy (margin-bottom: 30px i margin-top: 20px) umieszczasz w kontenerze z display: flex i flex-direction: column. Jaki będzie odstęp między nimi?",
+    "options": [
+      "30px, bo marginesy dalej się zapadają",
+      "20px, bo liczy się margines drugiego elementu",
+      "50px, bo w kontenerze flex marginesy się nie zapadają",
+      "0, bo flex ignoruje marginesy"
+    ],
+    "correct": 2,
+    "explanation": "Marginesy nie zapadają się w kontenerze z display: flex ani display: grid — oba marginesy się sumują.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/guides/box_model/margin_collapsing/index.md",
+    "added_on": "2026-11-21"
   }
 ]

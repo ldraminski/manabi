@@ -190,5 +190,37 @@
     "explanation": "DLQ odblokowuje grupę, bo zabiera z niej problematyczną wiadomość — a następne w grupie idą dalej bez niej. AWS wprost odradza DLQ przy FIFO, gdy nie można złamać kolejności operacji (przykład z listą edycji wideo). DLQ kolejki FIFO musi być FIFO, a przy przeniesieniu deduplication ID jest zastępowany ID wiadomości, więc deduplikacja nie odrzuci jej.",
     "source_url": "https://github.com/awsdocs/amazon-sqs-developer-guide/blob/main/doc_source/sqs-dead-letter-queues.md",
     "added_on": "2026-11-07"
+  },
+  {
+    "id": "aws-senior-013",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Bucket z kilkoma milionami obiektów dostał regułę Cross-Region Replication do bucketu w innym regionie. Po tygodniu w kopii są tylko obiekty zapisane po włączeniu reguły. Co zrobić, żeby skopiować też starsze?",
+    "options": [
+      "Nic — CRR skopiuje je w tle w ciągu kilku tygodni",
+      "Włączyć S3 Replication Time Control",
+      "Uruchomić S3 Batch Replication dla istniejących obiektów",
+      "Wyłączyć i ponownie włączyć wersjonowanie bucketu"
+    ],
+    "correct": 2,
+    "explanation": "Replikacja na żywo (CRR/SRR) obejmuje nowe obiekty zapisywane do bucketu. Istniejące obiekty kopiuje się na żądanie przez S3 Batch Replication. RTC dotyczy czasu replikacji na żywo i nie działa dla Batch Replication.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/replication.md",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "aws-senior-014",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Rola developera ma permissions boundary pozwalającą tylko na S3 i CloudWatch. Ktoś dopina do tej roli politykę tożsamościową z Allow na dynamodb:* i s3:GetObject. Co rola faktycznie może robić?",
+    "options": [
+      "Wszystko z S3 i CloudWatch, bo boundary nadaje uprawnienia",
+      "DynamoDB i s3:GetObject, bo polityka tożsamościowa wygrywa z boundary",
+      "Tylko s3:GetObject — efektywne uprawnienia to część wspólna polityki tożsamościowej i boundary",
+      "Nic, bo polityki są ze sobą sprzeczne"
+    ],
+    "correct": 2,
+    "explanation": "Permissions boundary tylko ogranicza maksymalne uprawnienia i sama niczego nie nadaje. Efektywne uprawnienia to część wspólna polityk tożsamościowych i boundary: DynamoDB odpada, bo nie pozwala na nie boundary, a pozostałe akcje S3 i CloudWatch — bo nie nadaje ich żadna polityka tożsamościowa.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/access_policies_boundaries.md",
+    "added_on": "2026-11-21"
   }
 ]

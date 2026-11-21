@@ -1208,6 +1208,22 @@
     "added_on": "2026-11-07"
   },
   {
+    "id": "aws-senior-013",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "aws-senior-014",
+    "technology": "aws",
+    "level": "senior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
     "id": "css-junior-001",
     "technology": "css",
     "level": "junior",
@@ -1302,6 +1318,30 @@
     "topic": "box-and-layout",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "css-junior-013",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "css-junior-014",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "css-junior-015",
+    "technology": "css",
+    "level": "junior",
+    "topic": "box-and-layout",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
   },
   {
     "id": "css-mid-001",
@@ -1646,6 +1686,30 @@
     "topic": "daily-workflow",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "git-junior-013",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "git-junior-014",
+    "technology": "git",
+    "level": "junior",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "git-junior-015",
+    "technology": "git",
+    "level": "junior",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
   },
   {
     "id": "git-mid-001",
@@ -2102,6 +2166,30 @@
     "topic": "semantics-and-forms",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "html-junior-013",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "html-junior-014",
+    "technology": "html",
+    "level": "junior",
+    "topic": "loading",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "html-junior-015",
+    "technology": "html",
+    "level": "junior",
+    "topic": "semantics-and-forms",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
   },
   {
     "id": "html-mid-001",
@@ -2958,6 +3046,22 @@
     "topic": "app-router",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "nextjs-junior-013",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "nextjs-junior-014",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
   },
   {
     "id": "nextjs-mid-001",
@@ -4896,6 +5000,30 @@
     "added_on": "2026-10-11"
   },
   {
+    "id": "rest-api-junior-013",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "rest-api-junior-014",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "rest-api-junior-015",
+    "technology": "rest-api",
+    "level": "junior",
+    "topic": "http-basics",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
     "id": "rest-api-mid-001",
     "technology": "rest-api",
     "level": "mid",
@@ -5206,6 +5334,30 @@
     "topic": "e2e-tests",
     "kind": "single_choice",
     "added_on": "2026-10-11"
+  },
+  {
+    "id": "testing-junior-013",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "testing-junior-014",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
+  },
+  {
+    "id": "testing-junior-015",
+    "technology": "testing",
+    "level": "junior",
+    "topic": "unit-tests",
+    "kind": "single_choice",
+    "added_on": "2026-11-21"
   },
   {
     "id": "testing-mid-001",
