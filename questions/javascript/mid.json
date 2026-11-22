@@ -452,5 +452,73 @@
     "explanation": "await using najpierw szuka [Symbol.asyncDispose], a gdy go nie ma, używa [Symbol.dispose]. Ta metoda jest opakowana jak async () => { obj[Symbol.dispose](); }, więc zwrócona obietnica nie jest awaitowana. Sam await przy wyjściu z zakresu i tak nastąpi, ale nie czeka na zamknięcie połączenia.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/statements/await_using/index.md",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "javascript-mid-028",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "ES2025. Co wypisze ten kod?",
+    "code": "const q = '1.5';\nconsole.log(\n  new RegExp(q).test('125'),\n  new RegExp(RegExp.escape(q)).test('125')\n);",
+    "options": [
+      "true false",
+      "false false",
+      "true true",
+      "TypeError — RegExp.escape przyjmuje tylko litery"
+    ],
+    "correct": 0,
+    "explanation": "W zwykłym wzorcu kropka pasuje do dowolnego znaku, więc /1.5/ znajduje '125'. RegExp.escape() ucieka wszystkie znaki składni wyrażeń regularnych, więc z wynikiem pasuje tylko dosłowne '1.5'. Wiodąca cyfra lub litera jest zapisywana jako \\x.. (tu \\x31), żeby nie skleiła się z poprzedzającym \\ w inną sekwencję. Dla argumentu, który nie jest stringiem, metoda rzuca TypeError.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/regexp/escape/index.md",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-029",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "Token z adresu URL jest zakodowany w base64url. Co się stanie?",
+    "code": "const bytes = Uint8Array.fromBase64('PGI-TUROPC9iPg');",
+    "options": [
+      "SyntaxError — domyślny alfabet to base64, a '-' do niego nie należy; trzeba podać { alphabet: 'base64url' }",
+      "Metoda sama rozpozna base64url i poprawnie zdekoduje bajty",
+      "Znak '-' zostanie pominięty jak biały znak, a reszta zdekodowana",
+      "Zwróci pusty Uint8Array"
+    ],
+    "correct": 0,
+    "explanation": "Uint8Array.fromBase64() domyślnie używa alfabetu base64 ze znakami + i /. base64url zamienia je na - i _, więc bez opcji alphabet: 'base64url' dekodowanie kończy się SyntaxError. Ignorowane są tylko białe znaki ASCII, a niepełna ostatnia porcja jest domyślnie akceptowana (lastChunkHandling: 'loose').",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/uint8array/frombase64/index.md",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-030",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "prompt": "Żądanie ma się przerwać po 5 s albo po kliknięciu „Anuluj”. Użytkownik klika po 1 s. Co wypisze catch?",
+    "code": "const user = new AbortController();\ncancelButton.onclick = () => user.abort();\nconst signal = AbortSignal.any([user.signal, AbortSignal.timeout(5000)]);\ntry {\n  await fetch(url, { signal });\n} catch (e) {\n  console.log(e.name);\n}",
+    "options": [
+      "AbortError",
+      "TimeoutError",
+      "TypeError — fetch przyjmuje tylko sygnał z AbortController",
+      "Nic — AbortSignal.any przerywa się dopiero, gdy przerwą się wszystkie sygnały"
+    ],
+    "correct": 0,
+    "explanation": "AbortSignal.any() zwraca nowy sygnał, który przerywa się, gdy przerwie się którykolwiek z sygnałów wejściowych, i przejmuje powód tego pierwszego. abort() bez argumentu daje DOMException AbortError, więc catch wypisze AbortError. Gdyby pierwszy był timeout, byłby TimeoutError — po nazwie odróżnisz anulowanie od przekroczenia czasu.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/abortsignal/any_static/index.md",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-031",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "prompt": "ES2026. Co wypisze ten kod w przeglądarce?",
+    "code": "const iframe = document.createElement('iframe');\ndocument.body.append(iframe);\nconst err = new iframe.contentWindow.Error('x');\nconst fake = { __proto__: Error.prototype };\n\nconsole.log(err instanceof Error, Error.isError(err));\nconsole.log(fake instanceof Error, Error.isError(fake));",
+    "options": [
+      "false true\ntrue false",
+      "true true\ntrue true",
+      "false false\ntrue true",
+      "true true\nfalse false"
+    ],
+    "correct": 0,
+    "explanation": "Każdy realm (np. iframe) ma własny konstruktor Error, więc instanceof zwraca false dla błędu z innego okna. instanceof sprawdza też tylko łańcuch prototypów, więc przepuszcza obiekt, który jedynie dziedziczy po Error.prototype. Error.isError() robi sprawdzenie „brandu” — wewnętrznego pola ustawianego przez konstruktor Error — więc rozpoznaje błąd z iframe'a i odrzuca podróbkę.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/error/iserror/index.md",
+    "added_on": "2026-11-22"
   }
 ]

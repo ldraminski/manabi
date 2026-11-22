@@ -962,5 +962,22 @@
     "explanation": "Wcześniej (m.in. w 26.5.1) w oknie między writer.close() a rozwiązaniem close() sinka algorytmy kontrolera były już wyczyszczone, a zapis trafiał w wewnętrzną asercję i wywracał proces z ERR_INTERNAL_ASSERTION. To samo dotyczyło zapisu do TransformStream z trwającym flush(). Po poprawce (PR #67058, zmiana „stream: reject writes during WritableStream close”) taki zapis jest odrzucany z TypeError.",
     "source_url": "https://github.com/nodejs/node/pull/67058",
     "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-mid-060",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Node.js 27.0.0-alpha.0.1.0. Polecenie uruchamiane przez exec() z opcją timeout czasem jest zabijane. Jak w callbacku pewnie odróżnić zabicie przez timeout od SIGTERM wysłanego przez kogoś innego?",
+    "code": "exec('./import.sh', { timeout: 30_000 }, (err) => {\n  if (err) {\n    // timeout czy obcy sygnał?\n  }\n});",
+    "options": [
+      "Sprawdzić err.timedOut === true",
+      "Sprawdzić err.code === 'ETIMEDOUT'",
+      "Sprawdzić err.signal === 'SIGTERM' — inaczej proces nie mógł dostać tego sygnału",
+      "Sprawdzić err.name === 'TimeoutError'"
+    ],
+    "correct": 0,
+    "explanation": "Po upływie timeout Node wysyła procesowi killSignal (domyślnie SIGTERM), więc err.signal wygląda tak samo jak przy sygnale wysłanym z zewnątrz. Nowe pole error.timedOut (oraz subprocess.timedOut dla spawn/execFile/fork) jest true tylko wtedy, gdy sygnał wysłał właśnie timeout. Nie gwarantuje to jeszcze, że proces się zakończył — tylko że sygnał poszedł.",
+    "source_url": "https://github.com/nodejs/node/pull/66639",
+    "added_on": "2026-11-22"
   }
 ]

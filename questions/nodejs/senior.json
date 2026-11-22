@@ -918,5 +918,21 @@
     "explanation": "Od zmiany łączącej zapisy chunked wykonywane w trakcie auto-corka write() decyduje o backpressure na podstawie długości w bajtach. Po uncork() net.Socket liczy fragmenty tekstowe w jednostkach UTF-16, więc przy znakach wielobajtowych może zostać poniżej własnego highWaterMark — nie potrzebuje opróżnienia i nie wyemituje 'drain'. Odpowiedź staje z writableNeedDrain === true i pustym buforem. Poprawka (PR #66782) sprawdza warunek drain ponownie po faktycznym zapisaniu połączonych danych.",
     "source_url": "https://github.com/nodejs/node/pull/66782",
     "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-senior-058",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Node.js 27.0.0-alpha.0.1.0. Po starcie serwis wysyła naraz 100 żądań do api.example.com, a każde wywołuje dns.lookup() z tymi samymi opcjami. Ile wywołań getaddrinfo trafi do puli wątków libuv?",
+    "options": [
+      "Jedno — identyczne równoczesne zapytania są łączone, a wynik dostaje każdy callback",
+      "100 — każde wywołanie zajmuje osobno wątek z puli (domyślnie 4 naraz)",
+      "Zero — dns.lookup od tej wersji pyta serwery DNS przez c-ares, bez puli wątków",
+      "Jedno, a pozostałe 99 wywołań dostaje błąd EBUSY"
+    ],
+    "correct": 0,
+    "explanation": "Od tej wersji równoczesne dns.lookup() z tym samym kluczem (hostname, family, hints, order) są scalane w jedno wywołanie getaddrinfo, a każdy wywołujący dostaje własny callback z przetworzonym wynikiem. Wcześniej każde zajmowało wątek puli libuv (domyślnie 4), więc burza zapytań mogła blokować też fs i crypto. To nie jest cache z TTL — łączone są zapytania w locie, a lookupy z innymi opcjami idą osobno.",
+    "source_url": "https://github.com/nodejs/node/pull/62599",
+    "added_on": "2026-11-22"
   }
 ]

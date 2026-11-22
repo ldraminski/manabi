@@ -2848,6 +2848,38 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "javascript-mid-028",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-029",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-030",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "async-patterns",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-031",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "objects-and-data",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
     "id": "javascript-senior-001",
     "technology": "javascript",
     "level": "senior",
@@ -3062,6 +3094,14 @@
     "topic": "app-router",
     "kind": "single_choice",
     "added_on": "2026-11-21"
+  },
+  {
+    "id": "nextjs-junior-015",
+    "technology": "nextjs",
+    "level": "junior",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
   },
   {
     "id": "nextjs-mid-001",
@@ -3968,6 +4008,14 @@
     "added_on": "2026-11-18"
   },
   {
+    "id": "nodejs-mid-060",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -4422,6 +4470,14 @@
     "topic": "diagnostics-and-resilience",
     "kind": "single_choice",
     "added_on": "2026-11-18"
+  },
+  {
+    "id": "nodejs-senior-058",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
   },
   {
     "id": "react-junior-001",
@@ -5238,6 +5294,14 @@
     "topic": "caching-at-scale",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "rest-api-senior-014",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
   },
   {
     "id": "testing-junior-001",
@@ -6216,6 +6280,22 @@
     "added_on": "2026-11-04"
   },
   {
+    "id": "vue-junior-014",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "vue-junior-015",
+    "technology": "vue",
+    "level": "junior",
+    "topic": "components",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
     "id": "vue-mid-001",
     "technology": "vue",
     "level": "mid",
@@ -6374,6 +6454,22 @@
     "topic": "reactivity-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "vue-mid-021",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "vue-mid-022",
+    "technology": "vue",
+    "level": "mid",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-22"
   },
   {
     "id": "vue-senior-001",

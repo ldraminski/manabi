@@ -223,5 +223,21 @@
     "explanation": "Route Handlery można zagnieżdżać w app jak strony, ale route.js nie może leżeć na tym samym poziomie segmentu co page.js. Typowo trafiają do osobnej ścieżki, np. app/api/....",
     "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/01-getting-started/15-route-handlers.mdx",
     "added_on": "2026-11-21"
+  },
+  {
+    "id": "nextjs-junior-015",
+    "topic": "app-router",
+    "kind": "single_choice",
+    "prompt": "W komponencie klienckim w App Routerze chcesz po zapisie przejść na /dashboard przez router.push(). Skąd importujesz useRouter?",
+    "options": [
+      "z 'next/navigation'",
+      "z 'next/router'",
+      "z 'next/link'",
+      "z 'react-router-dom'"
+    ],
+    "correct": 0,
+    "explanation": "W App Routerze useRouter importuje się z next/navigation; next/router to hook z Pages Routera. Działa tylko w komponentach klienckich ('use client'). Do zwykłej nawigacji dokumentacja zaleca <Link>, a useRouter zostawia na nawigację z kodu, np. po zapisie formularza.",
+    "source_url": "https://github.com/vercel/next.js/blob/canary/docs/01-app/03-api-reference/04-functions/use-router.mdx",
+    "added_on": "2026-11-22"
   }
 ]

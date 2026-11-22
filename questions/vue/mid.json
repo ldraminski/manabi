@@ -330,5 +330,39 @@
     "explanation": "scope.stop() od razu uruchamia zarejestrowane sprzątania, więc najpierw pojawia się A. Od Vue 3.5.45 onScopeDispose wywołane w zatrzymanym już zakresie uruchamia funkcję natychmiast, bo zakres nie będzie już niczego sprzątał, więc B pojawia się przed „koniec”. Wcześniej B trafiało do listy, której nikt już nie uruchamiał. Tak wyciekały zasoby z async setup wznowionego po odmontowaniu komponentu.",
     "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "vue-mid-021",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.46+. Komponent Comments w <Suspense> ma async setup(), które po 2 s odrzuca obietnicę. Po 100 ms rodzic ustawia show na false i Comments znika. Czy onErrorCaptured rodzica dostanie ten błąd?",
+    "code": "<!-- Parent.vue, onErrorCaptured((err) => { console.log('captured', err); return false }) -->\n<Suspense>\n  <Comments v-if=\"show\" />\n</Suspense>",
+    "options": [
+      "Nie — błąd async setup komponentu, który został już odmontowany, jest pomijany",
+      "Tak — każde odrzucenie async setup trafia do najbliższego onErrorCaptured",
+      "Tak, ale dopiero po ponownym pokazaniu Comments",
+      "Nie, bo onErrorCaptured w ogóle nie łapie błędów z async setup"
+    ],
+    "correct": 0,
+    "explanation": "Od 3.5.46 Suspense przy odrzuceniu async setup sprawdza, czy komponent wciąż jest aktywny; jeśli został odmontowany, błąd jest porzucany i nie trafia ani do onErrorCaptured przodków, ani do app.config.errorHandler. W 3.5.45 (regresja po zmianie propagacji błędów) taki błąd docierał do zamontowanego rodzica. Błędy zamontowanego komponentu nadal są przekazywane normalnie.",
+    "source_url": "https://github.com/vuejs/core/pull/16350",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "vue-mid-022",
+    "topic": "components-in-depth",
+    "kind": "single_choice",
+    "prompt": "Vue 3.5.45. computed tworzy obiekt stylu przez Object.create(null), a rodzic przekazuje go komponentowi jako :style. Pierwszy render działa, ale po zmianie active komponent przestaje się aktualizować. Dlaczego?",
+    "code": "const style = computed(() => {\n  const s = Object.create(null);\n  s.color = active.value ? 'red' : 'gray';\n  return s;\n});\n// <Badge :style=\"style\" />",
+    "options": [
+      "Porównanie propsów przy aktualizacji wywoływało hasOwnProperty bezpośrednio na obiekcie i rzucało TypeError, co przerywało aktualizację; poprawiono to w 3.5.46",
+      "Vue nie obsługuje obiektów w :style, tylko stringi",
+      "computed nie śledzi zależności, gdy zwraca obiekt bez prototypu",
+      "Vue zamraża obiekty bez prototypu, więc zmiana color jest ignorowana"
+    ],
+    "correct": 0,
+    "explanation": "Przy aktualizacji Vue sprawdza, czy prop się zmienił, i porównuje obiekty przez looseEqual. Ta funkcja wołała a.hasOwnProperty(key), a obiekt z Object.create(null) nie ma tej metody, więc leciał TypeError i cała aktualizacja komponentu była przerywana. W 3.5.46 looseEqual używa bezpiecznego helpera hasOwn i radzi sobie z obiektami bez prototypu.",
+    "source_url": "https://github.com/vuejs/core/pull/16251",
+    "added_on": "2026-11-22"
   }
 ]

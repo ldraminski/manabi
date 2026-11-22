@@ -206,5 +206,21 @@
     "explanation": "No-Vary-Search mówi przeglądarce, jak parametry zapytania wpływają na dopasowanie w cache. params w formie logicznej ignoruje wszystkie parametry, a except wymienia te, których inna wartość nadal wymaga osobnego wpisu. key-order ignoruje tylko kolejność parametrów, a params=(\"lang\") ignorowałby właśnie lang. Vary dotyczy nagłówków żądania, nie parametrów adresu. Nagłówek działa tylko w przeglądarkach, które go obsługują (Firefox od wersji 154).",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/No-Vary-Search",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "rest-api-senior-014",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Przy skoku ruchu serwis zaczyna odrzucać część żądań, żeby nie paść (load shedding). Nie chodzi o limit konkretnego klienta — przeciążony jest cały serwis. Jaką odpowiedź wysłać?",
+    "options": [
+      "503 Service Unavailable z nagłówkiem Retry-After",
+      "429 Too Many Requests bez nagłówków",
+      "500 Internal Server Error",
+      "400 Bad Request z opisem w body"
+    ],
+    "correct": 0,
+    "explanation": "503 oznacza, że serwer chwilowo nie może obsłużyć żądania, np. z powodu przeciążenia lub prac serwisowych, a Retry-After podpowiada klientom, kiedy spróbować ponownie, zamiast od razu ponawiać i dokładać ruchu. 429 opisuje przekroczenie limitu przez danego klienta, 500 sugeruje błąd w kodzie, a 4xx winę klienta. Takich odpowiedzi 503 zwykle nie należy cache'ować.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/503/index.md",
+    "added_on": "2026-11-22"
   }
 ]

@@ -205,5 +205,39 @@
     "explanation": "playsinline to atrybut logiczny HTML: liczy się sama jego obecność, więc playsinline=\"false\" nadal włącza odtwarzanie w miejscu (np. na iOS). Vue przy false usuwa atrybuty logiczne, ale playsinline brakowało na tej liście i do 3.5.43 renderował się jako playsinline=\"false\". Od 3.5.44 false pomija atrybut zarówno w przeglądarce, jak i w SSR.",
     "source_url": "https://github.com/vuejs/core/pull/15627",
     "added_on": "2026-11-04"
+  },
+  {
+    "id": "vue-junior-014",
+    "topic": "reactivity-and-templates",
+    "kind": "single_choice",
+    "prompt": "Co wyrenderuje ten szablon?",
+    "code": "<ul>\n  <li v-for=\"n in 3\">{{ n }}</li>\n</ul>",
+    "options": [
+      "Trzy elementy: 1, 2, 3",
+      "Trzy elementy: 0, 1, 2",
+      "Nic — v-for działa tylko z tablicami i obiektami",
+      "Jeden element z liczbą 3"
+    ],
+    "correct": 0,
+    "explanation": "v-for przyjmuje też liczbę całkowitą i powtarza szablon tyle razy. W odróżnieniu od indeksów tablicy n zaczyna się od 1, a nie od 0, więc powstaną elementy 1, 2 i 3.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/list.md",
+    "added_on": "2026-11-22"
+  },
+  {
+    "id": "vue-junior-015",
+    "topic": "components",
+    "kind": "single_choice",
+    "prompt": "Co robi modyfikator .prevent w tym formularzu?",
+    "code": "<form @submit.prevent=\"onSubmit\">\n  <input v-model=\"email\" />\n  <button>Zapisz</button>\n</form>",
+    "options": [
+      "Wywołuje event.preventDefault(), więc wysłanie formularza nie przeładuje strony",
+      "Zatrzymuje propagację zdarzenia submit do elementów nadrzędnych",
+      "Blokuje ponowne wywołanie onSubmit, dopóki poprzednie się nie skończy",
+      "Uruchamia onSubmit tylko wtedy, gdy zdarzenie wyszło z samego <form>, a nie z jego dzieci"
+    ],
+    "correct": 0,
+    "explanation": ".prevent to skrót dla event.preventDefault(): domyślna akcja submitu (wysłanie i przeładowanie strony) nie nastąpi, a onSubmit dostanie zdarzenie jak zwykle. Zatrzymanie propagacji daje .stop, reagowanie tylko na zdarzenia z samego elementu — .self. Modyfikatory można łączyć, a ich kolejność ma znaczenie.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/guide/essentials/event-handling.md",
+    "added_on": "2026-11-22"
   }
 ]
