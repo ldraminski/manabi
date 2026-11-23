@@ -211,5 +211,22 @@
     "explanation": "Od Vue 3.5.45 komponent, którego async setup zakończył się błędem, nie renderuje swojego szablonu. W HTML zostaje sam komentarz <!---->, a błąd trafia raz do obsługi błędów. Wcześniej szablon renderował się mimo braku danych z setup, co dawało kolejne błędy albo ostrzeżenia. Przy hydracji na kliencie ten sam komponent też renderuje komentarz, więc HTML się zgadza.",
     "source_url": "https://github.com/vuejs/core/blob/main/CHANGELOG.md",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "vue-senior-014",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "prompt": "Żeby ograniczyć narzut reaktywności, zespół oznacza duże obiekty przez markRaw. Co wypisze ten kod?",
+    "code": "const foo = markRaw({\n  nested: {}\n})\n\nconst bar = reactive({\n  nested: foo.nested\n})\n\nconsole.log(foo.nested === bar.nested)",
+    "options": [
+      "true — markRaw oznacza obiekt razem ze wszystkimi zagnieżdżonymi obiektami",
+      "false — markRaw działa tylko na poziomie korzenia, więc foo.nested nie jest oznaczony i bar.nested zwraca jego proxy",
+      "true — reactive() nigdy nie owija obiektów pobranych z obiektu oznaczonego przez markRaw",
+      "Błąd — reactive() nie przyjmuje obiektów pochodzących z markRaw"
+    ],
+    "correct": 1,
+    "explanation": "markRaw oznacza tylko ten jeden obiekt. Zagnieżdżony foo.nested pozostaje zwykłym obiektem, więc po włożeniu go do reactive() i odczytaniu dostajemy proxy, a nie oryginał. Dokumentacja nazywa to identity hazard: kod porównujący tożsamość obiektów miesza wersję surową i proxy. Dlatego markRaw i API shallow są oznaczone jako zaawansowane.",
+    "source_url": "https://github.com/vuejs/docs/blob/main/src/api/reactivity-advanced.md",
+    "added_on": "2026-11-23"
   }
 ]

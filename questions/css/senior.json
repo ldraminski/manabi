@@ -216,5 +216,22 @@
     "explanation": "attr() może czytać atrybuty, które nie służą do stylowania i mogą zawierać wrażliwe dane, np. token używany przez skrypty. Budowanie z nich adresów pozwalałoby wysłać te dane na zewnątrz, dlatego wartości z attr() nie mogą trafić do <url> (dotyczy to też np. image-set()). <url> nie jest też dozwolonym typem w type().",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/attr",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "css-senior-014",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "prompt": "Jaki kolor będzie miał link <a class=\"plain\" href=\"/\"> wewnątrz <nav class=\"nav\">?",
+    "code": "@layer base, components;\n\n@layer base {\n  a { color: blue; }\n}\n\n@layer components {\n  .nav a { color: white; }\n  .nav a.plain { color: revert-layer; }\n}",
+    "options": [
+      "Biały, bo revert-layer cofa tylko regułę, w której stoi, do poprzedniej reguły w tej samej warstwie",
+      "Niebieski, bo revert-layer liczy wartość tak, jakby w warstwie components nie było reguł dla tego elementu, i bierze ją z warstwy base",
+      "Domyślny kolor linku z arkusza przeglądarki, bo revert-layer pomija wszystkie style autora",
+      "Kolor odziedziczony z elementu nav"
+    ],
+    "correct": 1,
+    "explanation": "revert-layer cofa wartość właściwości do tej, którą dałaby reguła z wcześniejszej warstwy kaskady. Wartość jest liczona tak, jakby w bieżącej warstwie nie było żadnych reguł dla tego elementu, więc ignorowana jest też reguła .nav a z kolorem białym. Zostaje a { color: blue } z warstwy base. Do stylów przeglądarki cofa słowo kluczowe revert, nie revert-layer.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/revert-layer/index.md",
+    "added_on": "2026-11-23"
   }
 ]

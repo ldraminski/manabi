@@ -220,5 +220,21 @@
     "explanation": "Lista zmian TypeScript 7: przy inferencji przez typ szablonowy z pustym ogranicznikiem TS 7 pobiera cały punkt kodowy Unicode, a nie jedną jednostkę UTF-16 jak TS 6. Emoji spoza BMP nie jest już dzielone na połówki pary zastępczej: Head<\"😀abc\"> to \"😀\", a Rest<\"😀abc\"> to \"abc\".",
     "source_url": "https://github.com/microsoft/typescript-go/blob/main/CHANGES.md",
     "added_on": "2026-11-08"
+  },
+  {
+    "id": "typescript-senior-015",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "prompt": "Wewnętrzny pakiet @acme/utils jest budowany do dist/ razem z plikami .d.ts i publikowany z katalogiem src/. Aplikacje używają go z node_modules, bez referencji projektów. „Go to Definition” w VS Code przenosi do dist/index.d.ts zamiast do pliku .ts. Co włączyć w tsconfig pakietu?",
+    "options": [
+      "sourceMap: true",
+      "declarationMap: true",
+      "emitDeclarationOnly: true",
+      "inlineSources: true"
+    ],
+    "correct": 1,
+    "explanation": "declarationMap generuje mapy źródeł dla plików .d.ts, wskazujące oryginalne pliki .ts. Dzięki nim edytor przy „Go to Definition” otwiera źródło zamiast deklaracji. sourceMap mapuje wygenerowany JavaScript na TypeScript, co pomaga przy debugowaniu, ale nie w nawigacji po typach. Dokumentacja zaleca też declarationMap przy referencjach projektów.",
+    "source_url": "https://github.com/microsoft/TypeScript-Website/blob/v2/packages/tsconfig-reference/copy/en/options/declarationMap.md",
+    "added_on": "2026-11-23"
   }
 ]

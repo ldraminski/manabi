@@ -206,5 +206,53 @@
     "explanation": "Przy żądaniu między kontami AWS ocenia je dwa razy: w koncie zaufanym (polityka tożsamości) i w koncie ufającym (polityka zasobu). Żądanie przechodzi tylko wtedy, gdy obie oceny dają Allow.",
     "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/reference_policies_evaluation-logic-cross-account.md",
     "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-014",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Chcesz dodać regułę cyklu życia S3, która przenosi nowe obiekty z S3 Standard do S3 Standard-IA już po 7 dniach od utworzenia. Co na to S3?",
+    "options": [
+      "Reguła zadziała po 7 dniach bez żadnych ograniczeń",
+      "Takie przejście nie jest obsługiwane — obiekty muszą być przechowywane co najmniej 30 dni, zanim reguła przeniesie je do Standard-IA lub One Zone-IA",
+      "Reguła zadziała, ale najpierw przeniesie obiekty do S3 Intelligent-Tiering",
+      "Reguła zadziała, a za każdy obiekt zostanie naliczona minimalna opłata za 90 dni"
+    ],
+    "correct": 1,
+    "explanation": "S3 nie obsługuje przejścia do Standard-IA ani One Zone-IA w ciągu pierwszych 30 dni od utworzenia obiektu, bo nowe obiekty zwykle są częściej odczytywane albo szybciej usuwane. Dla wersji nieaktualnych w buckecie z wersjonowaniem obowiązuje to samo: muszą być nieaktualne co najmniej 30 dni. Standard-IA ma też minimalną opłatę za 30 dni przechowywania.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/lifecycle-transition-general-considerations.md",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "aws-mid-015",
+    "topic": "s3",
+    "kind": "single_choice",
+    "prompt": "Reguła cyklu życia przenosi obiekty z S3 Standard do S3 Standard-IA po 30 dniach. Bucket zawiera głównie miniatury po 20–60 KB. Co stanie się z miniaturami?",
+    "options": [
+      "Zostaną przeniesione, a opłata będzie naliczana od rzeczywistego rozmiaru",
+      "Reguła zostanie odrzucona przy zapisie konfiguracji",
+      "Zostaną w S3 Standard — S3 nie przenosi do Standard-IA obiektów mniejszych niż 128 KB",
+      "Zostaną przeniesione do S3 Glacier Instant Retrieval zamiast do Standard-IA"
+    ],
+    "correct": 2,
+    "explanation": "Przy przejściu z S3 Standard do Standard-IA lub One Zone-IA S3 nie przenosi obiektów mniejszych niż 128 KB. Reguła jest poprawna i zadziała dla większych obiektów, a małe zostaną w dotychczasowej klasie. Dokumentacja dodaje, że korzyść kosztowa z takich przejść dotyczy przede wszystkim większych obiektów; reguły można też filtrować po rozmiarze obiektu.",
+    "source_url": "https://github.com/awsdocs/amazon-s3-userguide/blob/main/doc_source/lifecycle-transition-general-considerations.md",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "aws-mid-016",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Rola Auditor w koncie A ma politykę zaufania z kontem B jako Principal (arn:aws:iam::<konto B>:root). Użytkownik IAM w koncie B, bez żadnych polityk, wywołuje sts:AssumeRole na tej roli i dostaje AccessDenied. Czego brakuje?",
+    "options": [
+      "Polityki tożsamości w koncie B, która pozwala temu użytkownikowi na sts:AssumeRole dla ARN roli Auditor",
+      "Polityka zaufania musi wymieniać ARN użytkownika; wpis z kontem B nigdy nie działa",
+      "Rola musi wymagać ExternalId przy każdym przejęciu",
+      "Oba konta muszą należeć do tej samej organizacji AWS Organizations"
+    ],
+    "correct": 0,
+    "explanation": "Polityka zaufania z kontem B jako Principal tylko potencjalnie pozwala każdemu użytkownikowi tego konta przejąć rolę. Administrator konta B musi jeszcze dać konkretnym użytkownikom lub grupom uprawnienie sts:AssumeRole, najlepiej z pełnym ARN roli zamiast Resource \"*\". Potrzebne są obie strony: zaufanie w koncie A i zgoda w koncie B.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/id_roles_use_permissions-to-switch.md",
+    "added_on": "2026-11-23"
   }
 ]

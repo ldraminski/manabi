@@ -216,5 +216,21 @@
     "explanation": "Publiczny NAT gateway tworzy się w publicznej podsieci, z adresem Elastic IP i trasą do internet gateway. Instancje z prywatnych podsieci łączą się przez niego z internetem, ale z zewnątrz nie da się otworzyć połączenia do nich.",
     "source_url": "https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/vpc-nat-gateway.md",
     "added_on": "2026-11-05"
+  },
+  {
+    "id": "aws-junior-015",
+    "topic": "iam",
+    "kind": "single_choice",
+    "prompt": "Użytkownik IAM ma uprawnienia do zarządzania instancjami EC2. Przełącza się na rolę, której polityka daje tylko dostęp do S3. Co może robić, dopóki korzysta z roli?",
+    "options": [
+      "Pracować z EC2 i z S3, bo uprawnienia roli dodają się do jego własnych",
+      "Tylko to, na co pozwala rola, czyli S3 — na czas korzystania z roli oddaje swoje uprawnienia",
+      "Tylko EC2, bo uprawnienia użytkownika mają pierwszeństwo przed rolą",
+      "S3 oraz odczyt EC2, bo zostają mu uprawnienia tylko do odczytu"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja IAM mówi wprost, że uprawnienia roli nie dodają się do uprawnień użytkownika. Po przełączeniu użytkownik tymczasowo oddaje swoje uprawnienia w zamian za uprawnienia roli, a po wyjściu z roli jego własne wracają. W tym przykładzie w trakcie sesji roli nie będzie mógł pracować z EC2.",
+    "source_url": "https://github.com/awsdocs/iam-user-guide/blob/main/doc_source/id_roles_use_permissions-to-switch.md",
+    "added_on": "2026-11-23"
   }
 ]

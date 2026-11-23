@@ -226,5 +226,21 @@
     "explanation": "Tylko SameSite=None wysyła ciasteczko w żądaniach cross-site, a ta wartość wymaga też atrybutu Secure. Strict wysyła je tylko w obrębie tej samej witryny, a Lax dodatkowo przy nawigacji najwyższego poziomu bezpieczną metodą, czyli nie w iframe. Nie warto też polegać na domyślnym zachowaniu: bez SameSite tylko niektóre przeglądarki przyjmują Lax. Część przeglądarek domyślnie blokuje ciasteczka stron trzecich, więc nawet poprawny nagłówek może nie wystarczyć.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/set-cookie/index.md",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "rest-api-mid-015",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "prompt": "Endpoint PATCH /carts/7 przyjmuje {\"op\": \"increment\", \"item\": 42} i zwiększa liczbę sztuk produktu w koszyku. Klient HTTP po timeoucie automatycznie ponawia żądanie. Co jest prawdą?",
+    "options": [
+      "Ponowienie jest bezpieczne, bo PATCH, tak jak PUT, jest z definicji idempotentny",
+      "PATCH nie musi być idempotentny — ponowienie może zwiększyć liczbę sztuk drugi raz, więc automatyczne ponawianie wymaga dodatkowego zabezpieczenia",
+      "Ponowienie jest bezpieczne, bo PATCH jest metodą bezpieczną (safe)",
+      "Serwer HTTP sam odrzuci duplikat, bo żądanie ma identyczne ciało"
+    ],
+    "correct": 1,
+    "explanation": "PUT zastępuje cały zasób, więc jest zawsze idempotentny. PATCH to zestaw instrukcji zmiany i nie musi być idempotentny: MDN podaje przykład licznika, który PUT nadpisze, a PATCH może zwiększyć. PATCH nie jest też metodą bezpieczną, bo zmienia stan, i podobnie jak POST może mieć skutki uboczne. HTTP nie wykrywa duplikatów sam z siebie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/methods/patch/index.md",
+    "added_on": "2026-11-23"
   }
 ]

@@ -194,5 +194,37 @@
     "explanation": "Reguły są sprawdzane w kolejności deny, potem ask, potem allow, i decyduje pierwsze dopasowanie. Szczegółowość reguły nie zmienia tej kolejności, więc allow nie może zrobić wyjątku od szerszego deny.",
     "source_url": "https://code.claude.com/docs/en/permissions",
     "added_on": "2026-10-07"
+  },
+  {
+    "id": "ai-tools-junior-014",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "W jednej turze Claude poprawił swoim narzędziem do edycji README.md, a potem uruchomił przez Bash skrypt codemod, który zmienił 40 innych plików. Tych 40 plików wcześniej w sesji nie edytował. Robisz /rewind do wiadomości sprzed tej tury i wybierasz „Restore code”. Co stanie się z 40 plikami?",
+    "options": [
+      "Zostaną zmienione — checkpointy nie śledzą plików, które zmieniły tylko polecenia Bash; trzeba je cofnąć przez Git",
+      "Wrócą do stanu sprzed codemodu, bo checkpoint zapisuje całe repozytorium",
+      "Wrócą do poprzedniego stanu, ale tylko jeśli sesja nie była w międzyczasie wznawiana",
+      "Claude Code wyświetli listę 40 plików i zapyta, które cofnąć"
+    ],
+    "correct": 0,
+    "explanation": "Checkpointy zapisują stan plików zmienianych narzędziami do edycji Claude’a. Plik zmieniony wyłącznie poleceniami Bash nie jest śledzony i po rewind zostaje bez zmian. Dokumentacja zaleca cofanie takich zmian przez system kontroli wersji, np. Git, i przypomina, że checkpointy nie zastępują Gita.",
+    "source_url": "https://code.claude.com/docs/en/checkpointing",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "ai-tools-junior-015",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "prompt": "Claude zmienił kilka plików, ale podejście Ci się nie podoba. Chcesz cofnąć zmiany w plikach i zachować rozmowę, żeby od razu poprosić o inne rozwiązanie. Co robisz w Claude Code?",
+    "options": [
+      "Wpisujesz /clear",
+      "Otwierasz menu rewind (/rewind albo dwa razy Esc przy pustym polu), wybierasz wiadomość i „Restore code”",
+      "Otwierasz menu rewind i wybierasz „Restore conversation”",
+      "Wpisujesz /compact"
+    ],
+    "correct": 1,
+    "explanation": "„Restore code” cofa zmiany w plikach do wybranego checkpointu i zostawia rozmowę. „Restore conversation” robi odwrotnie: cofa rozmowę, a obecny kod zostaje. /clear czyści kontekst rozmowy, a /compact go streszcza; żadne z nich nie zmienia plików na dysku.",
+    "source_url": "https://code.claude.com/docs/en/checkpointing",
+    "added_on": "2026-11-23"
   }
 ]

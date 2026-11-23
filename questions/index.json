@@ -104,6 +104,22 @@
     "added_on": "2026-10-07"
   },
   {
+    "id": "ai-tools-junior-014",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "ai-tools-junior-015",
+    "technology": "ai-tools",
+    "level": "junior",
+    "topic": "coding-agents",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
     "id": "ai-tools-mid-001",
     "technology": "ai-tools",
     "level": "mid",
@@ -1008,6 +1024,14 @@
     "added_on": "2026-11-05"
   },
   {
+    "id": "aws-junior-015",
+    "technology": "aws",
+    "level": "junior",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
     "id": "aws-mid-001",
     "technology": "aws",
     "level": "mid",
@@ -1110,6 +1134,30 @@
     "topic": "iam",
     "kind": "single_choice",
     "added_on": "2026-11-06"
+  },
+  {
+    "id": "aws-mid-014",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "aws-mid-015",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "s3",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
+    "id": "aws-mid-016",
+    "technology": "aws",
+    "level": "mid",
+    "topic": "iam",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
   },
   {
     "id": "aws-senior-001",
@@ -1590,6 +1638,14 @@
     "topic": "css-production",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "css-senior-014",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
   },
   {
     "id": "git-junior-001",
@@ -2982,6 +3038,14 @@
     "topic": "data-and-iteration",
     "kind": "single_choice",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-senior-014",
+    "technology": "javascript",
+    "level": "senior",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
   },
   {
     "id": "nextjs-junior-001",
@@ -5192,6 +5256,14 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "rest-api-mid-015",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "api-design-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
     "id": "rest-api-senior-001",
     "technology": "rest-api",
     "level": "senior",
@@ -6176,6 +6248,14 @@
     "added_on": "2026-11-08"
   },
   {
+    "id": "typescript-senior-015",
+    "technology": "typescript",
+    "level": "senior",
+    "topic": "build-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
+  },
+  {
     "id": "vue-junior-001",
     "technology": "vue",
     "level": "junior",
@@ -6574,5 +6654,13 @@
     "topic": "performance-and-ssr",
     "kind": "single_choice",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "vue-senior-014",
+    "technology": "vue",
+    "level": "senior",
+    "topic": "performance-and-ssr",
+    "kind": "single_choice",
+    "added_on": "2026-11-23"
   }
 ]

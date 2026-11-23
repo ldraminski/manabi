@@ -213,5 +213,22 @@
     "explanation": "Iterator.concat, tak jak yield*, nie obsługuje argumentów bez [Symbol.iterator](). Powód: concat przejmuje iteratory i zamyka je, gdy iteracja się kończy. Przy gołych iteratorach nie byłoby jasne, kto ma zamknąć te jeszcze nieosiągnięte, więc metoda ich nie przyjmuje. Iterator.from() zamienia taki obiekt w iterowalny iterator.",
     "source_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/concat",
     "added_on": "2026-10-31"
+  },
+  {
+    "id": "javascript-senior-014",
+    "topic": "memory-and-concurrency",
+    "kind": "single_choice",
+    "prompt": "config.js na najwyższym poziomie modułu czeka przez await na fetch, który trwa ok. 2 s. analytics.js nie importuje config.js. Co dzieje się z wykonaniem modułów?",
+    "code": "// main.js\nimport './config.js'    // top-level await, ok. 2 s\nimport './analytics.js' // nie zależy od config.js\nconsole.log('main')",
+    "options": [
+      "main.js czeka, aż config.js skończy się wykonywać; analytics.js, który od niego nie zależy, nie jest blokowany",
+      "Cała aplikacja, łącznie ze wszystkimi modułami na stronie, stoi przez 2 s",
+      "main.js wykona się od razu, a config.js dokończy działanie w tle",
+      "SyntaxError — await jest dozwolony tylko w funkcji async"
+    ],
+    "correct": 0,
+    "explanation": "W modułach await jest dozwolony na najwyższym poziomie. Moduł, którego zależność używa top-level await, czeka z wykonaniem, aż ta zależność się wykona. Moduły rodzeństwa, które od niej nie zależą, nie są blokowane. MDN zaznacza, że to nie jest darmowe: część grafu modułów może być wtedy ewaluowana tylko asynchronicznie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/operators/await/index.md",
+    "added_on": "2026-11-23"
   }
 ]
