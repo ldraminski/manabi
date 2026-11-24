@@ -532,6 +532,13 @@
     "icon": "atom"
   },
   {
+    "technology": "react",
+    "slug": "refs-and-dom",
+    "title": "Refy i DOM",
+    "description": "Ref na Fragmencie, FragmentInstance, fokus, zdarzenia i obserwatory",
+    "icon": "atom"
+  },
+  {
     "technology": "typescript",
     "slug": "build-at-scale",
     "title": "TypeScript w dużej skali",

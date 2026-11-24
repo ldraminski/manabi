@@ -244,5 +244,22 @@
     "explanation": "keyvalue zamienia obiekt lub Map na tablicę par { key, value }. Domyślnie sortuje je po kluczu (porównanie po punktach kodowych Unicode). Przekazanie null jako compareFn wyłącza sortowanie i zostawia naturalną kolejność wejścia.",
     "source_url": "https://github.com/angular/angular/blob/main/packages/common/src/pipes/keyvalue_pipe.ts",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "angular-junior-016",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "prompt": "Jaką szerokość będzie miał ten div?",
+    "code": "<div [style.width]=\"500\"></div>",
+    "options": [
+      "Bez zmiany — 500 bez jednostki to nieprawidłowa wartość width, przeglądarka ją ignoruje",
+      "500px, bo Angular domyślnie dopisuje px do liczb",
+      "500% szerokości rodzica",
+      "Aplikacja rzuci błąd przy renderowaniu szablonu"
+    ],
+    "correct": 0,
+    "explanation": "Właściwości długości, takie jak width, padding czy margin, wymagają jednostki. Wiązanie liczby ustawia napis \"500\", który przeglądarka traktuje jako nieprawidłowy i po cichu pomija. Jednostkę podaje się w nazwie wiązania, np. [style.width.px]=\"500\", albo wiąże się pełny napis, np. [style.width]=\"'500px'\". Od Angulara 22.3 przy strictTemplates taki błąd zgłasza rozszerzona diagnostyka NG8119.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/reference/extended-diagnostics/NG8119.md",
+    "added_on": "2026-11-24"
   }
 ]

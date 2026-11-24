@@ -428,5 +428,89 @@
     "explanation": "Funkcja inline jest przy każdym renderze nowa, więc React traktuje ją jak inny ref callback. Wywołuje funkcję sprzątającą zwróconą przez poprzedni callback, a potem nowy callback z węzłem DOM. Wywołanie poprzedniego callbacku z null zdarza się tylko wtedy, gdy nie zwrócił on funkcji sprzątającej.",
     "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react-dom/components/common.md",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "react-mid-027",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Komponent zwraca kilka elementów obok siebie i chcesz mieć do nich ref bez dodawania elementu-wrappera. Co mówi dokumentacja?",
+    "options": [
+      "Trzeba zaimportować Fragment z 'react' i napisać <Fragment ref={groupRef}>…</Fragment>",
+      "Wystarczy dodać ref do skróconego zapisu <>…</>, bo przyjmuje te same propsy co Fragment",
+      "Fragment przyjmuje tylko ref callback, obiekt z useRef nie zadziała",
+      "Nie da się, ref zawsze wskazuje na jeden węzeł DOM, więc wrapper jest konieczny"
+    ],
+    "correct": 0,
+    "explanation": "Od React 19.3 Fragment przyjmuje ref (obiekt z useRef albo ref callback), a React podstawia pod niego FragmentInstance z metodami do pracy z węzłami DOM wewnątrz Fragmentu. Skrócony zapis <>…</> nie przyjmuje propsów — tak samo jak przy key trzeba użyć jawnego <Fragment>.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-028",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Efekt wywołuje ref.current.addEventListener('click', onClick) na Fragmencie poniżej. Do których elementów DOM React doda listener?",
+    "code": "<Fragment ref={ref}>\n  <section>\n    <button>A</button>\n  </section>\n  <button>B</button>\n</Fragment>",
+    "options": [
+      "Do <section> i przycisku B",
+      "Do <section> oraz obu przycisków A i B",
+      "Tylko do <section>, pierwszego dziecka Fragmentu",
+      "Do elementu-rodzica, w którym renderuje się Fragment"
+    ],
+    "correct": 0,
+    "explanation": "addEventListener, observeUsing i getClientRects działają na dzieciach DOM pierwszego poziomu, czyli tutaj na <section> i przycisku B. Nie sięgają do elementów zagnieżdżonych w innym elemencie DOM, więc przycisk A nie dostaje własnego listenera. Kliknięcie A i tak wywoła onClick, bo zdarzenie click wypływa (bubbling) do <section>.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-029",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Co zrobi wywołanie ref.current.focus() na tym Fragmencie?",
+    "code": "<Fragment ref={ref}>\n  <div className=\"header\">\n    <h2>Ustawienia</h2>\n    <input name=\"email\" />\n  </div>\n  <button>Zapisz</button>\n</Fragment>",
+    "options": [
+      "Ustawi fokus na polu email",
+      "Ustawi fokus na przycisku „Zapisz”, bo focus sprawdza tylko dzieci pierwszego poziomu",
+      "Nic nie zrobi, bo pierwsze dziecko (div.header) nie przyjmuje fokusu",
+      "Rzuci błąd, bo Fragment nie ma własnego węzła DOM"
+    ],
+    "correct": 0,
+    "explanation": "focus() na FragmentInstance szuka pierwszego elementu, który może dostać fokus, przechodząc w głąb wszystkie zagnieżdżone dzieci (depth-first). div i h2 nie przyjmują fokusu, więc pierwszym trafieniem jest input. W odróżnieniu od addEventListener i observeUsing focus, focusLast i blur nie ograniczają się do dzieci pierwszego poziomu.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-030",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Chcesz płynnie przewinąć widok do grupy elementów owiniętej w Fragment z refem. Co się stanie?",
+    "code": "ref.current.scrollIntoView({ behavior: 'smooth' });",
+    "options": [
+      "Wywołanie rzuci błąd — scrollIntoView Fragmentu przyjmuje tylko boolean alignToTop",
+      "Strona płynnie przewinie się do pierwszego dziecka Fragmentu",
+      "Opcje zostaną zignorowane i strona przewinie się bez animacji",
+      "Strona przewinie się kolejno do każdego dziecka Fragmentu"
+    ],
+    "correct": 0,
+    "explanation": "W odróżnieniu od Element.scrollIntoView() metoda FragmentInstance nie przyjmuje obiektu ScrollIntoViewOptions — przekazanie go rzuca błąd. Przyjmuje tylko alignToTop: true lub brak argumentu wyrównuje pierwsze dziecko do góry, false wyrównuje ostatnie dziecko do dołu przewijanego obszaru.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-031",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "prompt": "React 19.3. Fragment z refem zawiera tylko tekst. Efekt wywołuje ref.current.observeUsing(intersectionObserver). Co się stanie?",
+    "code": "<Fragment ref={ref}>{label}</Fragment>",
+    "options": [
+      "Nic nie będzie obserwowane — observeUsing nie działa na węzłach tekstowych, w trybie deweloperskim React wypisze ostrzeżenie",
+      "Observer będzie śledził węzeł tekstowy tak samo jak element",
+      "React zacznie obserwować rodzica DOM Fragmentu",
+      "React owinie tekst w <span>, żeby dało się go obserwować"
+    ],
+    "correct": 0,
+    "explanation": "observeUsing podpina IntersectionObserver lub ResizeObserver do dzieci DOM pierwszego poziomu, ale nie działa na węzłach tekstowych. Gdy Fragment zawiera tylko tekst, React w trybie deweloperskim loguje ostrzeżenie. Fragment nie dodaje żadnych elementów do DOM, więc tekst trzeba samemu owinąć w element, jeśli ma być obserwowany.",
+    "source_url": "https://github.com/reactjs/react.dev/blob/main/src/content/reference/react/Fragment.md",
+    "added_on": "2026-11-24"
   }
 ]

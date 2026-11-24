@@ -934,5 +934,53 @@
     "explanation": "Od tej wersji równoczesne dns.lookup() z tym samym kluczem (hostname, family, hints, order) są scalane w jedno wywołanie getaddrinfo, a każdy wywołujący dostaje własny callback z przetworzonym wynikiem. Wcześniej każde zajmowało wątek puli libuv (domyślnie 4), więc burza zapytań mogła blokować też fs i crypto. To nie jest cache z TTL — łączone są zapytania w locie, a lookupy z innymi opcjami idą osobno.",
     "source_url": "https://github.com/nodejs/node/pull/62599",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "nodejs-senior-059",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123829. Proces na macOS działa z --permission, a reguła odczytu obejmuje katalog uploads, ale nie jego podkatalog private (readdir na uploads/private jest zabroniony). Kod wywołuje fs.watch('uploads', { recursive: true }), a inny proces tworzy uploads/private/secret.txt. Co przed poprawką dostawał callback?",
+    "options": [
+      "Nazwę private/secret.txt — bez treści pliku",
+      "Treść pliku secret.txt",
+      "Nic, bo fs.watch rzucał ERR_ACCESS_DENIED już przy starcie obserwacji",
+      "Tylko zdarzenia dla plików leżących bezpośrednio w uploads"
+    ],
+    "correct": 0,
+    "explanation": "Na macOS i Windows rekurencyjne fs.watch korzysta z natywnego watchera libuv. Uprawnienie do odczytu było sprawdzane tylko raz, dla obserwowanego katalogu, a potem do callbacku trafiały wszystkie ścieżki zgłoszone przez libuv, na dowolnej głębokości. Wyciekały nazwy i czas zmian, nie treść plików (ważność: Low). Poprawki są w 22.23.5, 24.22.3 i 26.13.1.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-060",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-126051. Serwer TLS na Node.js 26 wybiera certyfikat dla domeny przez SNICallback i nie używa certyfikatów klienta. Ma handler 'error' na gniazdach. Co przed poprawką mógł zrobić nieuwierzytelniony klient?",
+    "options": [
+      "Zakończyć proces serwera — odroczony callback handshake'u trafiał na zniszczone już gniazdo i rzucał nieprzechwycony wyjątek zamiast zdarzenia 'error'",
+      "Odczytać klucz prywatny innej domeny obsługiwanej przez ten sam serwer",
+      "Wymusić użycie domyślnego certyfikatu dla wszystkich domen do restartu",
+      "Nic, bo handler 'error' przechwytuje wszystkie błędy handshake'u"
+    ],
+    "correct": 0,
+    "explanation": "Przy SNICallback, OCSPRequest, newSession, resumeSession lub server.addContext() callbacki OpenSSL są odraczane, a odroczony kod nie obsługiwał gniazda zniszczonego w międzyczasie. Odpowiednio spreparowany client hello z FIN sprawiał, że gniazdo znikało przed wykonaniem callbacku, a proces kończył się nieprzechwyconym wyjątkiem — handler 'error' nie miał szansy zadziałać. Podatne są linie 24.x i 26.x (ważność: High); poprawki w 24.22.3 i 26.13.1.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-061",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "CVE-2026-123875. Serwer HTTP/2 wysyła pliki do pobrania przez stream.respondWithFile(). Jeden z klientów anuluje pobieranie w trakcie. Co mogło się stać przed poprawką?",
+    "options": [
+      "Cały proces serwera padał (dereferencja NULL w StreamPipe)",
+      "Zamykał się tylko ten strumień, z kodem błędu w zdarzeniu 'error'",
+      "Deskryptor pliku pozostawał otwarty do restartu procesu",
+      "Pozostali klienci dostawali niepełne pliki"
+    ],
+    "correct": 0,
+    "explanation": "Anulowanie jednego pobierania obsługiwanego przez respondWithFile() prowadziło do dereferencji NULL w StreamPipe i awarii całego serwera, a więc do odmowy usługi dla wszystkich klientów. Dotyczy linii 22.x, 24.x i 26.x (ważność: Medium); poprawki są w 22.23.5, 24.22.3 i 26.13.1.",
+    "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+    "added_on": "2026-11-24"
   }
 ]

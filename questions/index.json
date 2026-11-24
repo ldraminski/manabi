@@ -512,6 +512,14 @@
     "added_on": "2026-11-12"
   },
   {
+    "id": "angular-junior-016",
+    "technology": "angular",
+    "level": "junior",
+    "topic": "signals-and-templates",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
     "id": "angular-mid-001",
     "technology": "angular",
     "level": "mid",
@@ -4544,6 +4552,30 @@
     "added_on": "2026-11-22"
   },
   {
+    "id": "nodejs-senior-059",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-060",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-061",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
     "id": "react-junior-001",
     "technology": "react",
     "level": "junior",
@@ -4870,6 +4902,46 @@
     "topic": "effects-in-depth",
     "kind": "single_choice",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "react-mid-027",
+    "technology": "react",
+    "level": "mid",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-028",
+    "technology": "react",
+    "level": "mid",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-029",
+    "technology": "react",
+    "level": "mid",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-030",
+    "technology": "react",
+    "level": "mid",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
+  },
+  {
+    "id": "react-mid-031",
+    "technology": "react",
+    "level": "mid",
+    "topic": "refs-and-dom",
+    "kind": "single_choice",
+    "added_on": "2026-11-24"
   },
   {
     "id": "react-senior-001",
