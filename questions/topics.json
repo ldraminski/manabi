@@ -747,5 +747,19 @@
     "title": "Router i HttpClient",
     "description": "Granice błędów tras, RedirectCommand, HttpParams i HttpClient.query()",
     "icon": "layout"
+  },
+  {
+    "technology": "css",
+    "slug": "css-functions",
+    "title": "Nowe funkcje CSS",
+    "description": "random(), CSS Typed Object Model i obliczenia na wartościach CSS.",
+    "icon": "layout"
+  },
+  {
+    "technology": "javascript",
+    "slug": "web-apis",
+    "title": "Nowe Web API",
+    "description": "Clipboard API z własnymi formatami, Navigation API i WebTransport.",
+    "icon": "globe"
   }
 ]

@@ -297,5 +297,107 @@
     "explanation": "view() tworzy anonimową oś postępu widoku: domyślnie ma 0%, gdy element pojawia się przy jednej krawędzi kontenera, i 100%, gdy znika za przeciwną. scroll() śledzi pozycję przewinięcia całego kontenera, niezależnie od tego, gdzie jest element. auto to zwykła, czasowa oś dokumentu, a none wyłącza animację.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/properties/animation-timeline/index.md",
     "added_on": "2026-11-12"
+  },
+  {
+    "id": "css-mid-019",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "Funkcja CSS random() z trzecim argumentem — krokiem. Jakie wartości może dostać width?",
+    "code": ".box {\n  width: random(0px, 100px, 30px);\n}",
+    "options": [
+      "Dowolną wartość od 0px do 100px",
+      "0px, 30px, 60px albo 90px",
+      "30px, 60px, 90px albo 100px",
+      "Tylko 0px albo 100px"
+    ],
+    "correct": 1,
+    "explanation": "Trzeci argument to krok: wynik to wartość minimalna albo minimalna plus wielokrotność kroku, nie większa niż maksimum. Od 0px co 30px mieszczą się 0, 30, 60 i 90px — 120px przekroczyłoby 100px, a samo maksimum nie jest dokładane, jeśli nie leży na kroku.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/random/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-020",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "Funkcja random() z własną nazwą klucza. Jak będą wyglądać elementy .a, .b i .c?",
+    "code": ".a, .b, .c {\n  width: random(--size, 10px, 200px);\n  height: random(--size, 10px, 200px);\n}",
+    "options": [
+      "Trzy kwadraty o różnych rozmiarach",
+      "Trzy prostokąty o losowych, niezależnych bokach",
+      "Trzy identyczne kwadraty",
+      "Kwadrat tylko dla .a, pozostałe dostaną wartości niezależne"
+    ],
+    "correct": 2,
+    "explanation": "Sam <dashed-ident> jako <random-key> współdzieli wartość bazową w całym dokumencie: każde random() z tą samą nazwą i tymi samymi argumentami daje ten sam wynik, niezależnie od elementu i właściwości. width i height są więc równe, a wszystkie trzy elementy mają ten sam rozmiar.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/random/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-021",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "Funkcja random() z kluczem property-scoped. Jak będą wyglądać elementy .a, .b i .c?",
+    "code": ".a, .b, .c {\n  width: random(property-scoped, 10px, 200px);\n  height: random(property-scoped, 10px, 200px);\n}",
+    "options": [
+      "Trzy identyczne prostokąty — width i height losowane osobno, ale tak samo dla każdego elementu",
+      "Trzy identyczne kwadraty",
+      "Trzy różne prostokąty — każdy element losuje własne wartości",
+      "Trzy kwadraty o różnych rozmiarach"
+    ],
+    "correct": 0,
+    "explanation": "property-scoped dodaje do klucza nazwę właściwości, ale nie element. Wszystkie elementy dostają więc tę samą wartość width i tę samą wartość height, a width i height są losowane niezależnie od siebie.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/random/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-022",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "--angle jest zwykłą (niezarejestrowaną) właściwością niestandardową z random(). Jaki kolor tła dostaną .a, .b i .c?",
+    "code": ":root {\n  --angle: random(0deg, 360deg);\n}\n.a, .b, .c {\n  background-color: hsl(var(--angle) 100% 50%);\n}",
+    "options": [
+      "Ten sam — wartość zostaje wylosowana raz w :root i dziedziczona",
+      "Każdy element może dostać inny kolor — var() wstawia samo wyrażenie random(), które jest liczone osobno w miejscu użycia",
+      "Brak koloru — random() nie działa wewnątrz właściwości niestandardowych",
+      "Ten sam, ale inny przy każdym przeładowaniu stylów"
+    ],
+    "correct": 1,
+    "explanation": "Niezarejestrowana właściwość niestandardowa przechowuje tekst, nie wynik: var(--angle) zostaje zastąpione wyrażeniem random(0deg, 360deg), które daje osobne losowanie dla każdego elementu. Żeby wylosować wartość raz i ją dziedziczyć, trzeba zarejestrować właściwość przez @property — zarejestrowana właściwość oblicza i zapamiętuje wynik.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/random/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-023",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "CSS Typed Object Model (Firefox obsługuje go od wersji 161). Co zwróci ten kod?",
+    "code": "CSS.px(1).add(CSS.cm(1)).toString();",
+    "options": [
+      "CSSUnitValue o wartości około 38.8px — centymetry są przeliczane na piksele",
+      "CSSUnitValue w cm",
+      "CSSMathSum o postaci calc(1px + 1cm) — jednostki nie są przeliczane",
+      "TypeError, bo jednostki są różne"
+    ],
+    "correct": 2,
+    "explanation": "add() zwraca pojedynczy CSSUnitValue tylko wtedy, gdy wszystkie wartości mają dokładnie tę samą jednostkę. W przeciwnym razie zwraca CSSMathSum z osobnym wyrazem dla każdej wartości — nawet gdy dałoby się je przeliczyć na px. Do scalenia służą to() albo toSum().",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/cssnumericvalue/add/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-024",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "prompt": "CSS Typed Object Model. Co się stanie po wykonaniu tego kodu?",
+    "code": "CSS.px(10).add(2);",
+    "options": [
+      "Zwróci CSSUnitValue 12px — liczba zostanie potraktowana jako piksele",
+      "Rzuci TypeError — 2 zostaje zamienione na CSS.number(2), a długości i zwykłej liczby nie da się dodać",
+      "Zwróci CSSMathSum calc(10px + 2)",
+      "Zwróci CSSUnitValue 10px, a liczba zostanie zignorowana"
+    ],
+    "correct": 1,
+    "explanation": "Zwykła liczba przekazana do add() jest konwertowana na CSSUnitValue z jednostką \"number\", jak CSS.number(2). Dodanie długości do liczby (albo do czasu) ma niezgodne typy, więc add() rzuca TypeError. Długość z procentem da się natomiast dodać — powstaje CSSMathSum.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/cssnumericvalue/add/index.md",
+    "added_on": "2026-11-25"
   }
 ]

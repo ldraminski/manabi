@@ -520,5 +520,119 @@
     "explanation": "Każdy realm (np. iframe) ma własny konstruktor Error, więc instanceof zwraca false dla błędu z innego okna. instanceof sprawdza też tylko łańcuch prototypów, więc przepuszcza obiekt, który jedynie dziedziczy po Error.prototype. Error.isError() robi sprawdzenie „brandu” — wewnętrznego pola ustawianego przez konstruktor Error — więc rozpoznaje błąd z iframe'a i odrzuca podróbkę.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/javascript/reference/global_objects/error/iserror/index.md",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-032",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "Clipboard API. Twoja aplikacja chce kopiować dane we własnym formacie, którego nie ma wśród standardowych typów MIME. Jak nazwać ten format w ClipboardItem?",
+    "options": [
+      "\"x-custom/my-format\"",
+      "\"web text/x-my-format\" — typ MIME poprzedzony słowem web i spacją",
+      "\"application/vnd.my-format\" bez żadnego prefiksu",
+      "\"custom:text/x-my-format\""
+    ],
+    "correct": 1,
+    "explanation": "Własny format schowka to typ MIME z prefiksem \"web \" (słowo web i spacja). Dzięki temu nie koliduje z natywnymi formatami systemu ani z formatami innych stron. Obsługa różni się między przeglądarkami, więc przed użyciem warto sprawdzić ClipboardItem.supports().",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/clipboard_api/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-033",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "Kopiujesz tabelę magazynu. Twoja aplikacja ma przy wklejaniu dostać pełne dane (z SKU), a inne programy coś czytelnego. Jak najlepiej zbudować ClipboardItem?",
+    "options": [
+      "Zapisać tylko format \"web ...\" z JSON-em — inne programy same go przekonwertują",
+      "Zapisać tylko text/plain z JSON-em, bo każda aplikacja obsługuje tekst",
+      "Dać reprezentacje text/html i text/plain oraz własny format \"web ...\" z pełnymi danymi, dodany tylko gdy ClipboardItem.supports() go akceptuje",
+      "Wywołać clipboard.write() dwa razy: raz z text/html, raz z formatem \"web ...\""
+    ],
+    "correct": 2,
+    "explanation": "Jeden ClipboardItem może nieść kilka reprezentacji tej samej treści. Standardowe text/html i text/plain dostaje każda aplikacja, a własny format z prefiksem \"web \" zachowuje dane, których standardowe formaty nie przenoszą. Ponieważ nie każda przeglądarka obsługuje własne formaty, dodaje się go po sprawdzeniu ClipboardItem.supports(). Drugie write() nadpisałoby zawartość schowka.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/clipboard_api/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-034",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "Navigation API. W obsłudze zdarzenia navigateerror chcesz sprawdzić, czy nieudana nawigacja prowadziła na stronę logowania. Skąd wziąć jej docelowy URL?",
+    "options": [
+      "navigation.currentEntry.url",
+      "navigation.transition?.to?.url",
+      "document.referrer",
+      "event.destination.url"
+    ],
+    "correct": 1,
+    "explanation": "NavigationTransition.to zwraca NavigationDestination trwającej nawigacji. Działa podobnie jak NavigateEvent.destination, ale jest dostępne poza handlerem navigate — np. w navigateerror. currentEntry opisuje bieżący wpis historii, a nie cel nawigacji.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/navigationtransition/to/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-035",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "WebTransport.exportKeyingMaterial(). Dwa połączenia między tymi samymi dwoma punktami wywołują metodę z identycznym label, context i outputLength. Co dostaną?",
+    "options": [
+      "Te same bajty — wynik zależy tylko od argumentów i certyfikatu serwera",
+      "Różne bajty — materiał jest wyprowadzany z sekretu konkretnej sesji TLS",
+      "Te same bajty, jeśli oba połączenia używają tego samego certyfikatu z serverCertificateHashes",
+      "Błąd InvalidStateError, bo label można użyć tylko raz"
+    ],
+    "correct": 1,
+    "explanation": "Eksporter materiału kluczy TLS daje wartość unikalną dla danej sesji TLS: te same label i context na innym połączeniu dają inny wynik. Właśnie dlatego nadaje się do channel binding — podpisanie tej wartości wiąże uwierzytelnienie z konkretnym połączeniem i pozwala wykryć MitM.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/webtransport/exportkeyingmaterial/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-036",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "Firefox 160 dostosował WebTransport.exportKeyingMaterial() do aktualnej specyfikacji. Które wywołanie zwraca 16 bajtów, np. na klucz AES-128?",
+    "options": [
+      "transport.exportKeyingMaterial(label)",
+      "transport.exportKeyingMaterial(label, 16)",
+      "transport.exportKeyingMaterial(label, context, 16)",
+      "transport.exportKeyingMaterial(label, { length: 16 })"
+    ],
+    "correct": 2,
+    "explanation": "Według specyfikacji argument context jest wymagany, a outputLength określa liczbę bajtów (większą od 0). Wcześniej Firefox zawsze zwracał 32 bajty, więc kod pomijający któryś z tych argumentów trzeba poprawić. Obietnica spełnia się Uint8Array o długości outputLength.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/webtransport/exportkeyingmaterial/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-037",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "WebTransport, opcja headers. Co trafi do żądania CONNECT, które zestawia sesję?",
+    "code": "const transport = new WebTransport(url, {\n  headers: {\n    Authorization: 'Bearer abc123',\n    Cookie: 'session=xyz',\n  },\n});",
+    "options": [
+      "Oba nagłówki",
+      "Tylko Authorization — Cookie jako zabroniony nagłówek żądania jest po cichu pomijany",
+      "Żaden — konstruktor rzuci TypeError z powodu Cookie",
+      "Tylko Cookie, bo Authorization trzeba przekazać w query stringu"
+    ],
+    "correct": 1,
+    "explanation": "Opcja headers dodaje własne nagłówki do rozszerzonego żądania CONNECT, np. token zamiast parametru w URL. Zabronione nagłówki żądania, takie jak Cookie, są po cichu ignorowane. Nagłówki odpowiedzi serwera są potem dostępne w transport.responseHeaders.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/webtransport/webtransport/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-038",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "prompt": "WebTransport z datagramsReadableType: \"bytes\". Czytasz datagramy czytnikiem BYOB do 1 KB bufora, a przychodzi datagram 4 KB. Co się stanie?",
+    "code": "const transport = new WebTransport(url, { datagramsReadableType: 'bytes' });\nconst reader = transport.datagrams.readable.getReader({ mode: 'byob' });\nawait reader.read(new Uint8Array(1024));",
+    "options": [
+      "read() zwróci pierwsze 1024 bajty, resztę następne wywołanie",
+      "Datagram zostanie po cichu odrzucony",
+      "Strumień przejdzie w stan błędu, a read() odrzuci obietnicę z RangeError",
+      "Przeglądarka sama powiększy bufor"
+    ],
+    "correct": 2,
+    "explanation": "Bez opcji min każdy odczyt zwraca jeden datagram. Gdy podany bufor jest mniejszy niż datagram, strumień zostaje zepsuty, a oczekujące read() odrzuca obietnicę z RangeError. MDN zaleca bufor co najmniej 64 KiB — tyle wynosi zalecany maksymalny rozmiar ramek QUIC z datagramami.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/webtransport/webtransport/index.md",
+    "added_on": "2026-11-25"
   }
 ]

@@ -1544,6 +1544,54 @@
     "added_on": "2026-11-12"
   },
   {
+    "id": "css-mid-019",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-020",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-021",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-022",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-023",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-024",
+    "technology": "css",
+    "level": "mid",
+    "topic": "css-functions",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
     "id": "css-senior-001",
     "technology": "css",
     "level": "senior",
@@ -2942,6 +2990,62 @@
     "topic": "objects-and-data",
     "kind": "single_choice",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "javascript-mid-032",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-033",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-034",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-035",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-036",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-037",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "javascript-mid-038",
+    "technology": "javascript",
+    "level": "mid",
+    "topic": "web-apis",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
   },
   {
     "id": "javascript-senior-001",
@@ -5446,6 +5550,30 @@
     "topic": "http-at-scale",
     "kind": "single_choice",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "rest-api-senior-015",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-016",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-017",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-25"
   },
   {
     "id": "testing-junior-001",

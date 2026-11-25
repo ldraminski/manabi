@@ -222,5 +222,53 @@
     "explanation": "503 oznacza, że serwer chwilowo nie może obsłużyć żądania, np. z powodu przeciążenia lub prac serwisowych, a Retry-After podpowiada klientom, kiedy spróbować ponownie, zamiast od razu ponawiać i dokładać ruchu. 429 opisuje przekroczenie limitu przez danego klienta, 500 sugeruje błąd w kodzie, a 4xx winę klienta. Takich odpowiedzi 503 zwykle nie należy cache'ować.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/status/503/index.md",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "rest-api-senior-015",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Compression Dictionary Transport. Odpowiedź z app.v1.js miała nagłówek Use-As-Dictionary: match=\"/js/app.*.js\". Co przeglądarka wyśle przy żądaniu app.v2.js?",
+    "options": [
+      "Available-Dictionary z hashem SHA-256 słownika (app.v1.js) oraz dcb i/lub dcz w Accept-Encoding",
+      "Całą treść app.v1.js w ciele żądania, żeby serwer mógł policzyć różnicę",
+      "If-None-Match z ETagiem app.v1.js",
+      "Tylko Dictionary-ID z adresem app.v1.js"
+    ],
+    "correct": 0,
+    "explanation": "Gdy URL żądania pasuje do wzorca z match, przeglądarka dopisuje Available-Dictionary z hashem SHA-256 przechowywanego słownika i oferuje kodowania dcb (Brotli) lub dcz (Zstandard). Serwer może wtedy odesłać app.v2.js skompresowany względem v1, z Content-Encoding: dcb lub dcz. Dictionary-ID trafia do żądania tylko wtedy, gdy serwer podał id w Use-As-Dictionary.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/compression_dictionary_transport/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-016",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Serwer odsyła cache'owalną odpowiedź z Content-Encoding: dcb (skompresowaną względem słownika). Co musi zawierać, żeby CDN i cache nie podały jej niewłaściwemu klientowi?",
+    "options": [
+      "Vary: accept-encoding",
+      "Vary: accept-encoding, available-dictionary",
+      "Cache-Control: no-store — takich odpowiedzi nie wolno cache'ować",
+      "Vary: dictionary-id"
+    ],
+    "correct": 1,
+    "explanation": "Treść zależy i od obsługiwanych kodowań, i od tego, który słownik ma klient. Samo Vary: accept-encoding pozwoliłoby podać odpowiedź skompresowaną innym słownikiem albo klientowi, który go nie ma. Dlatego cache'owalna odpowiedź musi mieć Vary: accept-encoding, available-dictionary.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/compression_dictionary_transport/index.md",
+    "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-017",
+    "topic": "caching-at-scale",
+    "kind": "single_choice",
+    "prompt": "Słownik ogłoszono z Use-As-Dictionary: match=\"/js/app.*.js\", id=\"dict-42\". Żądanie przychodzi z Dictionary-ID: \"dict-42\". Czy serwer może pominąć sprawdzenie Available-Dictionary?",
+    "options": [
+      "Tak — Dictionary-ID jednoznacznie wskazuje słownik",
+      "Tak, jeśli odpowiedź nie jest cache'owana",
+      "Nie — Dictionary-ID tylko ułatwia znalezienie pliku, serwer nadal musi sprawdzić hash z Available-Dictionary",
+      "Nie, bo przeglądarka przy podanym id w ogóle nie wysyła Available-Dictionary"
+    ],
+    "correct": 2,
+    "explanation": "Opcjonalne id pomaga serwerowi znaleźć słownik, jeśli nie przechowuje go pod hashem. Nie zastępuje Available-Dictionary: przeglądarka wysyła oba nagłówki, a serwer musi zweryfikować hash SHA-256, zanim skompresuje odpowiedź tym słownikiem.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/compression_dictionary_transport/index.md",
+    "added_on": "2026-11-25"
   }
 ]
