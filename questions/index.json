@@ -216,6 +216,86 @@
     "added_on": "2026-10-12"
   },
   {
+    "id": "ai-tools-mid-013",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-014",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-015",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-016",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-017",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-018",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-019",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-020",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-021",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-022",
+    "technology": "ai-tools",
+    "level": "mid",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
     "id": "ai-tools-senior-001",
     "technology": "ai-tools",
     "level": "senior",
@@ -4192,6 +4272,22 @@
     "added_on": "2026-11-22"
   },
   {
+    "id": "nodejs-mid-061",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "nodejs-mid-062",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -4678,6 +4774,14 @@
     "topic": "upgrades-and-security",
     "kind": "single_choice",
     "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-062",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-26"
   },
   {
     "id": "react-junior-001",

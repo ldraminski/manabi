@@ -191,5 +191,167 @@
     "explanation": "allowed-tools tylko wstępnie zatwierdza wymienione narzędzia na czas tury, w której wywołano skill — zgoda wygasa przy Twojej następnej wiadomości. Nie ogranicza puli narzędzi; do tego służy disallowed-tools albo reguły deny. Uwaga: pole działa także w skillach z repozytorium, więc przeglądaj je przed uruchomieniem Claude Code w cudzym projekcie.",
     "source_url": "https://code.claude.com/docs/en/skills#pre-approve-tools-for-a-skill",
     "added_on": "2026-10-12"
+  },
+  {
+    "id": "ai-tools-mid-013",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Projekt ma tylko AGENTS.md (bez CLAUDE.md) i Claude Code dotąd go czytał. Dodajesz własny, niecommitowany CLAUDE.local.md w katalogu projektu. Co się zmieni przy domyślnych ustawieniach?",
+    "options": [
+      "Nic — Claude czyta AGENTS.md i CLAUDE.local.md razem",
+      "Claude przestaje czytać AGENTS.md, bo CLAUDE.local.md liczy się jako plik CLAUDE.md; żeby czytać oba, trzeba ustawić Project instructions na claude-md-and-agents-md",
+      "CLAUDE.local.md jest ignorowany, dopóki istnieje AGENTS.md",
+      "Claude czyta oba pliki, ale AGENTS.md nadpisuje sprzeczne instrukcje z CLAUDE.local.md"
+    ],
+    "correct": 1,
+    "explanation": "Domyślna wartość claude-md-or-agents-md czyta AGENTS.md tylko wtedy, gdy w katalogu roboczym i wyżej nie ma CLAUDE.md, .claude/CLAUDE.md ani CLAUDE.local.md. Dokumentacja wprost ostrzega, że dodanie CLAUDE.local.md wyłącza AGENTS.md, i zaleca ustawienie claude-md-and-agents-md w /config.",
+    "source_url": "https://code.claude.com/docs/en/memory#when-claude-code-reads-agents-md",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-014",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Uruchamiasz Claude Code w katalogu repo/api. repo/CLAUDE.md mówi „używaj tabulatorów”, a repo/api/CLAUDE.md mówi „używaj spacji”. Jak Claude Code łączy te pliki?",
+    "options": [
+      "Wczytuje tylko repo/api/CLAUDE.md, bo plik bliżej katalogu roboczego nadpisuje nadrzędny",
+      "Wczytuje tylko repo/CLAUDE.md, bo plik w katalogu głównym repozytorium ma pierwszeństwo",
+      "Skleja oba w kontekście: najpierw repo/CLAUDE.md, potem repo/api/CLAUDE.md, więc instrukcje bliższe katalogowi roboczemu są czytane jako ostatnie",
+      "Zgłasza konflikt i prosi o wybór pliku"
+    ],
+    "correct": 2,
+    "explanation": "Wszystkie znalezione pliki CLAUDE.md są łączone, a nie nadpisywane. Kolejność idzie od korzenia systemu plików w dół do katalogu roboczego, więc repo/api/CLAUDE.md trafia do kontekstu po repo/CLAUDE.md. Sprzeczne instrukcje lepiej jednak usunąć, bo nic nie wymusza, którą Claude wybierze.",
+    "source_url": "https://code.claude.com/docs/en/memory#how-claude-md-files-load",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-015",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "CLAUDE.md ma 600 linii. Ktoś proponuje rozbić go na kilka plików i dołączyć je przez @docs/style.md, @docs/testing.md itd., żeby oszczędzić kontekst. Czy to pomoże?",
+    "options": [
+      "Tak, importowane pliki są wczytywane dopiero, gdy Claude ich potrzebuje",
+      "Nie: importy porządkują treść, ale ładują się razem z CLAUDE.md, więc kontekst się nie zmniejsza; oszczędność dają reguły z paths albo skille",
+      "Tak, bo importy są streszczane przed wczytaniem",
+      "Nie, bo Claude Code nie obsługuje importów w CLAUDE.md"
+    ],
+    "correct": 1,
+    "explanation": "Pliki dołączone przez @path są rozwijane i wczytywane razem z CLAUDE.md, który je importuje. Dokumentacja wprost mówi, że takie rozbicie pomaga w organizacji, ale nie zmniejsza kontekstu. Instrukcje potrzebne tylko czasem lepiej przenieść do reguł z polem paths albo do skilli.",
+    "source_url": "https://code.claude.com/docs/en/memory#my-claude-md-is-too-large",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-016",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "W CLAUDE.md zostawiasz notatkę dla innych osób z zespołu, która nie jest instrukcją dla Claude’a. Jak ją zapisać, żeby nie zużywała tokenów kontekstu?",
+    "code": "<!-- Ten plik aktualizuje zespół platformy, pytania na #platform -->\n\n# Build\n- npm run build",
+    "options": [
+      "Jako blokowy komentarz HTML <!-- … --> — Claude Code usuwa go przed wstawieniem treści do kontekstu",
+      "Jako linię zaczynającą się od // — Markdown traktuje ją jak komentarz",
+      "W bloku kodu ```text``` — bloki kodu są pomijane",
+      "Nie da się; każdy znak CLAUDE.md trafia do kontekstu"
+    ],
+    "correct": 0,
+    "explanation": "Blokowe komentarze HTML w CLAUDE.md są usuwane przed wstawieniem treści do kontekstu. Komentarze wewnątrz bloków kodu zostają, a gdy Claude otworzy plik narzędziem Read, też je zobaczy.",
+    "source_url": "https://code.claude.com/docs/en/memory#how-claude-md-files-load",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-017",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Masz regułę .claude/rules/api.md z paths: [\"src/api/**/*.ts\"]. Kiedy jej treść trafi do kontekstu Claude’a?",
+    "options": [
+      "Na starcie każdej sesji, razem z CLAUDE.md",
+      "Gdy Claude odczyta, zapisze lub edytuje pasujący plik (także przez cat lub head na jednym pliku)",
+      "Tylko po wpisaniu /rules api",
+      "Gdy w prompcie padnie słowo „api”"
+    ],
+    "correct": 1,
+    "explanation": "Reguła z polem paths ładuje się dopiero, gdy Claude użyje Read, Write lub Edit na pasującym pliku albo podejrzy go poleceniem Bash, które liczy się jako odczyt (np. cat). Reguły bez paths ładują się na starcie, z tym samym priorytetem co .claude/CLAUDE.md.",
+    "source_url": "https://code.claude.com/docs/en/memory#path-specific-rules",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-018",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Reguła w .claude/rules/ miała ładować się tylko dla plików z migrations/, a jest w kontekście w każdej sesji. Frontmatter wygląda tak. Co jest najbardziej prawdopodobną przyczyną?",
+    "code": "---\npaths:\n  - \"migrations/**/*.sql\"\n description: Zasady migracji\n---",
+    "options": [
+      "Pole description wyłącza paths",
+      "YAML się nie parsuje (zła indentacja), więc Claude Code ignoruje frontmatter i ładuje regułę tak, jakby nie miała paths",
+      "Reguły w .claude/rules/ zawsze ładują się na starcie, paths tylko je sortuje",
+      "Wzorzec powinien zaczynać się od /, inaczej pasuje do wszystkiego"
+    ],
+    "correct": 1,
+    "explanation": "Gdy YAML między znacznikami --- się nie parsuje, Claude Code ignoruje frontmatter i ładuje regułę jak regułę bez paths, czyli na starcie. Błąd parsowania widać w claude --debug. Samo nieznane pole, np. description, jest po prostu ignorowane — paths to jedyne pole, które Claude Code czyta z reguły.",
+    "source_url": "https://code.claude.com/docs/en/memory#rule-frontmatter-reference",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-019",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Ile z pliku MEMORY.md (indeksu automatycznej pamięci) Claude Code wczytuje na starcie sesji?",
+    "options": [
+      "Cały plik, niezależnie od rozmiaru",
+      "Pierwsze 200 linii albo 25 KB, zależnie od tego, co nastąpi wcześniej; resztę pomija",
+      "Nic — Claude czyta go tylko, gdy uzna to za potrzebne",
+      "Tylko wpisy z ostatnich 7 dni"
+    ],
+    "correct": 1,
+    "explanation": "Przy włączonej automatycznej pamięci na starcie ładuje się pierwsze 200 linii lub 25 KB MEMORY.md. Wszystko poza limitem jest pomijane, dlatego Claude trzyma tam krótki indeks, a szczegóły w osobnych plikach tematycznych czytanych na żądanie. Ten limit nie dotyczy CLAUDE.md.",
+    "source_url": "https://code.claude.com/docs/en/memory#how-it-works",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-020",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "W ~/.claude/settings.json ustawiasz \"outputStyle\": \"explanatory\". Jaki styl odpowiedzi dostaniesz?",
+    "options": [
+      "Explanatory — nazwy stylów nie rozróżniają wielkości liter",
+      "Default, bo wartość w pliku ustawień rozróżnia wielkość liter i musi brzmieć \"Explanatory\"",
+      "Claude Code nie uruchomi się z błędem walidacji ustawień",
+      "Explanatory, ale dopiero po /clear"
+    ],
+    "correct": 1,
+    "explanation": "Wartość outputStyle w pliku ustawień rozróżnia wielkość liter. Wartość, która nie pasuje dokładnie do nazwy stylu, daje styl Default. Wielkości liter nie rozróżnia za to polecenie /output-style.",
+    "source_url": "https://code.claude.com/docs/en/output-styles#change-your-output-style",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-021",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Tworzysz własny styl odpowiedzi (output style), który ma tylko zmienić ton odpowiedzi. Claude ma dalej pracować z kodem jak zwykle. Co trzeba dodać we frontmatterze?",
+    "options": [
+      "Nic — własny styl zawsze tylko dokłada się do domyślnych instrukcji",
+      "keep-coding-instructions: true, bo bez tego (domyślnie false) własny styl usuwa z pełnego promptu systemowego wbudowane instrukcje inżynierskie Claude Code",
+      "force-for-plugin: true",
+      "inherit: default"
+    ],
+    "correct": 1,
+    "explanation": "Domyślnie własny styl pomija w pełnym prompcie systemowym sekcję wbudowanych instrukcji inżynierskich (np. zakres zmian, komentarze, weryfikacja pracy). Ustawienie keep-coding-instructions: true ją zachowuje. force-for-plugin dotyczy tylko stylów z pluginów.",
+    "source_url": "https://code.claude.com/docs/en/output-styles#frontmatter-reference",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "ai-tools-mid-022",
+    "topic": "agent-context",
+    "kind": "single_choice",
+    "prompt": "Sesja Claude Code działa w katalogu głównym repozytorium. W packages/billing/ jest osobny CLAUDE.md. Kiedy Claude go wczyta?",
+    "options": [
+      "Na starcie sesji, razem z CLAUDE.md z katalogu głównego",
+      "Nigdy — wczytywane są tylko pliki z katalogu roboczego i katalogów nadrzędnych",
+      "Gdy Claude odczyta, zapisze lub edytuje jakiś plik w packages/billing/",
+      "Dopiero po uruchomieniu sesji w packages/billing/"
+    ],
+    "correct": 2,
+    "explanation": "Pliki CLAUDE.md z podkatalogów katalogu roboczego nie ładują się na starcie. Claude Code wczytuje każdy z nich, gdy Claude odczyta, zapisze lub edytuje inny plik w tym podkatalogu. Pliki z katalogu roboczego i katalogów nadrzędnych ładują się od razu.",
+    "source_url": "https://code.claude.com/docs/en/memory#how-claude-md-files-load",
+    "added_on": "2026-11-26"
   }
 ]

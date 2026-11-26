@@ -979,5 +979,38 @@
     "explanation": "Po upływie timeout Node wysyła procesowi killSignal (domyślnie SIGTERM), więc err.signal wygląda tak samo jak przy sygnale wysłanym z zewnątrz. Nowe pole error.timedOut (oraz subprocess.timedOut dla spawn/execFile/fork) jest true tylko wtedy, gdy sygnał wysłał właśnie timeout. Nie gwarantuje to jeszcze, że proces się zakończył — tylko że sygnał poszedł.",
     "source_url": "https://github.com/nodejs/node/pull/66639",
     "added_on": "2026-11-22"
+  },
+  {
+    "id": "nodejs-mid-061",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.1.0). Generujesz certyfikat dla serwera HTTPS przez crypto.generateX509Certificate(), podając subject z commonName: 'api.example.com', ale bez opcji extensions. Co trafi do certyfikatu?",
+    "options": [
+      "Node.js sam doda subjectAltName z commonName i domyślne keyUsage",
+      "Żadne rozszerzenia — funkcja niczego nie dodaje niejawnie, więc subjectAltName trzeba podać w extensions",
+      "Rozszerzenia skopiowane z certyfikatu wystawcy",
+      "Funkcja rzuci błąd, bo extensions jest wymagane"
+    ],
+    "correct": 1,
+    "explanation": "Dokumentacja mówi, że generateX509Certificate nie dodaje żadnych rozszerzeń niejawnie (domyślnie extensions to []). Nazwy hostów, keyUsage itd. trzeba przekazać samemu, np. { type: 'subjectAltName', names: [{ type: 'dns', value: 'api.example.com' }] }.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
+    "added_on": "2026-11-26"
+  },
+  {
+    "id": "nodejs-mid-062",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.1.0). Wystawiasz certyfikat z CSR i chcesz w selectExtensions sprawdzić w bazie danych, czy domeny z żądania należą do klienta. Co mówi dokumentacja o takim callbacku?",
+    "code": "generateX509Certificate({\n  csr, issuer, serialNumber: 1n, notBefore, notAfter,\n  signature: { key: issuerKey, digest: 'sha256' },\n  async selectExtensions(requested) {\n    await checkDomainsInDb(requested);\n    return requested;\n  },\n}, callback);",
+    "options": [
+      "Działa — Node.js poczeka na obietnicę przed podpisaniem",
+      "Nie jest obsługiwane: selectExtensions musi być synchroniczny i zwracać tablicę; zwrócenie Promise nie jest wspierane, więc sprawdzenie w bazie trzeba zrobić przed wywołaniem",
+      "Działa, ale tylko z util.promisify(generateX509Certificate)",
+      "Działa, jeśli zamiast callback przekażesz AbortSignal"
+    ],
+    "correct": 1,
+    "explanation": "selectExtensions to synchroniczny callback polityki: rzucony wyjątek propaguje się synchronicznie, a zwracanie Promise nie jest wspierane. Asynchroniczne sprawdzenia (np. w bazie) trzeba wykonać wcześniej, np. parsując CSR przed wywołaniem.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
+    "added_on": "2026-11-26"
   }
 ]

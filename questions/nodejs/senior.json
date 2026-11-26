@@ -982,5 +982,22 @@
     "explanation": "Anulowanie jednego pobierania obsługiwanego przez respondWithFile() prowadziło do dereferencji NULL w StreamPipe i awarii całego serwera, a więc do odmowy usługi dla wszystkich klientów. Dotyczy linii 22.x, 24.x i 26.x (ważność: Medium); poprawki są w 22.23.5, 24.22.3 i 26.13.1.",
     "source_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
     "added_on": "2026-11-24"
+  },
+  {
+    "id": "nodejs-senior-062",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Budujesz wewnętrzne CA na crypto.generateX509Certificate() z opcją csr (Node.js 27 alfa). Klient przysyła CSR z rozszerzeniem basicConstraints CA:TRUE. Jak zaprojektować selectExtensions?",
+    "code": "selectExtensions(requested) {\n  return requested; // ?\n}",
+    "options": [
+      "Zwracać requested bez zmian — Node.js najpierw weryfikuje podpis CSR, więc te dane są zaufane",
+      "Traktować requested jako niezweryfikowane dane od klienta: przepuszczać tylko rozszerzenia z allowlisty OID (np. SAN, keyUsage) i odrzucić basicConstraints CA:TRUE",
+      "Nie implementować selectExtensions — rozszerzenia z CSR i tak są pomijane",
+      "Zwracać requested; brak CA:TRUE w certyfikacie wystawcy i tak zablokuje wydanie certyfikatu pośredniego"
+    ],
+    "correct": 1,
+    "explanation": "Node.js wywołuje selectExtensions przed weryfikacją podpisu żądania, więc callback dostaje nieuwierzytelnione dane i musi stosować politykę wystawcy. Rozszerzenia nie są kopiowane niejawnie, a echo requested przeniosłoby do certyfikatu wszystko, o co poprosił klient, łącznie z CA:TRUE. Funkcja nie waliduje też ścieżki certyfikacji, więc nie zablokuje takiego certyfikatu.",
+    "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
+    "added_on": "2026-11-26"
   }
 ]
