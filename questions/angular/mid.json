@@ -576,5 +576,55 @@
     "explanation": "Przed Angularem 22 operator ?. w wyrażeniach szablonu zwracał null, gdy lewa strona była null lub undefined. Od v22 działa jak w JavaScripcie i zwraca undefined. Przy migracji ng update otacza istniejące wyrażenia w $safeNavigationMigration(...), żeby zachować dawne zachowanie. To tymczasowa pomoc dla kompilatora, a nie prawdziwa funkcja, i dokumentacja zaleca jej usunięcie.",
     "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/templates/expression-syntax.md",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-mid-036",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "prompt": "Trasa user/:id używa resources (withRouterResources()). Użytkownik zmienia tylko parametr query ?tab=..., a :id zostaje ten sam. Mimo to loader uruchamia się przy każdej nawigacji. Dlaczego?",
+    "code": "resources: (ctx) => ({\n  user: resource({\n    params: () => ctx.params(),\n    loader: ({ params }) => fetchUser(params['id']),\n  }),\n}),",
+    "options": [
+      "params zwraca cały obiekt ctx.params(), a router tworzy nowy obiekt przy każdej nawigacji; trzeba zwracać ctx.params()['id']",
+      "Zasoby tras zawsze przeładowują się przy każdej nawigacji, niezależnie od params",
+      "ctx.params() zawiera też parametry query, więc zmiana tab zmienia jego zawartość",
+      "Brakuje withComponentInputBinding(), bez którego resource nie porównuje parametrów"
+    ],
+    "correct": 0,
+    "explanation": "Resource śledzi sygnały czytane w params i porównuje zwróconą wartość. Router tworzy nowy obiekt parametrów przy każdej nawigacji, więc zwrócenie całego ctx.params() wywołuje ponowne pobranie nawet przy niezmienionych wartościach. Dokumentacja zaleca czytać konkretne pola, np. ctx.params()['id']. Parametry query są w osobnym sygnale ctx.queryParams.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/data-fetching-with-resources.md",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-mid-037",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "prompt": "Trasa definiuje zasób user w resources i nie owija go w nonBlocking(). Router ma withComponentInputBinding(). Jak powinno wyglądać wejście komponentu?",
+    "options": [
+      "user = input.required<User>() — router wiąże samą wartość, bo czeka z aktywacją trasy na załadowanie danych",
+      "user = input.required<Resource<User>>() — router zawsze przekazuje cały obiekt Resource",
+      "user = input<User | undefined>() — wartość jest undefined, dopóki zasób się ładuje",
+      "Zasoby tras nie są wiązane z wejściami; trzeba je czytać przez inject(ActivatedRoute)"
+    ],
+    "correct": 0,
+    "explanation": "Domyślnie każdy zasób trasy jest blokujący: router aktywuje trasę dopiero po załadowaniu danych, a przy błędzie anuluje nawigację. Komponent nigdy nie widzi stanu loading ani error, więc router wiąże samą wartość typu T. Cały Resource<T> (z isLoading(), error()) dostaje się po owinięciu zasobu w nonBlocking(). Do reload() przy zasobie blokującym służy ActivatedRoute.resources.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/data-fetching-with-resources.md",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-mid-038",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "prompt": "Trasa potomna chce użyć zasobu user z trasy nadrzędnej. Co się stanie przy nawigacji z takim kodem?",
+    "code": "resources: (ctx) => {\n  const { user } = ctx.resources()\n  return {\n    details: resource({\n      params: () => (user as Resource<User>).value()?.role,\n      loader: ({ params: role }) => fetchRoleDetails(role),\n    }),\n  }\n},",
+    "options": [
+      "Synchroniczne wywołanie ctx.resources() poza kontekstem reaktywnym rzuci błąd i nawigacja się nie powiedzie",
+      "Zadziała, ale details załaduje się dopiero po zakończeniu całej nawigacji",
+      "user będzie undefined, więc details zostanie w stanie idle na zawsze",
+      "Zadziała tak samo jak chain(), tylko bez propagowania błędów"
+    ],
+    "correct": 0,
+    "explanation": "Trasy przodków inicjalizują się równolegle i mogą robić to asynchronicznie, więc ich zasoby nie są dostępne w trakcie konfigurowania trasy. Wywołanie ctx.resources() synchronicznie w ciele funkcji resources rzuca błąd i psuje nawigację. Trzeba czytać je reaktywnie w params, najlepiej przez chain(ctx.resources()['user'] as Resource<User>), które przekazuje też stan loading, error i idle przodka.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/data-fetching-with-resources.md",
+    "added_on": "2026-11-27"
   }
 ]

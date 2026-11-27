@@ -999,5 +999,37 @@
     "explanation": "Node.js wywołuje selectExtensions przed weryfikacją podpisu żądania, więc callback dostaje nieuwierzytelnione dane i musi stosować politykę wystawcy. Rozszerzenia nie są kopiowane niejawnie, a echo requested przeniosłoby do certyfikatu wszystko, o co poprosił klient, łącznie z CA:TRUE. Funkcja nie waliduje też ścieżki certyfikacji, więc nie zablokuje takiego certyfikatu.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
     "added_on": "2026-11-26"
+  },
+  {
+    "id": "nodejs-senior-063",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "prompt": "Job w CI uruchamia node --process-timeout=5m --process-timeout-worker-stacks app.js (Node.js 27 alfa 0.2.0). Po przekroczeniu czasu w logu jest stos wątku głównego i jednego Workera, ale drugi Worker jest wymieniony bez stosu i bez listy zasobów. Co najpewniej się stało?",
+    "options": [
+      "Drugi Worker był zablokowany w operacji synchronicznej (np. child_process.execSync()) i nie odpowiedział w ciągu dwóch sekund",
+      "Drugi Worker zakończył się wcześniej, więc nie miał stosu",
+      "--process-timeout-worker-stacks obejmuje tylko Workery utworzone bezpośrednio przez wątek główny",
+      "Drugi Worker był bezczynny; bezczynne Workery są wypisywane bez szczegółów"
+    ],
+    "correct": 0,
+    "explanation": "--process-timeout-worker-stacks dopisuje stosy i zasoby podtrzymujące pętlę zdarzeń każdego Workera, także Workerów utworzonych przez inne Workery. Wątki, które nie odpowiedzą w ciągu dwóch sekund, bo są zablokowane w operacji synchronicznej takiej jak execSync(), są wymieniane bez stosu i zasobów. Bezczynny Worker dostaje wpis „was not executing JavaScript” z listą zasobów. Analogicznie, gdy nie odpowie wątek główny, Node.js kończy proces od razu bez wypisywania szczegółów.",
+    "source_url": "https://nodejs.org/api/cli.html#--process-timeout-worker-stacks",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-senior-064",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "prompt": "Serwer TLS w Node.js prosi o certyfikat klienta dopiero po wejściu na /admin, przez tlsSocket.renegotiate({ requestCert: true }). Node.js 27 (alfa 0.2.0) oznaczył renegocjację TLS jako przestarzałą (DEP0213). Co zaleca dokumentacja?",
+    "options": [
+      "Prosić o certyfikat od początku, przez opcję requestCert w tls.createServer(); renegocjacja dotyczy tylko TLS 1.2, a TLS 1.3 nigdy jej nie wspierał",
+      "Wymusić TLS 1.3, w którym renegocjacja działa bez deprecjacji",
+      "Zostawić renegotiate() i zwiększyć tls.CLIENT_RENEG_LIMIT, żeby nie trafiać w limit",
+      "Zastąpić renegotiate() wywołaniem tlsSocket.disableRenegotiation() po pierwszym uścisku dłoni"
+    ],
+    "correct": 0,
+    "explanation": "DEP0213 każe unikać renegocjacji: serwer, który potrzebuje certyfikatu klienta, powinien zażądać go w początkowej konfiguracji opcją requestCert, a klient, który chce zmienić konfigurację połączenia, powinien otworzyć nowe. Dotyczy to tylko TLS 1.2, bo TLS 1.3 usunął renegocjację ze standardu. Limit CLIENT_RENEG_LIMIT to ochrona przed DoS, a nie sposób na obejście deprecjacji, a disableRenegotiation() też jest przestarzałe. Dokumentacja zapowiada, że funkcja zostanie w dużej mierze usunięta.",
+    "source_url": "https://nodejs.org/api/deprecations.html#dep0213-tls-renegotiation",
+    "added_on": "2026-11-27"
   }
 ]

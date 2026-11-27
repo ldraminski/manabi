@@ -300,5 +300,22 @@
     "explanation": "Przy imporcie JSON w modułach ES atrybut with { type: 'json' } jest obowiązkowy. Moduł JSON ma tylko eksport domyślny, więc nazwane importy, takie jak { port }, nie działają.",
     "source_url": "https://nodejs.org/api/esm.html#json-modules",
     "added_on": "2026-11-01"
+  },
+  {
+    "id": "nodejs-junior-020",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "prompt": "Node.js 27.0.0-alpha.0.2.0 oznaczył jako przestarzałe (DEP0212) util.TextEncoder i util.TextDecoder. Jak zakodować napis do bajtów UTF-8 w nowym kodzie?",
+    "code": "const { TextEncoder } = require('node:util')\nconst bytes = new TextEncoder().encode('zażółć')",
+    "options": [
+      "Użyć globalnego TextEncoder, bez importu z node:util",
+      "Importować TextEncoder z 'node:buffer' zamiast z 'node:util'",
+      "Zostać przy util.TextEncoder, bo globalny TextEncoder działa tylko w przeglądarce",
+      "Użyć util.encodeUTF8(), które zastępuje TextEncoder"
+    ],
+    "correct": 0,
+    "explanation": "DEP0212 mówi wprost: zamiast util.TextDecoder i util.TextEncoder należy używać globalnych TextDecoder i TextEncoder. Są dostępne w Node.js jako globalne obiekty od dawna, tak samo jak w przeglądarce. Na razie to deprecjacja tylko w dokumentacji, więc stary kod nie wypisuje ostrzeżenia.",
+    "source_url": "https://nodejs.org/api/deprecations.html#dep0212-utiltextdecoder-and-utiltextencoder",
+    "added_on": "2026-11-27"
   }
 ]

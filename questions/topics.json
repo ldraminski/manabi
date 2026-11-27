@@ -761,5 +761,12 @@
     "title": "Nowe Web API",
     "description": "Clipboard API z własnymi formatami, Navigation API i WebTransport.",
     "icon": "globe"
+  },
+  {
+    "technology": "angular",
+    "slug": "route-resources",
+    "title": "Zasoby tras",
+    "description": "resources w konfiguracji tras, nonBlocking(), dziedziczenie i chain(), zamrażanie stanu podczas nawigacji",
+    "icon": "layout"
   }
 ]

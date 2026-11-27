@@ -242,5 +242,37 @@
     "explanation": "focusReset (eksperymentalne od 22.3) jest przekazywane do NavigateEvent.intercept() z Navigation API i ma znaczenie tylko wtedy, gdy router używa tego API (withExperimentalPlatformNavigation). Wtedy domyślne 'after-transition' przenosi fokus na element z autofocus albo na <body>, a 'manual' zostawia go np. w polu wyszukiwania. Za przewijanie odpowiada osobna opcja scroll.",
     "source_url": "https://github.com/angular/angular/blob/main/packages/router/src/models.ts",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-senior-016",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "prompt": "Trasa nadrzędna ładuje dane w 200 ms, a potomna w 300 ms, i dane potomnej nie zależą od nadrzędnej. Ile trwa blokada nawigacji z klasycznymi resolverami, a ile po przejściu na zasoby tras (resources)?",
+    "options": [
+      "Resolvery: ok. 500 ms (po kolei od rodzica do dziecka); zasoby tras: ok. 300 ms (równolegle, czas najwolniejszego)",
+      "W obu przypadkach ok. 300 ms, bo resolvery też działają równolegle",
+      "Resolvery: ok. 300 ms; zasoby tras: ok. 500 ms, bo czekają na zasoby przodków",
+      "Zasoby tras nie blokują nawigacji wcale, więc 0 ms"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja podaje dokładnie ten przykład: resolvery wykonują się sekwencyjnie od trasy nadrzędnej do potomnej, więc 200 + 300 ms. Zasoby tras w całej dopasowanej hierarchii ładują się równolegle, więc nawigacja trwa tyle, co najwolniejszy zasób. Zasoby domyślnie są blokujące; natychmiastową aktywację daje dopiero nonBlocking(). Zasoby zależne od przodka też startują od razu, jeśli są powiązane przez chain().",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/data-fetching-with-resources.md",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-senior-017",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "prompt": "Komponent UserProfile jest użyty ponownie przy nawigacji z /user/1 do /user/2 i czyta zasób przez ActivatedRoute.resources. Co widzi użytkownik w trakcie nawigacji i co zwróci reload() wywołane w tym czasie?",
+    "options": [
+      "Dane użytkownika 1 aż do załadowania użytkownika 2, bez migania stanu loading; reload() zwróci false",
+      "Stan loading przez cały czas ładowania; reload() przerwie nawigację i pobierze dane ponownie",
+      "Pusty widok, bo stary zasób jest niszczony; reload() rzuci błąd",
+      "Dane użytkownika 1 do końca nawigacji; reload() zwróci true i pobierze dane użytkownika 1"
+    ],
+    "correct": 0,
+    "explanation": "W trakcie oczekującej nawigacji router zamraża zasoby wystawione na ActivatedRoute, ukrywając pośrednie stany loading i reloading. Komponent dalej pokazuje dane z /user/1, a po załadowaniu /user/2 przechodzi od razu do nowych danych. Te zasoby są tylko do odczytu, a reload() w trakcie nawigacji lub odtwarzania po anulowaniu zwraca false, żeby nie zakłócić śledzenia przejścia. Surowe zasoby z ctx.resources() nie są zamrażane.",
+    "source_url": "https://github.com/angular/angular/blob/main/adev/src/content/guide/routing/data-fetching-with-resources.md",
+    "added_on": "2026-11-27"
   }
 ]

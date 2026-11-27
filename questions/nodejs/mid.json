@@ -1012,5 +1012,55 @@
     "explanation": "selectExtensions to synchroniczny callback polityki: rzucony wyjątek propaguje się synchronicznie, a zwracanie Promise nie jest wspierane. Asynchroniczne sprawdzenia (np. w bazie) trzeba wykonać wcześniej, np. parsując CSR przed wywołaniem.",
     "source_url": "https://github.com/nodejs/node/blob/main/doc/api/crypto.md",
     "added_on": "2026-11-26"
+  },
+  {
+    "id": "nodejs-mid-063",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.2.0) dodał os.guessFileDescriptorType(). Skrypt uruchomiono jako cat dane.txt | node app.js. Co zwróci wywołanie dla stdin i co z tego wynika?",
+    "code": "import os from 'node:os'\n\nconst type = os.guessFileDescriptorType(0)",
+    "options": [
+      "'PIPE' — dane są dostępne na wejściu i skrypt nie powinien prosić użytkownika o więcej",
+      "'TTY' — można zadawać użytkownikowi pytania w trakcie działania",
+      "'FILE' — Node.js zawsze zgłasza potok jako plik",
+      "'UNKNOWN' — stdin w potoku nie jest otwartym deskryptorem"
+    ],
+    "correct": 0,
+    "explanation": "Funkcja zwraca jeden z typów: 'TCP', 'TTY', 'UDP', 'FILE', 'PIPE' albo 'UNKNOWN'. Przy potoku stdin ma typ 'PIPE'. Dokumentacja podaje to jako typowe użycie: 'TTY' oznacza, że można pytać użytkownika, a 'FILE' lub 'PIPE', że dane są już dostępne i nie należy prosić o więcej. 'UNKNOWN' dotyczy deskryptora, który nie jest otwarty, a liczba spoza zakresu nieujemnych 32-bitowych liczb całkowitych rzuca ERR_INVALID_FD.",
+    "source_url": "https://nodejs.org/api/os.html#osguessfiledescriptortypefd",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-mid-064",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "prompt": "Node.js 27 (alfa 0.2.0) dodał getter statement.columnCount w node:sqlite. Co wypisze ten kod?",
+    "code": "const insert = db.prepare('INSERT INTO users (name) VALUES (?)')\nconst insertReturning = db.prepare('INSERT INTO users (name) VALUES (?) RETURNING id, name')\n\nconsole.log(insert.columnCount, insertReturning.columnCount)",
+    "options": [
+      "0 2",
+      "1 2",
+      "2 2 — liczy kolumny tabeli, nie wyniku",
+      "undefined 2 — getter działa tylko dla SELECT"
+    ],
+    "correct": 0,
+    "explanation": "columnCount to liczba kolumn w wyniku przygotowanego zapytania (wrapper na sqlite3_column_count()). Dla INSERT, UPDATE i DELETE bez klauzuli RETURNING wynosi 0, bo zapytanie nie zwraca danych. Z RETURNING id, name wynik ma dwie kolumny.",
+    "source_url": "https://nodejs.org/api/sqlite.html#statementcolumncount",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-mid-065",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "prompt": "W Node.js 27 (alfa 0.2.0) flaga --process-timeout przestała być eksperymentalna. Zespół chce włączyć ją dla wszystkich jobów w CI. Które podejście jest zgodne z dokumentacją?",
+    "options": [
+      "Podać ją bezpośrednio w poleceniu, np. node --process-timeout=10m run-tests.js, bo nie jest dozwolona w NODE_OPTIONS",
+      "Ustawić NODE_OPTIONS=--process-timeout=10m, żeby objęła też procesy potomne",
+      "Uruchamiać testy przez node --process-timeout=10m --run test",
+      "Połączyć ją z --inspect, żeby po przekroczeniu czasu podłączyć debugger"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja --process-timeout mówi, że opcja nie jest dozwolona w NODE_OPTIONS i nie można jej łączyć z opcjami włączającymi inspector (--inspect, --inspect-brk i inne), z node inspect, --run ani --build-snapshot. Trzeba ją więc podać w wierszu poleceń konkretnego procesu node. Po upływie czasu proces kończy się kodem 124.",
+    "source_url": "https://nodejs.org/api/cli.html#--process-timeoutduration",
+    "added_on": "2026-11-27"
   }
 ]

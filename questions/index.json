@@ -880,6 +880,30 @@
     "added_on": "2026-11-19"
   },
   {
+    "id": "angular-mid-036",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-mid-037",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-mid-038",
+    "technology": "angular",
+    "level": "mid",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
     "id": "angular-senior-001",
     "technology": "angular",
     "level": "senior",
@@ -998,6 +1022,22 @@
     "topic": "router-and-http",
     "kind": "single_choice",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "angular-senior-016",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "angular-senior-017",
+    "technology": "angular",
+    "level": "senior",
+    "topic": "route-resources",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
   },
   {
     "id": "aws-junior-001",
@@ -3792,6 +3832,14 @@
     "added_on": "2026-11-01"
   },
   {
+    "id": "nodejs-junior-020",
+    "technology": "nodejs",
+    "level": "junior",
+    "topic": "runtime-basics",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
     "id": "nodejs-mid-001",
     "technology": "nodejs",
     "level": "mid",
@@ -4288,6 +4336,30 @@
     "added_on": "2026-11-26"
   },
   {
+    "id": "nodejs-mid-063",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-mid-064",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "data-and-testing",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-mid-065",
+    "technology": "nodejs",
+    "level": "mid",
+    "topic": "builtin-modules",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
     "id": "nodejs-senior-001",
     "technology": "nodejs",
     "level": "senior",
@@ -4782,6 +4854,22 @@
     "topic": "upgrades-and-security",
     "kind": "single_choice",
     "added_on": "2026-11-26"
+  },
+  {
+    "id": "nodejs-senior-063",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "diagnostics-and-resilience",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
+  },
+  {
+    "id": "nodejs-senior-064",
+    "technology": "nodejs",
+    "level": "senior",
+    "topic": "upgrades-and-security",
+    "kind": "single_choice",
+    "added_on": "2026-11-27"
   },
   {
     "id": "react-junior-001",
