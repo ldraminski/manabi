@@ -260,5 +260,21 @@
     "explanation": "Scoped registries obsługują tylko elementy autonomiczne. Próba użycia extends w define() na takim rejestrze rzuca DOMException NotSupportedError. Customized built-in elements można definiować tylko w rejestrze globalnym.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/web_components/using_custom_elements/index.md",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "html-senior-017",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "prompt": "Dokument ma <meta name=\"referrer\" content=\"no-referrer\">. Zewnętrzny arkusz https://cdn.example/app.css, wczytany przez <link rel=\"stylesheet\">, ładuje obrazek tła przez url(). Jaka polityka referera obowiązuje dla tego obrazka?",
+    "options": [
+      "no-referrer, bo arkusz dziedziczy politykę dokumentu",
+      "Domyślna strict-origin-when-cross-origin, chyba że odpowiedź z arkuszem ma własny nagłówek Referrer-Policy",
+      "unsafe-url, bo żądania z CSS nie podlegają polityce referera",
+      "Zawsze no-referrer, bo zasoby z CSS nigdy nie wysyłają Referer"
+    ],
+    "correct": 1,
+    "explanation": "Zasoby pobierane z zewnętrznych arkuszy używają polityki domyślnej (strict-origin-when-cross-origin), chyba że nadpisze ją nagłówek Referrer-Policy na odpowiedzi z arkuszem. Polityka dokumentu obowiązuje tylko dla <style> i atrybutów style. Żeby wyciszyć Referer także tutaj, trzeba ustawić nagłówek na pliku CSS.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-11-28"
   }
 ]

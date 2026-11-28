@@ -264,5 +264,37 @@
     "explanation": "Czy cancel da się anulować, zależy od źródła żądania zamknięcia. requestClose() zawsze wywołuje anulowalne zdarzenie. Żądania platformy (Esc, przycisk Wstecz) są anulowalne tylko, gdy pozwala na to aktywacja użytkownika. Po anulowanym żądaniu kolejne, bez aktywacji pomiędzy, może wywołać nieanulowalne cancel i zamknąć dialog. Dlatego warto sprawdzać event.cancelable i nie zakładać, że dialog da się zatrzymać na zawsze.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/htmldialogelement/cancel_event/index.md",
     "added_on": "2026-11-17"
+  },
+  {
+    "id": "html-mid-017",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "prompt": "Strona https://shop.example/cart?id=42 nie ustawia żadnej polityki referera. Wczytuje obrazek z https://cdn.other.example/logo.png. Jaki nagłówek Referer wyśle przeglądarka?",
+    "options": [
+      "Referer: https://shop.example/cart?id=42",
+      "Referer: https://shop.example/",
+      "Żadnego nagłówka Referer",
+      "Referer: shop.example"
+    ],
+    "correct": 1,
+    "explanation": "Domyślna polityka to strict-origin-when-cross-origin: przy żądaniu do innego originu przez HTTPS wysyłany jest tylko origin, bez ścieżki i query stringa. Pełny URL trafia tylko do tego samego originu, a przy przejściu z HTTPS na HTTP nagłówka nie ma wcale. Wcześniejszą domyślną polityką było no-referrer-when-downgrade, które wysłałoby pełny URL.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "html-mid-018",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "prompt": "Chcesz, żeby cała strona nie wysyłała nagłówka Referer. Który zapis w <head> jest poprawny?",
+    "options": [
+      "<meta name=\"referrer\" content=\"no-referrer\">",
+      "<meta name=\"referrer\" content=\"noreferrer\">",
+      "<meta name=\"referer\" content=\"no-referrer\">",
+      "<meta http-equiv=\"Referer\" content=\"none\">"
+    ],
+    "correct": 0,
+    "explanation": "Polityka dla całego dokumentu to <meta name=\"referrer\"> z wartością dyrektywy, czyli no-referrer z myślnikiem. Bez myślnika (noreferrer) pisze się tylko relację linku w rel na <a>, <area> i <link>. Nagłówek HTTP ma historyczną literówkę „Referer”, ale nazwa w meta to „referrer”.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-11-28"
   }
 ]

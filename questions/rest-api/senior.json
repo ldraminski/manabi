@@ -270,5 +270,21 @@
     "explanation": "Opcjonalne id pomaga serwerowi znaleźć słownik, jeśli nie przechowuje go pod hashem. Nie zastępuje Available-Dictionary: przeglądarka wysyła oba nagłówki, a serwer musi zweryfikować hash SHA-256, zanim skompresuje odpowiedź tym słownikiem.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/guides/compression_dictionary_transport/index.md",
     "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-018",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "prompt": "Strona ma Referrer-Policy: no-referrer, a backend sprawdza nagłówek Origin jako ochronę przed CSRF. Na ten sam origin idą dwa żądania: wysłanie <form method=\"post\"> i fetch(\"/api\", { method: \"POST\" }). Co serwer zobaczy w Origin?",
+    "options": [
+      "Oba wyślą prawdziwy origin — polityka referera dotyczy tylko nagłówka Referer",
+      "Formularz wyśle Origin: null, a fetch prawdziwy origin, bo żądania w trybie cors nie podlegają polityce referera",
+      "Oba wyślą Origin: null",
+      "Żadne nie wyśle nagłówka Origin, bo to żądania do tego samego originu"
+    ],
+    "correct": 1,
+    "explanation": "Polityka referera wpływa też na Origin. Żądania GET i HEAD oraz w trybie cors, websocket i webtransport zawsze dostają prawdziwy origin. Dla innych, np. wysłania formularza (tryb navigate), przy no-referrer przeglądarka ustawia Origin: null. fetch domyślnie działa w trybie cors, więc wysyła prawdziwy origin. Ochrona oparta na Origin musi uwzględniać ten przypadek.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-11-28"
   }
 ]

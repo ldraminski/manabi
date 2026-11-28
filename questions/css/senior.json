@@ -233,5 +233,22 @@
     "explanation": "revert-layer cofa wartość właściwości do tej, którą dałaby reguła z wcześniejszej warstwy kaskady. Wartość jest liczona tak, jakby w bieżącej warstwie nie było żadnych reguł dla tego elementu, więc ignorowana jest też reguła .nav a z kolorem białym. Zostaje a { color: blue } z warstwy base. Do stylów przeglądarki cofa słowo kluczowe revert, nie revert-layer.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/revert-layer/index.md",
     "added_on": "2026-11-23"
+  },
+  {
+    "id": "css-senior-015",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "prompt": "Nigdzie nie ustawiono --gap. Jaki odstęp dostanie .grid?",
+    "code": "@property --gap {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 8px;\n}\n\n.grid { gap: var(--gap, 24px); }",
+    "options": [
+      "24px — fallback, bo --gap nie zadeklarowano",
+      "8px — zarejestrowana właściwość ma initial-value, więc fallback nie jest używany",
+      "0 — gap wraca do swojej wartości początkowej",
+      "Deklaracja gap jest nieważna, bo var() z fallbackiem nie działa z zarejestrowanymi właściwościami"
+    ],
+    "correct": 1,
+    "explanation": "Fallback w var() działa, gdy właściwość ma wartość gwarantowanie nieprawidłową. Właściwość zarejestrowana przez @property z nieuniwersalnym syntax i initial-value dostaje tę wartość początkową, gdy nie ma innej deklaracji, więc var() podstawia 8px, a fallback 24px nie jest używany.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/var/index.md",
+    "added_on": "2026-11-28"
   }
 ]

@@ -768,5 +768,19 @@
     "title": "Zasoby tras",
     "description": "resources w konfiguracji tras, nonBlocking(), dziedziczenie i chain(), zamrażanie stanu podczas nawigacji",
     "icon": "layout"
+  },
+  {
+    "technology": "git",
+    "slug": "hooks-and-remotes",
+    "title": "Hooki i grupy zdalnych",
+    "description": "Hooki z konfiguracji uruchamiane równolegle, hook.jobs i push do grupy zdalnych repozytoriów",
+    "icon": "branch"
+  },
+  {
+    "technology": "html",
+    "slug": "referrer-policy",
+    "title": "Polityka referera",
+    "description": "Domyślna polityka, meta referrer, referrerpolicy i zasoby ładowane z CSS",
+    "icon": "layout"
   }
 ]

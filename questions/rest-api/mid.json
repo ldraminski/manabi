@@ -242,5 +242,22 @@
     "explanation": "PUT zastępuje cały zasób, więc jest zawsze idempotentny. PATCH to zestaw instrukcji zmiany i nie musi być idempotentny: MDN podaje przykład licznika, który PUT nadpisze, a PATCH może zwiększyć. PATCH nie jest też metodą bezpieczną, bo zmienia stan, i podobnie jak POST może mieć skutki uboczne. HTTP nie wykrywa duplikatów sam z siebie.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/methods/patch/index.md",
     "added_on": "2026-11-23"
+  },
+  {
+    "id": "rest-api-mid-016",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "prompt": "Serwer wysyła poniższy nagłówek. Jakiej polityki użyje przeglądarka, która obsługuje obie wartości?",
+    "code": "Referrer-Policy: no-referrer, strict-origin-when-cross-origin",
+    "options": [
+      "no-referrer — pierwszej z listy",
+      "strict-origin-when-cross-origin — ostatniej obsługiwanej; no-referrer jest zapasem dla przeglądarek, które jej nie znają",
+      "Najbardziej restrykcyjnej z listy, czyli no-referrer",
+      "Połączenia obu: pełny URL dla tego samego originu, a poza nim brak nagłówka"
+    ],
+    "correct": 1,
+    "explanation": "W nagłówku Referrer-Policy można podać kilka wartości jako zapasowe; obowiązuje ostatnia, którą przeglądarka rozumie. W tym przykładzie no-referrer zadziała tylko tam, gdzie strict-origin-when-cross-origin nie jest obsługiwane. Kilka wartości działa wyłącznie w nagłówku, nie w atrybucie referrerpolicy.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/http/reference/headers/referrer-policy/index.md",
+    "added_on": "2026-11-28"
   }
 ]

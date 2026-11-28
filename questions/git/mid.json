@@ -426,5 +426,151 @@
     "explanation": "hook.<event>.enabled = false wyłącza wszystkie hooki danego zdarzenia: skonfigurowane i tradycyjny skrypt z katalogu hooks, niezależnie od ustawień hook.<friendly-name>.enabled. Wcześniej ta opcja nie obejmowała tradycyjnych hooków. Nazwa zdarzenia nie może być użyta jako friendly-name, więc zapis jest jednoznaczny.",
     "source_url": "https://github.com/git/git/blob/master/Documentation/config/hook.adoc",
     "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-028",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. Dla zdarzenia pre-push skonfigurowano cztery hooki (hook.<nazwa>.command i hook.<nazwa>.event). Trzy mają hook.<nazwa>.parallel = true, czwarty nie ma tego ustawienia. W konfiguracji jest też hook.jobs = 4. Jak git push uruchomi te hooki?",
+    "options": [
+      "Wszystkie po kolei — jeden hook bez parallel = true wymusza wykonanie sekwencyjne całego zdarzenia",
+      "Trzy oznaczone hooki równolegle, a czwarty po nich",
+      "Wszystkie równolegle, bo hook.jobs nadpisuje ustawienia pojedynczych hooków",
+      "git push zakończy się błędem konfiguracji"
+    ],
+    "correct": 0,
+    "explanation": "Dokumentacja hook.<nazwa>.parallel: jeśli którykolwiek hook danego zdarzenia nie ma tego ustawienia na true, wszystkie hooki tego zdarzenia działają sekwencyjnie niezależnie od hook.jobs. Ustawienie pojedynczych hooków nadpisuje tylko opcja -j/--jobs większa od 1 w git hook run, nie konfiguracja hook.jobs.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/hook.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-029",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. Zespół ustawił hook.jobs = 4 i oznaczył wszystkie skonfigurowane hooki pre-commit jako parallel = true, żeby przyspieszyć commit. Co się stanie przy git commit?",
+    "options": [
+      "Hooki pre-commit ruszą równolegle, najwyżej cztery naraz",
+      "Hooki pre-commit i tak uruchomią się po kolei — Git zawsze wykonuje je sekwencyjnie, bo działają na wspólnym drzewie roboczym i indeksie",
+      "Commit się nie wykona, dopóki nie usunie się parallel z hooków pre-commit",
+      "Równolegle uruchomi się tylko tradycyjny hook z katalogu .git/hooks"
+    ],
+    "correct": 1,
+    "explanation": "hook.jobs nie działa dla kilku zdarzeń, których hooków nie da się bezpiecznie zrównoleglić: applypatch-msg, prepare-commit-msg, commit-msg, pre-commit, post-checkout, push-to-checkout i post-commit. Operują one na pliku z opisem commita albo na stanie drzewa roboczego, indeksu i repozytorium, więc zawsze działają sekwencyjnie.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/hook.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-030",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "prompt": "Hook o nazwie my-lint jest zarejestrowany dla zdarzenia post-receive i ma parallel = true. Ktoś dopisał hook.my-lint.jobs = 2, żeby pozwolić na dwa równoległe hooki. Jaki to ma efekt?",
+    "options": [
+      "Do dwóch hooków post-receive może działać naraz",
+      "Ogranicza do dwóch równoległych instancji tylko my-lint",
+      "Żaden — klucz jobs jest szukany po nazwie zdarzenia, więc trzeba ustawić hook.post-receive.jobs",
+      "Git kończy się błędem krytycznym, bo jobs nie wolno ustawiać dla nazwanego hooka"
+    ],
+    "correct": 2,
+    "explanation": "hook.<zdarzenie>.jobs przyjmuje nazwę zdarzenia, nie nazwę hooka. Dokumentacja opisuje dokładnie ten przypadek: hook.my-hook.jobs zostaje zapisany pod „my-hook”, ale Git w czasie działania szuka wartości pod nazwą zdarzenia („post-receive”), więc taki klucz jest po cichu ignorowany.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/config/hook.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-031",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. W konfiguracji jest remotes.all = \"origin backup\". Co zrobi poniższa komenda?",
+    "code": "git push --atomic all main",
+    "options": [
+      "Wypchnie main do obu zdalnych albo do żadnego",
+      "Odmówi i zgłosi błąd — --atomic nie jest obsługiwane przy pushu do grupy",
+      "Wypchnie atomowo do origin, a do backup zwykłym pushem",
+      "Zignoruje --atomic i wypchnie main po kolei do obu zdalnych"
+    ],
+    "correct": 1,
+    "explanation": "Od Git 2.55 git push przyjmuje nazwę grupy zdalnych (remotes.<grupa>) i robi osobny push do każdego członka po kolei. Atomowość da się zapewnić tylko w jednym połączeniu z jednym zdalnym, więc Git odrzuca połączenie --atomic z nazwą grupy.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-push.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-032",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "prompt": "Git 2.55, remotes.all = \"origin gitlab backup\". Podczas git push all main push do gitlab zostaje odrzucony (non-fast-forward). Co dzieje się dalej?",
+    "options": [
+      "Git przerywa i nie próbuje już pushować do backup",
+      "Git cofa push, który zdążył się udać do origin",
+      "Git zgłasza błąd, pushuje dalej do backup, a kod wyjścia całej komendy jest niezerowy",
+      "Git kończy z kodem 0, bo co najmniej jeden push się udał"
+    ],
+    "correct": 2,
+    "explanation": "Push do grupy to skrót dla osobnych git push do każdego członka. Gdy któryś się nie uda (odrzucenie albo błąd połączenia), Git zgłasza błąd i kontynuuje z pozostałymi; kod wyjścia jest niezerowy, jeśli zawiódł którykolwiek push. Udane pushe nie są cofane.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-push.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-033",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. Masz niezacommitowane zmiany w pliku, który różni się między gałęziami. git checkout -m feature przełącza gałąź, ale ponowne nałożenie twoich zmian kończy się konfliktem. Gdzie są twoje zmiany?",
+    "options": [
+      "W pliku z konfliktem oraz jako wpis na liście stash; po rozwiązaniu konfliktu robisz git stash drop",
+      "Tylko w pliku z konfliktem — jeśli rozwiążesz go źle, zmian nie da się odzyskać",
+      "Nigdzie się nie przeniosły — Git cofa przełączenie i zostajesz na starej gałęzi",
+      "W ORIG_HEAD, skąd przywraca się je przez git reset"
+    ],
+    "correct": 0,
+    "explanation": "Od Git 2.55 checkout -m przed przełączeniem odkłada kolidujące zmiany do stasha i potem go nakłada. Jeśli nałożenie daje konflikty, wpis zostaje na liście stash: po rozwiązaniu konfliktu usuwa się go przez git stash drop, a można też wyczyścić drzewo (np. git reset --hard) i nałożyć go później przez git stash pop. Wcześniej -m dawało tylko jedną szansę na rozwiązanie konfliktu.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/git-checkout.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-034",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. Czym różni się wynik tych dwóch komend?",
+    "code": "git log -n 3 v1.0..v2.0\ngit log --max-count-oldest=3 v1.0..v2.0",
+    "options": [
+      "Niczym, --max-count-oldest to nowy alias dla -n",
+      "Druga pokazuje trzy najstarsze commity z zakresu zamiast trzech najnowszych",
+      "Druga pokazuje commity starsze niż 3 dni",
+      "Druga pokazuje wszystkie commity z zakresu poza trzema najstarszymi"
+    ],
+    "correct": 1,
+    "explanation": "-n (--max-count) ogranicza wynik do pierwszych N commitów, czyli przy domyślnej kolejności do najnowszych. Nowa opcja --max-count-oldest=<n> z Git 2.55 zostawia ostatnie N commitów, które zostałyby pokazane, czyli najstarsze w zakresie.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/rev-list-options.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-035",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "prompt": "Git 2.55. W repozytorium z wieloma równoległymi gałęziami wynik git log --graph jest bardzo szeroki. Co zrobi dodanie --graph-lane-limit=6?",
+    "options": [
+      "Pokaże tylko commity z sześciu gałęzi, a resztę pominie",
+      "Ograniczy wynik do sześciu commitów",
+      "Narysuje najwyżej sześć torów grafu, a tory ponad limit zastąpi znakiem ~",
+      "Wyłączy rysowanie grafu, gdy torów będzie więcej niż sześć"
+    ],
+    "correct": 2,
+    "explanation": "--graph-lane-limit=<n> działa razem z --graph i ogranicza liczbę rysowanych torów; nadmiarowe są zastępowane znakiem obcięcia „~”. Commity nadal są pokazywane. Domyślnie limit to 0, a zero i wartości ujemne oznaczają brak limitu.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/rev-list-options.adoc",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-036",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "prompt": "Repozytorium ma kilka worktree dodanych przez git worktree add. W głównym repozytorium dopisujesz wzorzec scratch/ do .git/info/exclude. Gdzie Git zacznie ignorować katalog scratch/?",
+    "options": [
+      "Tylko w głównym worktree",
+      "We wszystkich worktree, bo info/exclude leży we wspólnym katalogu repozytorium ($GIT_COMMON_DIR)",
+      "Tylko w worktree dodanych po tej zmianie",
+      "Nigdzie, dopóki plik nie zostanie zacommitowany"
+    ],
+    "correct": 1,
+    "explanation": "Git czyta wzorce z $GIT_COMMON_DIR/info/exclude, czyli z katalogu wspólnego dla wszystkich worktree połączonych z tym samym repozytorium (dokumentacja doprecyzowała to w Git 2.55). Plik nie jest śledzony, więc niczego się nie commituje.",
+    "source_url": "https://github.com/git/git/blob/master/Documentation/gitignore.adoc",
+    "added_on": "2026-11-28"
   }
 ]

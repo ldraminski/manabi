@@ -1712,6 +1712,30 @@
     "added_on": "2026-11-25"
   },
   {
+    "id": "css-mid-025",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "css-mid-026",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "css-mid-027",
+    "technology": "css",
+    "level": "mid",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
     "id": "css-senior-001",
     "technology": "css",
     "level": "senior",
@@ -1822,6 +1846,14 @@
     "topic": "css-at-scale",
     "kind": "single_choice",
     "added_on": "2026-11-23"
+  },
+  {
+    "id": "css-senior-015",
+    "technology": "css",
+    "level": "senior",
+    "topic": "css-production",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
   },
   {
     "id": "git-junior-001",
@@ -2158,6 +2190,78 @@
     "topic": "newer-commands",
     "kind": "single_choice",
     "added_on": "2026-11-16"
+  },
+  {
+    "id": "git-mid-028",
+    "technology": "git",
+    "level": "mid",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-029",
+    "technology": "git",
+    "level": "mid",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-030",
+    "technology": "git",
+    "level": "mid",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-031",
+    "technology": "git",
+    "level": "mid",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-032",
+    "technology": "git",
+    "level": "mid",
+    "topic": "hooks-and-remotes",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-033",
+    "technology": "git",
+    "level": "mid",
+    "topic": "daily-workflow",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-034",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-035",
+    "technology": "git",
+    "level": "mid",
+    "topic": "history-and-recovery",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "git-mid-036",
+    "technology": "git",
+    "level": "mid",
+    "topic": "undoing",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
   },
   {
     "id": "git-senior-001",
@@ -2552,6 +2656,22 @@
     "added_on": "2026-11-17"
   },
   {
+    "id": "html-mid-017",
+    "technology": "html",
+    "level": "mid",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "html-mid-018",
+    "technology": "html",
+    "level": "mid",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
     "id": "html-senior-001",
     "technology": "html",
     "level": "senior",
@@ -2678,6 +2798,14 @@
     "topic": "loading-and-components",
     "kind": "single_choice",
     "added_on": "2026-11-19"
+  },
+  {
+    "id": "html-senior-017",
+    "technology": "html",
+    "level": "senior",
+    "topic": "referrer-policy",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
   },
   {
     "id": "javascript-junior-001",
@@ -5632,6 +5760,14 @@
     "added_on": "2026-11-23"
   },
   {
+    "id": "rest-api-mid-016",
+    "technology": "rest-api",
+    "level": "mid",
+    "topic": "http-in-depth",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
+  },
+  {
     "id": "rest-api-senior-001",
     "technology": "rest-api",
     "level": "senior",
@@ -5766,6 +5902,14 @@
     "topic": "caching-at-scale",
     "kind": "single_choice",
     "added_on": "2026-11-25"
+  },
+  {
+    "id": "rest-api-senior-018",
+    "technology": "rest-api",
+    "level": "senior",
+    "topic": "http-at-scale",
+    "kind": "single_choice",
+    "added_on": "2026-11-28"
   },
   {
     "id": "testing-junior-001",

@@ -399,5 +399,56 @@
     "explanation": "Zwykła liczba przekazana do add() jest konwertowana na CSSUnitValue z jednostką \"number\", jak CSS.number(2). Dodanie długości do liczby (albo do czasu) ma niezgodne typy, więc add() rzuca TypeError. Długość z procentem da się natomiast dodać — powstaje CSSMathSum.",
     "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/api/cssnumericvalue/add/index.md",
     "added_on": "2026-11-25"
+  },
+  {
+    "id": "css-mid-025",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "Akapit jest bezpośrednim dzieckiem .box. Jaki kolor tekstu dostanie?",
+    "code": ":root { --accent: 20px; }\n.box { color: black; }\n.box p { color: red; }\n.box p { color: var(--accent, blue); }",
+    "options": [
+      "Czerwony — przeglądarka wraca do poprzedniej deklaracji color",
+      "Niebieski — użyty zostanie fallback z var()",
+      "Czarny — właściwość jest nieważna w czasie obliczania wartości i zachowuje się jak unset, więc color dziedziczy od rodzica",
+      "Domyślny kolor przeglądarki, bo cała reguła zostaje odrzucona"
+    ],
+    "correct": 2,
+    "explanation": "--accent jest zadeklarowane, więc fallback nie wchodzi w grę. Wartość 20px nie pasuje do color, ale wychodzi to dopiero po podstawieniu, gdy przeglądarka odrzuciła już inne kaskadowe wartości. Właściwość traktowana jest wtedy jak unset, a color jest dziedziczone, więc tekst przejmuje czarny od .box.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/var/index.md",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "css-mid-026",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "--heading-font nie jest nigdzie zadeklarowane. Jaką wartość dostanie font-family?",
+    "code": "h1 {\n  font-family: var(--heading-font, \"Inter\", system-ui, sans-serif);\n}",
+    "options": [
+      "\"Inter\", system-ui, sans-serif — fallbackiem jest wszystko po pierwszym przecinku",
+      "Tylko \"Inter\" — fallback to jeden argument, reszta jest pomijana",
+      "Deklaracja jest nieprawidłowa, bo var() przyjmuje najwyżej dwa argumenty",
+      "Wartość początkowa font-family, bo fallback nie może zawierać przecinków"
+    ],
+    "correct": 0,
+    "explanation": "Składnia fallbacku w var() dopuszcza przecinki: wszystko między pierwszym przecinkiem a końcem funkcji jest wartością zapasową. Dokumentacja podaje przykład var(--foo, red, blue), którego fallback to „red, blue”.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/var/index.md",
+    "added_on": "2026-11-28"
+  },
+  {
+    "id": "css-mid-027",
+    "topic": "cascade-in-depth",
+    "kind": "single_choice",
+    "prompt": "Niezarejestrowana właściwość --accent jest ustawiona na initial. Jaki kolor dostanie .badge?",
+    "code": ".badge {\n  --accent: initial;\n  color: var(--accent, teal);\n}",
+    "options": [
+      "Wartość początkowa color (zwykle czarny)",
+      "teal — initial ustawia niezarejestrowaną właściwość na wartość gwarantowanie nieprawidłową, więc var() bierze fallback",
+      "Kolor odziedziczony po rodzicu, bo initial działa tu jak inherit",
+      "Deklaracja jest pomijana, bo initial nie jest dozwolone we właściwości niestandardowej"
+    ],
+    "correct": 1,
+    "explanation": "Ustawienie niezarejestrowanej właściwości niestandardowej na initial resetuje ją do wartości gwarantowanie nieprawidłowej (guaranteed-invalid value). To jeden z przypadków, w których var() używa fallbacku. Inaczej byłoby dla właściwości zarejestrowanej przez @property z initial-value.",
+    "source_url": "https://github.com/mdn/content/blob/main/files/en-us/web/css/reference/values/var/index.md",
+    "added_on": "2026-11-28"
   }
 ]
